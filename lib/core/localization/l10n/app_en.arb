@@ -1,0 +1,23 @@
+{
+  "connectionTimeoutMessage": "Connection timeout.\nPlease check your internet connection and try again.",
+  "sendTimeoutMessage": "Request took too long to send.\nPlease try again.",
+  "receiveTimeoutMessage": "Server took too long to respond.\nPlease try again later.",
+  "badCertificateMessage": "Security certificate error.\nPlease try again later.",
+  "requestCancelledMessage": "Request was cancelled.",
+  "connectionErrorMessage": "No internet connection.\nPlease check your network.",
+  "unknownErrorMessage": "Something went wrong.\nPlease try again.",
+  "unexpectedErrorMessage": "Unexpected error occurred.\nPlease try again.",
+
+  "errors_error400": "Bad request.",
+  "errors_error401": "Unauthorized access.",
+  "errors_error403": "Forbidden request.",
+  "errors_error404": "Resource not found.",
+  "errors_error408": "Request timeout.",
+  "errors_error429": "Too many requests. Please try again later.",
+  "errors_error500": "Internal server error.",
+  "errors_error502": "Bad gateway.",
+  "errors_error503": "Service unavailable.",
+  "errors_error504": "Gateway timeout.",
+  "errors_defaultError": "An error occurred. Please try again.",
+  "login":"Login"
+}

@@ -1,3 +1,4 @@
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../core/values/app_strings.dart';
@@ -8,7 +9,7 @@ class RouteGenerator {
       switch (settings.name) {
         /// Splash Screen
         // case Routes.splashRoute:
-        //   return CupertinoPageRoute(builder: (_) => const SplashScreen());
+        //   return CupertinoPageRoute(builder: (_) =>  SplashScreen());
 
 
         /// Default (Unknown Route)
