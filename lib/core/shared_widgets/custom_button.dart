@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../helpers/my_responsive.dart';
+import '../utils/app_colors.dart';
+import '../utils/app_text_styles.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -30,8 +32,8 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusValue!),
           side: BorderSide(
-            // color: onPressed == null || isLoading
-            //     ? AppColors.disabledGray : AppColors.primaryColor,
+            color: onPressed == null || isLoading
+                ? AppColors.disabledGray : AppColors.primaryColor,
             width: MyResponsive.width(value: 1, context),
           ),
         ),
@@ -47,7 +49,7 @@ class CustomButton extends StatelessWidget {
             )
           : Text(
               title,
-              // style: AppTextStyles.medium16().copyWith(color: foregroundColor),
+              style: AppTextStyles.medium16(context).copyWith(color: foregroundColor),
             ),
     );
   }

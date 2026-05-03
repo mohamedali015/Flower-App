@@ -5,6 +5,8 @@ import 'config/local_storage/local_storage.dart';
 import 'config/route_manager/route_generator.dart';
 import 'config/route_manager/routes.dart';
 import 'core/helpers/custom_bloc_observer.dart';
+import 'core/theme/app_theme.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +26,13 @@ class MyApp extends StatelessWidget {
       title: 'Flower APP',
       initialRoute: Routes.splashRoute,
       onGenerateRoute: RouteGenerator.getRoute,
+
+      builder: (context, child) {
+        return Theme(
+          data: AppTheme.appTheme(context),
+          child: child!,
+        );
+      },
     );
   }
 }

@@ -39,7 +39,7 @@ abstract class MyResponsive {
         double? vertical,
       }) {
     return EdgeInsets.symmetric(
-      horizontal: width(context, value: horizontal ?? 0),
+      horizontal: width(context, value: horizontal ?? 0 ),
       vertical: height(context, value: vertical ?? 0),
     );
   }
