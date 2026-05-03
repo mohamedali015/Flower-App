@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../helpers/my_responsive.dart';
+import '../utils/app_text_styles.dart';
 import '../values/app_strings.dart';
 import 'custom_button.dart';
 
@@ -24,7 +25,7 @@ class CustomErrorWidget extends StatelessWidget {
         children: [
           Text(
             errorMessage,
-            // style: AppTextStyles.bold16(),
+            style: AppTextStyles.bold16(context),
             textAlign: TextAlign.center,
           ),
           if (haveTryAgain) ...[

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../config/route_manager/routes.dart';
+import '../utils/app_constants.dart';
 import '../values/app_strings.dart';
 import 'custom_button.dart';
 
@@ -13,7 +15,7 @@ class SessionExpiredDialog extends StatelessWidget {
       actions: [
         CustomButton(
           onPressed: () {
-            // AppConstants.navigatorKey.currentState!.pushNamedAndRemoveUntil(Routes.loginRoute, (route) => false,);
+            AppConstants.navigatorKey.currentState!.pushNamedAndRemoveUntil(Routes.loginRoute, (route) => false,);
           },
           title: AppStrings.login,
         ),
