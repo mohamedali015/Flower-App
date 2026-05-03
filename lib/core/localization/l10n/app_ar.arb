@@ -1,0 +1,23 @@
+{
+  "connectionTimeoutMessage": "انتهت مهلة الاتصال.\nيرجى التحقق من الإنترنت والمحاولة مرة أخرى.",
+  "sendTimeoutMessage": "استغرق إرسال الطلب وقتًا طويلاً.\nيرجى المحاولة مرة أخرى.",
+  "receiveTimeoutMessage": "استغرق الخادم وقتًا طويلاً في الرد.\nيرجى المحاولة لاحقًا.",
+  "badCertificateMessage": "خطأ في شهادة الأمان.\nيرجى المحاولة لاحقًا.",
+  "requestCancelledMessage": "تم إلغاء الطلب.",
+  "connectionErrorMessage": "لا يوجد اتصال بالإنترنت.\nيرجى التحقق من الشبكة.",
+  "unknownErrorMessage": "حدث خطأ ما.\nيرجى المحاولة مرة أخرى.",
+  "unexpectedErrorMessage": "حدث خطأ غير متوقع.\nيرجى المحاولة مرة أخرى.",
+
+  "errors_error400": "طلب غير صالح.",
+  "errors_error401": "غير مصرح لك.",
+  "errors_error403": "تم رفض الطلب.",
+  "errors_error404": "العنصر غير موجود.",
+  "errors_error408": "انتهت مهلة الطلب.",
+  "errors_error429": "طلبات كثيرة جدًا. حاول لاحقًا.",
+  "errors_error500": "خطأ في الخادم.",
+  "errors_error502": "بوابة غير صالحة.",
+  "errors_error503": "الخدمة غير متاحة.",
+  "errors_error504": "انتهت مهلة البوابة.",
+  "errors_defaultError": "حدث خطأ. حاول مرة أخرى.",
+  "login":"تسجيل الدخول"
+}
