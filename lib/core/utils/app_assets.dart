@@ -4,4 +4,20 @@ abstract class AppAssets {
 
   static const String appLogo = "$_baseIconsPath/app_logo.svg";
   static const String testImage = "$_baseImagesPath/Image_test.png";
+  static const String selectedHomeIcon =
+      "$_baseIconsPath/selected/selected_home.png";
+  static const String selectedCategoryIcon =
+      "$_baseIconsPath/selected/selected_category.png";
+  static const String selectedCartIcon =
+      "$_baseIconsPath/selected/selected_cart.png";
+  static const String selectedProfileIcon =
+      "$_baseIconsPath/selected/selected_profile.png";
+  static const String unselectedHomeIcon =
+      "$_baseIconsPath/unselected/unselected_home.png";
+  static const String unselectedCategoryIcon =
+      "$_baseIconsPath/unselected/unselected_category.png";
+  static const String unselectedCartIcon =
+      "$_baseIconsPath/unselected/unselected_cart.png";
+  static const String unselectedProfileIcon =
+      "$_baseIconsPath/unselected/unselected_profile.png";
 }

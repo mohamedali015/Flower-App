@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'config/di/di.dart';
 import 'config/local_storage/local_storage.dart';
 import 'config/route_manager/route_generator.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flower APP',
-      initialRoute: Routes.splashRoute,
+      initialRoute: Routes.bottomNavBarRoute,
       onGenerateRoute: RouteGenerator.getRoute,
       locale: Locale("en"),
       theme: AppTheme.appTheme(context),

@@ -10,5 +10,8 @@ abstract class Routes {
       '/forgetPasswordNewPassView';
 
   static const String homeRoute = "/home";
-
+  static const String categoryRoute = "/category";
+  static const String cartRoute = "/cart";
+  static const String profileRoute = "/profile";
+  static const String bottomNavBarRoute = "/bottomNavBar";
 }
