@@ -1,3 +1,5 @@
+import 'package:flower_app/config/error_handling/execute_api.dart';
+import 'package:flower_app/features/auth/data/model/request/register_request.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../config/error_handling/result.dart';
 import '../../../data/data_source/remote/auth_remote_data_source.dart';
@@ -29,7 +31,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String phone,
     required String gender,
   }) {
-    // TODO: implement register
-    throw UnimplementedError();
+    return executeApi(() async {
+      final request = RegisterRequest(
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        rePassword: confirmPassword,
+        phone: phone,
+        gender: gender,
+      );
+      return await _apiClient.register(request);
+    });
   }
 }

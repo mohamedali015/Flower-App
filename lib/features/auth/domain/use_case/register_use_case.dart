@@ -19,7 +19,14 @@ class RegisterUseCase {
     required String phone,
     required String gender,
   }) async {
-    // TODO: implement register
-    throw UnimplementedError();
+    return await _authRepo.register(
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+      phone: phone,
+      gender: gender,
+    );
   }
 }

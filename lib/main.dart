@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flower APP',
-      initialRoute: Routes.splashRoute,
+      initialRoute: Routes.registerRoute,
       onGenerateRoute: RouteGenerator.getRoute,
       locale: Locale("en"),
       theme: AppTheme.appTheme(context),

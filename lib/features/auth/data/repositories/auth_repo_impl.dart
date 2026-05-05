@@ -1,3 +1,4 @@
+import 'package:flower_app/features/auth/data/mapper/auth_mapper.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../config/error_handling/result.dart';
 import '../../domain/entities/auth_entity.dart';
@@ -20,8 +21,26 @@ class AuthRepoImpl implements AuthRepo {
     required String phone,
     required String gender,
   }) async {
-    // TODO: implement register
-    throw UnimplementedError();
+    final response = await _authRemoteDataSource.register(
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+      phone: phone,
+      gender: gender,
+    );
+
+    switch (response) {
+      case Success():
+        {
+          return Success(data: response.data.toEntity());
+        }
+      case Failure():
+        {
+          return Failure(errorMessage: response.errorMessage);
+        }
+    }
   }
 
   @override

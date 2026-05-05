@@ -1,7 +1,10 @@
+import 'package:flower_app/config/di/di.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
+import 'package:flower_app/features/auth/presentation/manager/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/values/app_strings.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
 
@@ -16,9 +19,14 @@ class RouteGenerator {
       case Routes.loginRoute:
         return CupertinoPageRoute(builder: (_) => const LoginScreen());
 
-    /// Register Screen
+      /// Register Screen
       case Routes.registerRoute:
-        return CupertinoPageRoute(builder: (_) => const RegisterScreen());
+        return CupertinoPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<RegisterCubit>(),
+            child: const RegisterScreen(),
+          ),
+        );
 
       /// Default (Unknown Route)
       default:
