@@ -32,8 +32,8 @@ abstract class AppStrings {
   static const String password = "Password";
   static const String enterYouPassword = "Enter password";
   static const String rememberMe = "Remember me";
-  static const String forgetPassword = "Forget password";
-  static const String doNotHaveAnAccount = "Don't have an account";
+  static const String forgetPassword = "Forget password?";
+  static const String doNotHaveAnAccount = "Don't have an account?";
   static const String signUp = "Sign up";
 
   static const String userName = "User name";

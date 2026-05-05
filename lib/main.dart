@@ -1,3 +1,5 @@
+import 'package:flower_app/config/secure_cache/secure_cache/cache_keys.dart';
+import 'package:flower_app/config/secure_cache/secure_cache/secure_cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'config/di/di.dart';
@@ -10,23 +12,40 @@ import 'core/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   configureDependencies();
+
   await getIt<LocalStorage>().init();
+
+  final token = await SecureCacheHelper.getData(key: CacheKeys.token);
+
+  final rememberMeString = await SecureCacheHelper.getData(
+    key: CacheKeys.rememberMe,
+  );
+
+  final bool rememberMe = rememberMeString == 'true';
   Bloc.observer = CustomBlocObserver();
-  runApp(const MyApp());
+
+  runApp(MyApp(token: token, rememberMe: rememberMe));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String? token;
+  final bool rememberMe;
+
+  const MyApp({super.key, required this.token, required this.rememberMe});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flower APP',
-      initialRoute: Routes.splashRoute,
+
+      initialRoute: (token != null && rememberMe)
+          ? Routes.homeRoute
+          : Routes.loginRoute,
       onGenerateRoute: RouteGenerator.getRoute,
-      locale: Locale("en"),
+      locale: const Locale("en"),
       theme: AppTheme.appTheme(context),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

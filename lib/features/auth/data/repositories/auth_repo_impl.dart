@@ -44,15 +44,15 @@ class AuthRepoImpl implements AuthRepo {
         {
           final entity = response.data.toEntity();
 
-          await SecureCacheHelper.saveData(
-            key: CacheKeys.token,
-            value: response.data.token!,
-          );
-
-          if (response.data.token != null && rememberMe) {
+          if (response.data.token != null) {
             await SecureCacheHelper.saveData(
               key: CacheKeys.token,
               value: response.data.token!,
+            );
+
+            await SecureCacheHelper.saveData(
+              key: CacheKeys.rememberMe,
+              value: rememberMe.toString(),
             );
           }
 
