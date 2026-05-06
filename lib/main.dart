@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'config/di/di.dart';
 import 'config/local_storage/local_storage.dart';
 import 'config/route_manager/route_generator.dart';
@@ -12,6 +13,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   await getIt<LocalStorage>().init();
+
+  /* ForgetPasswordUseCase _forgetPasswordUseCase = getIt<ForgetPasswordUseCase>();
+  await _forgetPasswordUseCase("dygofile@fxzig.com");
+
+  ResetPasswordUseCase _resetPawwordUseCase = getIt<ResetPasswordUseCase>();
+  await _resetPawwordUseCase(email: "dygofile@fxzig.com", newPassword: "123456789");
+
+  VerifyResetCodeUseCase _verifyResetCodeUseCase =
+      getIt<VerifyResetCodeUseCase>();
+  await _verifyResetCodeUseCase(resetCode: "07775000");*/
+
   Bloc.observer = CustomBlocObserver();
   runApp(const MyApp());
 }

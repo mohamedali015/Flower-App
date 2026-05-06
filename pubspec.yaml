@@ -37,7 +37,7 @@ dependencies:
   dio: ^5.9.2
   injectable:
   get_it:
-  retrofit:
+  retrofit: ^4.9.2
   logger:
   json_annotation:
   pretty_dio_logger: ^1.4.0
