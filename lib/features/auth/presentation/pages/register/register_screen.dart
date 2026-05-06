@@ -30,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -88,7 +88,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return Column(
                         // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           /// name
                           NameFieldsWidget(
                             firstNameController: firstNameController,
@@ -125,15 +124,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           PasswordFieldsWidget(
                             passwordController: passwordController,
                             confirmPasswordController:
-                            confirmPasswordController,
+                                confirmPasswordController,
                             isPasswordHidden: state.isPasswordHidden,
-                            isConfirmPasswordHidden: state
-                                .isConfirmPasswordHidden,
+                            isConfirmPasswordHidden:
+                                state.isConfirmPasswordHidden,
                             passwordSuffixOnTap: () =>
                                 cubit.doEvents(PasswordVisibilityEvent()),
-                            confirmPasswordSuffixOnTap: () =>
-                                cubit.doEvents(
-                                    ConfirmPasswordVisibilityEvent()),
+                            confirmPasswordSuffixOnTap: () => cubit.doEvents(
+                              ConfirmPasswordVisibilityEvent(),
+                            ),
                             isLoading: isLoading,
                             validationMode: state.isSubmitted
                                 ? AutovalidateMode.always
@@ -175,7 +174,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: MyResponsive.height(context, value: 30),
                           ),
 
-
                           /// Terms And Conditions
                           TermsAndConditionsWidget(),
 
@@ -201,7 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   email: emailController.text,
                                   password: passwordController.text,
                                   confirmPassword:
-                                  confirmPasswordController.text,
+                                      confirmPasswordController.text,
                                   phone: phoneController.text,
                                   gender: state.gender.name,
                                 ),
