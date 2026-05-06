@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       title: 'Flower APP',
 
       initialRoute: (token != null && rememberMe)
-          ? Routes.homeRoute
+          ? Routes.bottomNavBarRoute
           : Routes.loginRoute,
       onGenerateRoute: RouteGenerator.getRoute,
       locale: const Locale("en"),
