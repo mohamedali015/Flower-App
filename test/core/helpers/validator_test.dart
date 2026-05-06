@@ -114,7 +114,7 @@ void main() {
     });
 
     test("When Phone is Valid", () {
-      final result = Validator.phone("0128");
+      final result = Validator.phone("01285947399");
       expect(result, isNull);
     });
   });
