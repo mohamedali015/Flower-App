@@ -11,15 +11,15 @@ class ForgetPasswordRemoteRepoImp implements ForgetPasswordRemoteRepoContract {
   final ForgetPasswordRemoteDataSourceContract _forgetPasswordRemoteDataSource;
 
   @override
-  Future<Result<bool>> forgetPassword({required String email}) async {
+  Future<Result<String?>> forgetPassword({required String email}) async {
     var result = await _forgetPasswordRemoteDataSource.forgetPassword(
       email: email,
     );
     switch (result) {
-      case Success<bool>():
-        return Success<bool>(data: result.data);
-      case Failure<bool>():
-        return Failure<bool>(errorMessage: result.errorMessage);
+      case Success<String?>():
+        return Success(data: result.data);
+      case Failure<String?>():
+        return Failure(errorMessage: result.errorMessage);
     }
   }
 

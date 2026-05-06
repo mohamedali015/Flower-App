@@ -9,16 +9,16 @@ class ForgetPasswordUseCase {
 
   final ForgetPasswordRemoteRepoContract _forgetPasswordRemoteRepoContract;
 
-  Future<Result<bool>> call(String email) async {
+  Future<Result<String?>> call(String email) async {
     var result = await _forgetPasswordRemoteRepoContract.forgetPassword(
       email: email,
     );
     switch (result) {
-      case Success<bool>():
-        return Success<bool>(data: result.data);
+      case Success<String?>():
+        return Success(data: result.data);
 
-      case Failure<bool>():
-        return Failure<bool>(errorMessage: result.errorMessage);
+      case Failure<String?>():
+        return Failure(errorMessage: result.errorMessage);
     }
   }
 }

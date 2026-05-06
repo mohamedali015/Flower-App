@@ -14,16 +14,6 @@ void main() async {
   configureDependencies();
   await getIt<LocalStorage>().init();
 
-  /* ForgetPasswordUseCase _forgetPasswordUseCase = getIt<ForgetPasswordUseCase>();
-  await _forgetPasswordUseCase("dygofile@fxzig.com");
-
-  ResetPasswordUseCase _resetPawwordUseCase = getIt<ResetPasswordUseCase>();
-  await _resetPawwordUseCase(email: "dygofile@fxzig.com", newPassword: "123456789");
-
-  VerifyResetCodeUseCase _verifyResetCodeUseCase =
-      getIt<VerifyResetCodeUseCase>();
-  await _verifyResetCodeUseCase(resetCode: "07775000");*/
-
   Bloc.observer = CustomBlocObserver();
   runApp(const MyApp());
 }
@@ -36,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flower APP',
-      initialRoute: Routes.splashRoute,
+      initialRoute: Routes.forgetPasswordEnterEmailViewRoute,
       onGenerateRoute: RouteGenerator.getRoute,
       locale: Locale("en"),
       theme: AppTheme.appTheme(context),

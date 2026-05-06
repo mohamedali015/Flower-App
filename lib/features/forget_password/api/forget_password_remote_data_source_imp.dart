@@ -13,8 +13,8 @@ class ForgetPasswordRemoteDataSourceImp
   final ForgetPasswordClient _forgetPasswordClient;
 
   @override
-  Future<Result<bool>> forgetPassword({required String email}) {
-    return executeApi<bool>(() {
+  Future<Result<String?>> forgetPassword({required String email}) {
+    return executeApi<String?>(() {
       return _forgetPasswordClient.forgetPassword(email);
     });
   }
@@ -24,13 +24,13 @@ class ForgetPasswordRemoteDataSourceImp
     required String email,
     required String newPassword,
   }) {
-    return executeApi(
+    return executeApi<bool>(
       () => _forgetPasswordClient.resetPassword(email, newPassword),
     );
   }
 
   @override
   Future<Result<bool>> verifyReset({required String resetCode}) {
-    return executeApi(() => _forgetPasswordClient.verifyReset(resetCode));
+    return executeApi<bool>(() => _forgetPasswordClient.verifyReset(resetCode));
   }
 }
