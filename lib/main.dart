@@ -4,6 +4,8 @@ import 'config/di/di.dart';
 import 'config/local_storage/local_storage.dart';
 import 'config/route_manager/route_generator.dart';
 import 'config/route_manager/routes.dart';
+import 'config/secure_cache/secure_cache/cache_keys.dart';
+import 'config/secure_cache/secure_cache/secure_cache_helper.dart';
 import 'core/helpers/custom_bloc_observer.dart';
 import 'core/localization/l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
