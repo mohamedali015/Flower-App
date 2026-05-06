@@ -1,4 +1,7 @@
 import 'package:flower_app/features/auth/data/mapper/auth_mapper.dart';
+import 'package:flower_app/config/secure_cache/secure_cache/cache_keys.dart';
+import 'package:flower_app/config/secure_cache/secure_cache/secure_cache_helper.dart';
+import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../config/error_handling/result.dart';
 import '../../domain/entities/auth_entity.dart';
@@ -49,7 +52,34 @@ class AuthRepoImpl implements AuthRepo {
     required String password,
     required bool rememberMe,
   }) async {
-    // TODO: implement register
-    throw UnimplementedError();
+    final response = await _authRemoteDataSource.login(
+      email: email,
+      password: password,
+    );
+
+    switch (response) {
+      case Success<AuthResponse>():
+        {
+          final entity = response.data.toEntity();
+
+          if (response.data.token != null) {
+            await SecureCacheHelper.saveData(
+              key: CacheKeys.token,
+              value: response.data.token!,
+            );
+
+            await SecureCacheHelper.saveData(
+              key: CacheKeys.rememberMe,
+              value: rememberMe.toString(),
+            );
+          }
+
+          return Success(data: entity);
+        }
+      case Failure<AuthResponse>():
+        {
+          return Failure(errorMessage: response.errorMessage);
+        }
+    }
   }
 }

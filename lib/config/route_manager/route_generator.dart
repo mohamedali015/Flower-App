@@ -1,11 +1,11 @@
-import 'package:flower_app/config/di/di.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
-import 'package:flower_app/features/auth/presentation/manager/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
+import 'package:flower_app/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/shared_widgets/custom_bottom_nav.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/values/app_strings.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
 import '../../features/cart/presentation/screens/cart_screen.dart';
@@ -22,7 +22,12 @@ class RouteGenerator {
 
       /// Login Screen
       case Routes.loginRoute:
-        return CupertinoPageRoute(builder: (_) => const LoginScreen());
+        return CupertinoPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<LoginCubit>(),
+            child: LoginScreen(),
+          ),
+        );
 
       /// Register Screen
       case Routes.registerRoute:

@@ -38,5 +38,8 @@
   "male": "Male",
   "termsText": "Creating an account, you agree to our",
   "termsAndConditions": "Terms & Conditions",
-  "alreadyHaveAccount": "Already have an account?"
+  "alreadyHaveAccount": "Already have an account?",
+    "rememberMe": "Remember me",
+    "forgetPassword": "Forgot password?",
+    "doNotHaveAnAccount": "Don’t have an account?"
 }

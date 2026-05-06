@@ -38,5 +38,8 @@
   "male": "ذكر",
   "termsText": "بإنشاء حساب، فإنك توافق على",
   "termsAndConditions": "الشروط والأحكام",
-  "alreadyHaveAccount": "لديك حساب بالفعل؟"
+  "alreadyHaveAccount": "لديك حساب بالفعل؟",
+     "rememberMe": "تذكرني",
+    "forgetPassword": "نسيت كلمة المرور؟",
+    "doNotHaveAnAccount": "ليس لديك حساب؟"
 }

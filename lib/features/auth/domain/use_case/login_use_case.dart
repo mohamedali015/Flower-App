@@ -14,7 +14,10 @@ class LoginUseCase {
     required String password,
     required bool rememberMe,
   }) {
-    // TODO: implement register
-    throw UnimplementedError();
+    return _authRepo.login(
+      email: email,
+      password: password,
+      rememberMe: rememberMe,
+    );
   }
 }
