@@ -90,6 +90,12 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/icons/unselected/
+    - assets/icons/selected/
+    - assets/icons/3.0x/unselected/
+    - assets/icons/3.0x/selected/
+    - assets/icons/2.0x/selected/
+    - assets/icons/2.0x/unselected/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

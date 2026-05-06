@@ -80,6 +80,8 @@ abstract class AppStrings {
   static const String invalidPassword = "Invalid password";
 
   static const String unknown = "Unknown";
-
+  static const String home = "Home";
   static const String tryAgain = "Try Again";
+  static const String category = "Category";
+  static const String cart = "Cart";
 }

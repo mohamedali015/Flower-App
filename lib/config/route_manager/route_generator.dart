@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/values/app_strings.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
+import '../../feautre/category/presentation/screens/category_screen.dart';
+import '../../feautre/home/presentation/screens/home_screen.dart';
+import '../../feautre/profile/presentation/screens/profile_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -28,10 +31,21 @@ class RouteGenerator {
           ),
         );
 
+      case Routes.homeRoute:
+        return CupertinoPageRoute(builder: (_) => HomeScreen());
+      case Routes.categoryRoute:
+        return CupertinoPageRoute(builder: (_) => CategoryScreen());
+      case Routes.cartRoute:
+        return CupertinoPageRoute(builder: (_) => CartScreen());
+      case Routes.profileRoute:
+        return CupertinoPageRoute(builder: (_) => ProfileScreen());
+      case Routes.bottomNavBarRoute:
+        return CupertinoPageRoute(builder: (_) => CustomBottomNavBar());
+
       /// Default (Unknown Route)
       default:
         return _errorRoute();
-    }
+        }
   }
 
   static Route<dynamic> _errorRoute() {

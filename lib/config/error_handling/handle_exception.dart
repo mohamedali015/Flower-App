@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../core/values/app_response_error_messages.dart';
 
@@ -51,7 +50,6 @@ class NetworkException {
       }
 
       switch (statusCode) {
-
         case 400:
           return AppResponseErrorMessages.error400;
         case 401:
