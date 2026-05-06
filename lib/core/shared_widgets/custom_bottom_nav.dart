@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../feautre/cart/presentation/screens/cart_screen.dart';
-import '../../feautre/category/presentation/screens/category_screen.dart';
-import '../../feautre/home/presentation/screens/home_screen.dart';
-import '../../feautre/profile/presentation/screens/profile_screen.dart';
+import '../../features/cart/presentation/screens/cart_screen.dart';
+import '../../features/category/presentation/screens/category_screen.dart';
+import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../helpers/my_responsive.dart';
 import '../utils/app_assets.dart';
 import '../utils/app_colors.dart';
