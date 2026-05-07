@@ -61,11 +61,11 @@ abstract class Validator {
 
     value = value.trim();
 
-    // final phoneRegex = RegExp(r'^\d{9}$');
-    //
-    // if (!phoneRegex.hasMatch(value)) {
-    //   return AppStrings.phoneInvalid;
-    // }
+    final phoneRegex = RegExp(r'^\d{11}$');
+
+    if (!phoneRegex.hasMatch(value)) {
+      return AppStrings.phoneInvalid;
+    }
 
     return null;
   }
