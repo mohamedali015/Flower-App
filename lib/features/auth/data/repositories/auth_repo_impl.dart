@@ -1,5 +1,5 @@
 import 'package:flower_app/config/secure_cache/secure_cache/cache_keys.dart';
-import 'package:flower_app/config/secure_cache/secure_cache/secure_cache_helper.dart';
+import 'package:flower_app/config/secure_cache/secure_cache/secure_cache.dart';
 import 'package:flower_app/features/auth/data/mapper/auth_mapper.dart';
 import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
 import 'package:injectable/injectable.dart';
@@ -10,9 +10,11 @@ import '../data_source/remote/auth_remote_data_source.dart';
 
 @Injectable(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
+  final SecureCache secureCache;
+
   final AuthRemoteDataSource _authRemoteDataSource;
 
-  AuthRepoImpl(this._authRemoteDataSource);
+  AuthRepoImpl(this._authRemoteDataSource, this.secureCache);
 
   @override
   Future<Result<AuthEntity>> register({
@@ -45,12 +47,12 @@ class AuthRepoImpl implements AuthRepo {
           final entity = response.data.toEntity();
 
           if (response.data.token != null) {
-            await SecureCacheHelper.saveData(
+            await secureCache.saveData(
               key: CacheKeys.token,
               value: response.data.token!,
             );
 
-            await SecureCacheHelper.saveData(
+            await secureCache.saveData(
               key: CacheKeys.rememberMe,
               value: rememberMe.toString(),
             );

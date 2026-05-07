@@ -1,5 +1,5 @@
 import 'package:flower_app/config/secure_cache/secure_cache/cache_keys.dart';
-import 'package:flower_app/config/secure_cache/secure_cache/secure_cache_helper.dart';
+import 'package:flower_app/config/secure_cache/secure_cache/secure_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'config/di/di.dart';
@@ -17,11 +17,11 @@ void main() async {
 
   await getIt<LocalStorage>().init();
 
-  final token = await SecureCacheHelper.getData(key: CacheKeys.token);
+  final secureCache = getIt<SecureCache>();
 
-  final rememberMeString = await SecureCacheHelper.getData(
-    key: CacheKeys.rememberMe,
-  );
+  final token = await secureCache.getData(key: CacheKeys.token);
+
+  final rememberMeString = await secureCache.getData(key: CacheKeys.rememberMe);
 
   final bool rememberMe = rememberMeString == 'true';
   Bloc.observer = CustomBlocObserver();

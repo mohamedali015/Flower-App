@@ -25,7 +25,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> _login(LoginSubmitEvent event) async {
-    emit(LoginLoading(rememberMe: state.rememberMe));
+    emit(LoginLoading(rememberMe: event.rememberMe));
 
     final result = await _loginUseCase.call(
       email: event.email,
@@ -36,7 +36,7 @@ class LoginCubit extends Cubit<LoginState> {
     switch (result) {
       case Success<AuthEntity>():
         emit(
-          LoginSuccess(authEntity: result.data, rememberMe: state.rememberMe),
+          LoginSuccess(authEntity: result.data, rememberMe: event.rememberMe),
         );
         break;
 
@@ -44,7 +44,7 @@ class LoginCubit extends Cubit<LoginState> {
         emit(
           LoginFailure(
             errorMessage: result.errorMessage,
-            rememberMe: state.rememberMe,
+            rememberMe: event.rememberMe,
           ),
         );
         break;

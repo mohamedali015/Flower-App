@@ -6,6 +6,9 @@ import '../../core/values/api_end_points.dart';
 import '../../core/values/api_strings.dart';
 import '../secure_cache/secure_cache/cache_keys.dart';
 import '../secure_cache/secure_cache/secure_cache_helper.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../secure_cache/secure_cache/secure_cache.dart';
 
 @module
 abstract class ApiModule {
@@ -43,7 +46,16 @@ abstract class ApiModule {
   }
 
   @lazySingleton
-  Dio provideDio(BaseOptions option, PrettyDioLogger logger) {
+  SecureCache provideSecureCache() {
+    return SecureCacheImpl(const FlutterSecureStorage());
+  }
+
+  @lazySingleton
+  Dio provideDio(
+    BaseOptions option,
+    PrettyDioLogger logger,
+    SecureCache secureCache,
+  ) {
     final dio = Dio(option);
 
     dio.interceptors.add(
@@ -52,7 +64,7 @@ abstract class ApiModule {
           final requiresAuth = options.extra[ApiStrings.requireAuth] ?? true;
 
           if (requiresAuth) {
-            final token = await SecureCacheHelper.getData(key: CacheKeys.token);
+            final token = await secureCache.getData(key: CacheKeys.token);
 
             if (token != null && token.isNotEmpty) {
               options.headers[ApiStrings.token] = token;
@@ -75,7 +87,7 @@ abstract class ApiModule {
               message.contains("user not found");
 
           if (requiresAuth && isTokenError) {
-            await SecureCacheHelper.removeData(key: CacheKeys.token);
+            await secureCache.removeData(key: CacheKeys.token);
             // getIt<UserCubit>().doEvent(UnauthorizedUserEvent());
           }
 
