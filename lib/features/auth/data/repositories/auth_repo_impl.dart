@@ -1,4 +1,5 @@
 import 'package:flower_app/features/auth/data/mapper/auth_mapper.dart';
+import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../config/error_handling/result.dart';
 import '../../domain/entities/auth_entity.dart';
@@ -32,13 +33,13 @@ class AuthRepoImpl implements AuthRepo {
     );
 
     switch (response) {
-      case Success():
+      case Success<AuthResponse>():
         {
-          return Success(data: response.data.toEntity());
+          return Success<AuthEntity>(data: response.data.toEntity());
         }
-      case Failure():
+      case Failure<AuthResponse>():
         {
-          return Failure(errorMessage: response.errorMessage);
+          return Failure<AuthEntity>(errorMessage: response.errorMessage);
         }
     }
   }

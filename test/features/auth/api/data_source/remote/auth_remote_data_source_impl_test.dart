@@ -12,7 +12,12 @@ import 'auth_remote_data_source_impl_test.mocks.dart';
 void main() {
   late AuthRemoteDataSourceImpl authRemoteDataSourceImpl;
   late MockAuthApiClient mockAuthApiClient;
+  late String errorMessage;
+  late AuthResponse expectedResponse;
+
   setUpAll(() {
+    errorMessage = "Something went wrong. Please try again later.";
+    expectedResponse = AuthResponse(message: "Success", token: "token_123");
     mockAuthApiClient = MockAuthApiClient();
     authRemoteDataSourceImpl = AuthRemoteDataSourceImpl(mockAuthApiClient);
   });
@@ -21,11 +26,6 @@ void main() {
     group("Register Function Test Group", () {
       group("Success Test Case", () {
         test("Test success test case with data return successfully", () async {
-          final expectedResponse = AuthResponse(
-            message: "Success",
-            token: "token_123",
-          );
-
           when(
             mockAuthApiClient.register(any),
           ).thenAnswer((_) async => expectedResponse);
@@ -48,8 +48,6 @@ void main() {
 
       group('Failure Test Cases', () {
         test("Test Failure Test case with ErrorMessage", () async {
-          final errorMessage = "Something went wrong. Please try again later.";
-
           when(
             mockAuthApiClient.register(any),
           ).thenThrow(Exception(errorMessage));
