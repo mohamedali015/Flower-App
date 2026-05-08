@@ -6,15 +6,15 @@ import 'package:flower_app/core/utils/app_constants.dart';
 import 'package:flower_app/features/auth/presentation/manager/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/manager/register_events.dart';
 import 'package:flower_app/features/auth/presentation/manager/register_state.dart';
+import 'package:flower_app/features/auth/presentation/widgets/register/gender_section_widget.dart';
 import 'package:flower_app/features/auth/presentation/widgets/register/have_an_account_widget.dart';
 import 'package:flower_app/features/auth/presentation/widgets/register/name_fields_widget.dart';
 import 'package:flower_app/features/auth/presentation/widgets/register/password_fields_widget.dart';
+import 'package:flower_app/features/auth/presentation/widgets/register/terms_and_conditions_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/helpers/validator.dart';
-import '../../widgets/register/gender_section_widget.dart';
-import '../../widgets/register/terms_and_conditions_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -27,11 +27,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController firstNameController = TextEditingController();
 
   final TextEditingController lastNameController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   final TextEditingController confirmPasswordController =
       TextEditingController();
+
   final TextEditingController phoneController = TextEditingController();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -49,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
-    final cubit = context.read<RegisterCubit>();
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -61,95 +66,81 @@ class _RegisterScreenState extends State<RegisterScreen> {
             context,
             horizontal: AppConstants.paddingHorizontal,
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: MyResponsive.height(context, value: 24)),
-                Form(
-                  key: formKey,
-                  child: BlocConsumer<RegisterCubit, RegisterState>(
-                    listener: (context, state) {
-                      if (state.registerState.isSuccess) {
-                        AppSnackBar.success(
-                          context,
-                          state.registerState.data!.message!,
-                        );
-                        Navigator.pop(context);
-                      } else if (state.registerState.errorMessage != null) {
-                        AppSnackBar.error(
-                          context,
-                          state.registerState.errorMessage!,
-                        );
-                      }
-                    },
-                    builder: (context, state) {
-                      final isLoading = state.registerState.isLoading;
-                      return Column(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
+          child: BlocConsumer<RegisterCubit, RegisterState>(
+            listenWhen: (previous, current) =>
+                previous.registerState != current.registerState,
+            listener: (context, state) {
+              if (state.registerState.isSuccess) {
+                AppSnackBar.success(context, state.registerState.data!.message);
+
+                Navigator.pop(context);
+              } else if (state.registerState.errorMessage != null) {
+                AppSnackBar.error(context, state.registerState.errorMessage!);
+              }
+            },
+            buildWhen: (previous, current) =>
+                previous.gender != current.gender ||
+                previous.isSubmitted != current.isSubmitted ||
+                previous.registerState.isLoading !=
+                    current.registerState.isLoading,
+            builder: (context, state) {
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: MyResponsive.height(context, value: 24)),
+
+                    Form(
+                      key: formKey,
+                      autovalidateMode: state.isSubmitted
+                          ? AutovalidateMode.always
+                          : AutovalidateMode.disabled,
+                      child: Column(
                         children: [
-                          /// name
+                          /// Name Fields
                           NameFieldsWidget(
                             firstNameController: firstNameController,
                             lastNameController: lastNameController,
-                            isLoading: isLoading,
-                            validationMode: state.isSubmitted
-                                ? AutovalidateMode.always
-                                : AutovalidateMode.disabled,
+                            isLoading: state.registerState.isLoading,
                           ),
 
                           SizedBox(
                             height: MyResponsive.height(context, value: 24),
                           ),
 
-                          /// email
+                          /// Email Field
                           TextFormField(
                             controller: emailController,
-                            enabled: !isLoading,
+                            enabled: !state.registerState.isLoading,
                             validator: Validator.email,
-                            autovalidateMode: state.isSubmitted
-                                ? AutovalidateMode.always
-                                : AutovalidateMode.disabled,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               labelText: local.email,
                               hintText: local.enterEmail,
                             ),
                           ),
+
                           SizedBox(
                             height: MyResponsive.height(context, value: 24),
                           ),
 
-                          /// passwords
+                          /// Password Fields
                           PasswordFieldsWidget(
                             passwordController: passwordController,
                             confirmPasswordController:
                                 confirmPasswordController,
-                            isPasswordHidden: state.isPasswordHidden,
-                            isConfirmPasswordHidden:
-                                state.isConfirmPasswordHidden,
-                            passwordSuffixOnTap: () =>
-                                cubit.doEvents(PasswordVisibilityEvent()),
-                            confirmPasswordSuffixOnTap: () => cubit.doEvents(
-                              ConfirmPasswordVisibilityEvent(),
-                            ),
-                            isLoading: isLoading,
-                            validationMode: state.isSubmitted
-                                ? AutovalidateMode.always
-                                : AutovalidateMode.disabled,
+                            isLoading: state.registerState.isLoading,
                           ),
+
                           SizedBox(
                             height: MyResponsive.height(context, value: 24),
                           ),
 
-                          /// Phone
+                          /// Phone Field
                           TextFormField(
                             controller: phoneController,
-                            enabled: !isLoading,
+                            enabled: !state.registerState.isLoading,
                             validator: Validator.phone,
-                            autovalidateMode: state.isSubmitted
-                                ? AutovalidateMode.always
-                                : AutovalidateMode.disabled,
                             keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
                               labelText: local.phoneNumber,
@@ -161,12 +152,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: MyResponsive.height(context, value: 40),
                           ),
 
-                          /// radio buttons
+                          /// Gender Section
                           GenderSectionWidget(
                             gender: state.gender,
-                            isLoading: isLoading,
+                            isLoading: state.registerState.isLoading,
                             onChanged: (value) {
-                              cubit.doEvents(SelectGenderEvent(gender: value));
+                              context.read<RegisterCubit>().doEvents(
+                                SelectGenderEvent(gender: value),
+                              );
                             },
                           ),
 
@@ -174,61 +167,63 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: MyResponsive.height(context, value: 30),
                           ),
 
-                          /// Terms And Conditions
-                          TermsAndConditionsWidget(),
+                          /// Terms
+                          const TermsAndConditionsWidget(),
 
                           SizedBox(
                             height: MyResponsive.height(context, value: 48),
                           ),
 
-                          /// sign up button
+                          /// Button
                           CustomButton(
                             title: local.signUp,
-                            isLoading: isLoading,
+                            isLoading: state.registerState.isLoading,
                             onPressed: () {
-                              cubit.doEvents(SubmitPressedEvent());
+                              context.read<RegisterCubit>().doEvents(
+                                SubmitPressedEvent(),
+                              );
 
                               if (!formKey.currentState!.validate()) {
                                 return;
                               }
 
-                              cubit.doEvents(
+                              context.read<RegisterCubit>().doEvents(
                                 SubmitRegisterEvent(
-                                  firstName: firstNameController.text,
-                                  lastName: lastNameController.text,
-                                  email: emailController.text,
+                                  firstName: firstNameController.text.trim(),
+                                  lastName: lastNameController.text.trim(),
+                                  email: emailController.text.trim(),
                                   password: passwordController.text,
                                   confirmPassword:
                                       confirmPasswordController.text,
-                                  phone: phoneController.text,
+                                  phone: phoneController.text.trim(),
                                   gender: state.gender.name,
                                 ),
                               );
                             },
                           ),
                         ],
-                      );
-                    },
-                  ),
-                ),
-                SizedBox(height: MyResponsive.height(context, value: 16)),
+                      ),
+                    ),
 
-                /// Have an Account Widget
-                HaveAnAccountWidget(
-                  title: local.alreadyHaveAccount,
-                  actionText: local.login,
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+                    SizedBox(height: MyResponsive.height(context, value: 16)),
+
+                    /// Have Account
+                    HaveAnAccountWidget(
+                      title: local.alreadyHaveAccount,
+                      actionText: local.login,
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+
+                    SizedBox(height: MyResponsive.height(context, value: 20)),
+                  ],
                 ),
-                SizedBox(height: MyResponsive.height(context, value: 20)),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),
     );
   }
 }
-
-enum UserGender { male, female }

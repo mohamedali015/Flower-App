@@ -8,29 +8,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/values/app_strings.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
 
-class RouteGenerator {
+abstract class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
-    switch (settings.name) {
-      /// Splash Screen
-      // case Routes.splashRoute:
-      //   return CupertinoPageRoute(builder: (_) => const SplashScreen());
+    try {
+      switch (settings.name) {
+        /// Splash Screen
+        // case Routes.splashRoute:
+        //   return CupertinoPageRoute(builder: (_) => const SplashScreen());
 
-      /// Login Screen
-      case Routes.loginRoute:
-        return CupertinoPageRoute(builder: (_) => const LoginScreen());
+        /// Login Screen
+        case Routes.loginRoute:
+          return CupertinoPageRoute(builder: (_) => const LoginScreen());
 
-      /// Register Screen
-      case Routes.registerRoute:
-        return CupertinoPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<RegisterCubit>(),
-            child: const RegisterScreen(),
-          ),
-        );
+        /// Register Screen
+        case Routes.registerRoute:
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (_) => getIt<RegisterCubit>(),
+              child: const RegisterScreen(),
+            ),
+          );
 
-      /// Default (Unknown Route)
-      default:
-        return _errorRoute();
+        /// Default (Unknown Route)
+        default:
+          return _errorRoute();
+      }
+    } catch (e) {
+      return _errorRoute();
     }
   }
 

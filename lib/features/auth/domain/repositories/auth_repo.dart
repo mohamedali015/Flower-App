@@ -1,5 +1,6 @@
 import '../../../../config/error_handling/result.dart';
 import '../entities/auth_entity.dart';
+import '../params/register_params.dart';
 
 abstract interface class AuthRepo {
   Future<Result<AuthEntity>> login({
@@ -8,13 +9,5 @@ abstract interface class AuthRepo {
     required bool rememberMe,
   });
 
-  Future<Result<AuthEntity>> register({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String confirmPassword,
-    required String phone,
-    required String gender,
-  });
+  Future<Result<AuthEntity>> register({required RegisterParams params});
 }

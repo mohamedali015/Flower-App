@@ -1,3 +1,5 @@
+import 'package:flower_app/features/auth/data/model/request/register_request.dart';
+
 import '../../../../../config/error_handling/result.dart';
 import '../../model/response/auth_response.dart';
 
@@ -7,13 +9,5 @@ abstract interface class AuthRemoteDataSource {
     required String password,
   });
 
-  Future<Result<AuthResponse>> register({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String confirmPassword,
-    required String phone,
-    required String gender,
-  });
+  Future<Result<AuthResponse>> register({required RegisterRequest request});
 }

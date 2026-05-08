@@ -8,14 +8,12 @@ class NameFieldsWidget extends StatelessWidget {
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
   final bool isLoading;
-  final AutovalidateMode validationMode;
 
   const NameFieldsWidget({
     super.key,
     required this.firstNameController,
     required this.lastNameController,
     required this.isLoading,
-    required this.validationMode,
   });
 
   @override
@@ -29,7 +27,6 @@ class NameFieldsWidget extends StatelessWidget {
             controller: firstNameController,
             enabled: !isLoading,
             validator: Validator.name,
-            autovalidateMode: validationMode,
             keyboardType: TextInputType.name,
             decoration: InputDecoration(
               labelText: local.firstName,
@@ -43,7 +40,6 @@ class NameFieldsWidget extends StatelessWidget {
             controller: lastNameController,
             enabled: !isLoading,
             validator: Validator.name,
-            autovalidateMode: validationMode,
             keyboardType: TextInputType.name,
             decoration: InputDecoration(
               labelText: local.lastName,

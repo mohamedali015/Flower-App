@@ -1,7 +1,9 @@
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/auth/api/auth_api_client.dart';
 import 'package:flower_app/features/auth/api/data_source/remote/auth_remote_data_source_impl.dart';
+import 'package:flower_app/features/auth/data/mapper/register_params_mapper.dart';
 import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
+import 'package:flower_app/features/auth/domain/params/register_params.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -14,10 +16,22 @@ void main() {
   late MockAuthApiClient mockAuthApiClient;
   late String errorMessage;
   late AuthResponse expectedResponse;
+  late RegisterParams params;
 
   setUpAll(() {
     errorMessage = "Something went wrong. Please try again later.";
     expectedResponse = AuthResponse(message: "Success", token: "token_123");
+    params = RegisterParams(
+      firstName: "Mohamed",
+      lastName: "Ali",
+      email: "mohamed@gmail.com",
+      password: "123456",
+      confirmPassword: "123456",
+      phone: "01020374526",
+      gender: "male",
+    );
+  });
+  setUp(() {
     mockAuthApiClient = MockAuthApiClient();
     authRemoteDataSourceImpl = AuthRemoteDataSourceImpl(mockAuthApiClient);
   });
@@ -31,13 +45,7 @@ void main() {
           ).thenAnswer((_) async => expectedResponse);
 
           final result = await authRemoteDataSourceImpl.register(
-            firstName: "Mohamed",
-            lastName: "Ali",
-            email: "mohamed@gmail.com",
-            password: "123456",
-            confirmPassword: "123456",
-            phone: "01020374526",
-            gender: "male",
+            request: params.toRequest(),
           );
 
           expect(result, isA<Success<AuthResponse>>());
@@ -53,17 +61,11 @@ void main() {
           ).thenThrow(Exception(errorMessage));
 
           final result = await authRemoteDataSourceImpl.register(
-            firstName: "Mohamed",
-            lastName: "Ali",
-            email: "mohamed@gmail.com",
-            password: "123456",
-            confirmPassword: "123456",
-            phone: "01020374526",
-            gender: "male",
+            request: params.toRequest(),
           );
 
           expect(result, isA<Failure<AuthResponse>>());
-
+          expect((result as Failure<AuthResponse>).errorMessage, isNotNull);
           verify(mockAuthApiClient.register(any)).called(1);
         });
       });

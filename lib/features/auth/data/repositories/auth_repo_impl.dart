@@ -1,8 +1,10 @@
 import 'package:flower_app/features/auth/data/mapper/auth_mapper.dart';
+import 'package:flower_app/features/auth/data/mapper/register_params_mapper.dart';
 import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../config/error_handling/result.dart';
 import '../../domain/entities/auth_entity.dart';
+import '../../domain/params/register_params.dart';
 import '../../domain/repositories/auth_repo.dart';
 import '../data_source/remote/auth_remote_data_source.dart';
 
@@ -13,23 +15,9 @@ class AuthRepoImpl implements AuthRepo {
   AuthRepoImpl(this._authRemoteDataSource);
 
   @override
-  Future<Result<AuthEntity>> register({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String confirmPassword,
-    required String phone,
-    required String gender,
-  }) async {
+  Future<Result<AuthEntity>> register({required RegisterParams params}) async {
     final response = await _authRemoteDataSource.register(
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
-      phone: phone,
-      gender: gender,
+      request: params.toRequest(),
     );
 
     switch (response) {

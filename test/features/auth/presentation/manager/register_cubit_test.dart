@@ -6,7 +6,6 @@ import 'package:flower_app/features/auth/domain/use_case/register_use_case.dart'
 import 'package:flower_app/features/auth/presentation/manager/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/manager/register_events.dart';
 import 'package:flower_app/features/auth/presentation/manager/register_state.dart';
-import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -33,7 +32,6 @@ void main() {
 
   setUp(() {
     mockRegisterUseCase = MockRegisterUseCase();
-
     registerCubit = RegisterCubit(mockRegisterUseCase);
   });
 
@@ -55,32 +53,6 @@ void main() {
     );
 
     blocTest<RegisterCubit, RegisterState>(
-      "should toggle password visibility",
-
-      build: () => registerCubit,
-
-      act: (cubit) {
-        cubit.doEvents(PasswordVisibilityEvent());
-      },
-
-      expect: () => [RegisterState().copyWith(isPasswordHiddenParam: false)],
-    );
-
-    blocTest<RegisterCubit, RegisterState>(
-      "should toggle confirm password visibility",
-
-      build: () => registerCubit,
-
-      act: (cubit) {
-        cubit.doEvents(ConfirmPasswordVisibilityEvent());
-      },
-
-      expect: () => [
-        RegisterState().copyWith(isConfirmPasswordHiddenParam: false),
-      ],
-    );
-
-    blocTest<RegisterCubit, RegisterState>(
       "should emit submitted state when SubmitPressedEvent is added",
 
       build: () => registerCubit,
@@ -95,31 +67,23 @@ void main() {
     blocTest<RegisterCubit, RegisterState>(
       "should emit loading then success state when register succeeds",
 
-      build: () {
+      setUp: () {
         when(
-          mockRegisterUseCase(
-            firstName: anyNamed('firstName'),
-            lastName: anyNamed('lastName'),
-            email: anyNamed('email'),
-            password: anyNamed('password'),
-            confirmPassword: anyNamed('confirmPassword'),
-            phone: anyNamed('phone'),
-            gender: anyNamed('gender'),
-          ),
+          mockRegisterUseCase(params: anyNamed('params')),
         ).thenAnswer((_) async => Success<AuthEntity>(data: authEntity));
-
-        return registerCubit;
       },
+
+      build: () => registerCubit,
 
       act: (cubit) {
         cubit.doEvents(
           SubmitRegisterEvent(
             firstName: "Mohamed",
             lastName: "Ali",
-            email: "test@test.com",
+            email: "mohamed@gmail.com",
             password: "123456",
             confirmPassword: "123456",
-            phone: "01000000000",
+            phone: "01020374526",
             gender: "male",
           ),
         );
@@ -142,50 +106,32 @@ void main() {
       ],
 
       verify: (_) {
-        verify(
-          mockRegisterUseCase(
-            firstName: anyNamed('firstName'),
-            lastName: anyNamed('lastName'),
-            email: anyNamed('email'),
-            password: anyNamed('password'),
-            confirmPassword: anyNamed('confirmPassword'),
-            phone: anyNamed('phone'),
-            gender: anyNamed('gender'),
-          ),
-        ).called(1);
+        verify(mockRegisterUseCase(params: anyNamed('params'))).called(1);
+
+        verifyNoMoreInteractions(mockRegisterUseCase);
       },
     );
 
     blocTest<RegisterCubit, RegisterState>(
       "should emit loading then failure state when register fails",
 
-      build: () {
-        when(
-          mockRegisterUseCase(
-            firstName: anyNamed('firstName'),
-            lastName: anyNamed('lastName'),
-            email: anyNamed('email'),
-            password: anyNamed('password'),
-            confirmPassword: anyNamed('confirmPassword'),
-            phone: anyNamed('phone'),
-            gender: anyNamed('gender'),
-          ),
-        ).thenAnswer(
+      setUp: () {
+        when(mockRegisterUseCase(params: anyNamed('params'))).thenAnswer(
           (_) async => Failure<AuthEntity>(errorMessage: errorMessage),
         );
-
-        return registerCubit;
       },
+
+      build: () => registerCubit,
 
       act: (cubit) {
         cubit.doEvents(
           SubmitRegisterEvent(
             firstName: "Mohamed",
             lastName: "Ali",
-            email: "test@test.com",
+            email: "mohamed@gmail.com",
             password: "123456",
             confirmPassword: "123456",
-            phone: "01000000000",
+            phone: "01020374526",
             gender: "male",
           ),
         );
@@ -208,17 +154,9 @@ void main() {
       ],
 
       verify: (_) {
-        verify(
-          mockRegisterUseCase(
-            firstName: anyNamed('firstName'),
-            lastName: anyNamed('lastName'),
-            email: anyNamed('email'),
-            password: anyNamed('password'),
-            confirmPassword: anyNamed('confirmPassword'),
-            phone: anyNamed('phone'),
-            gender: anyNamed('gender'),
-          ),
-        ).called(1);
+        verify(mockRegisterUseCase(params: anyNamed('params'))).called(1);
+
+        verifyNoMoreInteractions(mockRegisterUseCase);
       },
     );
   });

@@ -1,8 +1,4 @@
-import 'package:flower_app/features/auth/presentation/manager/register_state.dart';
-
-sealed class RegisterEvents {}
-
-class SubmitRegisterEvent extends RegisterEvents {
+class RegisterParams {
   final String firstName;
   final String lastName;
   final String email;
@@ -11,7 +7,7 @@ class SubmitRegisterEvent extends RegisterEvents {
   final String phone;
   final String gender;
 
-  SubmitRegisterEvent({
+  const RegisterParams({
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -21,11 +17,3 @@ class SubmitRegisterEvent extends RegisterEvents {
     required this.gender,
   });
 }
-
-class SelectGenderEvent extends RegisterEvents {
-  final UserGender gender;
-
-  SelectGenderEvent({required this.gender});
-}
-
-class SubmitPressedEvent extends RegisterEvents {}

@@ -5,6 +5,8 @@ import 'package:flower_app/features/auth/presentation/manager/register_state.dar
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../domain/params/register_params.dart';
+
 @injectable
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit(this._registerUseCase) : super(RegisterState());
@@ -21,16 +23,6 @@ class RegisterCubit extends Cubit<RegisterState> {
 
       case SubmitPressedEvent():
         emit(state.copyWith(isSubmittedParam: true));
-
-      case PasswordVisibilityEvent():
-        emit(state.copyWith(isPasswordHiddenParam: !state.isPasswordHidden));
-
-      case ConfirmPasswordVisibilityEvent():
-        emit(
-          state.copyWith(
-            isConfirmPasswordHiddenParam: !state.isConfirmPasswordHidden,
-          ),
-        );
     }
   }
 
@@ -41,7 +33,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       ),
     );
 
-    final result = await _registerUseCase.call(
+    final params = RegisterParams(
       firstName: event.firstName,
       lastName: event.lastName,
       email: event.email,
@@ -50,6 +42,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       phone: event.phone,
       gender: event.gender,
     );
+    final result = await _registerUseCase.call(params: params);
 
     switch (result) {
       case Success():
