@@ -41,7 +41,7 @@ void main() {
   });
 
   group("Register Implement Function Test Group", () {
-    group("Success Cases", () {
+    group("Success Test Cases", () {
       test(
         "Register Test success case with auth entity returned successfully",
         () async {
@@ -91,7 +91,7 @@ void main() {
       );
     });
 
-    group("Failure Cases", () {
+    group("Failure Test Cases", () {
       test("Register Test failure case with error message", () async {
         when(
           mockAuthRemoteDataSource.register(

@@ -31,7 +31,7 @@ void main() {
   });
 
   group("Register UseCase Test Group", () {
-    group("Success Cases", () {
+    group("Success Test Cases", () {
       test(
         "Test success case with auth entity returned successfully",
         () async {
@@ -79,7 +79,7 @@ void main() {
       );
     });
 
-    group("Failure Cases", () {
+    group("Failure Test Cases", () {
       test("Test failure case with error message", () async {
         when(
           mockAuthRepo.register(

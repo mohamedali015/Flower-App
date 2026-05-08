@@ -24,7 +24,7 @@ void main() {
 
   group('Remote data source Implementation test functions', () {
     group("Register Function Test Group", () {
-      group("Success Test Case", () {
+      group("Success Test Cases", () {
         test("Test success test case with data return successfully", () async {
           when(
             mockAuthApiClient.register(any),
