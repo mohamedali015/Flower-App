@@ -24,7 +24,7 @@ class FakeForgetPasswordClient implements ForgetPasswordClient {
     }
 
     // simulate success (usually API returns message or token)
-    return "Reset code sent to $email";
+    return "754274";
   }
 
   @override

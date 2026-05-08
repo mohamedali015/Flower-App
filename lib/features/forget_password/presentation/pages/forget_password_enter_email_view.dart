@@ -1,4 +1,7 @@
+import 'package:flower_app/config/route_manager/routes.dart';
+import 'package:flower_app/core/helpers/app_snack_bar.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
+import 'package:flower_app/core/helpers/validator.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flower_app/core/values/app_strings.dart';
@@ -14,6 +17,7 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
   ForgetPasswordEnterEmailView();
 
   final TextEditingController _emailTextController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,49 +36,77 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
             context,
             horizontal: AppConstants.paddingHorizontal,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: MyResponsive.height(context, value: 40)),
-              Text(
-                AppStrings.forgetPassword,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.medium18(context),
-              ),
-              SizedBox(height: MyResponsive.height(context, value: 16)),
-              Text(
-                AppStrings.enterYourEmailAssociatedToYourAccount,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.regular14(context),
-              ),
-              SizedBox(height: MyResponsive.height(context, value: 32)),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: AppStrings.email,
-                  hintText: AppStrings.enterYouEmail,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: MyResponsive.height(context, value: 40)),
+                Text(
+                  AppStrings.forgetPassword,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.medium18(context),
                 ),
-                controller: _emailTextController,
-              ),
-              SizedBox(height: MyResponsive.height(context, value: 42)),
-              ElevatedButton(
-                onPressed: () {
-                  cubit.doEvent(SendEmailEvent(_emailTextController.text));
-                },
-                child: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
-                  builder: (BuildContext context, state) {
-                    if (state.sendEmailState?.isLoading ?? false) {
-                      return CircularProgressIndicator(color: AppColors.white);
-                    } else {
-                      return Text(AppStrings.confirm);
+                SizedBox(height: MyResponsive.height(context, value: 16)),
+                Text(
+                  AppStrings.enterYourEmailAssociatedToYourAccount,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.regular14(context),
+                ),
+                SizedBox(height: MyResponsive.height(context, value: 32)),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: AppStrings.email,
+                    hintText: AppStrings.enterYouEmail,
+                  ),
+                  controller: _emailTextController,
+                  validator: (value) => Validator.email(value),
+                ),
+                SizedBox(height: MyResponsive.height(context, value: 42)),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      cubit.doEvent(SendEmailEvent(_emailTextController.text));
                     }
                   },
-                  listener: (BuildContext context, state) {},
+                  child: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
+                    builder: (BuildContext context, state) {
+                      return _buildWidget(state);
+                    },
+                    listener: (BuildContext context, state) {
+                      _listenActions(state, context, cubit);
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildWidget(ForgetPasswordState state) {
+    if (state.sendEmailState?.isLoading ?? false) {
+      return CircularProgressIndicator(color: AppColors.white);
+    } else {
+      return Text(AppStrings.confirm);
+    }
+  }
+
+  void _listenActions(ForgetPasswordState state, BuildContext context, cubit) {
+    if (state.sendEmailState?.isLoading ?? false) {
+    } else if (state.sendEmailState?.errorMessage != null) {
+      final String msg = state.sendEmailState!.errorMessage!;
+      AppSnackBar.error(context, msg);
+    } else {
+      state.resetCode = state.sendEmailState!.data;
+
+      Navigator.pushNamed(
+        context,
+        Routes.forgetPasswordOtpViewRoute,
+        arguments: cubit,
+      );
+    }
   }
 }
