@@ -16,7 +16,7 @@ class RouteGenerator {
           return CupertinoPageRoute(
             builder: (_) => BlocProvider(
               create: (_) => getIt<ForgetPasswordCubit>(),
-              child: const ForgetPasswordEnterEmailView(),
+              child:  ForgetPasswordEnterEmailView(),
             ),
           );
 

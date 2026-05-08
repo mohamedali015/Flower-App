@@ -33,7 +33,14 @@ class FakeForgetPasswordClient implements ForgetPasswordClient {
 
     // simulate validation error
     if (newPassword.length < 6) {
-      throw Exception("Password too weak");
+      throw DioException(
+        type: DioExceptionType.badResponse,
+        response: Response(
+          requestOptions: RequestOptions(),
+          data: {'message': 'password too weak'},
+        ),
+        requestOptions: RequestOptions(),
+      );
     }
 
     return true; // success

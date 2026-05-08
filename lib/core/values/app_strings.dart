@@ -42,6 +42,7 @@ abstract class AppStrings {
   static const String enterFirstName = "Enter first name";
   static const String lastName = "Last name";
   static const String enterLastName = "Enter last name";
+  static const String confirm = "Confirm";
   static const String confirmPassword = "Confirm password";
   static const String phoneNumber = "Phone number";
   static const String enterPhoneNumber = "Enter phone number";
