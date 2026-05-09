@@ -1,25 +1,30 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../../core/values/api_strings.dart';
-import '../../../../../core/values/api_end_points.dart';
 import '../forget_password_client.dart';
 
 @LazySingleton(as: ForgetPasswordClient)
 class FakeForgetPasswordClient implements ForgetPasswordClient {
-
   @override
   Future<String?> forgetPassword(String email) async {
     await Future.delayed(const Duration(seconds: 1)); // simulate network
 
     // simulate error case
     if (email == "error@test.com") {
-      throw Exception("Failed to send reset email");
+      throw DioException(
+        type: DioExceptionType.badResponse,
+        response: Response(
+          requestOptions: RequestOptions(),
+          data: {'message': 'Failed to send reset email'},
+        ),
+        requestOptions: RequestOptions(),
+      );
     }
 
     // simulate success (usually API returns message or token)
-    return "Reset code sent to $email";
+    return "123456";
   }
 
   @override
@@ -28,7 +33,14 @@ class FakeForgetPasswordClient implements ForgetPasswordClient {
 
     // simulate validation error
     if (newPassword.length < 6) {
-      throw Exception("Password too weak");
+      throw DioException(
+        type: DioExceptionType.badResponse,
+        response: Response(
+          requestOptions: RequestOptions(),
+          data: {'message': 'password too weak'},
+        ),
+        requestOptions: RequestOptions(),
+      );
     }
 
     return true; // success
@@ -40,7 +52,14 @@ class FakeForgetPasswordClient implements ForgetPasswordClient {
 
     // simulate wrong code
     if (resetCode != "123456") {
-      return false;
+      throw DioException(
+        type: DioExceptionType.badResponse,
+        response: Response(
+          requestOptions: RequestOptions(),
+          data: {'message': 'wrong code'},
+        ),
+        requestOptions: RequestOptions(),
+      );
     }
 
     return true;
