@@ -1,12 +1,12 @@
+import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/auth/api/auth_api_client.dart';
-import 'package:flower_app/features/auth/data/model/response/user_response.dart';
 import 'package:flower_app/features/auth/api/data_source/remote/auth_remote_data_source_impl.dart';
+import 'package:flower_app/features/auth/data/model/request/login_request.dart';
+import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
+import 'package:flower_app/features/auth/data/model/response/user_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:flower_app/config/error_handling/result.dart';
-import 'package:flower_app/features/auth/data/model/request/login_request.dart';
-import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
 
 import 'auth_remote_data_source_impl_test.mocks.dart';
 
@@ -57,6 +57,7 @@ void main() {
         expect(result, isA<Success<AuthResponse>>());
 
         final success = result as Success<AuthResponse>;
+
         expect(success.data, mockResponse);
 
         verify(
@@ -72,7 +73,7 @@ void main() {
     );
 
     test(
-      'should return Failure<AuthResponse> with correct message when API throws exception',
+      'should return Failure<AuthResponse> when API throws exception',
       () async {
         // Arrange
         when(mockAuthApiClient.login(any)).thenThrow(Exception('Login failed'));
@@ -90,7 +91,11 @@ void main() {
         verify(mockAuthApiClient.login(any)).called(1);
       },
     );
+  });
+
   group("Register Function Test Group", () {
     group("Success Test Cases", () {});
+
+    group("Failure Test Cases", () {});
   });
 }

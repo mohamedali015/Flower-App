@@ -24,8 +24,7 @@
   "cart": "Cart",
   "categories": "Categories",
   "home": "Home",
-  "profile": "Profile"
-  "login":"Login",
+  "profile": "Profile",
   "signUp": "Sign up",
   "firstName": "First name",
   "enterFirstName": "Enter first name",
