@@ -27,6 +27,22 @@ class UserEntity extends Equatable {
   final List<dynamic> addresses;
   final DateTime createdAt;
 
+  factory UserEntity.empty() {
+    return UserEntity(
+      id: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      gender: '',
+      phone: '',
+      userPhoto: '',
+      role: '',
+      wishList: const [],
+      addresses: const [],
+      createdAt: DateTime.fromMillisecondsSinceEpoch(0),
+    );
+  }
+
   @override
   List<Object?> get props => [
     id,

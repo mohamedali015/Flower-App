@@ -37,7 +37,7 @@ dependencies:
   dio: ^5.9.2
   injectable:
   get_it:
-  retrofit: ^4.9.2
+  retrofit:
   logger:
   json_annotation:
   pretty_dio_logger: ^1.4.0
@@ -53,7 +53,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
-  mockito: ^5.6.4
+  flutter_intl_phone_field: ^0.0.7
+  flutter_keyboard_visibility: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,8 @@ dev_dependencies:
   hive_ce_generator:
   flutter_launcher_icons:
   test:
+  mockito:
+  bloc_test:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

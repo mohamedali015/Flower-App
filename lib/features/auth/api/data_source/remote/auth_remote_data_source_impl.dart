@@ -25,26 +25,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<Result<AuthResponse>> register({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String confirmPassword,
-    required String phone,
-    required String gender,
-  }) {
+  Future<Result<AuthResponse>> register({required RegisterRequest request}) {
     return executeApi(() async {
-      final request = RegisterRequest(
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        rePassword: confirmPassword,
-        phone: phone,
-        gender: gender,
-      );
-      return await _apiClient.register(request);
+      return _apiClient.register(request);
     });
   }
 }
