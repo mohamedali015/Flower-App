@@ -53,6 +53,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  flutter_intl_phone_field: ^0.0.7
+  flutter_keyboard_visibility: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +74,7 @@ dev_dependencies:
   flutter_launcher_icons:
   test:
   mockito:
+  bloc_test:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

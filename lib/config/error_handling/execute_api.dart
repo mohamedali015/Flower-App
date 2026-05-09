@@ -4,8 +4,8 @@ import 'handle_exception.dart';
 Future<Result<T>> executeApi<T>(Future<T> Function() callApi) async {
   try {
     var result = await callApi.call();
-    return Success(data: result);
+    return Success<T>(data: result);
   } on Exception catch (e) {
-    return Failure(errorMessage: NetworkException.getMessageError(e));
+    return Failure<T>(errorMessage: NetworkException.getMessageError(e));
   }
 }
