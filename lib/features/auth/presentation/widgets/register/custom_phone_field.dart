@@ -1,3 +1,4 @@
+import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_intl_phone_field/country_picker_dialog.dart';
 import 'package:flutter_intl_phone_field/flutter_intl_phone_field.dart';
@@ -34,6 +35,7 @@ class CustomPhoneField extends StatelessWidget {
       onSubmitted: (_) {
         FocusScope.of(context).unfocus();
       },
+
       pickerDialogStyle: PickerDialogStyle(
         padding: MyResponsive.paddingSymmetric(
           horizontal: 20,
@@ -41,6 +43,9 @@ class CustomPhoneField extends StatelessWidget {
           context,
         ),
       ),
+
+      dropdownTextStyle: AppTextStyles.regular14(context),
+
       decoration: InputDecoration(
         labelText: local.phoneNumber,
         hintText: local.enterPhoneNumber,
