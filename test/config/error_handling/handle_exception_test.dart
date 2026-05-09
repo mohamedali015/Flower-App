@@ -4,7 +4,6 @@ import 'package:flower_app/core/values/app_response_error_messages.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-
   group('NetworkException DioException Types', () {
     test('connectionTimeout returns connectionTimeoutMessage', () {
       final exception = DioException(
@@ -225,15 +224,12 @@ void main() {
       );
     });
 
-    test(
-      'Unknown status code (e.g. 418) returns dynamic fallback message',
-      () {
-        expect(
-          NetworkException.getMessageError(makeException(418)),
-          'Server error (418). Please try again.',
-        );
-      },
-    );
+    test('Unknown status code (e.g. 418) returns dynamic fallback message', () {
+      expect(
+        NetworkException.getMessageError(makeException(418)),
+        'Server error (418). Please try again.',
+      );
+    });
   });
 
   group('NetworkException badResponse edge cases', () {
@@ -249,24 +245,21 @@ void main() {
       expect(result, AppResponseErrorMessages.defaultError);
     });
 
-    test(
-      'response data is not a Map falls through to status code switch',
-      () {
-        final exception = DioException(
+    test('response data is not a Map falls through to status code switch', () {
+      final exception = DioException(
+        requestOptions: RequestOptions(path: '/test'),
+        type: DioExceptionType.badResponse,
+        response: Response(
           requestOptions: RequestOptions(path: '/test'),
-          type: DioExceptionType.badResponse,
-          response: Response(
-            requestOptions: RequestOptions(path: '/test'),
-            statusCode: 500,
-            data: 'plain string error',
-          ),
-        );
+          statusCode: 500,
+          data: 'plain string error',
+        ),
+      );
 
-        final result = NetworkException.getMessageError(exception);
+      final result = NetworkException.getMessageError(exception);
 
-        expect(result, AppResponseErrorMessages.error500);
-      },
-    );
+      expect(result, AppResponseErrorMessages.error500);
+    });
 
     test('status code is null returns fallback with "unknown"', () {
       final exception = DioException(
@@ -284,5 +277,4 @@ void main() {
       expect(result, 'Server error (unknown). Please try again.');
     });
   });
-
 }

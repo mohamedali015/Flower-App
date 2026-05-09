@@ -1,6 +1,6 @@
 import 'package:flower_app/config/di/di.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
-import 'package:flower_app/features/auth/presentation/manager/register_cubit.dart';
+import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:flower_app/features/auth/presentation/manager/register_state.dart';
+import 'package:flower_app/features/auth/presentation/manager/register/register_state.dart';
 
 sealed class RegisterEvents {}
 

@@ -3,9 +3,7 @@ import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/shared_widgets/custom_button.dart';
 import 'package:flower_app/core/utils/app_constants.dart';
-import 'package:flower_app/features/auth/presentation/manager/register_cubit.dart';
-import 'package:flower_app/features/auth/presentation/manager/register_events.dart';
-import 'package:flower_app/features/auth/presentation/manager/register_state.dart';
+import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/widgets/register/gender_section_widget.dart';
 import 'package:flower_app/features/auth/presentation/widgets/register/have_an_account_widget.dart';
 import 'package:flower_app/features/auth/presentation/widgets/register/name_fields_widget.dart';
@@ -15,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../../../../../core/helpers/validator.dart';
+import '../../manager/register/register_events.dart';
+import '../../manager/register/register_state.dart';
 import '../../widgets/register/custom_phone_field.dart';
 
 class RegisterScreen extends StatefulWidget {

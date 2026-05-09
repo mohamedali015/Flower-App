@@ -3,7 +3,7 @@ import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import '../../manager/register_state.dart';
+import '../../manager/register/register_state.dart';
 
 class GenderSectionWidget extends StatelessWidget {
   final UserGender gender;

@@ -1,11 +1,11 @@
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/auth/domain/use_case/register_use_case.dart';
-import 'package:flower_app/features/auth/presentation/manager/register_events.dart';
-import 'package:flower_app/features/auth/presentation/manager/register_state.dart';
+import 'package:flower_app/features/auth/presentation/manager/register/register_events.dart';
+import 'package:flower_app/features/auth/presentation/manager/register/register_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/params/register_params.dart';
+import '../../../domain/params/register_params.dart';
 
 @injectable
 class RegisterCubit extends Cubit<RegisterState> {
