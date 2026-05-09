@@ -20,19 +20,16 @@ import '../di/di.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
-    switch (settings.name) {
-      /// Splash Screen
-      // case Routes.splashRoute:
-      //   return CupertinoPageRoute(builder: (_) => const SplashScreen());
-
-      /// Login Screen
-      case Routes.loginRoute:
-        return CupertinoPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => getIt<LoginCubit>(),
-            child: LoginScreen(),
-          ),
-        );
+    try {
+      switch (settings.name) {
+        /// Login Screen
+        case Routes.loginRoute:
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => getIt<LoginCubit>(),
+              child: const LoginScreen(),
+            ),
+          );
 
       /// Register Screen
       case Routes.registerRoute:
@@ -64,9 +61,15 @@ class RouteGenerator {
       case Routes.bottomNavBarRoute:
         return CupertinoPageRoute(builder: (_) => CustomBottomNavBar());
 
-      /// Default (Unknown Route)
-      default:
-        return _errorRoute();
+        /// Default
+        default:
+          return _errorRoute();
+      }
+    } catch (e, stackTrace) {
+      debugPrint("Route error: $e");
+      debugPrint("$stackTrace");
+
+      return _errorRoute();
     }
   }
 

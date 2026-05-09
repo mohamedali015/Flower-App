@@ -19,11 +19,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String email,
     required String password,
   }) {
-    return executeApi<AuthResponse>(() async {
-      var response = await _apiClient.login(
-        LoginRequest(email: email, password: password),
-      );
-      return response;
+    return executeApi<AuthResponse>(() {
+      return _apiClient.login(LoginRequest(email: email, password: password));
     });
   }
 

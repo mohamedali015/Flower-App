@@ -2,6 +2,7 @@ import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/features/auth/presentation/manager/login/login_cubit.dart';
+import 'package:flower_app/features/auth/presentation/manager/login/login_event.dart';
 import 'package:flutter/material.dart';
 
 class RememberMe extends StatelessWidget {
@@ -26,7 +27,9 @@ class RememberMe extends StatelessWidget {
             Checkbox(
               value: rememberMe,
               onChanged: (value) {
-                cubit.changeRememberMe(value ?? false);
+                cubit.doEvents(
+                  LoginRememberMeChangedEvent(rememberMe: value ?? false),
+                );
               },
             ),
             Text(local.rememberMe),
