@@ -58,6 +58,7 @@ class VerifyCode extends StatelessWidget {
               ),
               SizedBox(height: MyResponsive.height(context, value: 16)),
               BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
+                buildWhen: (previous, current) => false,
                 builder: (context, state) {
                   return CustomOtpField(
                     onCompleted: (value) {
@@ -74,6 +75,10 @@ class VerifyCode extends StatelessWidget {
                     isLoading: state.verifyOtpState!.isLoading,
                   );
                 },
+                listenWhen: (previous, current) {
+                  return false;
+                },
+
                 listener: (BuildContext context, ForgetPasswordState state) {
                   if (state.verifyOtpState?.errorMessage != null) {
                     String msg = state.verifyOtpState!.errorMessage!;

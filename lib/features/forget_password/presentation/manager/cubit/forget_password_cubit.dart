@@ -163,7 +163,18 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       if (seconds <= 0) {
         timer.cancel();
 
-        emit(state.copyWith(remainingSeconds: 0, canResend: true));
+        emit(
+          state.copyWith(
+            remainingSeconds: 0,
+            canResend: true,
+            verifyOtpState: BaseState(
+              isSuccess: false,
+              isLoading: false,
+              errorMessage: null,
+              data: null,
+            ),
+          ),
+        );
       } else {
         emit(state.copyWith(remainingSeconds: seconds));
       }
