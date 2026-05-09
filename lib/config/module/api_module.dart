@@ -5,9 +5,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../../core/values/api_end_points.dart';
 import '../../core/values/api_strings.dart';
 import '../secure_cache/secure_cache/cache_keys.dart';
-import '../secure_cache/secure_cache/secure_cache_helper.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../secure_cache/secure_cache/secure_cache.dart';
 
 @module
@@ -45,10 +42,10 @@ abstract class ApiModule {
     );
   }
 
-  @lazySingleton
-  SecureCache provideSecureCache() {
-    return SecureCacheImpl(const FlutterSecureStorage());
-  }
+  // @lazySingleton
+  // SecureCache provideSecureCache() {
+  //   return SecureCacheImpl(const FlutterSecureStorage());
+  // }
 
   @lazySingleton
   Dio provideDio(

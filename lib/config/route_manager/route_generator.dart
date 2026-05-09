@@ -11,30 +11,34 @@ import '../../features/auth/presentation/pages/login/login_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
-    switch (settings.name) {
-      /// Splash Screen
-      // case Routes.splashRoute:
-      //   return CupertinoPageRoute(builder: (_) => const SplashScreen());
+    try {
+      switch (settings.name) {
+        /// Login Screen
+        case Routes.loginRoute:
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => getIt<LoginCubit>(),
+              child: const LoginScreen(),
+            ),
+          );
 
-      /// Login Screen
-      case Routes.loginRoute:
-        return CupertinoPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => getIt<LoginCubit>(),
-            child: LoginScreen(),
-          ),
-        );
+        /// Register Screen
+        case Routes.registerRoute:
+          return CupertinoPageRoute(builder: (_) => const RegisterScreen());
 
-      /// Register Screen
-      case Routes.registerRoute:
-        return CupertinoPageRoute(builder: (_) => const RegisterScreen());
+        /// Home Screen
+        case Routes.homeRoute:
+          return CupertinoPageRoute(builder: (_) => const HomeScreen());
 
-      case Routes.homeRoute:
-        return CupertinoPageRoute(builder: (_) => const HomeScreen());
+        /// Default
+        default:
+          return _errorRoute();
+      }
+    } catch (e, stackTrace) {
+      debugPrint("Route error: $e");
+      debugPrint("$stackTrace");
 
-      /// Default (Unknown Route)
-      default:
-        return _errorRoute();
+      return _errorRoute();
     }
   }
 

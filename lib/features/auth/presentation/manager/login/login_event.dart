@@ -11,3 +11,9 @@ class LoginSubmitEvent extends LoginEvents {
     required this.rememberMe,
   });
 }
+
+class LoginRememberMeChangedEvent extends LoginEvents {
+  final bool rememberMe;
+
+  LoginRememberMeChangedEvent({required this.rememberMe});
+}

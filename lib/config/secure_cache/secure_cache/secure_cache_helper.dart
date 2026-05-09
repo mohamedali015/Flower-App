@@ -1,20 +1,22 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:injectable/injectable.dart';
 
 import 'secure_cache.dart';
 
+@LazySingleton(as: SecureCache)
 class SecureCacheImpl implements SecureCache {
   final FlutterSecureStorage storage;
 
   SecureCacheImpl(this.storage);
 
   @override
-  Future<void> saveData({required String key, required String value}) async {
-    await storage.write(key: key, value: value);
+  Future<void> saveData({required String key, required String value}) {
+    return storage.write(key: key, value: value);
   }
 
   @override
-  Future<String?> getData({required String key}) async {
-    return await storage.read(key: key);
+  Future<String?> getData({required String key}) {
+    return storage.read(key: key);
   }
 
   @override

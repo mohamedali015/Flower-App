@@ -44,7 +44,6 @@ class _LoginFormState extends State<LoginForm> {
           /// Email
           TextFormField(
             enabled: !widget.isLoading,
-            onChanged: (_) => widget.onChanged(),
             controller: widget.emailController,
             validator: Validator.email,
             keyboardType: TextInputType.emailAddress,
@@ -59,7 +58,6 @@ class _LoginFormState extends State<LoginForm> {
           /// Password
           TextFormField(
             enabled: !widget.isLoading,
-            onChanged: (_) => widget.onChanged(),
             controller: widget.passwordController,
             validator: Validator.password,
             keyboardType: TextInputType.visiblePassword,

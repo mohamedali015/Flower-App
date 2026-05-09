@@ -17,11 +17,13 @@ class LoginCubit extends Cubit<LoginState> {
       case LoginSubmitEvent():
         _login(event);
         break;
+      case LoginRememberMeChangedEvent():
+        _changeRememberMe(event.rememberMe);
     }
   }
 
-  void changeRememberMe(bool value) {
-    emit(LoginInitial(rememberMe: value));
+  void _changeRememberMe(bool value) {
+    emit(state.copyWith(rememberMe: value));
   }
 
   Future<void> _login(LoginSubmitEvent event) async {

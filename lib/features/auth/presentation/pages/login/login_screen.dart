@@ -67,17 +67,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               BlocConsumer<LoginCubit, LoginState>(
-                builder: (context, state) {
-                  return LoginForm(
-                    local: local,
-                    formKey: _formKey,
-                    emailController: emailController,
-                    passwordController: passwordController,
-                    autoValidate: autoValidate,
-                    isLoading: state is LoginLoading,
-                    onChanged: _validateForm,
-                  );
-                },
                 listenWhen: (prev, curr) =>
                     curr is LoginSuccess || curr is LoginFailure,
                 listener: (context, state) {
@@ -93,18 +82,30 @@ class _LoginScreenState extends State<LoginScreen> {
                     ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
                   }
                 },
-              ),
-
-              BlocBuilder<LoginCubit, LoginState>(
                 builder: (context, state) {
                   final rememberMe = state.rememberMe;
 
                   return Column(
                     children: [
-                      RememberMe(
-                        rememberMe: rememberMe,
-                        cubit: cubit,
+                      LoginForm(
                         local: local,
+                        formKey: _formKey,
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        autoValidate: autoValidate,
+                        isLoading: state is LoginLoading,
+                        onChanged: _validateForm,
+                      ),
+
+                      BlocSelector<LoginCubit, LoginState, bool>(
+                        selector: (state) => state.rememberMe,
+                        builder: (context, rememberMe) {
+                          return RememberMe(
+                            rememberMe: rememberMe,
+                            cubit: cubit,
+                            local: local,
+                          );
+                        },
                       ),
 
                       SizedBox(height: MyResponsive.height(context, value: 48)),
@@ -143,7 +144,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                 },
               ),
-
               SizedBox(height: MyResponsive.height(context, value: 16)),
 
               HaveAnAccountWidget(
