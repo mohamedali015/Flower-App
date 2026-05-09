@@ -58,6 +58,7 @@ abstract class AppStrings {
       "Please enter your code that send to your\nemail address ";
   static const String didNotReceiveCode = "Didn't receive code?";
   static const String resend = "Resend";
+  static const String resendCodeIn = "Resend code in";
   static const String invalidCode = "Invalid code";
   static const String resetCode = "Reset Code";
   static const String resetPassword = "Reset password";
