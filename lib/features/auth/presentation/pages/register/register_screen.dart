@@ -191,8 +191,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                           /// Gender Section
                           BlocBuilder<RegisterCubit, RegisterState>(
-                            buildWhen: (previous, current) =>
-                                previous.gender != current.gender,
+                            buildWhen: (previous, current) {
+                              return previous.gender != current.gender ||
+                                  previous.registerState.isLoading !=
+                                      current.registerState.isLoading;
+                            },
                             builder: (context, state) {
                               return GenderSectionWidget(
                                 gender: state.gender,
