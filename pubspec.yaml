@@ -53,6 +53,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  flutter_intl_phone_field: ^0.0.7
+  flutter_keyboard_visibility: ^6.0.0
 
 dev_dependencies:
   flutter_test:

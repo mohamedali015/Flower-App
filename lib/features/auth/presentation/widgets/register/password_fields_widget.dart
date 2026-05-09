@@ -11,10 +11,16 @@ class PasswordFieldsWidget extends StatefulWidget {
     required this.passwordController,
     required this.confirmPasswordController,
     required this.isLoading,
+    required this.passwordFocus,
+    required this.confirmPasswordFocus,
+    required this.phoneFocus,
   });
 
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
+  final FocusNode passwordFocus;
+  final FocusNode confirmPasswordFocus;
+  final FocusNode phoneFocus;
   final bool isLoading;
 
   @override
@@ -40,6 +46,11 @@ class _PasswordFieldsWidgetState extends State<PasswordFieldsWidget> {
             enabled: !widget.isLoading,
             validator: Validator.password,
             keyboardType: TextInputType.visiblePassword,
+            focusNode: widget.passwordFocus,
+            textInputAction: TextInputAction.next,
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(widget.confirmPasswordFocus);
+            },
             decoration: InputDecoration(
               labelText: local.password,
               hintText: local.enterPassword,
@@ -70,6 +81,11 @@ class _PasswordFieldsWidgetState extends State<PasswordFieldsWidget> {
               widget.passwordController.text,
             ),
             keyboardType: TextInputType.visiblePassword,
+            focusNode: widget.confirmPasswordFocus,
+            textInputAction: TextInputAction.next,
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(widget.phoneFocus);
+            },
             decoration: InputDecoration(
               labelText: local.confirmPassword,
               hintText: local.confirmPasswordHint,

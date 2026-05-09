@@ -53,20 +53,4 @@ abstract class Validator {
     }
     return null;
   }
-
-  static String? phone(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return AppStrings.phoneRequired;
-    }
-
-    value = value.trim();
-
-    // final phoneRegex = RegExp(r'^\d{11}$');
-    //
-    // if (!phoneRegex.hasMatch(value)) {
-    //   return AppStrings.phoneInvalid;
-    // }
-
-    return null;
-  }
 }

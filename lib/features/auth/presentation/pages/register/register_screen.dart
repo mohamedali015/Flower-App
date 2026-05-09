@@ -13,8 +13,9 @@ import 'package:flower_app/features/auth/presentation/widgets/register/password_
 import 'package:flower_app/features/auth/presentation/widgets/register/terms_and_conditions_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../../../../../core/helpers/validator.dart';
+import '../../widgets/register/custom_phone_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -39,6 +40,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  late KeyboardVisibilityController keyboardVisibilityController;
+
+  final firstNameFocus = FocusNode();
+  final lastNameFocus = FocusNode();
+  final emailFocus = FocusNode();
+  final passwordFocus = FocusNode();
+  final confirmPasswordFocus = FocusNode();
+  final phoneFocus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    keyboardVisibilityController = KeyboardVisibilityController();
+
+    keyboardVisibilityController.onChange.listen((visible) {
+      if (!visible) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      }
+    });
+  }
+
   @override
   void dispose() {
     firstNameController.dispose();
@@ -47,6 +70,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     passwordController.dispose();
     confirmPasswordController.dispose();
     phoneController.dispose();
+
+    firstNameFocus.dispose();
+    lastNameFocus.dispose();
+    emailFocus.dispose();
+    passwordFocus.dispose();
+    confirmPasswordFocus.dispose();
+    phoneFocus.dispose();
 
     super.dispose();
   }
@@ -101,6 +131,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             firstNameController: firstNameController,
                             lastNameController: lastNameController,
                             isLoading: state.registerState.isLoading,
+                            firstNameFocus: firstNameFocus,
+                            lastNameFocus: lastNameFocus,
+                            emailFocus: emailFocus,
                           ),
 
                           SizedBox(
@@ -113,6 +146,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             enabled: !state.registerState.isLoading,
                             validator: Validator.email,
                             keyboardType: TextInputType.emailAddress,
+                            focusNode: emailFocus,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) {
+                              FocusScope.of(
+                                context,
+                              ).requestFocus(passwordFocus);
+                            },
                             decoration: InputDecoration(
                               labelText: local.email,
                               hintText: local.enterEmail,
@@ -128,6 +168,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             passwordController: passwordController,
                             confirmPasswordController:
                                 confirmPasswordController,
+                            passwordFocus: passwordFocus,
+                            confirmPasswordFocus: confirmPasswordFocus,
+                            phoneFocus: phoneFocus,
                             isLoading: state.registerState.isLoading,
                           ),
 
@@ -136,15 +179,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
 
                           /// Phone Field
-                          TextFormField(
-                            controller: phoneController,
-                            enabled: !state.registerState.isLoading,
-                            validator: Validator.phone,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                              labelText: local.phoneNumber,
-                              hintText: local.enterPhoneNumber,
-                            ),
+                          CustomPhoneField(
+                            phoneController: phoneController,
+                            phoneFocus: phoneFocus,
+                            isLoading: state.registerState.isLoading,
                           ),
 
                           SizedBox(

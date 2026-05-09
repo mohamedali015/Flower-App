@@ -7,6 +7,9 @@ import '../../../../../core/localization/l10n/app_localizations.dart';
 class NameFieldsWidget extends StatelessWidget {
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
+  final FocusNode firstNameFocus;
+  final FocusNode lastNameFocus;
+  final FocusNode emailFocus;
   final bool isLoading;
 
   const NameFieldsWidget({
@@ -14,6 +17,9 @@ class NameFieldsWidget extends StatelessWidget {
     required this.firstNameController,
     required this.lastNameController,
     required this.isLoading,
+    required this.firstNameFocus,
+    required this.lastNameFocus,
+    required this.emailFocus,
   });
 
   @override
@@ -28,6 +34,11 @@ class NameFieldsWidget extends StatelessWidget {
             enabled: !isLoading,
             validator: Validator.name,
             keyboardType: TextInputType.name,
+            focusNode: firstNameFocus,
+            textInputAction: TextInputAction.next,
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(lastNameFocus);
+            },
             decoration: InputDecoration(
               labelText: local.firstName,
               hintText: local.enterFirstName,
@@ -41,6 +52,11 @@ class NameFieldsWidget extends StatelessWidget {
             enabled: !isLoading,
             validator: Validator.name,
             keyboardType: TextInputType.name,
+            focusNode: lastNameFocus,
+            textInputAction: TextInputAction.next,
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(emailFocus);
+            },
             decoration: InputDecoration(
               labelText: local.lastName,
               hintText: local.enterLastName,

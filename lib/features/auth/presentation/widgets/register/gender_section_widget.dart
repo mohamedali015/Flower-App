@@ -21,63 +21,77 @@ class GenderSectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
 
-    return RadioGroup<UserGender>(
-      groupValue: gender,
-      onChanged: isLoading ? (_) {} : (value) => onChanged(value!),
-      child: Row(
-        children: [
-          /// Title
-          Text(
-            local.gender,
-            style: AppTextStyles.medium18(
-              context,
-            ).copyWith(color: AppColors.grayDark),
-          ),
+    return Opacity(
+      opacity: isLoading ? .6 : 1,
+      child: IgnorePointer(
+        ignoring: isLoading,
 
-          SizedBox(width: MyResponsive.width(context, value: 40)),
-
-          /// Female
-          Material(
-            color: Colors.transparent,
-            child: GestureDetector(
-              onTap: isLoading ? null : () => onChanged(UserGender.female),
-              child: Row(
-                children: [
-                  Transform.scale(
-                    scale: MyResponsive.width(context, value: 1),
-                    child: Radio<UserGender>(
-                      value: UserGender.female,
-                      activeColor: AppColors.primaryColor,
-                    ),
-                  ),
-                  Text(local.female, style: AppTextStyles.regular14(context)),
-                ],
+        child: RadioGroup<UserGender>(
+          groupValue: gender,
+          onChanged: (value) {
+            if (value != null) {
+              onChanged(value);
+            }
+          },
+          child: Row(
+            children: [
+              /// Title
+              Text(
+                local.gender,
+                style: AppTextStyles.medium18(
+                  context,
+                ).copyWith(color: AppColors.grayDark),
               ),
-            ),
-          ),
 
-          SizedBox(width: MyResponsive.width(context, value: 16)),
+              SizedBox(width: MyResponsive.width(context, value: 40)),
 
-          /// Male
-          Material(
-            color: Colors.transparent,
-            child: GestureDetector(
-              onTap: isLoading ? null : () => onChanged(UserGender.male),
-              child: Row(
-                children: [
-                  Transform.scale(
-                    scale: MyResponsive.width(context, value: 1),
-                    child: Radio<UserGender>(
-                      value: UserGender.male,
-                      activeColor: AppColors.primaryColor,
-                    ),
+              /// Female
+              Material(
+                color: Colors.transparent,
+                child: GestureDetector(
+                  onTap: () => onChanged(UserGender.female),
+                  child: Row(
+                    children: [
+                      Transform.scale(
+                        scale: MyResponsive.width(context, value: 1),
+                        child: Radio<UserGender>(
+                          value: UserGender.female,
+                          activeColor: AppColors.primaryColor,
+                        ),
+                      ),
+                      Text(
+                        local.female,
+                        style: AppTextStyles.regular14(context),
+                      ),
+                    ],
                   ),
-                  Text(local.male, style: AppTextStyles.regular14(context)),
-                ],
+                ),
               ),
-            ),
+
+              SizedBox(width: MyResponsive.width(context, value: 16)),
+
+              /// Male
+              Material(
+                color: Colors.transparent,
+                child: GestureDetector(
+                  onTap: () => onChanged(UserGender.male),
+                  child: Row(
+                    children: [
+                      Transform.scale(
+                        scale: MyResponsive.width(context, value: 1),
+                        child: Radio<UserGender>(
+                          value: UserGender.male,
+                          activeColor: AppColors.primaryColor,
+                        ),
+                      ),
+                      Text(local.male, style: AppTextStyles.regular14(context)),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
