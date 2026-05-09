@@ -20,6 +20,12 @@
   "errors_error504": "Gateway timeout.",
   "errors_defaultError": "An error occurred. Please try again.",
   "login":"Login",
+
+  "cart": "Cart",
+  "categories": "Categories",
+  "home": "Home",
+  "profile": "Profile"
+  "login":"Login",
   "signUp": "Sign up",
   "firstName": "First name",
   "enterFirstName": "Enter first name",

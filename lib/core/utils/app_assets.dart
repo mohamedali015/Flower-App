@@ -20,4 +20,10 @@ abstract class AppAssets {
       "$_baseIconsPath/unselected/unselected_cart.png";
   static const String unselectedProfileIcon =
       "$_baseIconsPath/unselected/unselected_profile.png";
+
+  static const String categoryIcon ="$_baseIconsPath/category.svg";
+  static const String homeIcon ="$_baseIconsPath/home.svg";
+  static const String personIcon ="$_baseIconsPath/person.svg";
+  static const String shoppingIcon ="$_baseIconsPath/shopping.svg";
+
 }
