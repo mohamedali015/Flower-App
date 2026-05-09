@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/shared_widgets/custom_bottom_nav.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/values/app_strings.dart';
 import '../../features/auth/presentation/manager/login/login_cubit.dart';
@@ -20,7 +19,6 @@ import '../di/di.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
 import '../../features/forget_password/presentation/pages/reset_password.dart';
-import '../di/di.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -35,16 +33,16 @@ class RouteGenerator {
             ),
           );
 
-      /// Register Screen
-      case Routes.registerRoute:
-        return CupertinoPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<RegisterCubit>(),
-            child: const RegisterScreen(),
-          ),
-        );
+        /// Register Screen
+        case Routes.registerRoute:
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (_) => getIt<RegisterCubit>(),
+              child: const RegisterScreen(),
+            ),
+          );
 
-      /// Forget Password - Enter Email
+        /// Forget Password - Enter Email
         case Routes.forgetPasswordEnterEmailViewRoute:
           return MaterialPageRoute(
             builder: (_) => BlocProvider(
@@ -53,7 +51,7 @@ class RouteGenerator {
             ),
           );
 
-      /// OTP View
+        /// OTP View
         case Routes.forgetPasswordOtpViewRoute:
           final cubit = settings.arguments as ForgetPasswordCubit;
           return CupertinoPageRoute(
@@ -63,27 +61,24 @@ class RouteGenerator {
             ),
           );
 
-      /// New Password View
+        /// New Password View
         case Routes.forgetPasswordNewPassViewRoute:
           final cubit = settings.arguments as ForgetPasswordCubit;
           return CupertinoPageRoute(
-            builder: (_) => BlocProvider.value(
-              value: cubit,
-              child: const ResetPassword(),
-            ),
+            builder: (_) =>
+                BlocProvider.value(value: cubit, child: const ResetPassword()),
           );
 
-
-      case Routes.homeRoute:
-        return CupertinoPageRoute(builder: (_) => HomeScreen());
-      case Routes.categoryRoute:
-        return CupertinoPageRoute(builder: (_) => CategoryScreen());
-      case Routes.cartRoute:
-        return CupertinoPageRoute(builder: (_) => CartScreen());
-      case Routes.profileRoute:
-        return CupertinoPageRoute(builder: (_) => ProfileScreen());
-      case Routes.bottomNavBarRoute:
-        return CupertinoPageRoute(builder: (_) => CustomBottomNavBar());
+        case Routes.homeRoute:
+          return CupertinoPageRoute(builder: (_) => HomeScreen());
+        case Routes.categoryRoute:
+          return CupertinoPageRoute(builder: (_) => CategoryScreen());
+        case Routes.cartRoute:
+          return CupertinoPageRoute(builder: (_) => CartScreen());
+        case Routes.profileRoute:
+          return CupertinoPageRoute(builder: (_) => ProfileScreen());
+        case Routes.bottomNavBarRoute:
+          return CupertinoPageRoute(builder: (_) => CustomBottomNavBar());
 
         /// Default
         default:
@@ -107,4 +102,3 @@ class RouteGenerator {
     );
   }
 }
-
