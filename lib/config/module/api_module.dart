@@ -4,8 +4,11 @@ import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../../core/values/api_end_points.dart';
 import '../../core/values/api_strings.dart';
+import '../di/di.dart';
 import '../secure_cache/secure_cache/cache_keys.dart';
 import '../secure_cache/secure_cache/secure_cache.dart';
+import '../user/manager/user_cubit.dart';
+import '../user/manager/user_events.dart';
 
 @module
 abstract class ApiModule {
@@ -64,7 +67,7 @@ abstract class ApiModule {
             final token = await secureCache.getData(key: CacheKeys.token);
 
             if (token != null && token.isNotEmpty) {
-              options.headers[ApiStrings.token] = token;
+              options.headers[ApiStrings.token] = 'Bearer $token';
             }
           }
 
@@ -85,7 +88,7 @@ abstract class ApiModule {
 
           if (requiresAuth && isTokenError) {
             await secureCache.removeData(key: CacheKeys.token);
-            // getIt<UserCubit>().doEvent(UnauthorizedUserEvent());
+            getIt<UserCubit>().doEvent(UnauthorizedUserEvent());
           }
 
           return handler.next(error);

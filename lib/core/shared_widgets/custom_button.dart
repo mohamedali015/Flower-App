@@ -33,7 +33,8 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(radiusValue!),
           side: BorderSide(
             color: onPressed == null || isLoading
-                ? AppColors.disabledGray : AppColors.primaryColor,
+                ? AppColors.disabledGray
+                : AppColors.primaryColor,
             width: MyResponsive.width(value: 1, context),
           ),
         ),
@@ -43,13 +44,15 @@ class CustomButton extends StatelessWidget {
               height: MyResponsive.height(value: 22, context),
               width: MyResponsive.width(value: 22, context),
               child: CircularProgressIndicator(
-                // color: AppColors.baseWhite,
+                color: AppColors.baseWhite,
                 strokeWidth: MyResponsive.width(value: 2, context),
               ),
             )
           : Text(
               title,
-              style: AppTextStyles.medium16(context).copyWith(color: foregroundColor),
+              style: AppTextStyles.medium16(
+                context,
+              ).copyWith(color: foregroundColor),
             ),
     );
   }

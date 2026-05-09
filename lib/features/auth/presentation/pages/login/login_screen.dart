@@ -1,6 +1,9 @@
 import 'package:flower_app/config/route_manager/routes.dart';
+import 'package:flower_app/core/helpers/app_snack_bar.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
+import 'package:flower_app/core/shared_widgets/custom_button.dart';
+import 'package:flower_app/core/utils/app_constants.dart';
 import 'package:flower_app/features/auth/presentation/manager/login/login_cubit.dart';
 import 'package:flower_app/features/auth/presentation/manager/login/login_event.dart';
 import 'package:flower_app/features/auth/presentation/manager/login/login_state.dart';
@@ -9,6 +12,9 @@ import 'package:flower_app/features/auth/presentation/widgets/login/remember_me.
 import 'package:flower_app/features/auth/presentation/widgets/register/have_an_accountt_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../config/user/manager/user_cubit.dart';
+import '../../../../../config/user/manager/user_events.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -54,14 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(local.login),
-          leading: const Icon(Icons.arrow_back_ios_new_outlined),
-        ),
+        appBar: AppBar(title: Text(local.login)),
         body: Padding(
           padding: MyResponsive.paddingSymmetric(
             context,
-            horizontal: 18,
+            horizontal: AppConstants.paddingHorizontal,
             vertical: 10,
           ),
           child: Column(
@@ -71,6 +74,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     curr is LoginSuccess || curr is LoginFailure,
                 listener: (context, state) {
                   if (state is LoginSuccess) {
+                    AppSnackBar.success(context, state.authEntity.message);
+
+                    context.read<UserCubit>().doEvent(
+                      SetUserDataEvent(user: state.authEntity.user),
+                    );
+
+                    context.read<UserCubit>().doEvent(ResetUnauthorizedEvent());
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       Routes.bottomNavBarRoute,
@@ -110,35 +120,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       SizedBox(height: MyResponsive.height(context, value: 48)),
 
-                      ElevatedButton(
-                        onPressed: state is LoginLoading
-                            ? null
-                            : () {
-                                setState(() {
-                                  autoValidate = true;
-                                });
+                      CustomButton(
+                        title: local.login,
+                        isLoading: state is LoginLoading,
+                        onPressed: () {
+                          setState(() {
+                            autoValidate = true;
+                          });
 
-                                if (_formKey.currentState?.validate() ??
-                                    false) {
-                                  cubit.doEvents(
-                                    LoginSubmitEvent(
-                                      email: emailController.text.trim(),
-                                      password: passwordController.text.trim(),
-                                      rememberMe: rememberMe,
-                                    ),
-                                  );
-                                }
-                              },
-                        child: state is LoginLoading
-                            ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Text(local.login),
+                          if (_formKey.currentState?.validate() ?? false) {
+                            cubit.doEvents(
+                              LoginSubmitEvent(
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                                rememberMe: rememberMe,
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ],
                   );

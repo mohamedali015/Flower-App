@@ -2,7 +2,9 @@ import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/auth/api/auth_api_client.dart';
 import 'package:flower_app/features/auth/api/data_source/remote/auth_remote_data_source_impl.dart';
 import 'package:flower_app/features/auth/data/mapper/register_params_mapper.dart';
+import 'package:flower_app/features/auth/data/model/request/login_request.dart';
 import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
+import 'package:flower_app/features/auth/data/model/response/user_response.dart';
 import 'package:flower_app/features/auth/domain/params/register_params.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -24,8 +26,13 @@ void main() {
   });
 
   setUp(() {
+    mockAuthApiClient = MockAuthApiClient();
+    dataSource = AuthRemoteDataSourceImpl(mockAuthApiClient);
+
     errorMessage = "Something went wrong. Please try again later.";
+
     expectedResponse = AuthResponse(message: "Success", token: "token_123");
+
     params = RegisterParams(
       firstName: "Mohamed",
       lastName: "Ali",
@@ -35,10 +42,6 @@ void main() {
       phone: "01020374526",
       gender: "male",
     );
-  });
-  setUp(() {
-    mockAuthApiClient = MockAuthApiClient();
-    dataSource = AuthRemoteDataSourceImpl(mockAuthApiClient);
   });
 
   group('AuthRemoteDataSourceImpl - login', () {
@@ -114,32 +117,38 @@ void main() {
     group("Register Function Test Group", () {
       group("Success Test Cases", () {
         test("Test success test case with data return successfully", () async {
+          // Arrange
           when(
             mockAuthApiClient.register(any),
           ).thenAnswer((_) async => expectedResponse);
 
-          final result = await authRemoteDataSourceImpl.register(
-            request: params.toRequest(),
-          );
+          // Act
+          final result = await dataSource.register(request: params.toRequest());
 
+          // Assert
           expect(result, isA<Success<AuthResponse>>());
+
           expect((result as Success<AuthResponse>).data, expectedResponse);
+
           verify(mockAuthApiClient.register(any)).called(1);
         });
       });
 
       group('Failure Test Cases', () {
         test("Test Failure Test case with ErrorMessage", () async {
+          // Arrange
           when(
             mockAuthApiClient.register(any),
           ).thenThrow(Exception(errorMessage));
 
-          final result = await authRemoteDataSourceImpl.register(
-            request: params.toRequest(),
-          );
+          // Act
+          final result = await dataSource.register(request: params.toRequest());
 
+          // Assert
           expect(result, isA<Failure<AuthResponse>>());
+
           expect((result as Failure<AuthResponse>).errorMessage, isNotNull);
+
           verify(mockAuthApiClient.register(any)).called(1);
         });
       });

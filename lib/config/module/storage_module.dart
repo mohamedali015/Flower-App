@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 @module
 abstract class StorageModule {
   @lazySingleton
-  FlutterSecureStorage provideSecureStorage() {
+  FlutterSecureStorage provideSecureCacheStorage() {
     return const FlutterSecureStorage();
   }
 }

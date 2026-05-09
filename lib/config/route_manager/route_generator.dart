@@ -5,13 +5,29 @@ import 'package:flower_app/features/auth/presentation/pages/register/register_sc
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../core/shared_widgets/custom_bottom_nav.dart';
 import '../../core/values/app_strings.dart';
+import '../../features/auth/presentation/manager/login/login_cubit.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
+import '../../features/cart/presentation/screens/cart_screen.dart';
+import '../../features/category/presentation/screens/category_screen.dart';
+import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
+import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
+import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
+import '../../features/forget_password/presentation/pages/reset_password.dart';
+import '../../features/forget_password/presentation/pages/verify_code.dart';
+import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/splash/splash_screen.dart';
 
 abstract class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     try {
       switch (settings.name) {
+        /// Splash Screen
+        case Routes.splashRoute:
+          return CupertinoPageRoute(builder: (_) => const SplashScreen());
+
         /// Login Screen
         case Routes.loginRoute:
           return CupertinoPageRoute(

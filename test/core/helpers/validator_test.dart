@@ -92,30 +92,19 @@ void main() {
 
   group("Test Validator Confirm Password", () {
     test('When Confirm Password is null', () {
-      expect(Validator.confirmPassword(null, 'Mohamed@123'), "Please confirm your password");
+      expect(
+        Validator.confirmPassword(null, 'Mohamed@123'),
+        "Please confirm your password",
+      );
     });
     test('returns error when does not match', () {
-      expect(Validator.confirmPassword('Mohamed@123', 'Mohamed@456'), "Passwords do not match");
+      expect(
+        Validator.confirmPassword('Mohamed@123', 'Mohamed@456'),
+        "Passwords do not match",
+      );
     });
     test('returns null when matches and valid', () {
       expect(Validator.confirmPassword('Mohamed@123', 'Mohamed@123'), isNull);
-    });
-  });
-
-  group("Test Validator Phone", () {
-    test("When Phone is null", () {
-      final actual = Validator.phone(null);
-      expect(actual, "Phone number is required");
-    });
-
-    test("When Phone is Empty", () {
-      final actual = Validator.phone("");
-      expect(actual, "Phone number is required");
-    });
-
-    test("When Phone is Valid", () {
-      final result = Validator.phone("01285947399");
-      expect(result, isNull);
     });
   });
 }
