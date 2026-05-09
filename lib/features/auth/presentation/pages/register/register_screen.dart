@@ -79,7 +79,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               }
             },
             buildWhen: (previous, current) =>
-                previous.gender != current.gender ||
                 previous.isSubmitted != current.isSubmitted ||
                 previous.registerState.isLoading !=
                     current.registerState.isLoading,
@@ -153,12 +152,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
 
                           /// Gender Section
-                          GenderSectionWidget(
-                            gender: state.gender,
-                            isLoading: state.registerState.isLoading,
-                            onChanged: (value) {
-                              context.read<RegisterCubit>().doEvents(
-                                SelectGenderEvent(gender: value),
+                          BlocBuilder<RegisterCubit, RegisterState>(
+                            buildWhen: (previous, current) =>
+                                previous.gender != current.gender,
+                            builder: (context, state) {
+                              return GenderSectionWidget(
+                                gender: state.gender,
+                                isLoading: state.registerState.isLoading,
+                                onChanged: (value) {
+                                  context.read<RegisterCubit>().doEvents(
+                                    SelectGenderEvent(gender: value),
+                                  );
+                                },
                               );
                             },
                           ),
