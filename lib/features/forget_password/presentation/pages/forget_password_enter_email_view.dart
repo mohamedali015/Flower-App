@@ -102,9 +102,7 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
       if (state.sendEmailState?.errorMessage != null) {
         final String msg = state.sendEmailState!.errorMessage!;
         AppSnackBar.error(context, msg);
-      }
-
-      else {
+      } else {
         state.email = _emailTextController.text;
         state.isResendCodeState = true;
         Navigator.pushNamed(

@@ -45,7 +45,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
 
       case ResetPasswordEvent():
         {
-          _resetPassword();
+          _resetPassword(event);
           break;
         }
       case ResendCodeTimer():
@@ -101,7 +101,46 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     }
   }
 
-  void _resetPassword() {}
+  void _resetPassword(ResetPasswordEvent event) async {
+    emit(
+      state.copyWith(
+        resetPasswordState: BaseState(
+          data: null,
+          errorMessage: null,
+          isLoading: true,
+          isSuccess: false,
+        ),
+      ),
+    );
+    var result = await _resetPasswordUseCase(
+      email: state.email!,
+      newPassword: event.newPassword,
+    );
+
+    switch (result) {
+      case Success<bool>():
+        emit(
+          state.copyWith(
+            sendEmailState: BaseState(
+              errorMessage: null,
+              isLoading: false,
+              isSuccess: true,
+            ),
+          ),
+        );
+      case Failure<bool>():
+        emit(
+          state.copyWith(
+            sendEmailState: BaseState(
+              data: null,
+              errorMessage: result.errorMessage,
+              isLoading: false,
+              isSuccess: false,
+            ),
+          ),
+        );
+    }
+  }
 
   Future<void> _verifyOtp(
     String otp, {

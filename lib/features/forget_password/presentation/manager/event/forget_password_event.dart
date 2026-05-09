@@ -24,7 +24,11 @@ class VerifyOtpEvent extends ForgetPasswordEvents {
   });
 }
 
-class ResetPasswordEvent extends ForgetPasswordEvents {}
+class ResetPasswordEvent extends ForgetPasswordEvents {
+  final String newPassword;
+
+  ResetPasswordEvent({required this.newPassword});
+}
 
 class ResendCodeTimer extends ForgetPasswordEvents {}
 
