@@ -33,3 +33,13 @@ class ResetPasswordEvent extends ForgetPasswordEvents {
 class ResendCodeTimer extends ForgetPasswordEvents {}
 
 class ResendCodeEvent extends ForgetPasswordEvents {}
+
+class NavigateToVerifyCodeEventSetUp extends ForgetPasswordEvents {
+  final String? email;
+  bool isResendCodeState;
+
+  NavigateToVerifyCodeEventSetUp({
+    this.email,
+    required this.isResendCodeState,
+  });
+}

@@ -1,5 +1,4 @@
 import 'package:flower_app/core/helpers/app_snack_bar.dart';
-import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/shared_widgets/custom_button.dart';
 import 'package:flower_app/features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import 'package:flower_app/features/forget_password/presentation/manager/event/forget_password_event.dart';
@@ -48,7 +47,11 @@ class _ResetPasswordState extends State<ResetPassword> {
         appBar: AppBar(
           title: Text(AppStrings.resetPassword),
           leading: IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+              context,
+              Routes.loginRoute,
+              (route) => false,
+            ),
             icon: const Icon(Icons.arrow_back_ios_new),
           ),
         ),

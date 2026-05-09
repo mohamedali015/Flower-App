@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../../../../config/base_state/base_state.dart';
 
 class ForgetPasswordState extends Equatable {
-  ForgetPasswordState({
+  const ForgetPasswordState({
     this.sendEmailState = const BaseState(),
     this.resetPasswordState = const BaseState(),
     this.verifyOtpState = const BaseState(),
@@ -19,13 +19,13 @@ class ForgetPasswordState extends Equatable {
 
   final BaseState<bool>? resetPasswordState;
 
-  String? email;
+  final String? email;
 
   final int remainingSeconds;
 
   final bool canResend; // listen to state when timer is done
 
-  bool
+  final bool
   isResendCodeState; // listen to the state when in ForgetPasswordView or in ViewOtp View
 
   ForgetPasswordState copyWith({

@@ -27,7 +27,6 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
         title: Text(AppStrings.password),
         leading: IconButton(
           onPressed: () {
-            cubit.state.isResendCodeState = false;
             Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios_new),
@@ -76,6 +75,10 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
                     builder: (BuildContext context, state) {
                       return _buildWidget(state);
                     },
+                    listenWhen: (previous, current) {
+                      return previous.isResendCodeState ==
+                          current.isResendCodeState;
+                    },
                     listener: (BuildContext context, state) {
                       _listenActions(state, context, cubit);
                     },
@@ -97,14 +100,23 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
     }
   }
 
-  void _listenActions(ForgetPasswordState state, BuildContext context, cubit) {
+  void _listenActions(
+    ForgetPasswordState state,
+    BuildContext context,
+    ForgetPasswordCubit cubit,
+  ) {
+    print("navigate");
     if (!state.isResendCodeState) {
       if (state.sendEmailState?.errorMessage != null) {
         final String msg = state.sendEmailState!.errorMessage!;
         AppSnackBar.error(context, msg);
       } else {
-        state.email = _emailTextController.text;
-        state.isResendCodeState = true;
+        cubit.doEvent(
+          NavigateToVerifyCodeEventSetUp(
+            email: _emailTextController.text,
+            isResendCodeState: true,
+          ),
+        );
         Navigator.pushNamed(
           context,
           Routes.forgetPasswordOtpViewRoute,

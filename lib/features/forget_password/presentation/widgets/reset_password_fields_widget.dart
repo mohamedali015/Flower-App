@@ -1,5 +1,6 @@
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
+import 'package:flower_app/core/values/app_strings.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/helpers/validator.dart';
@@ -49,8 +50,8 @@ class _ResetPasswordFieldsWidgetState extends State<ResetPasswordFieldsWidget> {
             FocusScope.of(context).requestFocus(widget.confirmPasswordFocus);
           },
           decoration: InputDecoration(
-            labelText: local.password,
-            hintText: local.enterPassword,
+            labelText: AppStrings.newPassword,
+            hintText: AppStrings.enterYouPassword,
             suffixIcon: IconButton(
               icon: Icon(
                 isPasswordHidden ? Icons.visibility : Icons.visibility_off,
@@ -81,8 +82,8 @@ class _ResetPasswordFieldsWidgetState extends State<ResetPasswordFieldsWidget> {
             FocusScope.of(context).unfocus();
           },
           decoration: InputDecoration(
-            labelText: local.confirmPassword,
-            hintText: local.confirmPasswordHint,
+            labelText: AppStrings.confirmPassword,
+            hintText: AppStrings.enterYouPassword,
             suffixIcon: IconButton(
               icon: Icon(
                 isConfirmPasswordHidden

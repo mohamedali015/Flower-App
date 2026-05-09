@@ -59,6 +59,12 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
           _resendCode();
           break;
         }
+
+      case NavigateToVerifyCodeEventSetUp():
+        _navigateToVerifyCodeScreen(
+          email: event.email,
+          isResendCodeState: event.isResendCodeState,
+        );
     }
   }
 
@@ -202,18 +208,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       if (seconds <= 0) {
         timer.cancel();
 
-        emit(
-          state.copyWith(
-            remainingSeconds: 0,
-            canResend: true,
-            verifyOtpState: BaseState(
-              isSuccess: false,
-              isLoading: false,
-              errorMessage: null,
-              data: null,
-            ),
-          ),
-        );
+        emit(state.copyWith(remainingSeconds: 0, canResend: true));
       } else {
         emit(state.copyWith(remainingSeconds: seconds));
       }
@@ -261,6 +256,13 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
         );
     }
     _startResendTimer();
+  }
+
+  _navigateToVerifyCodeScreen({
+    String? email,
+    required bool isResendCodeState,
+  }) {
+    emit(state.copyWith(email: email, isResendCodeState: isResendCodeState));
   }
 
   @override

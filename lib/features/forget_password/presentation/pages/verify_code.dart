@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../../../config/route_manager/routes.dart';
 import '../../../../core/helpers/my_responsive.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_text_styles.dart';
@@ -26,74 +27,103 @@ class VerifyCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ForgetPasswordCubit>();
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppStrings.emailVerification),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios_new),
-        ),
-      ),
-      body: Padding(
-        padding: MyResponsive.paddingSymmetric(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        Navigator.pushNamedAndRemoveUntil(
           context,
-          horizontal: AppConstants.paddingHorizontal,
+          Routes.loginRoute,
+          (route) => false,
+        );
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppStrings.emailVerification),
+          leading: IconButton(
+            onPressed: () {
+              cubit.doEvent(
+                NavigateToVerifyCodeEventSetUp(isResendCodeState: false),
+              );
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Routes.loginRoute,
+                (route) => false,
+              );
+            },
+            icon: const Icon(Icons.arrow_back_ios_new),
+          ),
         ),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: MyResponsive.height(context, value: 40)),
-              Text(
-                AppStrings.emailVerification,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.medium18(context),
-              ),
-              SizedBox(height: MyResponsive.height(context, value: 16)),
-              Text(
-                AppStrings.enterYourCode,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.regular14(context),
-              ),
-              SizedBox(height: MyResponsive.height(context, value: 16)),
-              BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
-                buildWhen: (previous, current) => false,
-                builder: (context, state) {
-                  return CustomOtpField(
-                    onCompleted: (value) {
-                      cubit.doEvent(
-                        VerifyOtpEvent(
-                          value,
-                          otpController: otpController,
-                          errorController: errorController,
-                        ),
-                      );
-                    },
-                    errorController: errorController,
-                    controller: otpController,
-                    isLoading: state.verifyOtpState!.isLoading,
-                  );
-                },
-                listenWhen: (previous, current) {
-                  return false;
-                },
+        body: Padding(
+          padding: MyResponsive.paddingSymmetric(
+            context,
+            horizontal: AppConstants.paddingHorizontal,
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: MyResponsive.height(context, value: 40)),
+                Text(
+                  AppStrings.emailVerification,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.medium18(context),
+                ),
+                SizedBox(height: MyResponsive.height(context, value: 16)),
+                Text(
+                  AppStrings.enterYourCode,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.regular14(context),
+                ),
+                SizedBox(height: MyResponsive.height(context, value: 16)),
+                BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
+                  buildWhen: (previous, current) => false,
+                  builder: (context, state) {
+                    return CustomOtpField(
+                      onCompleted: (value) {
+                        cubit.doEvent(
+                          VerifyOtpEvent(
+                            value,
+                            otpController: otpController,
+                            errorController: errorController,
+                          ),
+                        );
+                      },
+                      errorController: errorController,
+                      controller: otpController,
+                      isLoading: state.verifyOtpState!.isLoading,
+                    );
+                  },
+                  listenWhen: (previous, current) {
+                    if (current.verifyOtpState?.errorMessage == null) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  },
 
-                listener: (BuildContext context, ForgetPasswordState state) {
-                  if (state.verifyOtpState?.errorMessage != null) {
-                    String msg = state.verifyOtpState!.errorMessage!;
-                    AppSnackBar.error(context, msg);
-                  } else if (state.verifyOtpState!.isSuccess) {
-                    print("true opt");
-                  }
-                },
-              ),
-              SizedBox(height: MyResponsive.height(context, value: 16)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text(AppStrings.didNotReceiveCode), OtpResenedBtn()],
-              ),
-            ],
+                  listener: (BuildContext context, ForgetPasswordState state) {
+                    if (state.verifyOtpState?.errorMessage != null) {
+                      String msg = state.verifyOtpState!.errorMessage!;
+                      AppSnackBar.error(context, msg);
+                    } else if (state.verifyOtpState!.isSuccess) {
+                      Navigator.pushNamed(
+                        context,
+                        Routes.forgetPasswordNewPassViewRoute,
+                      );
+                    }
+                  },
+                ),
+                SizedBox(height: MyResponsive.height(context, value: 16)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(AppStrings.didNotReceiveCode),
+                    OtpResenedBtn(),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
