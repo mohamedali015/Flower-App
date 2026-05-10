@@ -48,7 +48,6 @@ class RouteGenerator {
   }
 
   static Route<dynamic> _errorRoute() {
-    Cuo
     return MaterialPageRoute(
       builder: (_) => const Scaffold(
         body: Center(
