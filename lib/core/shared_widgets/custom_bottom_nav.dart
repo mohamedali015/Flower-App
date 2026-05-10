@@ -1,9 +1,15 @@
 import 'package:flower_app/core/shared_widgets/svg_wrapper.dart';
 import 'package:flutter/material.dart';
+
+import '../../features/cart/presentation/screens/cart_screen.dart';
+import '../../features/category/presentation/screens/category_screen.dart';
+import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../helpers/my_responsive.dart';
+import '../localization/l10n/app_localizations.dart';
 import '../utils/app_assets.dart';
 import '../utils/app_colors.dart';
-import '../values/app_strings.dart';
+
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key, this.initialIndex = 0});
@@ -18,9 +24,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   late int currentIndex;
 
   final List<Widget> _screens = const [
-    // HomeScreen(),
-    // ResultsScreen(),
-    // ProfileScreen(),
+    HomeScreen(),
+    CategoryScreen(),
+    CartScreen(),
+    ProfileScreen(),
   ];
 
   @override
@@ -37,18 +44,17 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    var local = AppLocalizations.of(context)!;
     return Scaffold(
       body: IndexedStack(index: currentIndex, children: _screens),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: _onTap,
         items: [
-          ////////// Add name & image (using image SVG)
-
-          // _buildItem(AppAssets.homePath, AppStrings.home, 0),
-          // _buildItem(AppAssets.resultPath, AppStrings.result, 1),
-          // _buildItem(AppAssets.profilePath, AppStrings.profile, 2),
-          // _buildItem(AppAssets.profilePath, AppStrings.profile, 3),
+          _buildItem(AppAssets.homeIcon, local.home, 0),
+          _buildItem(AppAssets.categoryIcon, local.categories, 1),
+          _buildItem(AppAssets.shoppingIcon, local.cart, 2),
+          _buildItem(AppAssets.personIcon, local.profile, 3),
         ],
       ),
     );
@@ -71,24 +77,21 @@ class _NavIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: MyResponsive.paddingSymmetric(
-        vertical: 8,
-        horizontal: 20,
-        context,
-      ),
-      decoration: BoxDecoration(
-        color: isSelected ? AppColors.primaryColor : Colors.transparent,
-        borderRadius: BorderRadius.circular(
-          MyResponsive.radius(value: 16, context),
-        ),
-      ),
+      padding: MyResponsive.paddingSymmetric(vertical: 8, horizontal: 20,context),
       child: SvgWrapper(
         path: image,
-        width: MyResponsive.width(value: 16, context),
-        height: MyResponsive.height(value: 16, context),
+        width: MyResponsive.width(value: 25,context),
+        height: MyResponsive.height(value: 25,context),
         fit: BoxFit.contain,
         color: isSelected ? AppColors.primaryColor : AppColors.disabledGray,
       ),
     );
   }
 }
+
+
+
+
+
+
+

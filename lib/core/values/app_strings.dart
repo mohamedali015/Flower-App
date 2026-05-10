@@ -34,8 +34,8 @@ abstract class AppStrings {
   static const String password = "Password";
   static const String enterYouPassword = "Enter password";
   static const String rememberMe = "Remember me";
-  static const String forgetPassword = "Forget password";
-  static const String doNotHaveAnAccount = "Don't have an account";
+  static const String forgetPassword = "Forget password?";
+  static const String doNotHaveAnAccount = "Don't have an account?";
   static const String signUp = "Sign up";
 
   static const String userName = "User name";
@@ -85,6 +85,8 @@ abstract class AppStrings {
   static const String invalidPassword = "Invalid password";
 
   static const String unknown = "Unknown";
-
+  static const String home = "Home";
   static const String tryAgain = "Try Again";
+  static const String category = "Category";
+  static const String cart = "Cart";
 }

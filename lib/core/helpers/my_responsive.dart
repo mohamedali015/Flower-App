@@ -6,8 +6,7 @@ abstract class MyResponsive {
   static const double _baseHeight = 812;
 
   /// Cache MediaQueryData (optional optimization)
-  static MediaQueryData _media(BuildContext context) =>
-      MediaQuery.of(context);
+  static MediaQueryData _media(BuildContext context) => MediaQuery.of(context);
 
   /// Width scale
   static double width(BuildContext context, {required double value}) {
@@ -23,7 +22,7 @@ abstract class MyResponsive {
 
   /// Font size (respects user settings)
   static double fontSize(BuildContext context, {required double value}) {
-    final scale = _media(context).textScaleFactor;
+    final scale = _media(context).textScaler.scale(1);
     return width(context, value: value) / scale;
   }
 
@@ -33,25 +32,23 @@ abstract class MyResponsive {
   }
 
   /// Padding symmetric
-  static EdgeInsets paddingSymmetric(
-      BuildContext context, {
-        double? horizontal,
-        double? vertical,
-      }) {
+  static EdgeInsets paddingSymmetric(BuildContext context, {
+    double? horizontal,
+    double? vertical,
+  }) {
     return EdgeInsets.symmetric(
-      horizontal: width(context, value: horizontal ?? 0 ),
+      horizontal: width(context, value: horizontal ?? 0),
       vertical: height(context, value: vertical ?? 0),
     );
   }
 
   /// Padding only
-  static EdgeInsetsDirectional paddingOnly(
-      BuildContext context, {
-        double? start,
-        double? end,
-        double? top,
-        double? bottom,
-      }) {
+  static EdgeInsetsDirectional paddingOnly(BuildContext context, {
+    double? start,
+    double? end,
+    double? top,
+    double? bottom,
+  }) {
     return EdgeInsetsDirectional.only(
       start: width(context, value: start ?? 0),
       end: width(context, value: end ?? 0),
@@ -61,14 +58,10 @@ abstract class MyResponsive {
   }
 
   /// Padding all
-  static EdgeInsets paddingAll(
-      BuildContext context, {
-        required double value,
-      }) {
+  static EdgeInsets paddingAll(BuildContext context, {required double value}) {
     return EdgeInsets.all(width(context, value: value));
   }
 }
-
 
 ///?  How to use
 /*
