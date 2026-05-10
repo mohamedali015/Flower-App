@@ -26,7 +26,7 @@ class RouteGenerator {
       /// OTP View
       case Routes.forgetPasswordOtpViewRoute:
         final cubit = settings.arguments as ForgetPasswordCubit;
-        return CupertinoPageRoute(
+        return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
             value: cubit..doEvent(ResendCodeTimer()),
             child: VerifyCode(),
@@ -48,7 +48,8 @@ class RouteGenerator {
   }
 
   static Route<dynamic> _errorRoute() {
-    return CupertinoPageRoute(
+    Cuo
+    return MaterialPageRoute(
       builder: (_) => const Scaffold(
         body: Center(
           child: Text(AppStrings.pageNotFound, style: TextStyle(fontSize: 18)),
