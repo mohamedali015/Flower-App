@@ -36,7 +36,7 @@ class RouteGenerator {
       /// New Password View
         case Routes.forgetPasswordNewPassViewRoute:
           final cubit = settings.arguments as ForgetPasswordCubit;
-          return CupertinoPageRoute(
+          return MaterialPageRoute(
             builder: (_) => BlocProvider.value(
               value: cubit,
               child: const ResetPassword(),

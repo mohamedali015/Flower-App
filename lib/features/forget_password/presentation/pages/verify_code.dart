@@ -110,6 +110,7 @@ class VerifyCode extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         Routes.forgetPasswordNewPassViewRoute,
+                        arguments: cubit
                       );
                     }
                   },

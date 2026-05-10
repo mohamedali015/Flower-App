@@ -75,10 +75,10 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
                     builder: (BuildContext context, state) {
                       return _buildWidget(state);
                     },
-                    listenWhen: (previous, current) {
-                      return previous.isResendCodeState ==
-                          current.isResendCodeState;
+                    listenWhen: (_,current) {
+                      return current.isResendCodeState == false;
                     },
+
                     listener: (BuildContext context, state) {
                       _listenActions(state, context, cubit);
                     },
@@ -105,24 +105,21 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
     BuildContext context,
     ForgetPasswordCubit cubit,
   ) {
-    print("navigate");
-    if (!state.isResendCodeState) {
-      if (state.sendEmailState?.errorMessage != null) {
-        final String msg = state.sendEmailState!.errorMessage!;
-        AppSnackBar.error(context, msg);
-      } else {
-        cubit.doEvent(
-          NavigateToVerifyCodeEventSetUp(
-            email: _emailTextController.text,
-            isResendCodeState: true,
-          ),
-        );
-        Navigator.pushNamed(
-          context,
-          Routes.forgetPasswordOtpViewRoute,
-          arguments: cubit,
-        );
-      }
+    if (state.sendEmailState?.errorMessage != null) {
+      final String msg = state.sendEmailState!.errorMessage!;
+      AppSnackBar.error(context, msg);
+    } else {
+      cubit.doEvent(
+        NavigateToVerifyCodeEventSetUp(
+          email: _emailTextController.text,
+          isResendCodeState: true,
+        ),
+      );
+      Navigator.pushNamed(
+        context,
+        Routes.forgetPasswordOtpViewRoute,
+        arguments: cubit,
+      );
     }
   }
 }
