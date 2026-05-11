@@ -46,5 +46,9 @@
   "alreadyHaveAccount": "Already have an account?",
     "rememberMe": "Remember me",
     "forgetPassword": "Forgot password?",
-    "doNotHaveAnAccount": "Don’t have an account?"
+    "doNotHaveAnAccount": "Don’t have an account?",
+
+    "search": "Search",
+      "filter": "Filter",
+      "add_to_cart": "Add to cart"
 }

@@ -47,5 +47,9 @@
   "alreadyHaveAccount": "لديك حساب بالفعل؟",
      "rememberMe": "تذكرني",
     "forgetPassword": "نسيت كلمة المرور؟",
-    "doNotHaveAnAccount": "ليس لديك حساب؟"
+    "doNotHaveAnAccount": "ليس لديك حساب؟",
+
+     "search": "بحث",
+      "filter": "تصفية",
+      "add_to_cart": "أضف إلى السلة"
 }

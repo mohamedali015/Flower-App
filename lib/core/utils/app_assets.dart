@@ -10,4 +10,7 @@ abstract class AppAssets {
   static const String personIcon ="$_baseIconsPath/person.svg";
   static const String shoppingIcon ="$_baseIconsPath/shopping.svg";
 
+  static const String filterIcon = "$_baseIconsPath/filter.svg";
+  static const String sortIcons = "$_baseIconsPath/sort.svg";
+
 }
