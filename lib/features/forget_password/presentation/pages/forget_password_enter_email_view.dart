@@ -13,10 +13,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../manager/event/forget_password_event.dart';
 
-class ForgetPasswordEnterEmailView extends StatelessWidget {
+class ForgetPasswordEnterEmailView extends StatefulWidget {
   ForgetPasswordEnterEmailView();
 
-  final TextEditingController _emailTextController = TextEditingController();
+  @override
+  State<ForgetPasswordEnterEmailView> createState() =>
+      _ForgetPasswordEnterEmailViewState();
+}
+
+class _ForgetPasswordEnterEmailViewState
+    extends State<ForgetPasswordEnterEmailView> {
+  late final TextEditingController _emailTextController;
+
+  @override
+  void initState() {
+    _emailTextController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    super.dispose();
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -57,11 +77,11 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
                 ),
                 SizedBox(height: MyResponsive.height(context, value: 32)),
                 TextFormField(
+                  controller: _emailTextController,
                   decoration: InputDecoration(
                     labelText: AppStrings.email,
                     hintText: AppStrings.enterYouEmail,
                   ),
-                  controller: _emailTextController,
                   validator: (value) => Validator.email(value),
                 ),
                 SizedBox(height: MyResponsive.height(context, value: 42)),
@@ -75,8 +95,8 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
                     builder: (BuildContext context, state) {
                       return _buildWidget(state);
                     },
-                    listenWhen: (_,current) {
-                      return current.isResendCodeState == false;
+                    listenWhen: (previous, current) {
+                      return previous.sendEmailState != current.sendEmailState;
                     },
 
                     listener: (BuildContext context, state) {
@@ -109,12 +129,12 @@ class ForgetPasswordEnterEmailView extends StatelessWidget {
       final String msg = state.sendEmailState!.errorMessage!;
       AppSnackBar.error(context, msg);
     } else {
-      cubit.doEvent(
+     /* cubit.doEvent(
         NavigateToVerifyCodeEventSetUp(
           email: _emailTextController.text,
           isResendCodeState: true,
         ),
-      );
+      );*/
       Navigator.pushNamed(
         context,
         Routes.forgetPasswordOtpViewRoute,

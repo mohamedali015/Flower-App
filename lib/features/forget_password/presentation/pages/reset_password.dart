@@ -37,6 +37,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
+        // cubit.doEvent(NavigateToResetCodeEventSetUp(isInResetCodeState: false));
         Navigator.pushNamedAndRemoveUntil(
           context,
           Routes.loginRoute,

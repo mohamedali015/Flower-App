@@ -62,7 +62,7 @@ abstract class RouteGenerator {
           return MaterialPageRoute(
             builder: (_) => BlocProvider.value(
               value: cubit..doEvent(ResendCodeTimer()),
-              child: VerifyCode(),
+              child: const VerifyCode(),
             ),
           );
 
