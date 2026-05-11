@@ -9,5 +9,6 @@ abstract class AppAssets {
   static const String homeIcon ="$_baseIconsPath/home.svg";
   static const String personIcon ="$_baseIconsPath/person.svg";
   static const String shoppingIcon ="$_baseIconsPath/shopping.svg";
+  static const String addCartIcon ="$_baseIconsPath/add_cart.svg";
 
 }
