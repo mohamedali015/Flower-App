@@ -1,7 +1,11 @@
 import 'package:flower_app/config/di/di.dart';
+import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
+import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
+import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
+import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,6 +88,19 @@ abstract class RouteGenerator {
           return CupertinoPageRoute(builder: (_) => ProfileScreen());
         case Routes.bottomNavBarRoute:
           return CupertinoPageRoute(builder: (_) => CustomBottomNavBar());
+
+        case Routes.bestSellerRoute:
+          return CupertinoPageRoute(builder: (_) => BestSellerScreen());
+
+        case Routes.occasionRoute:
+          return CupertinoPageRoute(builder: (_) => OccasionScreen());
+
+        case Routes.productDetailsRoute:
+          final entity = settings.arguments as ProductEntity;
+
+          return CupertinoPageRoute(
+            builder: (_) => ProductDetailsScreen(entity: entity),
+          );
 
         /// Default
         default:
