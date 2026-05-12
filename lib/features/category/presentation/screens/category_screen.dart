@@ -64,6 +64,7 @@ class _CategoryView extends StatelessWidget {
                 return BlocBuilder<TabCubit, int>(
                   builder: (context, selectedIndex) {
                     return CategoryTabBar(
+
                       categories: state.categories,
                       selectedIndex: selectedIndex,
                       onTap: (index) {
