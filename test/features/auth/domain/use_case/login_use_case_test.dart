@@ -1,4 +1,4 @@
-import 'package:flower_app/features/auth/domain/entities/user_entity.dart';
+import 'package:flower_app/config/user/domain/entities/user_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

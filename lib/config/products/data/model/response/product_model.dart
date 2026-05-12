@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'product_response.g.dart';
+part 'product_model.g.dart';
 
 @JsonSerializable()
-class ProductResponse {
+class ProductModel {
   @JsonKey(name: "_id")
   String? id;
   @JsonKey(name: "title")
@@ -47,7 +47,7 @@ class ProductResponse {
   @JsonKey(name: "isInWishlist")
   bool? isInWishlist;
 
-  ProductResponse({
+  ProductModel({
     this.id,
     this.title,
     this.slug,
@@ -71,6 +71,6 @@ class ProductResponse {
     this.isInWishlist,
   });
 
-  factory ProductResponse.fromJson(Map<String, dynamic> json) =>
-      _$ProductResponseFromJson(json);
+  factory ProductModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductModelFromJson(json);
 }

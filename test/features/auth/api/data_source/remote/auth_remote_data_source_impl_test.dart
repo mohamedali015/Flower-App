@@ -1,10 +1,10 @@
 import 'package:flower_app/config/error_handling/result.dart';
+import 'package:flower_app/config/user/data/models/responses/get_user_response/user_response.dart';
 import 'package:flower_app/features/auth/api/auth_api_client.dart';
 import 'package:flower_app/features/auth/api/data_source/remote/auth_remote_data_source_impl.dart';
 import 'package:flower_app/features/auth/data/mapper/register_params_mapper.dart';
 import 'package:flower_app/features/auth/data/model/request/login_request.dart';
 import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
-import 'package:flower_app/features/auth/data/model/response/user_response.dart';
 import 'package:flower_app/features/auth/domain/params/register_params.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';

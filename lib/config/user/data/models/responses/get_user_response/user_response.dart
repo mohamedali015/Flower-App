@@ -1,6 +1,7 @@
-import 'package:flower_app/features/auth/data/model/response/address_response.dart';
-import 'package:flower_app/features/auth/data/model/response/product_response.dart';
+import 'package:flower_app/config/user/data/models/responses/get_user_response/address_response.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../../../../products/data/model/response/product_model.dart';
 
 part 'user_response.g.dart';
 
@@ -21,7 +22,7 @@ class UserResponse {
   @JsonKey(name: "role")
   String? role;
   @JsonKey(name: "wishlist")
-  List<ProductResponse>? wishlist;
+  List<ProductModel>? wishlist;
   @JsonKey(name: "_id")
   String? id;
   @JsonKey(name: "addresses")

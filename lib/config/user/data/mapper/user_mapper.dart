@@ -1,8 +1,7 @@
-import 'package:flower_app/features/auth/data/mapper/address_mapper.dart';
-import 'package:flower_app/features/auth/data/mapper/product_mapper.dart';
-
+import '../../../products/data/mapper/product_mapper.dart';
 import '../../domain/entities/user_entity.dart';
-import '../model/response/user_response.dart';
+import '../models/responses/get_user_response/user_response.dart';
+import 'address_mapper.dart';
 
 extension UserMapper on UserResponse {
   UserEntity toEntity() {

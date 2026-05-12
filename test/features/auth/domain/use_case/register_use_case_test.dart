@@ -1,6 +1,6 @@
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/auth/domain/entities/auth_entity.dart';
-import 'package:flower_app/features/auth/domain/entities/user_entity.dart';
+import 'package:flower_app/config/user/domain/entities/user_entity.dart';
 import 'package:flower_app/features/auth/domain/params/register_params.dart';
 import 'package:flower_app/features/auth/domain/repositories/auth_repo.dart';
 import 'package:flower_app/features/auth/domain/use_case/register_use_case.dart';

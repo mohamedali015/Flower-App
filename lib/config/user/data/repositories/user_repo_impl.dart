@@ -1,6 +1,6 @@
-import 'package:flower_app/features/auth/data/mapper/user_mapper.dart';
+import 'package:flower_app/config/user/data/mapper/user_mapper.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../features/auth/domain/entities/user_entity.dart';
+import '../../domain/entities/user_entity.dart';
 import '../../../error_handling/result.dart';
 import '../../domain/repositories/user_repo.dart';
 import '../data_sources/remote/user_remote_data_source.dart';

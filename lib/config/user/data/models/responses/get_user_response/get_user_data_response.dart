@@ -1,6 +1,5 @@
+import 'package:flower_app/config/user/data/models/responses/get_user_response/user_response.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../../../../../features/auth/data/model/response/user_response.dart';
 
 part 'get_user_data_response.g.dart';
 

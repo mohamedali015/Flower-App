@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import '../../../../features/auth/domain/entities/user_entity.dart';
+import '../entities/user_entity.dart';
 import '../../../error_handling/result.dart';
 import '../repositories/user_repo.dart';
 

@@ -1,8 +1,7 @@
-import 'package:flower_app/features/auth/data/model/response/product_response.dart';
-
 import '../../domain/entities/product_entity.dart';
+import '../model/response/product_model.dart';
 
-extension ProductMapper on ProductResponse {
+extension ProductMapper on ProductModel {
   ProductEntity toEntity() {
     return ProductEntity(
       id: id ?? '',

@@ -1,6 +1,6 @@
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/auth/domain/entities/auth_entity.dart';
-import 'package:flower_app/features/auth/domain/entities/user_entity.dart';
+import 'package:flower_app/config/user/domain/entities/user_entity.dart';
 import 'package:flower_app/features/auth/domain/use_case/login_use_case.dart';
 import 'package:flower_app/features/auth/presentation/manager/login/login_cubit.dart';
 import 'package:flower_app/features/auth/presentation/manager/login/login_event.dart';
