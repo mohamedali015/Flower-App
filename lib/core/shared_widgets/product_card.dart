@@ -8,9 +8,9 @@ import 'custom_add_to_cart.dart';
 class ProductCard extends StatelessWidget {
   final String name;
   final String image;
-  final int price;
-  final int priceAfterDiscount;
-  final int discount;
+  final num price;
+  final num priceAfterDiscount;
+  final num discount;
   final VoidCallback? onAddToCart;
 
   const ProductCard({

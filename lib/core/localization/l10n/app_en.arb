@@ -50,7 +50,7 @@
 
     "search": "Search",
       "filter": "Filter",
-      "add_to_cart": "Add to cart"
+      "addToCart": "Add to cart",
     "doNotHaveAnAccount": "Don’t have an account?",
     "egp": "EGP",
     "addToCart": "Add to cart"

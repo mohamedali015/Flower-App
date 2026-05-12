@@ -15,7 +15,7 @@ abstract class CategoryApiClient {
   @factoryMethod
   factory CategoryApiClient(Dio dio) = _CategoryApiClient;
 
-  ////////////////// GET ALL Categories //////////////////
+  ///? GET ALL Categories
 
   @GET(ApiEndPoints.categories)
   @Extra({ApiStrings.requireAuth: false})

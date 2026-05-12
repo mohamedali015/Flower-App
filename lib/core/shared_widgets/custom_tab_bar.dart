@@ -2,7 +2,10 @@ import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class CategoryTabBar extends StatefulWidget {
+import '../helpers/my_responsive.dart';
+import '../values/app_strings.dart';
+
+class CategoryTabBar extends StatelessWidget {
   final List categories;
   final int selectedIndex;
   final Function(int index) onTap;
@@ -15,93 +18,53 @@ class CategoryTabBar extends StatefulWidget {
   });
 
   @override
-  State<CategoryTabBar> createState() => _CategoryTabBarState();
-}
-
-class _CategoryTabBarState extends State<CategoryTabBar>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _tabController = TabController(
-      length: widget.categories.length,
-      vsync: this,
-      initialIndex: widget.selectedIndex,
-    );
-
-    _tabController.addListener(() {
-      if (!_tabController.indexIsChanging) {
-        widget.onTap(_tabController.index);
-      }
-    });
-  }
-
-  @override
-  void didUpdateWidget(covariant CategoryTabBar oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (oldWidget.categories.length != widget.categories.length) {
-      _tabController.dispose();
-
-      _tabController = TabController(
-        length: widget.categories.length,
-        vsync: this,
-        initialIndex: widget.selectedIndex,
-      );
-    }
-
-    if (_tabController.index != widget.selectedIndex) {
-      _tabController.animateTo(widget.selectedIndex);
-    }
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final itemCount = categories.length + 1;
 
-    final tabs = ['All', ...widget.categories];
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(itemCount, (index) {
+          final isSelected = index == selectedIndex;
+          final isAll = index == 0;
+          final category = isAll ? null : categories[index - 1];
 
-    return TabBar(
-      controller: _tabController,
-      isScrollable: true,
-      tabAlignment: TabAlignment.start,
-      padding: EdgeInsets.zero,
-      labelPadding: const EdgeInsets.only(right: 24),
+          return GestureDetector(
+            onTap: () => onTap(index),
+            child: Padding(
+              padding: MyResponsive.paddingOnly(context, end: 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    isAll ? AppStrings.all : category.name,
+                    style: AppTextStyles.regular16(context).copyWith(
+                      color: isSelected
+                          ? AppColors.primaryColor
+                          : AppColors.textHint,
+                      fontWeight:
+                      isSelected ? FontWeight.bold : FontWeight.w400,
+                    ),
+                  ),
 
-      indicatorColor: AppColors.primaryColor,
-      labelColor: AppColors.primaryColor,
-      unselectedLabelColor: AppColors.textHint,
+                  SizedBox(height: MyResponsive.height(context, value: 8)),
 
-      tabs: List.generate(
-        tabs.length,
-            (index) {
-
-          final isSelected = index == widget.selectedIndex;
-
-          final title = index == 0 ? 'All' : tabs[index].name ?? "";
-
-          return Tab(
-            child: Text(
-              title,
-              style: AppTextStyles.regular16(context).copyWith(
-                color: isSelected
-                    ? AppColors.primaryColor
-                    : AppColors.textHint,
-                fontWeight: isSelected
-                    ? FontWeight.bold
-                    : FontWeight.w400,
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    height: MyResponsive.height(context, value: 4),
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? AppColors.primaryColor
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
-        },
+        }),
       ),
     );
   }
