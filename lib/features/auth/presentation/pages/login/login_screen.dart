@@ -9,12 +9,12 @@ import 'package:flower_app/features/auth/presentation/manager/login/login_event.
 import 'package:flower_app/features/auth/presentation/manager/login/login_state.dart';
 import 'package:flower_app/features/auth/presentation/widgets/login/login_form.dart';
 import 'package:flower_app/features/auth/presentation/widgets/login/remember_me.dart';
-import 'package:flower_app/features/auth/presentation/widgets/register/have_an_accountt_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../config/user/manager/user_cubit.dart';
 import '../../../../../config/user/manager/user_events.dart';
+import '../../widgets/register/have_an_account_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
