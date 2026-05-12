@@ -1,8 +1,8 @@
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/config/secure_cache/secure_cache/secure_cache.dart';
+import 'package:flower_app/config/user/data/models/responses/get_user_response/user_response.dart';
 import 'package:flower_app/features/auth/api/data_source/remote/auth_remote_data_source_impl.dart';
 import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
-import 'package:flower_app/features/auth/data/model/response/user_response.dart';
 import 'package:flower_app/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:flower_app/features/auth/domain/entities/auth_entity.dart';
 import 'package:flower_app/features/auth/domain/params/register_params.dart';

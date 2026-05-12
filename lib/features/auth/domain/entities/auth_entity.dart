@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flower_app/features/auth/domain/entities/user_entity.dart';
+import 'package:flower_app/config/user/domain/entities/user_entity.dart';
 
 class AuthEntity extends Equatable {
   const AuthEntity({required this.message, required this.user});

@@ -1,8 +1,8 @@
-import 'package:flower_app/features/auth/data/mapper/user_mapper.dart';
+import 'package:flower_app/config/user/data/mapper/user_mapper.dart';
 import 'package:flower_app/features/auth/data/model/response/auth_response.dart';
 import 'package:flower_app/features/auth/domain/entities/auth_entity.dart';
 
-import '../../domain/entities/user_entity.dart';
+import '../../../../config/user/domain/entities/user_entity.dart';
 
 extension AuthMapper on AuthResponse {
   AuthEntity toEntity() {

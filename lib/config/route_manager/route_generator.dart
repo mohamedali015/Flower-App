@@ -1,10 +1,15 @@
 import 'package:flower_app/config/di/di.dart';
+import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
+import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
+import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
+import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../core/shared_widgets/custom_bottom_nav.dart';
 import '../../core/values/app_strings.dart';
 import '../../features/auth/presentation/manager/login/login_cubit.dart';
@@ -58,17 +63,17 @@ abstract class RouteGenerator {
         /// OTP View
         case Routes.forgetPasswordOtpViewRoute:
           final cubit = settings.arguments as ForgetPasswordCubit;
-          return CupertinoPageRoute(
+          return MaterialPageRoute(
             builder: (_) => BlocProvider.value(
               value: cubit..doEvent(ResendCodeTimer()),
-              child: VerifyCode(),
+              child: const VerifyCode(),
             ),
           );
 
         /// New Password View
         case Routes.forgetPasswordNewPassViewRoute:
           final cubit = settings.arguments as ForgetPasswordCubit;
-          return CupertinoPageRoute(
+          return MaterialPageRoute(
             builder: (_) =>
                 BlocProvider.value(value: cubit, child: const ResetPassword()),
           );
@@ -84,6 +89,19 @@ abstract class RouteGenerator {
         case Routes.bottomNavBarRoute:
           return CupertinoPageRoute(builder: (_) => CustomBottomNavBar());
 
+        case Routes.bestSellerRoute:
+          return CupertinoPageRoute(builder: (_) => BestSellerScreen());
+
+        case Routes.occasionRoute:
+          return CupertinoPageRoute(builder: (_) => OccasionScreen());
+
+        case Routes.productDetailsRoute:
+          final entity = settings.arguments as ProductEntity;
+
+          return CupertinoPageRoute(
+            builder: (_) => ProductDetailsScreen(entity: entity),
+          );
+
         /// Default
         default:
           return _errorRoute();
@@ -97,7 +115,7 @@ abstract class RouteGenerator {
   }
 
   static Route<dynamic> _errorRoute() {
-    return CupertinoPageRoute(
+    return MaterialPageRoute(
       builder: (_) => const Scaffold(
         body: Center(
           child: Text(AppStrings.pageNotFound, style: TextStyle(fontSize: 18)),
