@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../helpers/my_responsive.dart';
 
 abstract class AppTextStyles {
-  static TextStyle _base(BuildContext context, {
+  static TextStyle _base(
+    BuildContext context, {
     required double size,
     required FontWeight weight,
   }) {

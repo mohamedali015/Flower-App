@@ -76,8 +76,7 @@ class ProductCard extends StatelessWidget {
                 "$discount%",
                 style: AppTextStyles.regular12(
                   context,
-                ).copyWithcolor: AppColors.success,
-                ),
+                ).copyWith(color: AppColors.success),
               ),
             ],
           ),
