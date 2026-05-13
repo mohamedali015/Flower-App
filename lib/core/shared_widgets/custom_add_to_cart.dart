@@ -11,7 +11,7 @@ class CustomAddToCart extends StatelessWidget {
   final VoidCallback? onTap;
   final double heightContainer;
 
-  const CustomAddToCart({super.key, this.onTap, this.heightContainer = 35});
+  const CustomAddToCart({super.key, this.onTap, this.heightContainer = 30});
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +30,14 @@ class CustomAddToCart extends StatelessWidget {
             padding: MyResponsive.paddingSymmetric(
               context,
               vertical: 6,
-              horizontal: 20,
+              horizontal: 10,
             ),
 
             decoration: BoxDecoration(
               color: AppColors.primaryColor,
 
               borderRadius: BorderRadius.circular(
-                MyResponsive.radius(context, value: 25),
+                MyResponsive.radius(context, value: 100),
               ),
             ),
 
@@ -48,15 +48,15 @@ class CustomAddToCart extends StatelessWidget {
                 SvgWrapper(
                   path: AppAssets.addCartIcon,
                   fit: BoxFit.cover,
-                  width: MyResponsive.width(context, value: 24),
-                  height: MyResponsive.height(context, value: 24),
+                  width: MyResponsive.width(context, value: 15),
+                  height: MyResponsive.height(context, value: 15),
                 ),
 
                 SizedBox(width: MyResponsive.width(context, value: 8)),
 
                 Text(
                   local.addToCart,
-                  style: AppTextStyles.medium14(
+                  style: AppTextStyles.medium13(
                     context,
                   ).copyWith(color: AppColors.white),
                 ),

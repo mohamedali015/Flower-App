@@ -49,5 +49,9 @@
     "forgetPassword": "نسيت كلمة المرور؟",
     "doNotHaveAnAccount": "ليس لديك حساب؟",
     "egp": "ج.م",
-    "addToCart": "أضف إلى السلة"
+    "addToCart": "أضف إلى السلة",
+    "occasion": "المناسبات",
+    "occasionSubTitle": "تألّق مع مجموعتنا المميزة من الأكثر مبيعًا",
+    "noOccasionsFound": "لا توجد مناسبات",
+    "noProductsFound": "لا توجد منتجات"
 }

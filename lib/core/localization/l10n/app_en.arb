@@ -48,5 +48,9 @@
     "forgetPassword": "Forgot password?",
     "doNotHaveAnAccount": "Don’t have an account?",
     "egp": "EGP",
-    "addToCart": "Add to cart"
+    "addToCart": "Add to cart",
+    "occasion" : "Occasion",
+    "occasionSubTitle" : "Bloom with our exquisite best sellers",
+    "noOccasionsFound": "No occasions found",
+    "noProductsFound": "No products found"
 }

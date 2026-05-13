@@ -39,6 +39,9 @@ abstract class AppTextStyles {
   static TextStyle medium12(BuildContext context) =>
       _base(context, size: 12, weight: FontWeight.w500);
 
+  static TextStyle medium13(BuildContext context) =>
+      _base(context, size: 13, weight: FontWeight.w500);
+
   static TextStyle medium14(BuildContext context) =>
       _base(context, size: 14, weight: FontWeight.w500);
 
