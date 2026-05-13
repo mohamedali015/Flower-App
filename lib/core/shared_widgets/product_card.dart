@@ -50,9 +50,9 @@ class ProductCard extends StatelessWidget {
             name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.regular14(
+            style: AppTextStyles.regular12(
               context,
-            ).copyWith(fontWeight: FontWeight.bold, color: AppColors.darkBase),
+            ).copyWith(color: AppColors.darkBase),
           ),
 
           SizedBox(height: MyResponsive.height(context, value: 6)),
@@ -62,23 +62,21 @@ class ProductCard extends StatelessWidget {
             children: [
               Text(
                 "EGP  $priceAfterDiscount",
-                style: AppTextStyles.regular14(
-                  context,
-                ).copyWith(fontWeight: FontWeight.bold),
+                style: AppTextStyles.medium14(context),
               ),
 
               Text(
                 "$price",
-                style: AppTextStyles.regular14(context).copyWith(
+                style: AppTextStyles.regular12(context).copyWith(
                   color: AppColors.grayDark,
                   decoration: TextDecoration.lineThrough,
                 ),
               ),
               Text(
                 "$discount%",
-                style: AppTextStyles.regular14(context).copyWith(
-                  color: AppColors.success,
-                  fontWeight: FontWeight.bold,
+                style: AppTextStyles.regular12(
+                  context,
+                ).copyWithcolor: AppColors.success,
                 ),
               ),
             ],

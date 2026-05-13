@@ -56,10 +56,9 @@ class CustomAddToCart extends StatelessWidget {
 
                 Text(
                   local.addToCart,
-                  style: AppTextStyles.medium14(context).copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: AppTextStyles.medium14(
+                    context,
+                  ).copyWith(color: AppColors.white),
                 ),
               ],
             ),

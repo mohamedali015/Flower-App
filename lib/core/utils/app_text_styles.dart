@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import '../helpers/my_responsive.dart';
 
 abstract class AppTextStyles {
-
-  static TextStyle _base(
-      BuildContext context, {
-        required double size,
-        required FontWeight weight,
-      }) {
+  static TextStyle _base(BuildContext context, {
+    required double size,
+    required FontWeight weight,
+  }) {
     return TextStyle(
       fontSize: MyResponsive.fontSize(value: size, context),
       fontWeight: weight,
     );
   }
-
 
   static TextStyle regular10(BuildContext context) =>
       _base(context, size: 10, weight: FontWeight.w400);
@@ -32,7 +29,6 @@ abstract class AppTextStyles {
 
   static TextStyle regular20(BuildContext context) =>
       _base(context, size: 20, weight: FontWeight.w400);
-
 
   ///?   Medium  (FontWeight.w500)
 
@@ -56,7 +52,6 @@ abstract class AppTextStyles {
 
   static TextStyle medium24(BuildContext context) =>
       _base(context, size: 24, weight: FontWeight.w500);
-
 
   ///?  SemiBold  (FontWeight.w600)
 
@@ -82,6 +77,9 @@ abstract class AppTextStyles {
 
   static TextStyle bold12(BuildContext context) =>
       _base(context, size: 12, weight: FontWeight.w700);
+
+  static TextStyle bold14(BuildContext context) =>
+      _base(context, size: 14, weight: FontWeight.w700);
 
   static TextStyle bold16(BuildContext context) =>
       _base(context, size: 16, weight: FontWeight.w700);
