@@ -9,12 +9,9 @@ import 'svg_wrapper.dart';
 
 class CustomAddToCart extends StatelessWidget {
   final VoidCallback? onTap;
-  final double widthContainer;
-  const CustomAddToCart({
-    super.key,
-    this.onTap,
-    this.widthContainer = 35,
-  });
+  final double heightContainer;
+
+  const CustomAddToCart({super.key, this.onTap, this.heightContainer = 35});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +25,7 @@ class CustomAddToCart extends StatelessWidget {
           onTap: onTap,
 
           child: Container(
-            height: MyResponsive.height(context, value: widthContainer),
+            height: MyResponsive.height(context, value: heightContainer),
 
             padding: MyResponsive.paddingSymmetric(
               context,
@@ -55,12 +52,10 @@ class CustomAddToCart extends StatelessWidget {
                   height: MyResponsive.height(context, value: 24),
                 ),
 
-                SizedBox(
-                  width: MyResponsive.width(context, value: 8),
-                ),
+                SizedBox(width: MyResponsive.width(context, value: 8)),
 
                 Text(
-                  local.add_to_cart,
+                  local.addToCart,
                   style: AppTextStyles.medium14(context).copyWith(
                     color: AppColors.white,
                     fontWeight: FontWeight.bold,

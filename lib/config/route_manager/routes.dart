@@ -14,4 +14,9 @@ abstract class Routes {
   static const String cartRoute = "/cart";
   static const String profileRoute = "/profile";
   static const String bottomNavBarRoute = "/bottomNavBar";
+
+  static const String bestSellerRoute = '/bestSeller';
+  static const String occasionRoute = '/occasion';
+  static const String productDetailsRoute = '/productDetails';
+  static const String categoryScreenRoute = '/categoryScreen';
 }
