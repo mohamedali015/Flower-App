@@ -10,7 +10,6 @@ class ForgetPasswordState extends Equatable {
     this.email,
     this.remainingSeconds = 60,
     this.canResend = false,
-    this.isResendCodeState = false,
   });
 
   final BaseState<String>? sendEmailState;
@@ -25,9 +24,6 @@ class ForgetPasswordState extends Equatable {
 
   final bool canResend; // listen to state when timer is done
 
-  final bool
-  isResendCodeState; // listen to the state when in ForgetPasswordView or in ViewOtp View
-
   ForgetPasswordState copyWith({
     BaseState<String>? sendEmailState,
     BaseState<bool>? verifyOtpState,
@@ -35,7 +31,6 @@ class ForgetPasswordState extends Equatable {
     String? email,
     int? remainingSeconds,
     bool? canResend,
-    bool? isResendCodeState,
   }) {
     return ForgetPasswordState(
       sendEmailState: sendEmailState ?? this.sendEmailState,
@@ -44,7 +39,6 @@ class ForgetPasswordState extends Equatable {
       email: email ?? this.email,
       remainingSeconds: remainingSeconds ?? this.remainingSeconds,
       canResend: canResend ?? this.canResend,
-      isResendCodeState: isResendCodeState ?? this.isResendCodeState,
     );
   }
 
@@ -56,6 +50,5 @@ class ForgetPasswordState extends Equatable {
     email,
     remainingSeconds,
     canResend,
-    isResendCodeState,
   ];
 }

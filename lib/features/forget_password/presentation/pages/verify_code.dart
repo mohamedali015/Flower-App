@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flower_app/core/helpers/app_snack_bar.dart';
-import 'package:flower_app/features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import 'package:flower_app/features/forget_password/presentation/manager/state/forget_password_state.dart';
 import 'package:flower_app/features/forget_password/presentation/widgets/custom_otp_field.dart';
 import 'package:flower_app/features/forget_password/presentation/widgets/otp_resened_btn.dart';
@@ -14,15 +13,28 @@ import '../../../../core/helpers/my_responsive.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_text_styles.dart';
 import '../../../../core/values/app_strings.dart';
+import '../manager/cubit/forget_password_cubit.dart';
 import '../manager/event/forget_password_event.dart';
 
-class VerifyCode extends StatelessWidget {
-  VerifyCode();
+class VerifyCode extends StatefulWidget {
+  const VerifyCode();
 
+  @override
+  State<VerifyCode> createState() => _VerifyCodeState();
+}
+
+class _VerifyCodeState extends State<VerifyCode> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController otpController = TextEditingController();
-  final StreamController<ErrorAnimationType> errorController =
-      StreamController<ErrorAnimationType>.broadcast();
+  late final TextEditingController _otpController;
+
+  late final StreamController<ErrorAnimationType> _errorController;
+
+  @override
+  void initState() {
+    _otpController = TextEditingController();
+    _errorController = StreamController<ErrorAnimationType>.broadcast();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +42,7 @@ class VerifyCode extends StatelessWidget {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
+        // cubit.doEvent(NavigateToVerifyCodeEventSetUp(isResendCodeState: false));
         Navigator.pushNamedAndRemoveUntil(
           context,
           Routes.loginRoute,
@@ -41,9 +54,6 @@ class VerifyCode extends StatelessWidget {
           title: Text(AppStrings.emailVerification),
           leading: IconButton(
             onPressed: () {
-              cubit.doEvent(
-                NavigateToVerifyCodeEventSetUp(isResendCodeState: false),
-              );
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 Routes.loginRoute,
@@ -81,35 +91,31 @@ class VerifyCode extends StatelessWidget {
                   builder: (context, state) {
                     return CustomOtpField(
                       onCompleted: (value) {
-                        cubit.doEvent(
-                          VerifyOtpEvent(
-                            value,
-                            otpController: otpController,
-                            errorController: errorController,
-                          ),
-                        );
+                        cubit.doEvent(VerifyOtpEvent(value));
                       },
-                      errorController: errorController,
-                      controller: otpController,
+                      errorController: _errorController,
+                      controller: _otpController,
                       isLoading: state.verifyOtpState!.isLoading,
                     );
                   },
-                  listenWhen: (previous, current) {
-                    if (current.verifyOtpState?.errorMessage == null) {
-                      return true;
-                    } else {
-                      return false;
-                    }
-                  },
 
+                  ///
+                  listenWhen: (previous, current) {
+                    return (current.verifyOtpState?.isLoading == false &&
+                        previous.verifyOtpState != current.verifyOtpState);
+                  },
                   listener: (BuildContext context, ForgetPasswordState state) {
                     if (state.verifyOtpState?.errorMessage != null) {
+                      print("listend");
                       String msg = state.verifyOtpState!.errorMessage!;
+                      _errorController.add(ErrorAnimationType.shake);
+                      _otpController.clear();
                       AppSnackBar.error(context, msg);
                     } else if (state.verifyOtpState!.isSuccess) {
                       Navigator.pushNamed(
                         context,
                         Routes.forgetPasswordNewPassViewRoute,
+                        arguments: cubit,
                       );
                     }
                   },
