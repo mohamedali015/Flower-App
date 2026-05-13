@@ -1,27 +1,32 @@
 import 'package:flower_app/config/products/data/params/product_query_params.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../config/di/di.dart';
 import '../../../../core/helpers/my_responsive.dart';
+import '../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../core/shared_widgets/custom_grid_view.dart';
 import '../../../../core/shared_widgets/custom_tab_bar.dart';
 import '../../../../core/shared_widgets/product_card.dart';
+import '../../../../core/shared_widgets/svg_wrapper.dart';
+import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
+
+import '../../../../core/utils/app_text_styles.dart';
 import '../manager/category_cubit.dart';
 import '../manager/category_event.dart';
 import '../manager/category_state.dart';
 import '../widget/custom_header_category.dart';
 
-class CategoryScreen extends StatefulWidget {
+class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
 
   @override
-  State<CategoryScreen> createState() => _CategoryScreenState();
-}
-
-class _CategoryScreenState extends State<CategoryScreen> {
-  @override
   Widget build(BuildContext context) {
-    return const _CategoryView();
+    return BlocProvider(
+      create: (_) => getIt<CategoryCubit>()
+        ..doEvent(GetAllCategoryEvent()),
+      child: const _CategoryView(),
+    );
   }
 }
 
@@ -42,9 +47,7 @@ class _CategoryViewState extends State<_CategoryView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CategoryCubit>().doEvent(
         ProductEvent(
-          categoryId: ProductQueryParams(
-            categoryId: null,
-          ),
+          categoryId: ProductQueryParams(categoryId: null),
         ),
       );
     });
@@ -52,14 +55,18 @@ class _CategoryViewState extends State<_CategoryView> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return Padding(
       padding: MyResponsive.paddingSymmetric(
         context,
         horizontal: 15,
-        vertical: 50,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(height: MyResponsive.height(context, value: 50)),
           const CustomHeaderCategory(),
 
           SizedBox(height: MyResponsive.height(context, value: 10)),
@@ -68,11 +75,20 @@ class _CategoryViewState extends State<_CategoryView> {
           BlocBuilder<CategoryCubit, CategoryState>(
             builder: (context, state) {
               if (state.isLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const SizedBox(
+                  height: 60,
+                  child: Center(child: CircularProgressIndicator()),
+                );
               }
 
               if (state.errorMessage != null) {
                 return Center(child: Text(state.errorMessage!));
+              }
+
+              ///? safety reset (optional stability fix)
+              if (state.categories.isNotEmpty &&
+                  selectedIndex >= state.categories.length + 1) {
+                selectedIndex = 0;
               }
 
               return CategoryTabBar(
@@ -83,7 +99,7 @@ class _CategoryViewState extends State<_CategoryView> {
                     selectedIndex = index;
                   });
 
-                  /// ALL tab
+                  ///? ALL tab
                   if (index == 0) {
                     context.read<CategoryCubit>().doEvent(
                       ProductEvent(
@@ -93,10 +109,15 @@ class _CategoryViewState extends State<_CategoryView> {
                     return;
                   }
 
+                  ///? CATEGORY TAB
+                  final categoryId = state.categories.isNotEmpty
+                      ? state.categories[index - 1].id!
+                      : null;
+
                   context.read<CategoryCubit>().doEvent(
                     ProductEvent(
                       categoryId: ProductQueryParams(
-                        categoryId: state.categories[index].id!,
+                        categoryId: categoryId,
                       ),
                     ),
                   );
@@ -110,8 +131,10 @@ class _CategoryViewState extends State<_CategoryView> {
             child: BlocBuilder<CategoryCubit, CategoryState>(
               builder: (context, state) {
                 if (state.isProductLoading) {
-                  return const CircularProgressIndicator(
-                    color: AppColors.primaryColor,
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
                   );
                 }
 
@@ -120,6 +143,7 @@ class _CategoryViewState extends State<_CategoryView> {
                 }
 
                 return CustomGridView(
+
                   itemCount: state.products.length,
                   itemBuilder: (context, index) {
                     final product = state.products[index];
@@ -135,10 +159,35 @@ class _CategoryViewState extends State<_CategoryView> {
                   },
                 );
               },
-              buildWhen: (previous, current) =>
-                  current.products != previous.products,
             ),
           ),
+          SizedBox(height: MyResponsive.height(context, value: 10)),
+          // Container(
+          //   padding: MyResponsive.paddingSymmetric(
+          //     context,
+          //     horizontal: 15,
+          //   ),
+          //   decoration: BoxDecoration(
+          //     color: AppColors.primaryColor,
+          //     borderRadius: BorderRadius.circular(MyResponsive.radius(context, value: 15))
+          //   ),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       SvgWrapper(path: AppAssets.sortIcons,color: AppColors.white,),
+          //       SizedBox(width: MyResponsive.width(context, value: 10)),
+          //       Text(
+          //         local.filter,
+          //         style: AppTextStyles.medium18(context).copyWith(
+          //             color: AppColors.white,
+          //           fontWeight: FontWeight.bold
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // )
         ],
       ),
     );
