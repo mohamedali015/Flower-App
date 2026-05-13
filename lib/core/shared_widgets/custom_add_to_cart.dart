@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../helpers/my_responsive.dart';
 import '../localization/l10n/app_localizations.dart';
 import '../utils/app_assets.dart';
@@ -55,7 +54,8 @@ class CustomAddToCart extends StatelessWidget {
                 SizedBox(width: MyResponsive.width(context, value: 8)),
 
                 Text(
-                  local.addToCart,
+                  'add to cart',
+                  // local.addToCart,
                   style: AppTextStyles.medium14(context).copyWith(
                     color: AppColors.white,
                     fontWeight: FontWeight.bold,

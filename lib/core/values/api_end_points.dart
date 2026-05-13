@@ -10,4 +10,5 @@ abstract class ApiEndPoints {
   static const String getUserData = "/auth/profile-data";
 
   static const String products = "/products";
+  static const String home = "/home";
 }

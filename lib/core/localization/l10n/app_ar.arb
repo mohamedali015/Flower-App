@@ -45,9 +45,17 @@
   "termsText": "بإنشاء حساب، فإنك توافق على",
   "termsAndConditions": "الشروط والأحكام",
   "alreadyHaveAccount": "لديك حساب بالفعل؟",
-     "rememberMe": "تذكرني",
-    "forgetPassword": "نسيت كلمة المرور؟",
-    "doNotHaveAnAccount": "ليس لديك حساب؟",
+  "rememberMe": "تذكرني",
+  "forgetPassword": "نسيت كلمة المرور؟",
+  "doNotHaveAnAccount": "ليس لديك حساب؟",
     "egp": "ج.م",
-    "addToCart": "أضف إلى السلة"
+    "addToCart": "أضف إلى السلة",
+    "search":"أبحث",
+    "deliverTo":"توصيل الي",
+    "categories":"أقسام",
+    "bestSeller":"الأكثر مبيعا",
+    "occasion":"مناسبات",
+        "viewAll":"المزيد"
+ 
+
 }
