@@ -22,15 +22,15 @@ class OccasionsCubit extends Cubit<OccasionsState> {
 
   void doEvent(OccasionsEvents event) {
     switch (event) {
-      case GetOccasionsEvent():
-        _getOccasions();
+      case GetOccasionsCategoriesEvent():
+        _getOccasionsCategories();
 
       case GetOccasionProductsEvent():
         _getOccasionProducts(event);
     }
   }
 
-  Future<void> _getOccasions() async {
+  Future<void> _getOccasionsCategories() async {
     emit(
       state.copyWith(
         occasionsCategoryStateParam: state.occasionsCategoryState.copyWith(

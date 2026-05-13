@@ -1,6 +1,6 @@
 sealed class OccasionsEvents {}
 
-class GetOccasionsEvent extends OccasionsEvents {}
+class GetOccasionsCategoriesEvent extends OccasionsEvents {}
 
 class GetOccasionProductsEvent extends OccasionsEvents {
   final String occasionId;
