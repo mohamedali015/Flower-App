@@ -31,8 +31,6 @@ class ForgetPasswordState extends Equatable {
     String? email,
     int? remainingSeconds,
     bool? canResend,
-    bool? isResendCodeState,
-    bool? isInResendCodeView,
   }) {
     return ForgetPasswordState(
       sendEmailState: sendEmailState ?? this.sendEmailState,
