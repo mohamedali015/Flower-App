@@ -49,5 +49,10 @@
     "forgetPassword": "نسيت كلمة المرور؟",
     "doNotHaveAnAccount": "ليس لديك حساب؟",
     "egp": "ج.م",
-    "addToCart": "أضف إلى السلة"
+    "addToCart": "أضف إلى السلة",
+    "status": "الحالة",
+     "inStock":"متوفر في المخزون",
+     "outOfStock":"غير متوفر",
+    "allPricesIncludeTax" : "جميع الأسعار تشمل الضريبة",
+    "description":"الوصف"
 }

@@ -129,7 +129,6 @@ class _ForgetPasswordEnterEmailViewState
       final String msg = state.sendEmailState!.errorMessage!;
       AppSnackBar.error(context, msg);
     } else {
-      print("navigate");
       Navigator.pushNamed(
         context,
         Routes.forgetPasswordOtpViewRoute,
