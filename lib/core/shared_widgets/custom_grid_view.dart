@@ -17,8 +17,8 @@ class CustomGridView extends StatelessWidget {
     required this.itemBuilder,
     this.crossAxisCount = 2,
     this.spacing = 16,
-    this.childAspectRatio = 0.70,
-    this.padding,
+    this.childAspectRatio = 163 / 229,
+    this.padding = EdgeInsets.zero,
     this.physics,
     this.shrinkWrap = false,
   });

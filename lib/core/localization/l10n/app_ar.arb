@@ -49,5 +49,8 @@
     "forgetPassword": "نسيت كلمة المرور؟",
     "doNotHaveAnAccount": "ليس لديك حساب؟",
     "egp": "ج.م",
-    "addToCart": "أضف إلى السلة"
+    "addToCart": "أضف إلى السلة",
+    "bestSeller": "الأكثر مبيعاً",
+    "bloomExquisiteMessage": "تألقي مع تشكيلتنا الأكثر مبيعاً",
+    "noProductsFound": "لم يتم العثور على منتجات"
 }
