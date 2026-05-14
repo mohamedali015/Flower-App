@@ -28,7 +28,7 @@ class CustomErrorWidget extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           if (haveTryAgain) ...[
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             CustomButton(onPressed: onPressed, title: AppStrings.tryAgain),
           ],
         ],
