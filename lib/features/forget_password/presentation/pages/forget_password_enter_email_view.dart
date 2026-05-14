@@ -96,9 +96,9 @@ class _ForgetPasswordEnterEmailViewState
                       return _buildWidget(state);
                     },
                     listenWhen: (previous, current) {
-                      return previous.sendEmailState != current.sendEmailState;
+                      return (current.sendEmailState?.isLoading == false &&
+                          previous.sendEmailState != current.sendEmailState);
                     },
-
                     listener: (BuildContext context, state) {
                       _listenActions(state, context, cubit);
                     },
@@ -129,12 +129,7 @@ class _ForgetPasswordEnterEmailViewState
       final String msg = state.sendEmailState!.errorMessage!;
       AppSnackBar.error(context, msg);
     } else {
-     /* cubit.doEvent(
-        NavigateToVerifyCodeEventSetUp(
-          email: _emailTextController.text,
-          isResendCodeState: true,
-        ),
-      );*/
+      print("navigate");
       Navigator.pushNamed(
         context,
         Routes.forgetPasswordOtpViewRoute,

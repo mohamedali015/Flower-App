@@ -13,15 +13,9 @@ class SendEmailEvent extends ForgetPasswordEvents {
 
 class VerifyOtpEvent extends ForgetPasswordEvents {
   final String otp;
-  final TextEditingController otpController;
-
-  final StreamController<ErrorAnimationType> errorController;
 
   VerifyOtpEvent(
-    this.otp, {
-    required this.otpController,
-    required this.errorController,
-  });
+    this.otp,);
 }
 
 class ResetPasswordEvent extends ForgetPasswordEvents {

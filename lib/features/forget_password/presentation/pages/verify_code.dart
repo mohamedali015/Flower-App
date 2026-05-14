@@ -37,13 +37,6 @@ class _VerifyCodeState extends State<VerifyCode> {
   }
 
   @override
-  void dispose() {
-    _otpController.dispose();
-    _errorController.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final cubit = context.read<ForgetPasswordCubit>();
     return PopScope(
@@ -61,9 +54,6 @@ class _VerifyCodeState extends State<VerifyCode> {
           title: Text(AppStrings.emailVerification),
           leading: IconButton(
             onPressed: () {
-            /*  cubit.doEvent(
-                NavigateToVerifyCodeEventSetUp(isResendCodeState: false),
-              );*/
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 Routes.loginRoute,
@@ -101,13 +91,7 @@ class _VerifyCodeState extends State<VerifyCode> {
                   builder: (context, state) {
                     return CustomOtpField(
                       onCompleted: (value) {
-                        cubit.doEvent(
-                          VerifyOtpEvent(
-                            value,
-                            otpController: _otpController,
-                            errorController: _errorController,
-                          ),
-                        );
+                        cubit.doEvent(VerifyOtpEvent(value));
                       },
                       errorController: _errorController,
                       controller: _otpController,
@@ -117,21 +101,17 @@ class _VerifyCodeState extends State<VerifyCode> {
 
                   ///
                   listenWhen: (previous, current) {
-                    return previous.verifyOtpState != current.verifyOtpState;
+                    return (current.verifyOtpState?.isLoading == false &&
+                        previous.verifyOtpState != current.verifyOtpState);
                   },
                   listener: (BuildContext context, ForgetPasswordState state) {
                     if (state.verifyOtpState?.errorMessage != null) {
+                      print("listend");
                       String msg = state.verifyOtpState!.errorMessage!;
+                      _errorController.add(ErrorAnimationType.shake);
+                      _otpController.clear();
                       AppSnackBar.error(context, msg);
                     } else if (state.verifyOtpState!.isSuccess) {
-                      /*cubit.doEvent(
-                        NavigateToVerifyCodeEventSetUp(
-                          isResendCodeState: false,
-                        ),
-                      );*/
-                  /*    cubit.doEvent(
-                        NavigateToResetCodeEventSetUp(isInResetCodeState: true),
-                      );*/
                       Navigator.pushNamed(
                         context,
                         Routes.forgetPasswordNewPassViewRoute,
