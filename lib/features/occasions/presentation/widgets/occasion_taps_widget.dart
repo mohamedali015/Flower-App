@@ -28,6 +28,8 @@ class OccasionTabsWidget extends StatelessWidget {
 
         indicatorColor: AppColors.primaryColor,
 
+        indicatorPadding: EdgeInsets.symmetric(horizontal: 2),
+
         indicatorWeight: 4,
 
         indicatorSize: TabBarIndicatorSize.label,
