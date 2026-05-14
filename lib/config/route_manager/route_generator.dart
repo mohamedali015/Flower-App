@@ -95,12 +95,14 @@ abstract class RouteGenerator {
           return CupertinoPageRoute(builder: (_) => BestSellerScreen());
 
         case Routes.occasionRoute:
+          final currentIndex = settings.arguments as int?;
+
           return CupertinoPageRoute(
             builder: (_) => BlocProvider(
               create: (context) =>
                   getIt<OccasionsCubit>()
                     ..doEvent(GetOccasionsCategoriesEvent()),
-              child: OccasionScreen(),
+              child: OccasionScreen(currentIndex: currentIndex),
             ),
           );
 

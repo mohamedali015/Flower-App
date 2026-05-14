@@ -15,7 +15,9 @@ import '../manager/occasions_state.dart';
 import '../widgets/occasion_taps_widget.dart';
 
 class OccasionScreen extends StatefulWidget {
-  const OccasionScreen({super.key});
+  const OccasionScreen({super.key, this.currentIndex});
+
+  final int? currentIndex;
 
   @override
   State<OccasionScreen> createState() => _OccasionScreenState();
@@ -75,12 +77,15 @@ class _OccasionScreenState extends State<OccasionScreen> {
                   occasions.isNotEmpty) {
                 isFirstProductsLoaded = true;
 
+                selectedIndex = widget.currentIndex ?? 0;
+
                 cubit.doEvent(
-                  GetOccasionProductsEvent(occasionId: occasions.first.id),
+                  GetOccasionProductsEvent(
+                    occasionId: occasions[selectedIndex].id,
+                  ),
                 );
               }
             },
-
             builder: (context, state) {
               final occasions = state.occasionsCategoryState.data;
 
@@ -110,6 +115,7 @@ class _OccasionScreenState extends State<OccasionScreen> {
                   const SizedBox(height: 16),
                   OccasionTabsWidget(
                     occasions: occasions,
+                    initialIndex: widget.currentIndex ?? 0,
 
                     onTap: (index) {
                       setState(() {
