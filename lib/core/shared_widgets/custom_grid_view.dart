@@ -1,4 +1,3 @@
-import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flutter/material.dart';
 
 class CustomGridView extends StatelessWidget {
@@ -33,8 +32,8 @@ class CustomGridView extends StatelessWidget {
       padding: padding,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        crossAxisSpacing: MyResponsive.width(context, value: spacing),
-        mainAxisSpacing: MyResponsive.height(context, value: spacing),
+        crossAxisSpacing: spacing,
+        mainAxisSpacing: spacing,
         childAspectRatio: childAspectRatio,
       ),
       itemBuilder: itemBuilder,

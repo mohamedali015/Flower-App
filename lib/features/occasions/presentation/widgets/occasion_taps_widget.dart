@@ -1,4 +1,3 @@
-import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +9,10 @@ class OccasionTabsWidget extends StatelessWidget {
     super.key,
     required this.occasions,
     required this.onTap,
-    required this.selectedIndex,
   });
 
   final List<OccasionEntity> occasions;
-
   final ValueChanged<int> onTap;
-
-  final int selectedIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +26,11 @@ class OccasionTabsWidget extends StatelessWidget {
 
         onTap: onTap,
 
-        indicatorColor: Colors.transparent,
+        indicatorColor: AppColors.primaryColor,
+
+        indicatorWeight: 4,
+
+        indicatorSize: TabBarIndicatorSize.label,
 
         dividerColor: Colors.transparent,
 
@@ -39,51 +38,18 @@ class OccasionTabsWidget extends StatelessWidget {
 
         splashFactory: NoSplash.splashFactory,
 
-        labelPadding: MyResponsive.paddingOnly(context, end: 20),
+        labelColor: AppColors.primaryColor,
 
-        tabs: List.generate(occasions.length, (index) {
-          final isSelected = selectedIndex == index;
+        unselectedLabelColor: AppColors.textHint,
 
-          return Column(
-            mainAxisSize: MainAxisSize.min,
+        labelStyle: AppTextStyles.regular16(context),
 
-            children: [
-              Text(
-                occasions[index].name,
+        unselectedLabelStyle: AppTextStyles.regular16(context),
 
-                style: AppTextStyles.regular16(context).copyWith(
-                  color: isSelected
-                      ? AppColors.primaryColor
-                      : AppColors.textHint,
-                ),
-              ),
-
-              SizedBox(height: MyResponsive.height(context, value: 8)),
-
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-
-                width: isSelected ? MyResponsive.width(context, value: 70) : 0,
-
-                height: MyResponsive.height(context, value: 4),
-
-                decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
-
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(
-                      MyResponsive.radius(context, value: 100),
-                    ),
-
-                    topRight: Radius.circular(
-                      MyResponsive.radius(context, value: 100),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        }),
+        tabs: List.generate(
+          occasions.length,
+          (index) => Tab(text: occasions[index].name),
+        ),
       ),
     );
   }

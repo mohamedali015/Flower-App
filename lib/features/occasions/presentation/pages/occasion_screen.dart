@@ -1,4 +1,3 @@
-import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/shared_widgets/custom_error_widget.dart';
 import 'package:flower_app/core/shared_widgets/custom_loading_indicator.dart';
@@ -51,7 +50,6 @@ class _OccasionScreenState extends State<OccasionScreen> {
 
             children: [
               Text(local.occasion),
-
               Text(
                 local.occasionSubTitle,
 
@@ -64,8 +62,7 @@ class _OccasionScreenState extends State<OccasionScreen> {
         ),
 
         body: Padding(
-          padding: MyResponsive.paddingSymmetric(
-            context,
+          padding: const EdgeInsets.symmetric(
             horizontal: AppConstants.paddingHorizontal,
           ),
 
@@ -110,11 +107,9 @@ class _OccasionScreenState extends State<OccasionScreen> {
 
               return Column(
                 children: [
-                  SizedBox(height: MyResponsive.height(context, value: 16)),
+                  const SizedBox(height: 16),
                   OccasionTabsWidget(
                     occasions: occasions,
-
-                    selectedIndex: selectedIndex,
 
                     onTap: (index) {
                       setState(() {
@@ -129,7 +124,7 @@ class _OccasionScreenState extends State<OccasionScreen> {
                     },
                   ),
 
-                  SizedBox(height: MyResponsive.height(context, value: 16)),
+                  const SizedBox(height: 16),
 
                   Expanded(
                     child: Builder(
@@ -167,16 +162,11 @@ class _OccasionScreenState extends State<OccasionScreen> {
                           child: CustomGridView(
                             physics: const AlwaysScrollableScrollPhysics(),
 
-                            childAspectRatio:
-                                MyResponsive.width(context, value: 163) /
-                                MyResponsive.height(context, value: 229),
+                            childAspectRatio: 163 / 229,
 
                             itemCount: products.length,
 
-                            padding: MyResponsive.paddingOnly(
-                              context,
-                              bottom: 16,
-                            ),
+                            padding: const EdgeInsets.only(bottom: 16),
 
                             itemBuilder: (context, index) {
                               return ProductCard(product: products[index]);

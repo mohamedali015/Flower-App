@@ -1,5 +1,4 @@
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
-import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
@@ -22,31 +21,32 @@ class ProductCard extends StatelessWidget {
     final hasDiscount = product.discount > 0;
 
     return Container(
-      padding: MyResponsive.paddingAll(context, value: 8),
+      padding: EdgeInsets.all(8),
 
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          MyResponsive.radius(context, value: 8),
-        ),
+        borderRadius: BorderRadius.circular(8),
 
-        border: Border.all(color: AppColors.hintTextGray, width: 1.2),
+        border: Border.all(color: AppColors.hintTextGray, width: .5),
       ),
 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
-          CachedNetworkImageWrapper(
-            imagePath: product.imgCover,
+          Expanded(
+            // aspectRatio: 147 / 131,
+            child: CachedNetworkImageWrapper(
+              imagePath: product.imgCover,
 
-            height: MyResponsive.height(context, value: 130),
-
-            width: double.infinity,
-
-            fit: BoxFit.cover,
+              // height: MyResponsive.height(context, value: 130),
+              //
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
 
-          SizedBox(height: MyResponsive.height(context, value: 8)),
+          // SizedBox(height: MyResponsive.height(context, value: 8)),
+          SizedBox(height: 8),
 
           Text(
             product.title,
@@ -60,7 +60,7 @@ class ProductCard extends StatelessWidget {
             ).copyWith(color: AppColors.darkBase),
           ),
 
-          SizedBox(height: MyResponsive.height(context, value: 4)),
+          SizedBox(height: 4),
 
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -79,7 +79,7 @@ class ProductCard extends StatelessWidget {
               ),
 
               if (hasDiscount) ...[
-                SizedBox(width: MyResponsive.width(context, value: 8)),
+                SizedBox(width: 8),
 
                 Text(
                   "${product.price}",
@@ -91,7 +91,7 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
 
-                SizedBox(width: MyResponsive.width(context, value: 8)),
+                SizedBox(width: 8),
 
                 Text(
                   "${product.discount}%",
@@ -103,7 +103,7 @@ class ProductCard extends StatelessWidget {
               ],
             ],
           ),
-          SizedBox(height: MyResponsive.height(context, value: 8)),
+          SizedBox(height: 8),
 
           CustomAddToCart(onTap: onAddToCart),
         ],
