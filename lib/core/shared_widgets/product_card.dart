@@ -30,7 +30,7 @@ class ProductCard extends StatelessWidget {
         );
       },
       child: Container(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
 
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -43,19 +43,14 @@ class ProductCard extends StatelessWidget {
 
           children: [
             Expanded(
-              // aspectRatio: 147 / 131,
               child: CachedNetworkImageWrapper(
                 imagePath: product.imgCover,
-
-                // height: MyResponsive.height(context, value: 130),
-                //
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
 
-            // SizedBox(height: MyResponsive.height(context, value: 8)),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
 
             Text(
               product.title,
@@ -69,7 +64,7 @@ class ProductCard extends StatelessWidget {
               ).copyWith(color: AppColors.darkBase),
             ),
 
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
 
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -88,7 +83,7 @@ class ProductCard extends StatelessWidget {
                 ),
 
                 if (hasDiscount) ...[
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
 
                   Text(
                     "${product.price}",
@@ -100,7 +95,7 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
 
                   Text(
                     "${product.discount}%",
@@ -112,7 +107,7 @@ class ProductCard extends StatelessWidget {
                 ],
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
 
             CustomAddToCart(onTap: onAddToCart),
           ],
