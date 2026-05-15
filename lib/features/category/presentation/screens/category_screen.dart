@@ -3,15 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/di/di.dart';
 import '../../../../core/helpers/my_responsive.dart';
-import '../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../core/shared_widgets/custom_grid_view.dart';
 import '../../../../core/shared_widgets/custom_tab_bar.dart';
 import '../../../../core/shared_widgets/product_card.dart';
-import '../../../../core/shared_widgets/svg_wrapper.dart';
-import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
-
-import '../../../../core/utils/app_text_styles.dart';
 import '../manager/category_cubit.dart';
 import '../manager/category_event.dart';
 import '../manager/category_state.dart';
@@ -23,8 +18,7 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<CategoryCubit>()
-        ..doEvent(GetAllCategoryEvent()),
+      create: (_) => getIt<CategoryCubit>()..doEvent(GetAllCategoryEvent()),
       child: const _CategoryView(),
     );
   }
@@ -46,21 +40,15 @@ class _CategoryViewState extends State<_CategoryView> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CategoryCubit>().doEvent(
-        ProductEvent(
-          categoryId: ProductQueryParams(categoryId: null),
-        ),
+        ProductEvent(categoryId: ProductQueryParams(categoryId: null)),
       );
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     return Padding(
-      padding: MyResponsive.paddingSymmetric(
-        context,
-        horizontal: 15,
-      ),
+      padding: MyResponsive.paddingSymmetric(context, horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -116,9 +104,7 @@ class _CategoryViewState extends State<_CategoryView> {
 
                   context.read<CategoryCubit>().doEvent(
                     ProductEvent(
-                      categoryId: ProductQueryParams(
-                        categoryId: categoryId,
-                      ),
+                      categoryId: ProductQueryParams(categoryId: categoryId),
                     ),
                   );
                 },
@@ -143,19 +129,11 @@ class _CategoryViewState extends State<_CategoryView> {
                 }
 
                 return CustomGridView(
-
                   itemCount: state.products.length,
                   itemBuilder: (context, index) {
                     final product = state.products[index];
 
-                    return ProductCard(
-                      name: product.title,
-                      image: product.imgCover,
-                      price: product.price,
-                      priceAfterDiscount: product.priceAfterDiscount,
-                      discount: product.discount,
-                      onAddToCart: () {},
-                    );
+                    return ProductCard(product: product, onAddToCart: () {});
                   },
                 );
               },

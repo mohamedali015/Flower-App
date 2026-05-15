@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 part 'all_categories_response.g.dart';
+
 @JsonSerializable()
 class AllCategoriesResponse {
   @JsonKey(name: "_id")
@@ -20,7 +21,7 @@ class AllCategoriesResponse {
   @JsonKey(name: "productsCount")
   final int? productsCount;
 
-  AllCategoriesResponse ({
+  AllCategoriesResponse({
     this.id,
     this.name,
     this.slug,
