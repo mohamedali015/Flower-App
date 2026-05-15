@@ -64,5 +64,9 @@
     "categories":"Categories",
     "bestSeller":"Best seller",
     "occasion":"Occasion",
-    "viewAll":"View All"
+    "viewAll":"View All",
+    "addToCart": "Add to cart",
+    "bestSeller": "Best Seller",
+      "bloomExquisiteMessage": "Bloom with our exquisite best sellers",
+      "noProductsFound": "No Products Found"
 }

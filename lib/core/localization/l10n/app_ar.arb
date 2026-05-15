@@ -68,7 +68,11 @@
     "categories":"أقسام",
     "bestSeller":"الأكثر مبيعا",
     "occasion":"مناسبات",
-        "viewAll":"المزيد"
+        "viewAll":"المزيد",
 
 
+    "addToCart": "أضف إلى السلة",
+    "bestSeller": "الأكثر مبيعاً",
+    "bloomExquisiteMessage": "تألقي مع تشكيلتنا الأكثر مبيعاً",
+    "noProductsFound": "لم يتم العثور على منتجات"
 }
