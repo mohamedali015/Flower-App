@@ -116,10 +116,12 @@ class _OccasionScreenState extends State<OccasionScreen> {
                   occasions: occasions,
                   initialIndex: widget.currentIndex ?? 0,
 
-                  onTap: (index) {
-                    setState(() {
-                      selectedIndex = index;
-                    });
+                    onTap: (index) {
+                      if (selectedIndex == index) return;
+
+                      setState(() {
+                        selectedIndex = index;
+                      });
 
                     cubit.doEvent(
                       GetOccasionProductsEvent(
