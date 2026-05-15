@@ -1,8 +1,3 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-
 sealed class ForgetPasswordEvents {}
 
 class SendEmailEvent extends ForgetPasswordEvents {
@@ -14,8 +9,7 @@ class SendEmailEvent extends ForgetPasswordEvents {
 class VerifyOtpEvent extends ForgetPasswordEvents {
   final String otp;
 
-  VerifyOtpEvent(
-    this.otp,);
+  VerifyOtpEvent(this.otp);
 }
 
 class ResetPasswordEvent extends ForgetPasswordEvents {

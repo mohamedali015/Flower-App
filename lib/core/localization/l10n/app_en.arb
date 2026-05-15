@@ -57,6 +57,11 @@
   "forgetPassword": "Forgot password?",
   "doNotHaveAnAccount": "Don’t have an account?",
 
+  "search": "Search",
+  "filter": "Filter",
+
+  "addToCart": "Add to cart",
+
   "egp": "EGP",
 
   "status": "Status",
@@ -66,45 +71,15 @@
   "allPricesIncludeTax": "All prices include tax",
   "description": "Description",
 
-  "search": "Search",
-  "filter": "Filter",
-
-  "addToCart": "Add to cart",
-
-  "bestSeller": "Best seller",
+  "bestSeller": "Best Seller",
   "bloomExquisiteMessage": "Bloom with our exquisite best sellers",
 
   "occasion": "Occasion",
   "occasionSubTitle": "Bloom with our exquisite best sellers",
 
   "noOccasionsFound": "No occasions found",
-  "noProductsFound": "No products found",
+  "noProductsFound": "No Products Found",
 
   "deliverTo": "Deliver to",
   "viewAll": "View All"
-    "rememberMe": "Remember me",
-    "forgetPassword": "Forgot password?",
-    "doNotHaveAnAccount": "Don’t have an account?",
-
-    "search": "Search",
-      "filter": "Filter",
-      "addToCart": "Add to cart",
-    "doNotHaveAnAccount": "Don’t have an account?",
-    "egp": "EGP",
-    "addToCart": "Add to cart",
-    "occasion" : "Occasion",
-    "occasionSubTitle" : "Bloom with our exquisite best sellers",
-    "noOccasionsFound": "No occasions found",
-    "noProductsFound": "No products found",
-    "addToCart": "Add to cart",
-    "search": "Search",
-    "deliverTo":"Deliver to",
-    "categories":"Categories",
-    "bestSeller":"Best seller",
-    "occasion":"Occasion",
-    "viewAll":"View All",
-    "addToCart": "Add to cart",
-    "bestSeller": "Best Seller",
-      "bloomExquisiteMessage": "Bloom with our exquisite best sellers",
-      "noProductsFound": "No Products Found"
 }
