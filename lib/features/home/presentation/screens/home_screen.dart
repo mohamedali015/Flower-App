@@ -12,7 +12,6 @@ import 'package:flower_app/features/home/presentation/widgets/occasions/occasion
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -63,13 +62,12 @@ class HomeScreen extends StatelessWidget {
                                     "categoryIndex": 0,
                                   },
                                 );
-                              }
+                              },
                             ),
                             CategoriesList(
                               categories: home.categories,
 
                               onPressed: (index) {
-
                                 Navigator.pushReplacementNamed(
                                   context,
                                   Routes.bottomNavBarRoute,

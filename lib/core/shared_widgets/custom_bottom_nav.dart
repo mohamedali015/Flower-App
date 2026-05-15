@@ -20,13 +20,10 @@ class CustomBottomNavBar extends StatefulWidget {
   final int categoryIndex;
 
   @override
-  State<CustomBottomNavBar> createState() =>
-      _CustomBottomNavBarState();
+  State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
 }
 
-class _CustomBottomNavBarState
-    extends State<CustomBottomNavBar> {
-
+class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   late int currentIndex;
 
   late int selectedCategoryIndex;
@@ -37,24 +34,17 @@ class _CustomBottomNavBarState
 
     currentIndex = widget.initialIndex;
 
-    selectedCategoryIndex =
-        widget.categoryIndex;
+    selectedCategoryIndex = widget.categoryIndex;
   }
 
   @override
   Widget build(BuildContext context) {
-
-    final local =
-    AppLocalizations.of(context)!;
+    final local = AppLocalizations.of(context)!;
 
     final screens = [
-
       const HomeScreen(),
 
-      CategoryScreen(
-        initialIndex:
-        selectedCategoryIndex,
-      ),
+      CategoryScreen(initialIndex: selectedCategoryIndex),
 
       const CartScreen(),
 
@@ -62,19 +52,12 @@ class _CustomBottomNavBarState
     ];
 
     return Scaffold(
+      body: IndexedStack(index: currentIndex, children: screens),
 
-      body: IndexedStack(
-        index: currentIndex,
-        children: screens,
-      ),
-
-      bottomNavigationBar:
-      BottomNavigationBar(
-
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
 
         onTap: (index) {
-
           setState(() {
             currentIndex = index;
           });
@@ -82,14 +65,11 @@ class _CustomBottomNavBarState
 
         type: BottomNavigationBarType.fixed,
 
-        backgroundColor:
-        AppColors.white,
+        backgroundColor: AppColors.white,
 
-        selectedItemColor:
-        AppColors.primaryColor,
+        selectedItemColor: AppColors.primaryColor,
 
-        unselectedItemColor:
-        AppColors.disabledGray,
+        unselectedItemColor: AppColors.disabledGray,
 
         showUnselectedLabels: true,
 
@@ -98,11 +78,8 @@ class _CustomBottomNavBarState
         unselectedFontSize: 12,
 
         items: [
-
           BottomNavigationBarItem(
-
             icon: SvgWrapper(
-
               path: AppAssets.homeIcon,
 
               width: 24,
@@ -118,9 +95,7 @@ class _CustomBottomNavBarState
           ),
 
           BottomNavigationBarItem(
-
             icon: SvgWrapper(
-
               path: AppAssets.categoryIcon,
 
               width: 24,
@@ -136,9 +111,7 @@ class _CustomBottomNavBarState
           ),
 
           BottomNavigationBarItem(
-
             icon: SvgWrapper(
-
               path: AppAssets.shoppingIcon,
 
               width: 24,
@@ -154,9 +127,7 @@ class _CustomBottomNavBarState
           ),
 
           BottomNavigationBarItem(
-
             icon: SvgWrapper(
-
               path: AppAssets.personIcon,
 
               width: 24,
