@@ -61,4 +61,9 @@
     "bestSeller": "الأكثر مبيعاً",
     "bloomExquisiteMessage": "تألقي مع تشكيلتنا الأكثر مبيعاً",
     "noProductsFound": "لم يتم العثور على منتجات"
+    "addToCart": "أضف إلى السلة",
+    "occasion": "المناسبات",
+    "occasionSubTitle": "تألّق مع مجموعتنا المميزة من الأكثر مبيعًا",
+    "noOccasionsFound": "لا توجد مناسبات",
+    "noProductsFound": "لا توجد منتجات"
 }

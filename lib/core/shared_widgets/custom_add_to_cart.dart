@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../localization/l10n/app_localizations.dart';
 import '../utils/app_assets.dart';
 import '../utils/app_colors.dart';

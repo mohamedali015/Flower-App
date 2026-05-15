@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Flower APP',
 
-            initialRoute: Routes.productDetailsRoute,
+            initialRoute: Routes.splashRoute,
             onGenerateRoute: RouteGenerator.getRoute,
             locale: const Locale("en"),
             theme: AppTheme.appTheme(context),

@@ -59,4 +59,13 @@
     "bestSeller": "Best Seller",
       "bloomExquisiteMessage": "Bloom with our exquisite best sellers",
       "noProductsFound": "No Products Found"
+    "rememberMe": "Remember me",
+    "forgetPassword": "Forgot password?",
+    "doNotHaveAnAccount": "Don’t have an account?",
+    "egp": "EGP",
+    "addToCart": "Add to cart",
+    "occasion" : "Occasion",
+    "occasionSubTitle" : "Bloom with our exquisite best sellers",
+    "noOccasionsFound": "No occasions found",
+    "noProductsFound": "No products found"
 }
