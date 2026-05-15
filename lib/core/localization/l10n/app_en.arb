@@ -19,12 +19,14 @@
   "errors_error503": "Service unavailable.",
   "errors_error504": "Gateway timeout.",
   "errors_defaultError": "An error occurred. Please try again.",
-  "login":"Login",
+
+  "login": "Login",
 
   "cart": "Cart",
   "categories": "Categories",
   "home": "Home",
   "profile": "Profile",
+
   "signUp": "Sign up",
   "firstName": "First name",
   "enterFirstName": "Enter first name",
@@ -38,34 +40,39 @@
   "confirmPasswordHint": "Confirm password",
   "phoneNumber": "Phone number",
   "enterPhoneNumber": "Enter phone number",
+
   "gender": "Gender",
   "female": "Female",
   "male": "Male",
+
   "termsText": "Creating an account, you agree to our",
   "termsAndConditions": "Terms & Conditions",
+
   "alreadyHaveAccount": "Already have an account?",
-   "rememberMe": "Remember me",
-   "forgetPassword": "Forgot password?",
-   "doNotHaveAnAccount": "Don’t have an account?",
-   "egp": "EGP",
-   "status": "Status",
-   "inStock":"In Stock",
-   "outOfStock":"Out of Stock",
-   "allPricesIncludeTax" : "All prices include tax",
-   "description":"Description",
-    "search": "Search",
-      "filter": "Filter",
-    "addToCart": "Add to cart",
-    "bestSeller": "Best Seller",
-      "bloomExquisiteMessage": "Bloom with our exquisite best sellers",
-      "noProductsFound": "No Products Found"
-    "rememberMe": "Remember me",
-    "forgetPassword": "Forgot password?",
-    "doNotHaveAnAccount": "Don’t have an account?",
-    "egp": "EGP",
-    "addToCart": "Add to cart",
-    "occasion" : "Occasion",
-    "occasionSubTitle" : "Bloom with our exquisite best sellers",
-    "noOccasionsFound": "No occasions found",
-    "noProductsFound": "No products found"
+  "rememberMe": "Remember me",
+  "forgetPassword": "Forgot password?",
+  "doNotHaveAnAccount": "Don’t have an account?",
+
+  "egp": "EGP",
+
+  "status": "Status",
+  "inStock": "In Stock",
+  "outOfStock": "Out of Stock",
+
+  "allPricesIncludeTax": "All prices include tax",
+  "description": "Description",
+
+  "search": "Search",
+  "filter": "Filter",
+
+  "addToCart": "Add to cart",
+
+  "bestSeller": "Best Seller",
+  "bloomExquisiteMessage": "Bloom with our exquisite best sellers",
+
+  "occasion": "Occasion",
+  "occasionSubTitle": "Bloom with our exquisite best sellers",
+
+  "noOccasionsFound": "No occasions found",
+  "noProductsFound": "No products found"
 }

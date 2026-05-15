@@ -143,17 +143,13 @@ abstract class RouteGenerator {
   }
 }
 
-
-
-
-
 final product = ProductEntity(
   id: '1',
   title: 'Rose Bouquet',
   slug: 'rose-bouquet',
   description: 'Beautiful bouquet of fresh roses',
   imgCover:
-  'https://flower.elevateegy.com/uploads/66c36d5d-c067-46d9-b339-d81be57e0149-image_one.png',
+      'https://flower.elevateegy.com/uploads/66c36d5d-c067-46d9-b339-d81be57e0149-image_one.png',
   images: [
     'https://flower.elevateegy.com/uploads/66c36d5d-c067-46d9-b339-d81be57e0149-image_one.png',
     'https://flower.elevateegy.com/uploads/f27e1903-74cf-4ed6-a42c-e43e35b6dd14-image_three.png',

@@ -19,7 +19,8 @@
   "errors_error503": "الخدمة غير متاحة.",
   "errors_error504": "انتهت مهلة البوابة.",
   "errors_defaultError": "حدث خطأ. حاول مرة أخرى.",
-  "login":"تسجيل الدخول",
+
+  "login": "تسجيل الدخول",
 
   "cart": "السلة",
   "categories": "التصنيفات",
@@ -31,39 +32,51 @@
   "enterFirstName": "أدخل الاسم الأول",
   "lastName": "اسم العائلة",
   "enterLastName": "أدخل اسم العائلة",
+
   "email": "البريد الإلكتروني",
   "enterEmail": "أدخل بريدك الإلكتروني",
+
   "password": "كلمة المرور",
   "enterPassword": "أدخل كلمة المرور",
+
   "confirmPassword": "تأكيد كلمة المرور",
   "confirmPasswordHint": "أعد إدخال كلمة المرور",
+
   "phoneNumber": "رقم الهاتف",
   "enterPhoneNumber": "أدخل رقم الهاتف",
+
   "gender": "النوع",
   "female": "أنثى",
   "male": "ذكر",
+
   "termsText": "بإنشاء حساب، فإنك توافق على",
   "termsAndConditions": "الشروط والأحكام",
-  "alreadyHaveAccount": "لديك حساب بالفعل؟",
-     "rememberMe": "تذكرني",
-    "forgetPassword": "نسيت كلمة المرور؟",
-    "doNotHaveAnAccount": "ليس لديك حساب؟",
 
-     "search": "بحث",
-      "filter": "تصفية",
-      "addToCart": "أضف إلى السلة",
-    "egp": "ج.م",
-    "status": "الحالة",
-     "inStock":"متوفر في المخزون",
-     "outOfStock":"غير متوفر",
-    "allPricesIncludeTax" : "جميع الأسعار تشمل الضريبة",
-    "description":"الوصف",
-    "bestSeller": "الأكثر مبيعاً",
-    "bloomExquisiteMessage": "تألقي مع تشكيلتنا الأكثر مبيعاً",
-    "noProductsFound": "لم يتم العثور على منتجات"
-    "addToCart": "أضف إلى السلة",
-    "occasion": "المناسبات",
-    "occasionSubTitle": "تألّق مع مجموعتنا المميزة من الأكثر مبيعًا",
-    "noOccasionsFound": "لا توجد مناسبات",
-    "noProductsFound": "لا توجد منتجات"
+  "alreadyHaveAccount": "لديك حساب بالفعل؟",
+  "rememberMe": "تذكرني",
+  "forgetPassword": "نسيت كلمة المرور؟",
+  "doNotHaveAnAccount": "ليس لديك حساب؟",
+
+  "search": "بحث",
+  "filter": "تصفية",
+
+  "addToCart": "أضف إلى السلة",
+
+  "egp": "ج.م",
+
+  "status": "الحالة",
+  "inStock": "متوفر في المخزون",
+  "outOfStock": "غير متوفر",
+
+  "allPricesIncludeTax": "جميع الأسعار تشمل الضريبة",
+  "description": "الوصف",
+
+  "bestSeller": "الأكثر مبيعاً",
+  "bloomExquisiteMessage": "تألقي مع تشكيلتنا الأكثر مبيعاً",
+
+  "occasion": "المناسبات",
+  "occasionSubTitle": "تألّق مع مجموعتنا المميزة من الأكثر مبيعًا",
+
+  "noOccasionsFound": "لا توجد مناسبات",
+  "noProductsFound": "لا توجد منتجات"
 }
