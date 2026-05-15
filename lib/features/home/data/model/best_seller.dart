@@ -37,11 +37,11 @@ class BestSeller {
   @JsonKey(name: "isSuperAdmin")
   final bool? isSuperAdmin;
   @JsonKey(name: "createdAt")
-  final String? createdAt;
+  DateTime? createdAt;
   @JsonKey(name: "updatedAt")
-  final String? updatedAt;
+  DateTime? updatedAt;
   @JsonKey(name: "__v")
-  final int? V;
+  num? V;
   @JsonKey(name: "id")
   final String? id;
 

@@ -20,8 +20,8 @@ class ProductEntity extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final num v;
-  final String favoriteId;
-  final bool isInWishlist;
+  final String? favoriteId;
+  final bool? isInWishlist;
 
   const ProductEntity({
     required this.id,

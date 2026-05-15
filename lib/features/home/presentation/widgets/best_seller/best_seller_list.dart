@@ -1,10 +1,11 @@
+import 'package:flower_app/config/products/domain/entities/product_entity.dart';
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
-import 'package:flower_app/features/home/domain/entities/best_seller_entity.dart';
 import 'package:flower_app/features/home/presentation/widgets/home_list_card.dart';
 import 'package:flutter/widgets.dart';
 
 class BestSellerList extends StatelessWidget {
-  final List<BestSellerEntity> items;
+  final List<ProductEntity> items;
   const BestSellerList({super.key, required this.items});
 
   @override
@@ -17,10 +18,19 @@ class BestSellerList extends StatelessWidget {
         itemCount: itemCount,
         itemBuilder: (context, index) {
           final item = items[index];
-          return HomeListCard(
-            title: item.title,
-            price: item.price,
-            image: item.imgCover,
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                Routes.productDetailsRoute,
+                arguments: item,
+              );
+            },
+            child: HomeListCard(
+              title: item.title,
+              price: item.price.toInt(),
+              image: item.imgCover,
+            ),
           );
         },
       ),
