@@ -54,4 +54,14 @@
    "outOfStock":"Out of Stock",
    "allPricesIncludeTax" : "All prices include tax",
    "description":"Description"
+    "rememberMe": "Remember me",
+    "forgetPassword": "Forgot password?",
+    "doNotHaveAnAccount": "Don’t have an account?",
+
+    "search": "Search",
+      "filter": "Filter",
+      "addToCart": "Add to cart",
+    "doNotHaveAnAccount": "Don’t have an account?",
+    "egp": "EGP",
+    "addToCart": "Add to cart"
 }

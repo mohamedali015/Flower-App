@@ -8,6 +8,6 @@ abstract class ApiEndPoints {
   static const String verifyResetCode = "/auth/verifyResetCode";
 
   static const String getUserData = "/auth/profile-data";
-
+  static const String categories = "/categories";
   static const String products = "/products";
 }

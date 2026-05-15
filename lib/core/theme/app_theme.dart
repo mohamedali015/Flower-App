@@ -83,21 +83,21 @@ class AppTheme {
       ///?  Search Bar
       searchBarTheme: SearchBarThemeData(
         hintStyle: WidgetStatePropertyAll(
-          AppTextStyles.medium14(context).copyWith(color: AppColors.grayDark),
+          AppTextStyles.medium14(context).copyWith(color: AppColors.textHint,fontWeight: FontWeight.bold),
         ),
         backgroundColor: WidgetStateProperty.all(AppColors.background),
         elevation: WidgetStateProperty.all(0),
         padding: WidgetStateProperty.all(
-          MyResponsive.paddingSymmetric(horizontal: 16, vertical: 4, context),
+          MyResponsive.paddingSymmetric(horizontal: 16,context),
         ),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
-              MyResponsive.radius(value: 20, context),
+              MyResponsive.radius(value: 12, context),
             ),
             side: BorderSide(
-              color: AppColors.grayDark,
-              width: MyResponsive.width(value: 1.2, context),
+              color: AppColors.textHint,
+              width: MyResponsive.width(value: 1.5, context),
             ),
           ),
         ),

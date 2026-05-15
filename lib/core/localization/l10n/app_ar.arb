@@ -48,6 +48,11 @@
      "rememberMe": "تذكرني",
     "forgetPassword": "نسيت كلمة المرور؟",
     "doNotHaveAnAccount": "ليس لديك حساب؟",
+
+     "search": "بحث",
+      "filter": "تصفية",
+      "addToCart": "أضف إلى السلة",
+    "doNotHaveAnAccount": "ليس لديك حساب؟",
     "egp": "ج.م",
     "addToCart": "أضف إلى السلة",
     "status": "الحالة",

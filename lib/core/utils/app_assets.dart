@@ -12,4 +12,7 @@ abstract class AppAssets {
   static const String addCartIcon = "$_baseIconsPath/add_cart.svg";
 
   static const String backBtn = "$_baseIconsPath/back_btn.svg";
+  static const String filterIcon = "$_baseIconsPath/filter.svg";
+  static const String sortIcons = "$_baseIconsPath/sort.svg";
+
 }
