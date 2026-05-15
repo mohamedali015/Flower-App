@@ -28,14 +28,17 @@ class CustomHeaderCategory extends StatelessWidget {
         GestureDetector(
           onTap: () {},
           child: Container(
-            height: MyResponsive.height(context, value: 45),
-            width: MyResponsive.width(context, value: 45),
+            padding: MyResponsive.paddingSymmetric(
+              context,
+              horizontal: 23,
+              vertical: 18,
+            ),
             alignment: Alignment.center,
 
             decoration: BoxDecoration(
               color: AppColors.background,
               borderRadius: BorderRadius.circular(
-                MyResponsive.radius(context, value: 12),
+                MyResponsive.radius(context, value: 8),
               ),
 
               border: Border.all(
@@ -46,8 +49,8 @@ class CustomHeaderCategory extends StatelessWidget {
 
             child: SvgWrapper(
               path: AppAssets.sortIcons,
-              width: MyResponsive.width(value: 25, context),
-              height: MyResponsive.height(value: 25, context),
+              width: MyResponsive.width(value: 18, context),
+              height: MyResponsive.height(value: 12, context),
               fit: BoxFit.contain,
               color: AppColors.textHint,
             ),

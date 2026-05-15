@@ -20,15 +20,11 @@ import '../../features/auth/presentation/manager/login/login_cubit.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
 import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
-import '../../features/cart/presentation/screens/cart_screen.dart';
-import '../../features/category/presentation/screens/category_screen.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
 import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
-import '../../features/home/presentation/screens/home_screen.dart';
-import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/splash/splash_screen.dart';
 
 abstract class RouteGenerator {
@@ -84,35 +80,17 @@ abstract class RouteGenerator {
                 BlocProvider.value(value: cubit, child: const ResetPassword()),
           );
 
-        case Routes.homeRoute:
-          return CupertinoPageRoute(builder: (_) => HomeScreen());
-        case Routes.categoryRoute:
-          return CupertinoPageRoute(builder: (_) => CategoryScreen());
-        case Routes.cartRoute:
-          return CupertinoPageRoute(builder: (_) => CartScreen());
-        case Routes.profileRoute:
-          return CupertinoPageRoute(builder: (_) => ProfileScreen());
         case Routes.bottomNavBarRoute:
-
-          final args =
-          settings.arguments
-          as Map<String, dynamic>?;
+          final args = settings.arguments as Map<String, dynamic>?;
 
           return CupertinoPageRoute(
-
             builder: (_) => BlocProvider(
-
-              create: (context) =>
-              getIt<HomeCubit>()
-                ..doEvents(GetHomeEvent()),
+              create: (context) => getIt<HomeCubit>()..doEvents(GetHomeEvent()),
 
               child: CustomBottomNavBar(
+                initialIndex: args?['initialIndex'] ?? 0,
 
-                initialIndex:
-                args?['initialIndex'] ?? 0,
-
-                categoryIndex:
-                args?['categoryIndex'] ?? 0,
+                categoryIndex: args?['categoryIndex'] ?? 0,
               ),
             ),
           );

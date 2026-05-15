@@ -1,7 +1,10 @@
 import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
+import 'package:flower_app/core/shared_widgets/custom_error_widget.dart';
+import 'package:flower_app/core/shared_widgets/custom_loading_indicator.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
+import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_state.dart';
 import 'package:flower_app/features/home/presentation/widgets/best_seller/best_seller_list.dart';
 import 'package:flower_app/features/home/presentation/widgets/categories/categories_list.dart';
@@ -36,78 +39,81 @@ class HomeScreen extends StatelessWidget {
                 child: BlocBuilder<HomeCubit, HomeState>(
                   builder: (context, state) {
                     if (state is HomeLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-
-                    if (state is HomeFailure) {
-                      return Center(child: Text(state.errorMessage));
-                    }
-
-                    if (state is HomeSuccess) {
+                      return const CustomLoadingIndicator();
+                    } else if (state is HomeFailure) {
+                      return CustomErrorWidget(
+                        errorMessage: state.errorMessage,
+                      );
+                    } else if (state is HomeSuccess) {
                       final home = state.homeResponseEntity;
 
-                      return SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            /// Categories
-                            HeadlineWidget(
-                              local: local,
-                              title: local.categories,
-                              onViewAllPressed: () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  Routes.bottomNavBarRoute,
-                                  arguments: {
-                                    "initialIndex": 1,
-                                    "categoryIndex": 0,
-                                  },
-                                );
-                              },
-                            ),
-                            CategoriesList(
-                              categories: home.categories,
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          context.read<HomeCubit>().doEvents(GetHomeEvent());
+                        },
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              /// Categories
+                              HeadlineWidget(
+                                local: local,
+                                title: local.categories,
+                                onViewAllPressed: () {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    Routes.bottomNavBarRoute,
+                                    arguments: {
+                                      "initialIndex": 1,
+                                      "categoryIndex": 0,
+                                    },
+                                  );
+                                },
+                              ),
+                              CategoriesList(
+                                categories: home.categories,
 
-                              onPressed: (index) {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  Routes.bottomNavBarRoute,
+                                onPressed: (index) {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    Routes.bottomNavBarRoute,
 
-                                  arguments: {
-                                    "initialIndex": 1,
-                                    "categoryIndex": index + 1,
-                                  },
-                                );
-                              },
-                            ),
+                                    arguments: {
+                                      "initialIndex": 1,
+                                      "categoryIndex": index + 1,
+                                    },
+                                  );
+                                },
+                              ),
 
-                            /// Best Seller
-                            HeadlineWidget(
-                              local: local,
+                              /// Best Seller
+                              HeadlineWidget(
+                                local: local,
 
-                              title: local.bestSeller,
-                              onViewAllPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  Routes.bestSellerRoute,
-                                );
-                              },
-                            ),
-                            BestSellerList(items: home.bestSeller),
+                                title: local.bestSeller,
+                                onViewAllPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.bestSellerRoute,
+                                  );
+                                },
+                              ),
+                              BestSellerList(items: home.bestSeller),
 
-                            /// Occasions
-                            HeadlineWidget(
-                              local: local,
+                              /// Occasions
+                              HeadlineWidget(
+                                local: local,
 
-                              title: local.occasion,
-                              onViewAllPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  Routes.occasionRoute,
-                                );
-                              },
-                            ),
-                            OccasionsList(items: home.occasions),
-                          ],
+                                title: local.occasion,
+                                onViewAllPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.occasionRoute,
+                                  );
+                                },
+                              ),
+                              OccasionsList(items: home.occasions),
+                            ],
+                          ),
                         ),
                       );
                     }

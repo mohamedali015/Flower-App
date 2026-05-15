@@ -35,7 +35,8 @@ class CustomAddToCart extends StatelessWidget {
 
               children: [
                 const SvgWrapper(
-                  path: AppAssets.addCartIcon,
+                  path: AppAssets.cartIcon,
+                  color: AppColors.white,
                   fit: BoxFit.cover,
                   width: 15,
                   height: 15,

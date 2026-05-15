@@ -83,12 +83,14 @@ class AppTheme {
       ///?  Search Bar
       searchBarTheme: SearchBarThemeData(
         hintStyle: WidgetStatePropertyAll(
-          AppTextStyles.medium14(context).copyWith(color: AppColors.textHint,fontWeight: FontWeight.bold),
+          AppTextStyles.medium14(
+            context,
+          ).copyWith(color: AppColors.textHint, fontWeight: FontWeight.bold),
         ),
         backgroundColor: WidgetStateProperty.all(AppColors.background),
         elevation: WidgetStateProperty.all(0),
         padding: WidgetStateProperty.all(
-          MyResponsive.paddingSymmetric(horizontal: 16,context),
+          MyResponsive.paddingSymmetric(horizontal: 16, context),
         ),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
@@ -140,20 +142,26 @@ class AppTheme {
         color: AppColors.primaryColor,
       ),
 
-      ///?  Bottom Navigation Bar
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        selectedItemColor: AppColors.primaryColor,
-        unselectedItemColor: AppColors.disabledGray,
-        unselectedLabelStyle: AppTextStyles.medium12(
-          context,
-        ).copyWith(color: AppColors.disabledGray),
-        selectedLabelStyle: AppTextStyles.medium12(context),
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        elevation: 0,
-        type: BottomNavigationBarType.fixed,
-      ),
+      ///?  Navigation Bar
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: AppColors.white,
 
+        elevation: 1,
+
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+
+        indicatorColor: Colors.transparent,
+
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
+
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          final isSelected = states.contains(WidgetState.selected);
+
+          return AppTextStyles.regular12(context).copyWith(
+            color: isSelected ? AppColors.primaryColor : AppColors.disabledGray,
+          );
+        }),
+      ),
     );
   }
 }

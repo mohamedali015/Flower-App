@@ -26,7 +26,7 @@ class CustomBottomNavBar extends StatefulWidget {
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   late int currentIndex;
 
-  late int selectedCategoryIndex;
+  late final List<Widget> screens;
 
   @override
   void initState() {
@@ -34,109 +34,86 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
     currentIndex = widget.initialIndex;
 
-    selectedCategoryIndex = widget.categoryIndex;
+    screens = [
+      const _KeepAlivePage(child: HomeScreen()),
+
+      _KeepAlivePage(child: CategoryScreen(initialIndex: widget.categoryIndex)),
+
+      const _KeepAlivePage(child: CartScreen()),
+
+      const _KeepAlivePage(child: ProfileScreen()),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
 
-    final screens = [
-      const HomeScreen(),
-
-      CategoryScreen(initialIndex: selectedCategoryIndex),
-
-      const CartScreen(),
-
-      const ProfileScreen(),
-    ];
-
     return Scaffold(
       body: IndexedStack(index: currentIndex, children: screens),
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: currentIndex,
+        onDestinationSelected: (int index) {
+          if (currentIndex == index) return;
 
-        onTap: (index) {
           setState(() {
             currentIndex = index;
           });
         },
 
-        type: BottomNavigationBarType.fixed,
-
-        backgroundColor: AppColors.white,
-
-        selectedItemColor: AppColors.primaryColor,
-
-        unselectedItemColor: AppColors.disabledGray,
-
-        showUnselectedLabels: true,
-
-        selectedFontSize: 12,
-
-        unselectedFontSize: 12,
-
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgWrapper(
+        destinations: [
+          NavigationDestination(
+            icon: const _BottomNavIcon(
               path: AppAssets.homeIcon,
+              isSelected: false,
+            ),
 
-              width: 24,
-
-              height: 24,
-
-              color: currentIndex == 0
-                  ? AppColors.primaryColor
-                  : AppColors.disabledGray,
+            selectedIcon: const _BottomNavIcon(
+              path: AppAssets.homeIcon,
+              isSelected: true,
             ),
 
             label: local.home,
           ),
 
-          BottomNavigationBarItem(
-            icon: SvgWrapper(
+          NavigationDestination(
+            icon: const _BottomNavIcon(
               path: AppAssets.categoryIcon,
+              isSelected: false,
+            ),
 
-              width: 24,
-
-              height: 24,
-
-              color: currentIndex == 1
-                  ? AppColors.primaryColor
-                  : AppColors.disabledGray,
+            selectedIcon: const _BottomNavIcon(
+              path: AppAssets.categoryIcon,
+              isSelected: true,
             ),
 
             label: local.categories,
           ),
 
-          BottomNavigationBarItem(
-            icon: SvgWrapper(
-              path: AppAssets.shoppingIcon,
+          NavigationDestination(
+            icon: const _BottomNavIcon(
+              path: AppAssets.cartIcon,
+              isSelected: false,
+            ),
 
-              width: 24,
-
-              height: 24,
-
-              color: currentIndex == 2
-                  ? AppColors.primaryColor
-                  : AppColors.disabledGray,
+            selectedIcon: const _BottomNavIcon(
+              path: AppAssets.cartIcon,
+              isSelected: true,
             ),
 
             label: local.cart,
           ),
 
-          BottomNavigationBarItem(
-            icon: SvgWrapper(
+          NavigationDestination(
+            icon: const _BottomNavIcon(
               path: AppAssets.personIcon,
+              isSelected: false,
+            ),
 
-              width: 24,
-
-              height: 24,
-
-              color: currentIndex == 3
-                  ? AppColors.primaryColor
-                  : AppColors.disabledGray,
+            selectedIcon: const _BottomNavIcon(
+              path: AppAssets.personIcon,
+              isSelected: true,
             ),
 
             label: local.profile,
@@ -145,4 +122,43 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       ),
     );
   }
+}
+
+class _BottomNavIcon extends StatelessWidget {
+  const _BottomNavIcon({required this.path, required this.isSelected});
+
+  final String path;
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return SvgWrapper(
+      path: path,
+      width: 24,
+      height: 24,
+      color: isSelected ? AppColors.primaryColor : AppColors.disabledGray,
+    );
+  }
+}
+
+class _KeepAlivePage extends StatefulWidget {
+  const _KeepAlivePage({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_KeepAlivePage> createState() => _KeepAlivePageState();
+}
+
+class _KeepAlivePageState extends State<_KeepAlivePage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    return widget.child;
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

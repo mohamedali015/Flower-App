@@ -20,8 +20,8 @@ class LocationBar extends StatelessWidget {
         children: [
           SvgWrapper(
             path: AppAssets.location,
-            width: MyResponsive.width(context, value: 16),
-            height: MyResponsive.height(context, value: 16),
+            width: MyResponsive.width(context, value: 20),
+            height: MyResponsive.height(context, value: 20),
           ),
           SizedBox(width: MyResponsive.width(context, value: 5)),
           RichText(
@@ -42,6 +42,7 @@ class LocationBar extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(width: MyResponsive.width(context, value: 8)),
           SvgWrapper(
             path: AppAssets.pinkArrow,
             width: MyResponsive.width(context, value: 16),
