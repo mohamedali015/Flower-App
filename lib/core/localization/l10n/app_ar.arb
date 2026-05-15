@@ -52,15 +52,12 @@
      "search": "بحث",
       "filter": "تصفية",
       "addToCart": "أضف إلى السلة",
-    "doNotHaveAnAccount": "ليس لديك حساب؟",
     "egp": "ج.م",
-    "addToCart": "أضف إلى السلة",
     "status": "الحالة",
      "inStock":"متوفر في المخزون",
      "outOfStock":"غير متوفر",
     "allPricesIncludeTax" : "جميع الأسعار تشمل الضريبة",
-    "description":"الوصف"
-    "addToCart": "أضف إلى السلة",
+    "description":"الوصف",
     "bestSeller": "الأكثر مبيعاً",
     "bloomExquisiteMessage": "تألقي مع تشكيلتنا الأكثر مبيعاً",
     "noProductsFound": "لم يتم العثور على منتجات"
