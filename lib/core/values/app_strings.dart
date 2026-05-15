@@ -1,4 +1,5 @@
 abstract class AppStrings {
+
   static const String cubit = "Cubit";
   // validators
   static const String emptyField = "This field cannot be empty";
