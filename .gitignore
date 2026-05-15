@@ -51,5 +51,9 @@ app.*.map.json
 *.freezed.dart
 *.gr.dart
 *.generated.dart
+*.mocks.dart
 /pubspec.lock
 /lib/config/di/di.config.dart
+/lib/core/localization/l10n/app_localizations.dart
+/lib/core/localization/l10n/app_localizations_ar.dart
+/lib/core/localization/l10n/app_localizations_en.dart

@@ -50,7 +50,6 @@ class NetworkException {
       }
 
       switch (statusCode) {
-
         case 400:
           return AppResponseErrorMessages.error400;
         case 401:

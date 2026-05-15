@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../helpers/my_responsive.dart';
 import '../utils/app_text_styles.dart';
 import '../values/app_strings.dart';
 import 'custom_button.dart';
@@ -29,15 +28,11 @@ class CustomErrorWidget extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           if (haveTryAgain) ...[
-            SizedBox(height: MyResponsive.height(value: 32, context)),
-            CustomButton(
-                onPressed: onPressed,
-                title: AppStrings.tryAgain
-            ),
+            const SizedBox(height: 32),
+            CustomButton(onPressed: onPressed, title: AppStrings.tryAgain),
           ],
         ],
       ),
     );
   }
 }
-

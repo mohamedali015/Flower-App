@@ -1,4 +1,6 @@
 abstract class AppStrings {
+
+  static const String cubit = "Cubit";
   // validators
   static const String emptyField = "This field cannot be empty";
 
@@ -32,8 +34,8 @@ abstract class AppStrings {
   static const String password = "Password";
   static const String enterYouPassword = "Enter password";
   static const String rememberMe = "Remember me";
-  static const String forgetPassword = "Forget password";
-  static const String doNotHaveAnAccount = "Don't have an account";
+  static const String forgetPassword = "Forget password?";
+  static const String doNotHaveAnAccount = "Don't have an account?";
   static const String signUp = "Sign up";
 
   static const String userName = "User name";
@@ -42,6 +44,7 @@ abstract class AppStrings {
   static const String enterFirstName = "Enter first name";
   static const String lastName = "Last name";
   static const String enterLastName = "Enter last name";
+  static const String confirm = "Confirm";
   static const String confirmPassword = "Confirm password";
   static const String phoneNumber = "Phone number";
   static const String enterPhoneNumber = "Enter phone number";
@@ -55,7 +58,9 @@ abstract class AppStrings {
       "Please enter your code that send to your\nemail address ";
   static const String didNotReceiveCode = "Didn't receive code?";
   static const String resend = "Resend";
+  static const String resendCodeIn = "Resend code in";
   static const String invalidCode = "Invalid code";
+  static const String resetCode = "Reset Code";
   static const String resetPassword = "Reset password";
   static const String newPassword = "New password";
   static const String loading = "Loading...";
@@ -80,6 +85,8 @@ abstract class AppStrings {
   static const String invalidPassword = "Invalid password";
 
   static const String unknown = "Unknown";
-
+  static const String home = "Home";
   static const String tryAgain = "Try Again";
+  static const String category = "Category";
+  static const String cart = "Cart";
 }

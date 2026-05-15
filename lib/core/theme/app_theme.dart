@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../helpers/my_responsive.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_text_styles.dart';
@@ -152,6 +153,7 @@ class AppTheme {
         elevation: 0,
         type: BottomNavigationBarType.fixed,
       ),
+
     );
   }
 }
