@@ -1,13 +1,15 @@
 import 'package:flower_app/config/products/data/params/product_query_params.dart';
+import 'package:flower_app/core/helpers/my_responsive.dart';
+import 'package:flower_app/core/localization/l10n/app_localizations.dart';
+import 'package:flower_app/core/shared_widgets/custom_error_widget.dart';
+import 'package:flower_app/core/shared_widgets/custom_grid_view.dart';
+import 'package:flower_app/core/shared_widgets/custom_loading_indicator.dart';
+import 'package:flower_app/core/shared_widgets/custom_tab_bar.dart';
+import 'package:flower_app/core/shared_widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../config/di/di.dart';
-import '../../../../core/helpers/my_responsive.dart';
-import '../../../../core/shared_widgets/custom_grid_view.dart';
-import '../../../../core/shared_widgets/custom_tab_bar.dart';
-import '../../../../core/shared_widgets/product_card.dart';
-import '../../../../core/utils/app_colors.dart';
 import '../manager/category_cubit.dart';
 import '../manager/category_event.dart';
 import '../manager/category_state.dart';
@@ -49,7 +51,7 @@ class _CategoryViewState extends State<_CategoryView> {
   }
 
   void _loadProducts(CategoryState state) {
-    ///? ALL TAB
+    /// ALL TAB
     if (selectedIndex == 0) {
       context.read<CategoryCubit>().doEvent(
         ProductEvent(categoryId: ProductQueryParams(categoryId: null)),
@@ -58,7 +60,7 @@ class _CategoryViewState extends State<_CategoryView> {
       return;
     }
 
-    ///? CATEGORY TAB
+    /// CATEGORY TAB
     if (state.categories.isNotEmpty &&
         selectedIndex - 1 < state.categories.length) {
       final categoryId = state.categories[selectedIndex - 1].id!;
@@ -71,16 +73,12 @@ class _CategoryViewState extends State<_CategoryView> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Padding(
       padding: MyResponsive.paddingSymmetric(context, horizontal: 15),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
-        mainAxisSize: MainAxisSize.min,
-
-        mainAxisAlignment: MainAxisAlignment.start,
-
         children: [
           SizedBox(height: MyResponsive.height(context, value: 50)),
 
@@ -88,75 +86,118 @@ class _CategoryViewState extends State<_CategoryView> {
 
           SizedBox(height: MyResponsive.height(context, value: 10)),
 
-          ///? Category
-          BlocBuilder<CategoryCubit, CategoryState>(
-            builder: (context, state) {
-              if (state.isLoading) {
-                return const SizedBox(
-                  height: 60,
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              }
-
-              if (state.errorMessage != null) {
-                return Center(child: Text(state.errorMessage!));
-              }
-
-              ///? Safety reset
-              if (state.categories.isNotEmpty &&
-                  selectedIndex >= state.categories.length + 1) {
-                selectedIndex = 0;
-              }
-
-              ///? First Load
-              if (isFirstLoad && state.categories.isNotEmpty) {
-                isFirstLoad = false;
-
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _loadProducts(state);
-                });
-              }
-
-              return CategoryTabBar(
-                categories: state.categories,
-
-                selectedIndex: selectedIndex,
-
-                onTap: (index) {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-
-                  _loadProducts(state);
-                },
-              );
-            },
-          ),
-
-          ///? Product
           Expanded(
-            child: BlocBuilder<CategoryCubit, CategoryState>(
+            child: BlocConsumer<CategoryCubit, CategoryState>(
+              listener: (context, state) {
+                /// SAFETY RESET
+                if (state.categories.isNotEmpty &&
+                    selectedIndex >= state.categories.length + 1) {
+                  selectedIndex = 0;
+                }
+
+                /// FIRST LOAD
+                if (isFirstLoad && state.categories.isNotEmpty) {
+                  isFirstLoad = false;
+
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _loadProducts(state);
+                  });
+                }
+              },
+
               builder: (context, state) {
-                if (state.isProductLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ),
+                /// CATEGORY LOADING
+                if (state.isLoading) {
+                  return CustomLoadingIndicator();
+                }
+
+                /// CATEGORY ERROR
+                if (state.errorMessage != null) {
+                  return CustomErrorWidget(
+                    errorMessage: state.errorMessage!,
+                    haveTryAgain: true,
+                    onPressed: () {
+                      context.read<CategoryCubit>().doEvent(
+                        GetAllCategoryEvent(),
+                      );
+                    },
                   );
                 }
 
-                if (state.productErrorMessage != null) {
-                  return Center(child: Text(state.productErrorMessage!));
+                /// EMPTY CATEGORY
+                if (state.categories.isEmpty) {
+                  return CustomErrorWidget(
+                    errorMessage: local.noCategoriesFound,
+                  );
                 }
 
-                return CustomGridView(
-                  itemCount: state.products.length,
+                return Column(
+                  children: [
+                    /// TABS
+                    CategoryTabBar(
+                      categories: state.categories,
+                      selectedIndex: selectedIndex,
+                      onTap: (index) {
+                        if (selectedIndex == index) return;
 
-                  itemBuilder: (context, index) {
-                    final product = state.products[index];
+                        setState(() {
+                          selectedIndex = index;
+                        });
 
-                    return ProductCard(product: product);
-                  },
+                        _loadProducts(state);
+                      },
+                    ),
+
+                    SizedBox(height: MyResponsive.height(context, value: 16)),
+
+                    /// PRODUCTS
+                    Expanded(
+                      child: Builder(
+                        builder: (_) {
+                          /// PRODUCTS LOADING
+                          if (state.isProductLoading) {
+                            return CustomLoadingIndicator();
+                          }
+
+                          /// PRODUCTS ERROR
+                          if (state.productErrorMessage != null) {
+                            return CustomErrorWidget(
+                              errorMessage: state.productErrorMessage!,
+                              haveTryAgain: true,
+                              onPressed: () {
+                                _loadProducts(state);
+                              },
+                            );
+                          }
+
+                          /// EMPTY PRODUCTS
+                          if (state.products.isEmpty) {
+                            return CustomErrorWidget(
+                              errorMessage: local.noProductsFound,
+                            );
+                          }
+
+                          return RefreshIndicator(
+                            onRefresh: () async {
+                              _loadProducts(state);
+                            },
+
+                            child: CustomGridView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+
+                              itemCount: state.products.length,
+
+                              itemBuilder: (context, index) {
+                                final product = state.products[index];
+
+                                return ProductCard(product: product);
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
