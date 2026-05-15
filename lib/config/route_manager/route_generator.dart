@@ -96,10 +96,9 @@ abstract class RouteGenerator {
           return CupertinoPageRoute(builder: (_) => OccasionScreen());
 
         case Routes.productDetailsRoute:
-          final entity = settings.arguments as ProductEntity;
-
+          //final entity = settings.arguments as ProductEntity;
           return CupertinoPageRoute(
-            builder: (_) => ProductDetailsScreen(entity: entity),
+            builder: (_) => ProductDetailsScreen(entity: product),
           );
 
         /// Default
@@ -124,3 +123,36 @@ abstract class RouteGenerator {
     );
   }
 }
+
+
+
+
+
+final product = ProductEntity(
+  id: '1',
+  title: 'Rose Bouquet',
+  slug: 'rose-bouquet',
+  description: 'Beautiful bouquet of fresh roses',
+  imgCover:
+  'https://flower.elevateegy.com/uploads/66c36d5d-c067-46d9-b339-d81be57e0149-image_one.png',
+  images: [
+    'https://flower.elevateegy.com/uploads/66c36d5d-c067-46d9-b339-d81be57e0149-image_one.png',
+    'https://flower.elevateegy.com/uploads/f27e1903-74cf-4ed6-a42c-e43e35b6dd14-image_three.png',
+    'https://flower.elevateegy.com/uploads/500fe197-0e16-4b01-9a0d-031ccb032714-image_two.png',
+  ],
+  price: 500,
+  priceAfterDiscount: 450,
+  discount: 10,
+  rateAvg: 4.8,
+  rateCount: 120,
+  sold: 75,
+  quantity: 20,
+  category: 'Flowers',
+  occasion: 'Birthday',
+  isSuperAdmin: false,
+  createdAt: DateTime.now(),
+  updatedAt: DateTime.now(),
+  v: 0,
+  favoriteId: '',
+  isInWishlist: false,
+);

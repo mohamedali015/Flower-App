@@ -25,7 +25,7 @@ class BaseState<T> extends Equatable {
     return BaseState<T>(
       isLoading: isLoadingParam ?? isLoading,
       isSuccess: isSuccessParam ?? isSuccess,
-      errorMessage: errorMessageParam,
+      errorMessage: errorMessageParam ,
       data: dataParam ?? data,
     );
   }
