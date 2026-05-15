@@ -34,158 +34,156 @@ class _OccasionScreenState extends State<OccasionScreen> {
 
     final local = AppLocalizations.of(context)!;
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
 
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
 
-            icon: const Icon(Icons.arrow_back_ios_new),
-          ),
-
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-
-            children: [
-              Text(local.occasion),
-              Text(
-                local.occasionSubTitle,
-
-                style: AppTextStyles.medium13(
-                  context,
-                ).copyWith(color: AppColors.grayDark),
-              ),
-            ],
-          ),
+          icon: const Icon(Icons.arrow_back_ios_new),
         ),
 
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.paddingHorizontal,
-          ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
 
-          child: BlocConsumer<OccasionsCubit, OccasionsState>(
-            listener: (context, state) {
-              final occasions = state.occasionsCategoryState.data;
+          children: [
+            Text(local.occasion),
+            Text(
+              local.occasionSubTitle,
 
-              if (!isFirstProductsLoaded &&
-                  occasions != null &&
-                  occasions.isNotEmpty) {
-                isFirstProductsLoaded = true;
+              style: AppTextStyles.medium13(
+                context,
+              ).copyWith(color: AppColors.grayDark),
+            ),
+          ],
+        ),
+      ),
 
-                selectedIndex = widget.currentIndex ?? 0;
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppConstants.paddingHorizontal,
+        ),
 
-                cubit.doEvent(
-                  GetOccasionProductsEvent(
-                    occasionId: occasions[selectedIndex].id,
-                  ),
-                );
-              }
-            },
-            builder: (context, state) {
-              final occasions = state.occasionsCategoryState.data;
+        child: BlocConsumer<OccasionsCubit, OccasionsState>(
+          listener: (context, state) {
+            final occasions = state.occasionsCategoryState.data;
 
-              if (state.occasionsCategoryState.isLoading) {
-                return const CustomLoadingIndicator();
-              } else if (state.occasionsCategoryState.errorMessage != null &&
-                  state.occasionsCategoryState.errorMessage!.isNotEmpty) {
-                return CustomErrorWidget(
-                  errorMessage: state.occasionsCategoryState.errorMessage!,
+            if (!isFirstProductsLoaded &&
+                occasions != null &&
+                occasions.isNotEmpty) {
+              isFirstProductsLoaded = true;
 
-                  haveTryAgain: true,
+              selectedIndex = widget.currentIndex ?? 0;
 
-                  onPressed: () {
-                    cubit.doEvent(GetOccasionsCategoriesEvent());
+              cubit.doEvent(
+                GetOccasionProductsEvent(
+                  occasionId: occasions[selectedIndex].id,
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            final occasions = state.occasionsCategoryState.data;
+
+            if (state.occasionsCategoryState.isLoading) {
+              return const CustomLoadingIndicator();
+            } else if (state.occasionsCategoryState.errorMessage != null &&
+                state.occasionsCategoryState.errorMessage!.isNotEmpty) {
+              return CustomErrorWidget(
+                errorMessage: state.occasionsCategoryState.errorMessage!,
+
+                haveTryAgain: true,
+
+                onPressed: () {
+                  cubit.doEvent(GetOccasionsCategoriesEvent());
+                },
+              );
+            } else if (occasions == null || occasions.isEmpty) {
+              return CustomErrorWidget(errorMessage: local.noOccasionsFound);
+            }
+
+            final productsState = state.occasionProductsState;
+
+            final products = productsState.data?.products;
+
+            return Column(
+              children: [
+                const SizedBox(height: 16),
+                OccasionTabsWidget(
+                  occasions: occasions,
+                  initialIndex: widget.currentIndex ?? 0,
+
+                  onTap: (index) {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+
+                    cubit.doEvent(
+                      GetOccasionProductsEvent(
+                        occasionId: occasions[index].id,
+                      ),
+                    );
                   },
-                );
-              } else if (occasions == null || occasions.isEmpty) {
-                return CustomErrorWidget(errorMessage: local.noOccasionsFound);
-              }
+                ),
 
-              final productsState = state.occasionProductsState;
+                const SizedBox(height: 16),
 
-              final products = productsState.data?.products;
-
-              return Column(
-                children: [
-                  const SizedBox(height: 16),
-                  OccasionTabsWidget(
-                    occasions: occasions,
-                    initialIndex: widget.currentIndex ?? 0,
-
-                    onTap: (index) {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-
-                      cubit.doEvent(
-                        GetOccasionProductsEvent(
-                          occasionId: occasions[index].id,
-                        ),
-                      );
-                    },
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  Expanded(
-                    child: Builder(
-                      builder: (_) {
-                        if (productsState.isLoading) {
-                          return const CustomLoadingIndicator();
-                        } else if (productsState.errorMessage != null &&
-                            productsState.errorMessage!.isNotEmpty) {
-                          return CustomErrorWidget(
-                            errorMessage: productsState.errorMessage!,
-                            haveTryAgain: true,
-                            onPressed: () {
-                              cubit.doEvent(
-                                GetOccasionProductsEvent(
-                                  occasionId: occasions[selectedIndex].id,
-                                ),
-                              );
-                            },
-                          );
-                        } else if (products == null || products.isEmpty) {
-                          return CustomErrorWidget(
-                            errorMessage: local.noProductsFound,
-                          );
-                        }
-
-                        return RefreshIndicator(
-                          onRefresh: () async {
+                Expanded(
+                  child: Builder(
+                    builder: (_) {
+                      if (productsState.isLoading) {
+                        return const CustomLoadingIndicator();
+                      } else if (productsState.errorMessage != null &&
+                          productsState.errorMessage!.isNotEmpty) {
+                        return CustomErrorWidget(
+                          errorMessage: productsState.errorMessage!,
+                          haveTryAgain: true,
+                          onPressed: () {
                             cubit.doEvent(
                               GetOccasionProductsEvent(
                                 occasionId: occasions[selectedIndex].id,
                               ),
                             );
                           },
-
-                          child: CustomGridView(
-                            physics: const AlwaysScrollableScrollPhysics(),
-
-                            childAspectRatio: 163 / 229,
-
-                            itemCount: products.length,
-
-                            padding: const EdgeInsets.only(bottom: 16),
-
-                            itemBuilder: (context, index) {
-                              return ProductCard(product: products[index]);
-                            },
-                          ),
                         );
-                      },
-                    ),
+                      } else if (products == null || products.isEmpty) {
+                        return CustomErrorWidget(
+                          errorMessage: local.noProductsFound,
+                        );
+                      }
+
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          cubit.doEvent(
+                            GetOccasionProductsEvent(
+                              occasionId: occasions[selectedIndex].id,
+                            ),
+                          );
+                        },
+
+                        child: CustomGridView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+
+                          childAspectRatio: 163 / 229,
+
+                          itemCount: products.length,
+
+                          padding: const EdgeInsets.only(bottom: 16),
+
+                          itemBuilder: (context, index) {
+                            return ProductCard(product: products[index]);
+                          },
+                        ),
+                      );
+                    },
                   ),
-                ],
-              );
-            },
-          ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

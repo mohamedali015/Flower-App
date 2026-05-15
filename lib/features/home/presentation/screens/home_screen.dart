@@ -11,6 +11,7 @@ import 'package:flower_app/features/home/presentation/widgets/logo_and_searchBar
 import 'package:flower_app/features/home/presentation/widgets/occasions/occasions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/shared_widgets/custom_bottom_nav.dart';
 
 import '../../../../core/shared_widgets/custom_add_to_cart.dart';
 import '../../../../core/shared_widgets/custom_grid_view.dart';
@@ -57,13 +58,32 @@ class HomeScreen extends StatelessWidget {
                               local: local,
                               title: local.categories,
                               onViewAllPressed: () {
-                                Navigator.pushNamed(
+                                Navigator.pushReplacementNamed(
                                   context,
-                                  Routes.categoryRoute,
+                                  Routes.bottomNavBarRoute,
+                                  arguments: {
+                                    "initialIndex": 1,
+                                    "categoryIndex": 0,
+                                  },
+                                );
+                              }
+                            ),
+                            CategoriesList(
+                              categories: home.categories,
+
+                              onPressed: (index) {
+
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  Routes.bottomNavBarRoute,
+
+                                  arguments: {
+                                    "initialIndex": 1,
+                                    "categoryIndex": index + 1,
+                                  },
                                 );
                               },
                             ),
-                            CategoriesList(categories: home.categories),
 
                             /// Best Seller
                             HeadlineWidget(

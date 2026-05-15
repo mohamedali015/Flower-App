@@ -93,10 +93,27 @@ abstract class RouteGenerator {
         case Routes.profileRoute:
           return CupertinoPageRoute(builder: (_) => ProfileScreen());
         case Routes.bottomNavBarRoute:
+
+          final args =
+          settings.arguments
+          as Map<String, dynamic>?;
+
           return CupertinoPageRoute(
+
             builder: (_) => BlocProvider(
-              create: (context) => getIt<HomeCubit>()..doEvents(GetHomeEvent()),
-              child: CustomBottomNavBar(),
+
+              create: (context) =>
+              getIt<HomeCubit>()
+                ..doEvents(GetHomeEvent()),
+
+              child: CustomBottomNavBar(
+
+                initialIndex:
+                args?['initialIndex'] ?? 0,
+
+                categoryIndex:
+                args?['categoryIndex'] ?? 0,
+              ),
             ),
           );
 
