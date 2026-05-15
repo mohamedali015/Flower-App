@@ -118,6 +118,8 @@ class _OccasionScreenState extends State<OccasionScreen> {
                     initialIndex: widget.currentIndex ?? 0,
 
                     onTap: (index) {
+                      if (selectedIndex == index) return;
+                      
                       setState(() {
                         selectedIndex = index;
                       });
