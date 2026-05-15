@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/shared_widgets/custom_add_to_cart.dart';
 import '../../../../core/shared_widgets/custom_grid_view.dart';
-import '../../../../core/shared_widgets/product_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,19 +13,16 @@ class HomeScreen extends StatelessWidget {
       padding: MyResponsive.paddingAll(context, value: 8),
       child: Column(
         children: [
-          // Expanded(
-          //    child: CustomGridView(
-          //       itemCount: 3,
-          //       itemBuilder: (context, index) {
-          //         // final product = state.products[index];
-          //
-          //         return ProductCard(
-          //           product: ,
-          //           onAddToCart: () {},
-          //         );
-          //       },
-          //     )
-          // ),
+          Expanded(
+            child: CustomGridView(
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                // final product = state.products[index];
+
+                return Container();
+              },
+            ),
+          ),
           CustomAddToCart(),
         ],
       ),

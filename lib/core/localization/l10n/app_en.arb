@@ -56,4 +56,12 @@
     "search": "Search",
       "filter": "Filter",
     "addToCart": "Add to cart"
+    "rememberMe": "Remember me",
+    "forgetPassword": "Forgot password?",
+    "doNotHaveAnAccount": "Don’t have an account?",
+    "egp": "EGP",
+    "addToCart": "Add to cart",
+    "bestSeller": "Best Seller",
+      "bloomExquisiteMessage": "Bloom with our exquisite best sellers",
+      "noProductsFound": "No Products Found"
 }

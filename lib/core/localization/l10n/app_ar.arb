@@ -60,4 +60,8 @@
      "outOfStock":"غير متوفر",
     "allPricesIncludeTax" : "جميع الأسعار تشمل الضريبة",
     "description":"الوصف"
+    "addToCart": "أضف إلى السلة",
+    "bestSeller": "الأكثر مبيعاً",
+    "bloomExquisiteMessage": "تألقي مع تشكيلتنا الأكثر مبيعاً",
+    "noProductsFound": "لم يتم العثور على منتجات"
 }
