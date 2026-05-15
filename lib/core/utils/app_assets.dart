@@ -3,6 +3,8 @@ abstract class AppAssets {
   static const String _baseIconsPath = "assets/icons";
 
   static const String appLogo = "$_baseIconsPath/app_logo.svg";
+  static const String logo = "$_baseImagesPath/Logo.png";
+
   static const String testImage = "$_baseImagesPath/Image_test.png";
 
   static const String categoryIcon = "$_baseIconsPath/category.svg";
@@ -15,4 +17,6 @@ abstract class AppAssets {
   static const String filterIcon = "$_baseIconsPath/filter.svg";
   static const String sortIcons = "$_baseIconsPath/sort.svg";
 
+  static const String location = "$_baseIconsPath/location.svg";
+  static const String pinkArrow = "$_baseIconsPath/pink_arrow.svg";
 }

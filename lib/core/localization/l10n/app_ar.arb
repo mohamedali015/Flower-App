@@ -79,4 +79,17 @@
 
   "noOccasionsFound": "لا توجد مناسبات",
   "noProductsFound": "لا توجد منتجات"
+  "rememberMe": "تذكرني",
+  "forgetPassword": "نسيت كلمة المرور؟",
+  "doNotHaveAnAccount": "ليس لديك حساب؟",
+    "egp": "ج.م",
+    "addToCart": "أضف إلى السلة",
+    "search":"أبحث",
+    "deliverTo":"توصيل الي",
+    "categories":"أقسام",
+    "bestSeller":"الأكثر مبيعا",
+    "occasion":"مناسبات",
+        "viewAll":"المزيد"
+
+
 }

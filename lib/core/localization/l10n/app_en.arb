@@ -75,4 +75,15 @@
 
   "noOccasionsFound": "No occasions found",
   "noProductsFound": "No products found"
+    "rememberMe": "Remember me",
+    "forgetPassword": "Forgot password?",
+    "doNotHaveAnAccount": "Don’t have an account?",
+    "egp": "EGP",
+    "addToCart": "Add to cart",
+    "search": "Search",
+    "deliverTo":"Deliver to",
+    "categories":"Categories",
+    "bestSeller":"Best seller",
+    "occasion":"Occasion",
+    "viewAll":"View All"
 }
