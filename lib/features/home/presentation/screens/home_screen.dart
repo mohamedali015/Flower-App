@@ -14,23 +14,19 @@ class HomeScreen extends StatelessWidget {
       padding: MyResponsive.paddingAll(context, value: 8),
       child: Column(
         children: [
-          Expanded(
-             child: CustomGridView(
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  // final product = state.products[index];
-
-                  return ProductCard(
-                    name: "Red Roses",
-                    image:   "https://flower.elevateegy.com/uploads/5452abf4-2040-43d7-bb3d-3ae8f53c4576-cover_image.png",
-                    price: 500,
-                    priceAfterDiscount: 200,
-                    discount: 20,
-                    onAddToCart: () {},
-                  );
-                },
-              )
-          ),
+          // Expanded(
+          //    child: CustomGridView(
+          //       itemCount: 3,
+          //       itemBuilder: (context, index) {
+          //         // final product = state.products[index];
+          //
+          //         return ProductCard(
+          //           product: ,
+          //           onAddToCart: () {},
+          //         );
+          //       },
+          //     )
+          // ),
           CustomAddToCart(),
         ],
       ),

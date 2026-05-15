@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../helpers/my_responsive.dart';
 import '../localization/l10n/app_localizations.dart';
 import '../utils/app_assets.dart';
 import '../utils/app_colors.dart';
@@ -9,9 +7,8 @@ import 'svg_wrapper.dart';
 
 class CustomAddToCart extends StatelessWidget {
   final VoidCallback? onTap;
-  final double heightContainer;
 
-  const CustomAddToCart({super.key, this.onTap, this.heightContainer = 35});
+  const CustomAddToCart({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,41 +22,32 @@ class CustomAddToCart extends StatelessWidget {
           onTap: onTap,
 
           child: Container(
-            height: MyResponsive.height(context, value: heightContainer),
-
-            padding: MyResponsive.paddingSymmetric(
-              context,
-              vertical: 6,
-              horizontal: 20,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
 
             decoration: BoxDecoration(
               color: AppColors.primaryColor,
 
-              borderRadius: BorderRadius.circular(
-                MyResponsive.radius(context, value: 25),
-              ),
+              borderRadius: BorderRadius.circular(100),
             ),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
 
               children: [
-                SvgWrapper(
+                const SvgWrapper(
                   path: AppAssets.addCartIcon,
                   fit: BoxFit.cover,
-                  width: MyResponsive.width(context, value: 24),
-                  height: MyResponsive.height(context, value: 24),
+                  width: 15,
+                  height: 15,
                 ),
 
-                SizedBox(width: MyResponsive.width(context, value: 8)),
+                const SizedBox(width: 8),
 
                 Text(
                   local.addToCart,
-                  style: AppTextStyles.medium14(context).copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: AppTextStyles.medium13(
+                    context,
+                  ).copyWith(color: AppColors.white),
                 ),
               ],
             ),

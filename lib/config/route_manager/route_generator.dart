@@ -4,6 +4,8 @@ import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
+import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
+import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -93,7 +95,16 @@ abstract class RouteGenerator {
           return CupertinoPageRoute(builder: (_) => BestSellerScreen());
 
         case Routes.occasionRoute:
-          return CupertinoPageRoute(builder: (_) => OccasionScreen());
+          final currentIndex = settings.arguments as int?;
+
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) =>
+                  getIt<OccasionsCubit>()
+                    ..doEvent(GetOccasionsCategoriesEvent()),
+              child: OccasionScreen(currentIndex: currentIndex),
+            ),
+          );
 
         case Routes.productDetailsRoute:
           final entity = settings.arguments as ProductEntity;

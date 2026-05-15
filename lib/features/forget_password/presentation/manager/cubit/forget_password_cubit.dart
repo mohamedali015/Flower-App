@@ -5,10 +5,8 @@ import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/forget_password/domain/use_cases/forget_password_use_case.dart';
 import 'package:flower_app/features/forget_password/domain/use_cases/reset_password_use_case.dart';
 import 'package:flower_app/features/forget_password/domain/use_cases/verify_reset_code_use_case.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../event/forget_password_event.dart';
 import '../state/forget_password_state.dart';
@@ -35,11 +33,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
 
       case VerifyOtpEvent():
         {
-          _verifyOtp(
-            event.otp,
-            otpController: event.otpController,
-            errorController: event.errorController,
-          );
+          _verifyOtp(event.otp);
           break;
         }
 
@@ -121,7 +115,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       case Success<bool>():
         emit(
           state.copyWith(
-            sendEmailState: BaseState(
+            resetPasswordState: BaseState(
               errorMessage: null,
               isLoading: false,
               isSuccess: true,
@@ -131,7 +125,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       case Failure<bool>():
         emit(
           state.copyWith(
-            sendEmailState: BaseState(
+            resetPasswordState: BaseState(
               data: null,
               errorMessage: result.errorMessage,
               isLoading: false,
@@ -142,11 +136,8 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     }
   }
 
-  Future<void> _verifyOtp(
-    String otp, {
-    required TextEditingController otpController,
-    required StreamController<ErrorAnimationType> errorController,
-  }) async {
+  Future<void> _verifyOtp(String otp) async {
+    if (state.verifyOtpState?.isLoading == true) return;
     emit(
       state.copyWith(
         verifyOtpState: BaseState(
@@ -172,8 +163,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
         );
       case Failure<bool>():
         {
-          errorController.add(ErrorAnimationType.shake);
-          otpController.clear();
           emit(
             state.copyWith(
               verifyOtpState: BaseState(
@@ -218,7 +207,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
           isLoading: true,
           isSuccess: false,
         ),
-        isResendCodeState: true,
       ),
     );
     var result = await _forgetPasswordUseCase(state.email!);
@@ -232,7 +220,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
               isLoading: false,
               isSuccess: true,
             ),
-            isResendCodeState: true,
           ),
         );
       case Failure<String?>():
@@ -244,7 +231,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
               isLoading: false,
               isSuccess: false,
             ),
-            isResendCodeState: true,
           ),
         );
     }
