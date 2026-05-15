@@ -22,7 +22,10 @@ class OccasionsList extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               Navigator.pushNamed(
-                  context, Routes.occasionRoute, arguments: index);
+                context,
+                Routes.occasionRoute,
+                arguments: index,
+              );
             },
             child: HomeListCard(
               title: item.name,
