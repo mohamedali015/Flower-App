@@ -6,6 +6,8 @@ import 'package:flower_app/features/auth/presentation/pages/register/register_sc
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
+import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
+import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +18,8 @@ import '../../core/shared_widgets/custom_bottom_nav.dart';
 import '../../core/values/app_strings.dart';
 import '../../features/auth/presentation/manager/login/login_cubit.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
+import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
+import '../../features/best_seller/presentation/manager/best_seller_event.dart';
 import '../../features/cart/presentation/screens/cart_screen.dart';
 import '../../features/category/presentation/screens/category_screen.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
@@ -89,10 +93,38 @@ abstract class RouteGenerator {
         case Routes.profileRoute:
           return CupertinoPageRoute(builder: (_) => ProfileScreen());
         case Routes.bottomNavBarRoute:
-          return CupertinoPageRoute(builder: (_) => CustomBottomNavBar());
+
+          final args =
+          settings.arguments
+          as Map<String, dynamic>?;
+
+          return CupertinoPageRoute(
+
+            builder: (_) => BlocProvider(
+
+              create: (context) =>
+              getIt<HomeCubit>()
+                ..doEvents(GetHomeEvent()),
+
+              child: CustomBottomNavBar(
+
+                initialIndex:
+                args?['initialIndex'] ?? 0,
+
+                categoryIndex:
+                args?['categoryIndex'] ?? 0,
+              ),
+            ),
+          );
 
         case Routes.bestSellerRoute:
-          return CupertinoPageRoute(builder: (_) => BestSellerScreen());
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) =>
+                  getIt<BestSellerCubit>()..doEvent(GetBestSellerEvent()),
+              child: BestSellerScreen(),
+            ),
+          );
 
         case Routes.occasionRoute:
           final currentIndex = settings.arguments as int?;
