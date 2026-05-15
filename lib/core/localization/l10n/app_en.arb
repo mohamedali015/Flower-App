@@ -32,12 +32,16 @@
   "enterFirstName": "Enter first name",
   "lastName": "Last name",
   "enterLastName": "Enter last name",
+
   "email": "Email",
   "enterEmail": "Enter your email",
+
   "password": "Password",
   "enterPassword": "Enter password",
+
   "confirmPassword": "Confirm password",
   "confirmPasswordHint": "Confirm password",
+
   "phoneNumber": "Phone number",
   "enterPhoneNumber": "Enter phone number",
 
@@ -67,23 +71,15 @@
 
   "addToCart": "Add to cart",
 
-  "bestSeller": "Best Seller",
+  "bestSeller": "Best seller",
   "bloomExquisiteMessage": "Bloom with our exquisite best sellers",
 
   "occasion": "Occasion",
   "occasionSubTitle": "Bloom with our exquisite best sellers",
 
   "noOccasionsFound": "No occasions found",
-  "noProductsFound": "No products found"
-    "rememberMe": "Remember me",
-    "forgetPassword": "Forgot password?",
-    "doNotHaveAnAccount": "Don’t have an account?",
-    "egp": "EGP",
-    "addToCart": "Add to cart",
-    "search": "Search",
-    "deliverTo":"Deliver to",
-    "categories":"Categories",
-    "bestSeller":"Best seller",
-    "occasion":"Occasion",
-    "viewAll":"View All"
+  "noProductsFound": "No products found",
+
+  "deliverTo": "Deliver to",
+  "viewAll": "View All"
 }

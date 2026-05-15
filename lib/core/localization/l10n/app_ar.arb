@@ -23,7 +23,7 @@
   "login": "تسجيل الدخول",
 
   "cart": "السلة",
-  "categories": "التصنيفات",
+  "categories": "أقسام",
   "home": "الرئيسية",
   "profile": "الملف الشخصي",
 
@@ -57,7 +57,7 @@
   "forgetPassword": "نسيت كلمة المرور؟",
   "doNotHaveAnAccount": "ليس لديك حساب؟",
 
-  "search": "بحث",
+  "search": "أبحث",
   "filter": "تصفية",
 
   "addToCart": "أضف إلى السلة",
@@ -71,25 +71,15 @@
   "allPricesIncludeTax": "جميع الأسعار تشمل الضريبة",
   "description": "الوصف",
 
-  "bestSeller": "الأكثر مبيعاً",
+  "bestSeller": "الأكثر مبيعا",
   "bloomExquisiteMessage": "تألقي مع تشكيلتنا الأكثر مبيعاً",
 
-  "occasion": "المناسبات",
+  "occasion": "مناسبات",
   "occasionSubTitle": "تألّق مع مجموعتنا المميزة من الأكثر مبيعًا",
 
   "noOccasionsFound": "لا توجد مناسبات",
-  "noProductsFound": "لا توجد منتجات"
-  "rememberMe": "تذكرني",
-  "forgetPassword": "نسيت كلمة المرور؟",
-  "doNotHaveAnAccount": "ليس لديك حساب؟",
-    "egp": "ج.م",
-    "addToCart": "أضف إلى السلة",
-    "search":"أبحث",
-    "deliverTo":"توصيل الي",
-    "categories":"أقسام",
-    "bestSeller":"الأكثر مبيعا",
-    "occasion":"مناسبات",
-        "viewAll":"المزيد"
+  "noProductsFound": "لا توجد منتجات",
 
-
+  "deliverTo": "توصيل الي",
+  "viewAll": "المزيد"
 }
