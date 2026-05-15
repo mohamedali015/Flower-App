@@ -12,4 +12,5 @@ abstract class ApiEndPoints {
   static const String products = "/products";
 
   static const String getOccasions = '/occasions';
+  static const String home = "/home";
 }

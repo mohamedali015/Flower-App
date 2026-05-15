@@ -6,6 +6,8 @@ import 'package:flower_app/features/auth/presentation/pages/register/register_sc
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
+import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
+import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -89,7 +91,12 @@ abstract class RouteGenerator {
         case Routes.profileRoute:
           return CupertinoPageRoute(builder: (_) => ProfileScreen());
         case Routes.bottomNavBarRoute:
-          return CupertinoPageRoute(builder: (_) => CustomBottomNavBar());
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => getIt<HomeCubit>()..doEvents(GetHomeEvent()),
+              child: CustomBottomNavBar(),
+            ),
+          );
 
         case Routes.bestSellerRoute:
           return CupertinoPageRoute(builder: (_) => BestSellerScreen());

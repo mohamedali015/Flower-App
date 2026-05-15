@@ -58,4 +58,11 @@
     "occasionSubTitle" : "Bloom with our exquisite best sellers",
     "noOccasionsFound": "No occasions found",
     "noProductsFound": "No products found"
+    "addToCart": "Add to cart",
+    "search": "Search",
+    "deliverTo":"Deliver to",
+    "categories":"Categories",
+    "bestSeller":"Best seller",
+    "occasion":"Occasion",
+    "viewAll":"View All"
 }

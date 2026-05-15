@@ -53,10 +53,22 @@
       "filter": "تصفية",
       "addToCart": "أضف إلى السلة",
     "doNotHaveAnAccount": "ليس لديك حساب؟",
+  "rememberMe": "تذكرني",
+  "forgetPassword": "نسيت كلمة المرور؟",
+  "doNotHaveAnAccount": "ليس لديك حساب؟",
     "egp": "ج.م",
     "addToCart": "أضف إلى السلة",
     "occasion": "المناسبات",
     "occasionSubTitle": "تألّق مع مجموعتنا المميزة من الأكثر مبيعًا",
     "noOccasionsFound": "لا توجد مناسبات",
     "noProductsFound": "لا توجد منتجات"
+    "addToCart": "أضف إلى السلة",
+    "search":"أبحث",
+    "deliverTo":"توصيل الي",
+    "categories":"أقسام",
+    "bestSeller":"الأكثر مبيعا",
+    "occasion":"مناسبات",
+        "viewAll":"المزيد"
+
+
 }

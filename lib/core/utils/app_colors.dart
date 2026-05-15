@@ -9,7 +9,6 @@ abstract class AppColors {
 
   static const baseWhite = Color(0xffF9F9F9);
 
-
   static const Color rosePale = Color(0xFFf6d2e1);
   static const Color roseLight = Color(0xFFf0b4cd);
   static const Color roseSoft = Color(0xFFe98fb5);
@@ -37,6 +36,7 @@ abstract class AppColors {
   static const Color darkShade3 = Color(0xFF86888a);
   static const Color darkShade4 = Color(0xFFaeafb1);
   static const Color darkShade5 = Color(0xFFcecfd0);
+  static const Color darkShade6 = Color(0xFF35383C);
 
   static const Color textHint = Color(0xFFA6A6A6);
   static const Color textMuted = Color(0xFF7C7C7C);
