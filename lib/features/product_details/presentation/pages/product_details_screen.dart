@@ -29,114 +29,116 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(
-              height: MyResponsive.height(context, value: 400),
-              child: Stack(
-                children: [
-                  CarouselSliderWidget(
-                    widget.entity,
-                    onPageChanged: _onCarouselSliderPageChanged,
-                  ),
-                  SizedBox(
-                    height: double.infinity,
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: SvgWrapper(path: AppAssets.backBtn),
-                          padding: MyResponsive.paddingSymmetric(
-                            context,
-                            vertical: 18,
-                            horizontal: 22,
-                          ),
-                        ),
-                        Spacer(),
-                        Align(
-                          alignment: AlignmentGeometry.center,
-                          child: AnimatedSmoothIndicator(
-                            activeIndex: imageIndex,
-                            count: widget.entity.images.length,
-                            effect: SlideEffect(
-                              dotColor: AppColors.grayMedium,
-                              activeDotColor: AppColors.primaryColor,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: MyResponsive.height(context, value: 400),
+                child: Stack(
+                  children: [
+                    CarouselSliderWidget(
+                      widget.entity,
+                      onPageChanged: _onCarouselSliderPageChanged,
+                    ),
+                    SizedBox(
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: SvgWrapper(path: AppAssets.backBtn),
+                            padding: MyResponsive.paddingSymmetric(
+                              context,
+                              vertical: 18,
+                              horizontal: 22,
                             ),
                           ),
+                          Spacer(),
+                          Center(
+                            child: AnimatedSmoothIndicator(
+                              activeIndex: imageIndex,
+                              count: widget.entity.images.length,
+                              effect: SlideEffect(
+                                dotColor: AppColors.grayMedium,
+                                activeDotColor: AppColors.primaryColor,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MyResponsive.height(context, value: 8),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: MyResponsive.height(context, value: 16)),
+              Padding(
+                padding: MyResponsive.paddingSymmetric(context, horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "${local.egp} ${widget.entity.price}",
+                          style: AppTextStyles.bold20(context),
+                          textAlign: TextAlign.center,
                         ),
-                        SizedBox(
-                          height: MyResponsive.height(context, value: 8),
+                        SizedBox(width: MyResponsive.width(context, value: 106)),
+                        Text(
+                          "${local.status} : ${widget.entity.quantity > 0 ? local.inStock : local.outOfStock}",
+                          style: AppTextStyles.regular20(context),
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    SizedBox(height: MyResponsive.height(context, value: 4)),
+                    Text(
+                      local.allPricesIncludeTax,
+                      textAlign: TextAlign.start,
+                      style: AppTextStyles.regular14(
+                        context,
+                      ).copyWith(fontSize: 13, color: AppColors.grayDark),
+                    ),
+                    SizedBox(height: MyResponsive.height(context, value: 8)),
+                    Text(
+                      "${widget.entity.quantity} ${widget.entity.title}",
+                      style: AppTextStyles.medium16(context),
+                    ),
+                    SizedBox(height: MyResponsive.height(context, value: 24)),
+                    Text(
+                      local.description,
+                      style: AppTextStyles.medium16(context),
+                    ),
+                    SizedBox(height: MyResponsive.height(context, value: 8)),
+                    Text(
+                      widget.entity.description,
+                      style: AppTextStyles.regular14(context),
+                    ),
+                    SizedBox(height: MyResponsive.height(context, value: 133)),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text(local.addToCart),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: MyResponsive.height(context, value: 16)),
-            Padding(
-              padding: MyResponsive.paddingSymmetric(context, horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "${local.egp} ${widget.entity.price}",
-                        style: AppTextStyles.bold20(context),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(width: MyResponsive.width(context, value: 106)),
-                      Text(
-                        "${local.status} : ${widget.entity.quantity > 0 ? local
-                            .inStock : local.outOfStock}",
-                        style: AppTextStyles.regular20(context),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: MyResponsive.height(context, value: 4)),
-                  Text(
-                    local.allPricesIncludeTax,
-                    textAlign: TextAlign.start,
-                    style: AppTextStyles.regular14(
-                      context,
-                    ).copyWith(fontSize: 13, color: AppColors.grayDark),
-                  ),
-                  SizedBox(height: MyResponsive.height(context, value: 8)),
-                  Text(
-                    "${widget.entity.quantity} ${widget.entity.title}",
-                    style: AppTextStyles.medium16(context),
-                  ),
-                  SizedBox(height: MyResponsive.height(context, value: 24)),
-                  Text(
-                    local.description,
-                    style: AppTextStyles.medium16(context),
-                  ),
-                  SizedBox(height: MyResponsive.height(context, value: 8)),
-                  Text(
-                    widget.entity.description,
-                    style: AppTextStyles.regular14(context),
-                  ),
-                  SizedBox(height: MyResponsive.height(context, value: 133)),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text(local.addToCart),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void _onCarouselSliderPageChanged(int index,
-      CarouselPageChangedReason reason,) {
+  void _onCarouselSliderPageChanged(
+    int index,
+    CarouselPageChangedReason reason,
+  ) {
     setState(() {
       imageIndex = index;
     });
