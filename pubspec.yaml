@@ -57,6 +57,7 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   carousel_slider: ^5.1.2
   smooth_page_indicator: ^2.0.1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

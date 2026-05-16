@@ -15,6 +15,8 @@ import 'package:flower_app/features/home/presentation/widgets/occasions/occasion
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../widgets/home_shimmer_loading.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -39,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                 child: BlocBuilder<HomeCubit, HomeState>(
                   builder: (context, state) {
                     if (state is HomeLoading) {
-                      return const CustomLoadingIndicator();
+                      return const HomeShimmerLoading();
                     } else if (state is HomeFailure) {
                       return CustomErrorWidget(
                         errorMessage: state.errorMessage,

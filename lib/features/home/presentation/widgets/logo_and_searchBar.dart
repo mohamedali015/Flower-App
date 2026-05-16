@@ -5,6 +5,8 @@ import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/shared_widgets/custom_search_bar.dart';
+
 class LogoAndSearchBar extends StatelessWidget {
   const LogoAndSearchBar({super.key, required this.local});
 
@@ -20,34 +22,7 @@ class LogoAndSearchBar extends StatelessWidget {
           width: MyResponsive.width(context, value: 90),
         ),
         SizedBox(width: MyResponsive.width(context, value: 17)),
-        Expanded(
-          child: Container(
-            padding: MyResponsive.paddingSymmetric(
-              context,
-              vertical: 9.5,
-              horizontal: 11,
-            ),
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(
-                MyResponsive.radius(context, value: 8),
-              ),
-              border: Border.all(color: AppColors.grayMedium),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.search, color: AppColors.grayMedium, size: 20),
-                SizedBox(width: MyResponsive.width(context, value: 6)),
-                Text(
-                  local.search,
-                  style: AppTextStyles.medium14(
-                    context,
-                  ).copyWith(color: AppColors.grayMedium),
-                ),
-              ],
-            ),
-          ),
-        ),
+        CustomSearchBar(),
       ],
     );
   }

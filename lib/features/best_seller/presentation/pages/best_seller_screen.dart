@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../core/shared_widgets/shimmer/grid_product_shimmer.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_text_styles.dart';
@@ -56,7 +57,7 @@ class BestSellerScreen extends StatelessWidget {
 
             // 1. حالة التحميل
             if (bestState.isLoading) {
-              return const CustomLoadingIndicator();
+              return const GridProductShimmer();
             }
 
             // 2. حالة الخطأ

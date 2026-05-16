@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/helpers/my_responsive.dart';
 import '../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../core/shared_widgets/custom_search_bar.dart';
 import '../../../../core/shared_widgets/svg_wrapper.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
@@ -14,15 +15,9 @@ class CustomHeaderCategory extends StatelessWidget {
     var local = AppLocalizations.of(context)!;
     return Row(
       children: [
-        Expanded(
-          child: SearchBar(
-            onChanged: (value) {},
-            leading: Icon(CupertinoIcons.search, color: AppColors.textHint),
-            hintText: local.search,
-            onSubmitted: (value) {
-              FocusScope.of(context).unfocus();
-            },
-          ),
+        CustomSearchBar(
+          horizontal: 20,
+          vertical: 15,
         ),
         SizedBox(width: MyResponsive.width(context, value: 8)),
         GestureDetector(
@@ -30,8 +25,8 @@ class CustomHeaderCategory extends StatelessWidget {
           child: Container(
             padding: MyResponsive.paddingSymmetric(
               context,
-              horizontal: 23,
-              vertical: 18,
+              horizontal: 20,
+              vertical: 15,
             ),
             alignment: Alignment.center,
 

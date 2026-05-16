@@ -19,4 +19,5 @@ abstract class Routes {
   static const String occasionRoute = '/occasion';
   static const String productDetailsRoute = '/productDetails';
   static const String categoryScreenRoute = '/categoryScreen';
+  static const String searchScreenRoute = '/SearchScreen';
 }

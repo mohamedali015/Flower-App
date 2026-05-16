@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/shared_widgets/custom_grid_view.dart';
+import '../../../../core/shared_widgets/shimmer/grid_product_shimmer.dart';
+import '../../../../core/shared_widgets/shimmer/tabs_shimmer.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../manager/occasions_cubit.dart';
 import '../manager/occasions_events.dart';
@@ -89,7 +91,7 @@ class _OccasionScreenState extends State<OccasionScreen> {
             final occasions = state.occasionsCategoryState.data;
 
             if (state.occasionsCategoryState.isLoading) {
-              return const CustomLoadingIndicator();
+              return const TabsShimmer();
             } else if (state.occasionsCategoryState.errorMessage != null &&
                 state.occasionsCategoryState.errorMessage!.isNotEmpty) {
               return CustomErrorWidget(
@@ -137,7 +139,7 @@ class _OccasionScreenState extends State<OccasionScreen> {
                   child: Builder(
                     builder: (_) {
                       if (productsState.isLoading) {
-                        return const CustomLoadingIndicator();
+                        return const GridProductShimmer();
                       } else if (productsState.errorMessage != null &&
                           productsState.errorMessage!.isNotEmpty) {
                         return CustomErrorWidget(

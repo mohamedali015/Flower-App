@@ -82,5 +82,7 @@
   "noProductsFound": "لم يتم العثور على منتجات",
 
   "deliverTo": "توصيل الي",
-  "viewAll": "المزيد"
+  "viewAll": "المزيد",
+
+"searchForAnyProductYouWant": "ابحث عن أي منتج تريده"
 }

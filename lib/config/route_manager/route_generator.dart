@@ -25,6 +25,7 @@ import '../../features/forget_password/presentation/manager/event/forget_passwor
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
 import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
+import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
 
 abstract class RouteGenerator {
@@ -123,7 +124,12 @@ abstract class RouteGenerator {
             builder: (_) => ProductDetailsScreen(entity: entity),
           );
 
-        /// Default
+          ///? search Screen
+        case Routes.searchScreenRoute:
+          return CupertinoPageRoute(builder: (_) => const SearchScreen());
+
+
+      /// Default
         default:
           return _errorRoute();
       }
