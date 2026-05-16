@@ -1,6 +1,5 @@
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/shared_widgets/custom_error_widget.dart';
-import 'package:flower_app/core/shared_widgets/custom_loading_indicator.dart';
 import 'package:flower_app/core/shared_widgets/product_card.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
@@ -118,17 +117,15 @@ class _OccasionScreenState extends State<OccasionScreen> {
                   occasions: occasions,
                   initialIndex: widget.currentIndex ?? 0,
 
-                    onTap: (index) {
-                      if (selectedIndex == index) return;
+                  onTap: (index) {
+                    if (selectedIndex == index) return;
 
-                      setState(() {
-                        selectedIndex = index;
-                      });
+                    setState(() {
+                      selectedIndex = index;
+                    });
 
                     cubit.doEvent(
-                      GetOccasionProductsEvent(
-                        occasionId: occasions[index].id,
-                      ),
+                      GetOccasionProductsEvent(occasionId: occasions[index].id),
                     );
                   },
                 ),

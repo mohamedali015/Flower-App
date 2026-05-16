@@ -2,7 +2,6 @@ import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/shared_widgets/custom_error_widget.dart';
-import 'package:flower_app/core/shared_widgets/custom_loading_indicator.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_state.dart';
