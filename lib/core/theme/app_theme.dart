@@ -152,7 +152,9 @@ class AppTheme {
 
         indicatorColor: Colors.transparent,
 
-        overlayColor: WidgetStateProperty.all(Colors.transparent),
+        overlayColor: WidgetStateProperty.all(
+          AppColors.primaryColor.withValues(alpha: 0.2),
+        ),
 
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           final isSelected = states.contains(WidgetState.selected);

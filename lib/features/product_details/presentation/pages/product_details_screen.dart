@@ -1,8 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
-import 'package:flower_app/core/shared_widgets/svg_wrapper.dart';
-import 'package:flower_app/core/utils/app_assets.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +47,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         children: [
                           IconButton(
                             onPressed: () => Navigator.pop(context),
-                            icon: SvgWrapper(path: AppAssets.backBtn),
+                            icon: const Icon(Icons.arrow_back_ios_new),
                             padding: MyResponsive.paddingSymmetric(
                               context,
                               vertical: 18,
@@ -89,7 +87,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           style: AppTextStyles.bold20(context),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(width: MyResponsive.width(context, value: 106)),
+                        SizedBox(
+                          width: MyResponsive.width(context, value: 106),
+                        ),
                         Text(
                           "${local.status} : ${widget.entity.quantity > 0 ? local.inStock : local.outOfStock}",
                           style: AppTextStyles.regular20(context),
