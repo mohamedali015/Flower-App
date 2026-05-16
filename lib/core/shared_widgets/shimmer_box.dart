@@ -21,7 +21,7 @@ class ShimmerBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: AppColors.textHint,
-      highlightColor: Colors.white,
+      highlightColor: AppColors.white,
 
       child: Container(
         height: height,
