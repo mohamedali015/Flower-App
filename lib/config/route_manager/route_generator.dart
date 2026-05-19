@@ -87,10 +87,8 @@ abstract class RouteGenerator {
           return CupertinoPageRoute(
             builder: (_) => BlocProvider(
               create: (context) => getIt<HomeCubit>()..doEvents(GetHomeEvent()),
-
               child: CustomBottomNavBar(
                 initialIndex: args?['initialIndex'] ?? 0,
-
                 categoryIndex: args?['categoryIndex'] ?? 0,
               ),
             ),

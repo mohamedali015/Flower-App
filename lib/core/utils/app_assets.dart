@@ -18,4 +18,6 @@ abstract class AppAssets {
 
   static const String location = "$_baseIconsPath/location.svg";
   static const String pinkArrow = "$_baseIconsPath/pink_arrow.svg";
+
+  static const String logout = "$_baseIconsPath/logout.svg";
 }

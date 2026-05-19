@@ -51,12 +51,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
     return Scaffold(
       body: IndexedStack(index: currentIndex, children: screens),
-
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentIndex,
         onDestinationSelected: (int index) {
           if (currentIndex == index) return;
-
           setState(() {
             currentIndex = index;
           });
