@@ -84,5 +84,8 @@
   "deliverTo": "توصيل الي",
   "viewAll": "المزيد",
 
-"searchForAnyProductYouWant": "ابحث عن أي منتج تريده"
+"searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
+   "logout":"تسجيل الخروج",
+   "confirmLogout":"تأكيد تسجيل الخروج!!",
+   "cancle":"إلغاء"
 }
