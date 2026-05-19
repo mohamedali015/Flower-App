@@ -7,10 +7,12 @@ import 'package:flower_app/features/best_seller/presentation/manager/best_seller
 import 'package:flower_app/features/best_seller/presentation/manager/best_seller_event.dart';
 import 'package:flower_app/features/best_seller/presentation/manager/best_seller_state.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
-class MockGetProductsUseCase extends Mock implements GetProductsUseCase {}
+import 'best_seller_cubit_test.mocks.dart';
 
+@GenerateMocks([GetProductsUseCase])
 void main() {
   late BestSellerCubit cubit;
   late MockGetProductsUseCase mockGetProductsUseCase;
@@ -20,20 +22,20 @@ void main() {
     cubit = BestSellerCubit(mockGetProductsUseCase);
   });
 
-  tearDown(() {
-    cubit.close();
+  tearDown(() async {
+    await cubit.close();
   });
 
   group('BestSellerCubit Tests', () {
-    test('الحالة الابتدائية (Initial State) لازم تكون صحيحة', () {
+    test('الحالة الابتدائية لازم تكون صحيحة', () {
       expect(cubit.state, const BestSellerState());
     });
 
     blocTest<BestSellerCubit, BestSellerState>(
-      'يجب أن يخرج (emit) حالة التحميل ثم حالة النجاح عند استدعاء GetBestSellerEvent بنجاح',
+      'يجب emit loading ثم success عند نجاح العملية',
       build: () {
         when(
-          () => mockGetProductsUseCase.call(params: any(named: 'params')),
+          mockGetProductsUseCase.call(params: anyNamed('params')),
         ).thenAnswer(
           (_) async => Success<ProductsResponseEntity>(
             data: const ProductsResponseEntity(
@@ -47,17 +49,16 @@ void main() {
             ),
           ),
         );
+
         return cubit;
       },
       act: (cubit) => cubit.doEvent(GetBestSellerEvent()),
       expect: () => [
-        // الحالة الأولى: Loading
         isA<BestSellerState>().having(
           (s) => s.bestSellerState.isLoading,
           'loading',
           true,
         ),
-        // الحالة الثانية: Success
         isA<BestSellerState>().having(
           (s) => s.bestSellerState.isSuccess,
           'success',
@@ -67,14 +68,14 @@ void main() {
     );
 
     blocTest<BestSellerCubit, BestSellerState>(
-      'يجب أن يخرج (emit) حالة التحميل ثم حالة الفشل عند حدوث خطأ',
+      'يجب emit loading ثم failure عند حدوث خطأ',
       build: () {
-        // تجهيز الـ Mock ليرجع فشل
         when(
-          () => mockGetProductsUseCase.call(params: any(named: 'params')),
+          mockGetProductsUseCase.call(params: anyNamed('params')),
         ).thenAnswer(
           (_) async => Failure(errorMessage: 'Error fetching products'),
         );
+
         return cubit;
       },
       act: (cubit) => cubit.doEvent(GetBestSellerEvent()),
