@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+
 import '../../helpers/my_responsive.dart';
 import '../shimmer_box.dart';
+
 class GridProductShimmer extends StatelessWidget {
   const GridProductShimmer({super.key});
 
@@ -17,7 +19,7 @@ class GridProductShimmer extends StatelessWidget {
               mainAxisSpacing: 12,
               childAspectRatio: .7,
             ),
-            itemBuilder: (_, __) {
+            itemBuilder: (_, _) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

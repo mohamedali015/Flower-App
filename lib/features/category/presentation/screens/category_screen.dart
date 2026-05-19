@@ -54,7 +54,7 @@ class _CategoryViewState extends State<_CategoryView> {
     /// ALL TAB
     if (selectedIndex == 0) {
       context.read<CategoryCubit>().doEvent(
-        ProductEvent(categoryId: ProductQueryParams(categoryId: null)),
+        ProductEvent(categoryId: const ProductQueryParams(categoryId: null)),
       );
 
       return;
@@ -108,7 +108,7 @@ class _CategoryViewState extends State<_CategoryView> {
               builder: (context, state) {
                 /// CATEGORY LOADING
                 if (state.isLoading) {
-                  return TabsShimmer();
+                  return const TabsShimmer();
                 }
 
                 /// CATEGORY ERROR
@@ -156,7 +156,7 @@ class _CategoryViewState extends State<_CategoryView> {
                         builder: (_) {
                           /// PRODUCTS LOADING
                           if (state.isProductLoading) {
-                            return GridProductShimmer();
+                            return const GridProductShimmer();
                           }
 
                           /// PRODUCTS ERROR

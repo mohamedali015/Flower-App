@@ -46,7 +46,7 @@ class _ResetPasswordState extends State<ResetPassword> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppStrings.resetPassword),
+          title: const Text(AppStrings.resetPassword),
           leading: IconButton(
             onPressed: () => Navigator.pushNamedAndRemoveUntil(
               context,

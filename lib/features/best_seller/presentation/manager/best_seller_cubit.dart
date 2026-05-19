@@ -28,7 +28,8 @@ class BestSellerCubit extends Cubit<BestSellerState> {
       ),
     );
 
-    final result = await _getProductsUseCase.call(params: ProductQueryParams());
+    final result = await _getProductsUseCase.call(
+        params: const ProductQueryParams());
 
     switch (result) {
       case Success():

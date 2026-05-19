@@ -9,7 +9,7 @@ import 'package:flower_app/features/home/presentation/widgets/best_seller/best_s
 import 'package:flower_app/features/home/presentation/widgets/categories/categories_list.dart';
 import 'package:flower_app/features/home/presentation/widgets/headline_widget.dart';
 import 'package:flower_app/features/home/presentation/widgets/location_bar.dart';
-import 'package:flower_app/features/home/presentation/widgets/logo_and_searchBar.dart';
+import 'package:flower_app/features/home/presentation/widgets/logo_and_search_bar.dart';
 import 'package:flower_app/features/home/presentation/widgets/occasions/occasions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

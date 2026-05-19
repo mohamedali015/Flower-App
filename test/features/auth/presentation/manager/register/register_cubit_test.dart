@@ -38,7 +38,7 @@ void main() {
 
   group("Register Cubit Test Group", () {
     test("initial state should be RegisterState", () {
-      expect(registerCubit.state, RegisterState());
+      expect(registerCubit.state, const RegisterState());
     });
 
     blocTest<RegisterCubit, RegisterState>(
@@ -50,7 +50,10 @@ void main() {
         cubit.doEvents(SelectGenderEvent(gender: UserGender.male));
       },
 
-      expect: () => [RegisterState().copyWith(genderParam: UserGender.male)],
+      expect: () =>
+      [
+        const RegisterState().copyWith(genderParam: UserGender.male)
+      ],
     );
 
     blocTest<RegisterCubit, RegisterState>(
@@ -62,7 +65,7 @@ void main() {
         cubit.doEvents(SubmitPressedEvent());
       },
 
-      expect: () => [RegisterState().copyWith(isSubmittedParam: true)],
+      expect: () => [const RegisterState().copyWith(isSubmittedParam: true)],
     );
 
     blocTest<RegisterCubit, RegisterState>(
@@ -91,14 +94,14 @@ void main() {
       },
 
       expect: () => [
-        RegisterState().copyWith(
-          registerStateParam: RegisterState().registerState.copyWith(
+        const RegisterState().copyWith(
+          registerStateParam: const RegisterState().registerState.copyWith(
             isLoadingParam: true,
           ),
         ),
 
-        RegisterState().copyWith(
-          registerStateParam: RegisterState().registerState.copyWith(
+        const RegisterState().copyWith(
+          registerStateParam: const RegisterState().registerState.copyWith(
             isLoadingParam: false,
             isSuccessParam: true,
             dataParam: authEntity,
@@ -139,14 +142,14 @@ void main() {
       },
 
       expect: () => [
-        RegisterState().copyWith(
-          registerStateParam: RegisterState().registerState.copyWith(
+        const RegisterState().copyWith(
+          registerStateParam: const RegisterState().registerState.copyWith(
             isLoadingParam: true,
           ),
         ),
 
-        RegisterState().copyWith(
-          registerStateParam: RegisterState().registerState.copyWith(
+        const RegisterState().copyWith(
+          registerStateParam: const RegisterState().registerState.copyWith(
             isLoadingParam: false,
             isSuccessParam: false,
             errorMessageParam: errorMessage,

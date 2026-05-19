@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../core/helpers/my_responsive.dart';
-import '../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../core/shared_widgets/custom_search_bar.dart';
 import '../../../../core/shared_widgets/svg_wrapper.dart';
 import '../../../../core/utils/app_assets.dart';
@@ -12,13 +12,9 @@ class CustomHeaderCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var local = AppLocalizations.of(context)!;
     return Row(
       children: [
-        CustomSearchBar(
-          horizontal: 20,
-          vertical: 15,
-        ),
+        const CustomSearchBar(horizontal: 20, vertical: 15),
         SizedBox(width: MyResponsive.width(context, value: 8)),
         GestureDetector(
           onTap: () {},

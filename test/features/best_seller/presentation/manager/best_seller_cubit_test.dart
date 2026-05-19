@@ -36,7 +36,7 @@ void main() {
           () => mockGetProductsUseCase.call(params: any(named: 'params')),
         ).thenAnswer(
           (_) async => Success<ProductsResponseEntity>(
-            data: ProductsResponseEntity(
+            data: const ProductsResponseEntity(
               products: [],
               metadata: MetadataEntity(
                 currentPage: 1,

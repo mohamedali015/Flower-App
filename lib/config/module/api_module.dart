@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
 import '../../core/values/api_end_points.dart';
 import '../../core/values/api_strings.dart';
 import '../di/di.dart';
@@ -16,9 +17,9 @@ abstract class ApiModule {
   BaseOptions providerOption() {
     return BaseOptions(
       baseUrl: ApiEndPoints.baseUrl,
-      connectTimeout: Duration(seconds: 10),
-      sendTimeout: Duration(seconds: 10),
-      receiveTimeout: Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 10),
+      sendTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
     );
   }
 

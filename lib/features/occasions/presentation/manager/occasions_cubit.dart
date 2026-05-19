@@ -11,7 +11,7 @@ import 'occasions_state.dart';
 @injectable
 class OccasionsCubit extends Cubit<OccasionsState> {
   OccasionsCubit(this._getProductsUseCase, this._getOccasionsUseCase)
-    : super(OccasionsState());
+    : super(const OccasionsState());
 
   final GetOccasionsUseCase _getOccasionsUseCase;
   final GetProductsUseCase _getProductsUseCase;
