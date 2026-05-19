@@ -5,7 +5,7 @@ part 'categories.g.dart';
 @JsonSerializable()
 class Categories {
   @JsonKey(name: "_id")
-  final String? Id;
+  final String? id;
   @JsonKey(name: "name")
   final String? name;
   @JsonKey(name: "slug")
@@ -20,7 +20,7 @@ class Categories {
   final String? updatedAt;
 
   Categories({
-    this.Id,
+    this.id,
     this.name,
     this.slug,
     this.image,

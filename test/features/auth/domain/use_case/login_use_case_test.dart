@@ -20,8 +20,8 @@ void main() {
     phone: '+201010700999',
     userPhoto: '',
     role: '',
-    wishList: [],
-    addresses: [],
+    wishList: const [],
+    addresses: const [],
     createdAt: DateTime(2023, 5, 4, 8, 56, 26, 842),
   );
 

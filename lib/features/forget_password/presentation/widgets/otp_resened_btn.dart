@@ -9,6 +9,8 @@ import '../manager/cubit/forget_password_cubit.dart';
 import '../manager/state/forget_password_state.dart';
 
 class OtpResenedBtn extends StatelessWidget {
+  const OtpResenedBtn({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
@@ -21,7 +23,7 @@ class OtpResenedBtn extends StatelessWidget {
             child: BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
               builder: (context, state) {
                 if (state.sendEmailState!.isLoading) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else {
                   return Text(
                     AppStrings.resend,

@@ -28,7 +28,7 @@ void main() {
   setUpAll(() {
     errorMessage = "Something went wrong. Please try again later.";
 
-    params = ProductQueryParams(page: 1, limit: 10);
+    params = const ProductQueryParams(page: 1, limit: 10);
 
     productsEntities = List.generate(
       5,
@@ -59,7 +59,7 @@ void main() {
 
     productsResponseEntity = ProductsResponseEntity(
       products: productsEntities,
-      metadata: MetadataEntity(
+      metadata: const MetadataEntity(
         currentPage: 1,
         totalPages: 1,
         limit: 10,

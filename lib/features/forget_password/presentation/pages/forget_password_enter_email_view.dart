@@ -14,7 +14,7 @@ import '../../../../core/utils/app_constants.dart';
 import '../manager/event/forget_password_event.dart';
 
 class ForgetPasswordEnterEmailView extends StatefulWidget {
-  ForgetPasswordEnterEmailView();
+  const ForgetPasswordEnterEmailView({super.key});
 
   @override
   State<ForgetPasswordEnterEmailView> createState() =>
@@ -44,7 +44,7 @@ class _ForgetPasswordEnterEmailViewState
     final cubit = context.read<ForgetPasswordCubit>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.password),
+        title: const Text(AppStrings.password),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -78,7 +78,7 @@ class _ForgetPasswordEnterEmailViewState
                 SizedBox(height: MyResponsive.height(context, value: 32)),
                 TextFormField(
                   controller: _emailTextController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: AppStrings.email,
                     hintText: AppStrings.enterYouEmail,
                   ),
@@ -114,9 +114,9 @@ class _ForgetPasswordEnterEmailViewState
 
   Widget _buildWidget(ForgetPasswordState state) {
     if (state.sendEmailState?.isLoading ?? false) {
-      return CircularProgressIndicator(color: AppColors.white);
+      return const CircularProgressIndicator(color: AppColors.white);
     } else {
-      return Text(AppStrings.confirm);
+      return const Text(AppStrings.confirm);
     }
   }
 

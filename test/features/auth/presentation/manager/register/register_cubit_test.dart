@@ -1,12 +1,11 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flower_app/config/error_handling/result.dart';
-import 'package:flower_app/features/auth/domain/entities/auth_entity.dart';
 import 'package:flower_app/config/user/domain/entities/user_entity.dart';
+import 'package:flower_app/features/auth/domain/entities/auth_entity.dart';
 import 'package:flower_app/features/auth/domain/use_case/register_use_case.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_events.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_state.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -38,7 +37,7 @@ void main() {
 
   group("Register Cubit Test Group", () {
     test("initial state should be RegisterState", () {
-      expect(registerCubit.state, RegisterState());
+      expect(registerCubit.state, const RegisterState());
     });
 
     blocTest<RegisterCubit, RegisterState>(
@@ -50,7 +49,9 @@ void main() {
         cubit.doEvents(SelectGenderEvent(gender: UserGender.male));
       },
 
-      expect: () => [RegisterState().copyWith(genderParam: UserGender.male)],
+      expect: () => [
+        const RegisterState().copyWith(genderParam: UserGender.male),
+      ],
     );
 
     blocTest<RegisterCubit, RegisterState>(
@@ -62,7 +63,7 @@ void main() {
         cubit.doEvents(SubmitPressedEvent());
       },
 
-      expect: () => [RegisterState().copyWith(isSubmittedParam: true)],
+      expect: () => [const RegisterState().copyWith(isSubmittedParam: true)],
     );
 
     blocTest<RegisterCubit, RegisterState>(
@@ -91,14 +92,14 @@ void main() {
       },
 
       expect: () => [
-        RegisterState().copyWith(
-          registerStateParam: RegisterState().registerState.copyWith(
+        const RegisterState().copyWith(
+          registerStateParam: const RegisterState().registerState.copyWith(
             isLoadingParam: true,
           ),
         ),
 
-        RegisterState().copyWith(
-          registerStateParam: RegisterState().registerState.copyWith(
+        const RegisterState().copyWith(
+          registerStateParam: const RegisterState().registerState.copyWith(
             isLoadingParam: false,
             isSuccessParam: true,
             dataParam: authEntity,
@@ -139,14 +140,14 @@ void main() {
       },
 
       expect: () => [
-        RegisterState().copyWith(
-          registerStateParam: RegisterState().registerState.copyWith(
+        const RegisterState().copyWith(
+          registerStateParam: const RegisterState().registerState.copyWith(
             isLoadingParam: true,
           ),
         ),
 
-        RegisterState().copyWith(
-          registerStateParam: RegisterState().registerState.copyWith(
+        const RegisterState().copyWith(
+          registerStateParam: const RegisterState().registerState.copyWith(
             isLoadingParam: false,
             isSuccessParam: false,
             errorMessageParam: errorMessage,

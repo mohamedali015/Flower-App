@@ -44,7 +44,7 @@ class LogoutDialog extends StatelessWidget {
           child: Padding(
             padding: MyResponsive.paddingSymmetric(
               context,
-              horizontal: 32,
+              horizontal: 28,
               vertical: 32,
             ),
             child: Column(
@@ -77,8 +77,7 @@ class LogoutDialog extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox(width: MyResponsive.width(context, value: 16)),
-
+                    SizedBox(width: MyResponsive.width(context, value: 12)),
                     Expanded(
                       child: BlocBuilder<LogoutCubit, LogoutState>(
                         builder: (context, state) {

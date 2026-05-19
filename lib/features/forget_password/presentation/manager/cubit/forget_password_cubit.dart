@@ -17,7 +17,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     this._forgetPasswordUseCase,
     this._resetPasswordUseCase,
     this._verifyResetCodeUseCase,
-  ) : super(ForgetPasswordState());
+  ) : super(const ForgetPasswordState());
 
   final ForgetPasswordUseCase _forgetPasswordUseCase;
   final VerifyResetCodeUseCase _verifyResetCodeUseCase;
@@ -59,7 +59,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   Future<void> _sendEmail(String email) async {
     emit(
       state.copyWith(
-        sendEmailState: BaseState(
+        sendEmailState: const BaseState(
           data: null,
           errorMessage: null,
           isLoading: true,
@@ -98,7 +98,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   void _resetPassword(ResetPasswordEvent event) async {
     emit(
       state.copyWith(
-        resetPasswordState: BaseState(
+        resetPasswordState: const BaseState(
           data: null,
           errorMessage: null,
           isLoading: true,
@@ -115,7 +115,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       case Success<bool>():
         emit(
           state.copyWith(
-            resetPasswordState: BaseState(
+            resetPasswordState: const BaseState(
               errorMessage: null,
               isLoading: false,
               isSuccess: true,
@@ -140,7 +140,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     if (state.verifyOtpState?.isLoading == true) return;
     emit(
       state.copyWith(
-        verifyOtpState: BaseState(
+        verifyOtpState: const BaseState(
           isLoading: true,
           errorMessage: null,
           data: null,
@@ -201,7 +201,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     if (!state.canResend) return;
     emit(
       state.copyWith(
-        sendEmailState: BaseState(
+        sendEmailState: const BaseState(
           data: null,
           errorMessage: null,
           isLoading: true,

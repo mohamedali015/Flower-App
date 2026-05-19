@@ -69,7 +69,7 @@ void main() {
           isInWishlist: false,
         ),
       ],
-      metadata: MetadataEntity(
+      metadata: const MetadataEntity(
         currentPage: 1,
         totalPages: 1,
         limit: 10,
@@ -99,7 +99,7 @@ void main() {
 
   group("Occasions Cubit Test Group", () {
     test("initial state should be OccasionsState", () {
-      expect(occasionsCubit.state, OccasionsState());
+      expect(occasionsCubit.state, const OccasionsState());
     });
 
     blocTest<OccasionsCubit, OccasionsState>(
@@ -118,13 +118,15 @@ void main() {
       },
 
       expect: () => [
-        OccasionsState().copyWith(
-          occasionsCategoryStateParam: OccasionsState().occasionsCategoryState
+        const OccasionsState().copyWith(
+          occasionsCategoryStateParam: const OccasionsState()
+              .occasionsCategoryState
               .copyWith(isLoadingParam: true),
         ),
 
-        OccasionsState().copyWith(
-          occasionsCategoryStateParam: OccasionsState().occasionsCategoryState
+        const OccasionsState().copyWith(
+          occasionsCategoryStateParam: const OccasionsState()
+              .occasionsCategoryState
               .copyWith(
                 isLoadingParam: false,
                 isSuccessParam: true,
@@ -155,13 +157,15 @@ void main() {
       },
 
       expect: () => [
-        OccasionsState().copyWith(
-          occasionsCategoryStateParam: OccasionsState().occasionsCategoryState
+        const OccasionsState().copyWith(
+          occasionsCategoryStateParam: const OccasionsState()
+              .occasionsCategoryState
               .copyWith(isLoadingParam: true),
         ),
 
-        OccasionsState().copyWith(
-          occasionsCategoryStateParam: OccasionsState().occasionsCategoryState
+        const OccasionsState().copyWith(
+          occasionsCategoryStateParam: const OccasionsState()
+              .occasionsCategoryState
               .copyWith(
                 isLoadingParam: false,
                 isSuccessParam: false,
@@ -194,13 +198,15 @@ void main() {
       },
 
       expect: () => [
-        OccasionsState().copyWith(
-          occasionProductsStateParam: OccasionsState().occasionProductsState
+        const OccasionsState().copyWith(
+          occasionProductsStateParam: const OccasionsState()
+              .occasionProductsState
               .copyWith(isLoadingParam: true),
         ),
 
-        OccasionsState().copyWith(
-          occasionProductsStateParam: OccasionsState().occasionProductsState
+        const OccasionsState().copyWith(
+          occasionProductsStateParam: const OccasionsState()
+              .occasionProductsState
               .copyWith(
                 isLoadingParam: false,
                 isSuccessParam: true,
@@ -233,13 +239,15 @@ void main() {
       },
 
       expect: () => [
-        OccasionsState().copyWith(
-          occasionProductsStateParam: OccasionsState().occasionProductsState
+        const OccasionsState().copyWith(
+          occasionProductsStateParam: const OccasionsState()
+              .occasionProductsState
               .copyWith(isLoadingParam: true),
         ),
 
-        OccasionsState().copyWith(
-          occasionProductsStateParam: OccasionsState().occasionProductsState
+        const OccasionsState().copyWith(
+          occasionProductsStateParam: const OccasionsState()
+              .occasionProductsState
               .copyWith(
                 isLoadingParam: false,
                 isSuccessParam: false,

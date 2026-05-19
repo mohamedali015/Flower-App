@@ -12,8 +12,8 @@ class ProfileScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Profile Screen"),
-          SizedBox(height: 40),
+          const Text("Profile Screen"),
+          const SizedBox(height: 40),
           CustomButton(
             title: "Logout",
             onPressed: () async {

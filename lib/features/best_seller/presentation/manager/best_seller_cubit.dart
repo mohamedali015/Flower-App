@@ -12,6 +12,7 @@ class BestSellerCubit extends Cubit<BestSellerState> {
   final GetProductsUseCase _getProductsUseCase;
 
   BestSellerCubit(this._getProductsUseCase) : super(const BestSellerState());
+
   void doEvent(BestSellerEvents event) {
     switch (event) {
       case GetBestSellerEvent():
@@ -28,7 +29,9 @@ class BestSellerCubit extends Cubit<BestSellerState> {
       ),
     );
 
-    final result = await _getProductsUseCase.call(params: ProductQueryParams());
+    final result = await _getProductsUseCase.call(
+      params: const ProductQueryParams(),
+    );
 
     switch (result) {
       case Success():

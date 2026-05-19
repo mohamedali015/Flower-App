@@ -5,7 +5,7 @@ part 'best_seller.g.dart';
 @JsonSerializable()
 class BestSeller {
   @JsonKey(name: "_id")
-  final String? Id;
+  final String? uId;
   @JsonKey(name: "title")
   final String? title;
   @JsonKey(name: "slug")
@@ -46,7 +46,7 @@ class BestSeller {
   final String? id;
 
   BestSeller({
-    this.Id,
+    this.uId,
     this.title,
     this.slug,
     this.description,

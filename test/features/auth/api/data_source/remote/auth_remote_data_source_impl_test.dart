@@ -33,7 +33,7 @@ void main() {
 
     expectedResponse = AuthResponse(message: "Success", token: "token_123");
 
-    params = RegisterParams(
+    params = const RegisterParams(
       firstName: "Mohamed",
       lastName: "Ali",
       email: "mohamed@gmail.com",
