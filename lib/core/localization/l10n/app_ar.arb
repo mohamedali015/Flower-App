@@ -84,5 +84,8 @@
   "deliverTo": "توصيل الي",
   "viewAll": "المزيد",
 
-"searchForAnyProductYouWant": "ابحث عن أي منتج تريده"
+  "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "currentPassword": "كلمة المرور الحالية",
+  "newPassword": "كلمة المرور الجديدة"
 }
