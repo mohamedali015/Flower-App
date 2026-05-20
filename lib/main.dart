@@ -7,10 +7,12 @@ import 'config/route_manager/route_generator.dart';
 import 'config/route_manager/routes.dart';
 import 'config/user/manager/user_cubit.dart';
 import 'config/user/manager/user_state.dart';
+import 'core/cubit/locale/locale_cubit.dart';
 import 'core/helpers/custom_bloc_observer.dart';
 import 'core/helpers/show_session_expired_dialog.dart';
 import 'core/localization/l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,10 +29,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<UserCubit>(),
-      child: Builder(
-        builder: (context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => getIt<UserCubit>(),
+        ),
+
+        BlocProvider(
+          create: (_) => getIt<LocaleCubit>(),
+        ),
+      ],
+      child: BlocBuilder<LocaleCubit, Locale>(
+        builder: (context, locale) {
           return MaterialApp(
             navigatorKey: AppConstants.navigatorKey,
             debugShowCheckedModeBanner: false,
@@ -38,10 +48,17 @@ class MyApp extends StatelessWidget {
 
             initialRoute: Routes.bottomNavBarRoute,
             onGenerateRoute: RouteGenerator.getRoute,
-            locale: const Locale("ar"),
+
+            locale: locale,
+
             theme: AppTheme.appTheme(context),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
+
+            localizationsDelegates:
+            AppLocalizations.localizationsDelegates,
+
+            supportedLocales:
+            AppLocalizations.supportedLocales,
+
             builder: (context, child) {
               return BlocListener<UserCubit, UserState>(
                 listener: (context, state) {
