@@ -109,7 +109,9 @@ class ProductCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
 
-            CustomAddToCart(onTap: onAddToCart),
+            CustomAddToCart(
+              productId: product.id,
+            ),
           ],
         ),
       ),

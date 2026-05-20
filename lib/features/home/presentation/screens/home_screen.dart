@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               LogoAndSearchBar(local: local),
-              LocationBar(local: local),
+              LocationBar(),
 
               Expanded(
                 child: BlocBuilder<HomeCubit, HomeState>(

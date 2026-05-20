@@ -7,13 +7,14 @@ import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flower_app/core/values/app_strings.dart';
 import 'package:flutter/material.dart';
 
-class LocationBar extends StatelessWidget {
-  const LocationBar({super.key, required this.local});
+import '../../../cart/domain/entities/get_cart_entity.dart';
 
-  final AppLocalizations local;
+class LocationBar extends StatelessWidget {
+  const LocationBar({super.key });
 
   @override
   Widget build(BuildContext context) {
+    var local = AppLocalizations.of(context)!;
     return Padding(
       padding: MyResponsive.paddingSymmetric(context, vertical: 17),
       child: Row(
@@ -28,10 +29,10 @@ class LocationBar extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: local.deliverTo,
+                  text: "${local.deliverTo} " ,
                   style: AppTextStyles.medium14(
                     context,
-                  ).copyWith(color: AppColors.darkShade6),
+                  ).copyWith(color: AppColors.grayDark),
                 ),
                 TextSpan(
                   text: AppStrings.address,
