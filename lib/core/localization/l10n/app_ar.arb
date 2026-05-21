@@ -87,5 +87,6 @@
   "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
   "resetPassword": "إعادة تعيين كلمة المرور",
   "currentPassword": "كلمة المرور الحالية",
-  "newPassword": "كلمة المرور الجديدة"
+  "newPassword": "كلمة المرور الجديدة",
+  "update":"تعديل"
 }

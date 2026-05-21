@@ -88,5 +88,6 @@
 
    "resetPassword":"Reset password",
    "currentPassword":"Current password",
-   "newPassword":"New password"
+   "newPassword":"New password",
+   "update":"Update"
 }

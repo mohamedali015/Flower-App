@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../features/cart/presentation/screens/cart_screen.dart';
 import '../../features/category/presentation/screens/category_screen.dart';
-import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/logout/home/presentation/screens/home_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../localization/l10n/app_localizations.dart';
 import '../shared_widgets/svg_wrapper.dart';

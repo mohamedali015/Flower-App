@@ -111,7 +111,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     ),
                     SizedBox(height: MyResponsive.height(context, value: 24)),
                     CustomButton(
-                      title: local.resetPassword,
+                      title: local.update,
                       onPressed: isLoading
                           ? null
                           : () {

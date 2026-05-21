@@ -1,10 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flower_app/config/error_handling/result.dart';
-import 'package:flower_app/features/home/domain/entities/home_response_entity.dart';
-import 'package:flower_app/features/home/domain/use_cases/get_home_use_case.dart';
-import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
-import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
-import 'package:flower_app/features/home/presentation/manager/cubit/home_state.dart';
+import 'package:flower_app/features/logout/home/domain/entities/home_response_entity.dart';
+import 'package:flower_app/features/logout/home/domain/use_cases/get_home_use_case.dart';
+import 'package:flower_app/features/logout/home/presentation/manager/cubit/home_cubit.dart';
+import 'package:flower_app/features/logout/home/presentation/manager/cubit/home_events.dart';
+import 'package:flower_app/features/logout/home/presentation/manager/cubit/home_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
