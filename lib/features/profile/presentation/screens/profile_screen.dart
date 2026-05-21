@@ -34,6 +34,13 @@ class ProfileScreen extends StatelessWidget {
               );
             },
           ),
+          const SizedBox(height: 24),
+          CustomButton(
+            title: "EditProfile",
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.editProfileScreenRoute);
+            },
+          ),
         ],
       ),
     );

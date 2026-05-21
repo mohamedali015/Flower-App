@@ -84,5 +84,9 @@
   "deliverTo": "توصيل الي",
   "viewAll": "المزيد",
 
-"searchForAnyProductYouWant": "ابحث عن أي منتج تريده"
+  "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
+
+  "editProfile" : "تعديل الحساب الشخصى",
+  "change" : "تغير",
+  "update" : "تحديث"
 }

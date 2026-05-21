@@ -12,4 +12,7 @@ abstract class ApiEndPoints {
   static const String products = "/products";
   static const String home = "/home";
   static const String getOccasions = '/occasions';
+
+  static const String editProfile = '/auth/editProfile';
+  static const String uploadPhoto = '/auth/upload-photo';
 }

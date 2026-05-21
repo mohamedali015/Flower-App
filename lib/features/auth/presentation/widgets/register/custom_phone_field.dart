@@ -11,11 +11,13 @@ class CustomPhoneField extends StatelessWidget {
   const CustomPhoneField({
     super.key,
     required this.phoneController,
+    this.initialValue,
     required this.isLoading,
     required this.phoneFocus,
   });
 
   final TextEditingController phoneController;
+  final String? initialValue;
   final FocusNode phoneFocus;
   final bool isLoading;
 
@@ -24,6 +26,7 @@ class CustomPhoneField extends StatelessWidget {
     final local = AppLocalizations.of(context)!;
 
     return IntlPhoneField(
+      initialValue: initialValue,
       initialCountryCode: 'EG',
       dialogType: DialogType.showModalBottomSheet,
       enabled: !isLoading,
