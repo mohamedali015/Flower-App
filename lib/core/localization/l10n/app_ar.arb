@@ -86,12 +86,15 @@
 
 "english": "الإنجليزية",
 "arabic": "العربية",
-"searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
  "logout" : "تسجيل خروج",
  "aboutUs":"معلومات عنا",
   "language":"اللغة",
   "changeLanguage":"تغير اللغة",
   "myOrders": "طلباتي",
   "myAddress": "عناويني",
-  "notification":"الاشعارات"
+  "notification":"الاشعارات",
+  "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
+  "editProfile" : "تعديل الحساب الشخصى",
+  "change" : "تغير",
+  "update" : "تحديث"
 }

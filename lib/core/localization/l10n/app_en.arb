@@ -95,5 +95,8 @@
    "changeLanguage":"Change Language",
    "myOrders" : "My Orders",
    "myAddress" : "My Address",
-   "notification":"Notification"
+   "notification":"Notification",
+   "editProfile": "Edit Profile",
+   "change": "Change",
+   "update" : "Update"
 }

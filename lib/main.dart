@@ -13,7 +13,6 @@ import 'core/helpers/show_session_expired_dialog.dart';
 import 'core/localization/l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -31,13 +30,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => getIt<UserCubit>(),
-        ),
+        BlocProvider(create: (_) => getIt<UserCubit>()),
 
-        BlocProvider(
-          create: (_) => getIt<LocaleCubit>(),
-        ),
+        BlocProvider(create: (_) => getIt<LocaleCubit>()),
       ],
       child: BlocBuilder<LocaleCubit, Locale>(
         builder: (context, locale) {
@@ -53,11 +48,9 @@ class MyApp extends StatelessWidget {
 
             theme: AppTheme.appTheme(context),
 
-            localizationsDelegates:
-            AppLocalizations.localizationsDelegates,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
 
-            supportedLocales:
-            AppLocalizations.supportedLocales,
+            supportedLocales: AppLocalizations.supportedLocales,
 
             builder: (context, child) {
               return BlocListener<UserCubit, UserState>(

@@ -4,4 +4,6 @@ abstract class ApiStrings {
   static const String email = "email";
   static const String newPassword = "newPassword";
   static const String resetCode = "resetCode";
+
+  static const String photo = 'photo';
 }

@@ -4,6 +4,8 @@ import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
+import 'package:flower_app/features/edit_profile/presentation/manager/edit_profile_cubit.dart';
+import 'package:flower_app/features/edit_profile/presentation/pages/edit_profile_screen.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
@@ -125,6 +127,14 @@ abstract class RouteGenerator {
         ///? search Screen
         case Routes.searchScreenRoute:
           return CupertinoPageRoute(builder: (_) => const SearchScreen());
+
+        case Routes.editProfileScreenRoute:
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => getIt<EditProfileCubit>(),
+              child: const EditProfileScreen(),
+            ),
+          );
 
         /// Default
         default:

@@ -1,3 +1,4 @@
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/config/user/domain/entities/user_entity.dart';
 import 'package:flower_app/core/shared_widgets/cached_network_image_wrapper.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
@@ -88,7 +89,12 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                             style: AppTextStyles.medium18(context),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.editProfileScreenRoute,
+                              );
+                            },
                             icon: const SvgWrapper(path: AppAssets.pen),
                           ),
                         ],

@@ -35,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           );
         }
-        return ProfileScreenView(user: state.user!,);
+        return ProfileScreenView(user: state.user!);
       },
       listenWhen: (previous, current) {
         return current.error != null;
