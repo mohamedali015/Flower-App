@@ -8,8 +8,9 @@ import 'package:flower_app/features/edit_profile/presentation/manager/edit_profi
 import 'package:flower_app/features/edit_profile/presentation/pages/edit_profile_screen.dart';
 import 'package:flower_app/features/change_password/presentation/manager/cubit/change_password_cubit.dart';
 import 'package:flower_app/features/change_password/presentation/screens/change_password_screen.dart';
-import 'package:flower_app/features/logout/home/presentation/manager/cubit/home_cubit.dart';
-import 'package:flower_app/features/logout/home/presentation/manager/cubit/home_events.dart';
+import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cubit.dart';
+import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
+import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
@@ -128,8 +129,11 @@ abstract class RouteGenerator {
 
         case Routes.changePasswordRoute:
           return CupertinoPageRoute(
-            builder: (_) => BlocProvider(
-              create: (context) => getIt<ChangePasswordCubit>(),
+            builder: (_) => MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => getIt<ChangePasswordCubit>()),
+                BlocProvider(create: (context) => getIt<LogoutCubit>()),
+              ],
               child: const ChangePasswordScreen(),
             ),
           );

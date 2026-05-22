@@ -2,6 +2,7 @@ import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/config/user/domain/entities/user_entity.dart';
 import 'package:flower_app/core/shared_widgets/cached_network_image_wrapper.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
+import 'package:flower_app/features/logout/presentation/logout_dialog.dart';
 import 'package:flower_app/features/profile/presentation/widgets/profile_screen_setting_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -198,7 +199,13 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                   iconPath: AppAssets.logout,
                 ),
                 right: IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) => const LogoutDialog(),
+                    );
+                  },
                   icon: const SvgWrapper(path: AppAssets.logout),
                 ),
               ),

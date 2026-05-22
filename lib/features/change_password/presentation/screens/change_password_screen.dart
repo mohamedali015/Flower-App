@@ -3,9 +3,12 @@ import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/shared_widgets/custom_button.dart';
 import 'package:flower_app/core/utils/app_constants.dart';
 import 'package:flower_app/features/change_password/domain/entities/change_password_request_entity.dart';
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/features/change_password/presentation/manager/cubit/change_password_cubit.dart';
 import 'package:flower_app/features/change_password/presentation/manager/cubit/change_password_events.dart';
 import 'package:flower_app/features/change_password/presentation/widgets/change_password_form.dart';
+import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cubit.dart';
+import 'package:flower_app/features/logout/presentation/manager/cubit/logout_events.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,93 +59,112 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<ChangePasswordCubit, ChangePasswordState>(
+            listener: (context, state) {
+              if (state is ChangePasswordSuccess) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(local.resetPassword)));
+
+                context.read<LogoutCubit>().doEvents(LogoutEvent());
+              }
             },
-            icon: const Icon(Icons.arrow_back_ios_new),
           ),
-          title: Text(local.resetPassword),
-        ),
-        body: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
-          listener: (context, state) {
-            if (state is ChangePasswordSuccess) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(local.resetPassword)));
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (mounted) {
-                  Navigator.pop(context);
-                }
-              });
-            }
+          BlocListener<LogoutCubit, LogoutState>(
+            listener: (context, state) {
+              if (state is LogoutSuccess) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (!mounted) return;
 
-            if (state is ChangePasswordError) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
-            }
-          },
-          builder: (context, state) {
-            final isLoading = state is ChangePasswordLoading;
-            return Padding(
-              padding: MyResponsive.paddingSymmetric(
-                context,
-                horizontal: AppConstants.paddingHorizontal,
-                vertical: 10,
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ChangePasswordForm(
-                      formKey: _formKey,
-                      confirmPasswordFocus: confirmPasswordFocus,
-                      newPasswordFocus: newPasswordFocus,
-                      newPasswordController: newPasswordController,
-                      passwordController: passwordController,
-                      autoValidate: autoValidate,
-                      isLoading: isLoading,
-                      local: local,
-                      onChanged: _validateForm,
-                    ),
-                    SizedBox(height: MyResponsive.height(context, value: 24)),
-                    CustomButton(
-                      title: local.update,
-                      onPressed: isLoading
-                          ? null
-                          : () {
-                              final isValid =
-                                  _formKey.currentState?.validate() ?? false;
-                              if (!isValid) {
-                                setState(() {
-                                  autoValidate = true;
-                                });
-                                return;
-                              }
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Routes.loginRoute,
+                    (_) => false,
+                  );
+                });
+              }
 
-                              context.read<ChangePasswordCubit>().doEvents(
-                                SubmitChangePasswordEvent(
-                                  changePasswordRequestEntity:
-                                      ChangePasswordRequestEntity(
-                                        password: passwordController.text
-                                            .trim(),
-                                        newPassword: newPasswordController.text
-                                            .trim(),
-                                      ),
-                                ),
-                              );
-                            },
-                      isLoading: isLoading,
-                    ),
-                  ],
+              if (state is LogoutFailure) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+              }
+            },
+          ),
+        ],
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back_ios_new),
+            ),
+            title: Text(local.resetPassword),
+          ),
+          body: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
+            builder: (context, state) {
+              final isLoading = state is ChangePasswordLoading;
+              return Padding(
+                padding: MyResponsive.paddingSymmetric(
+                  context,
+                  horizontal: AppConstants.paddingHorizontal,
+                  vertical: 10,
                 ),
-              ),
-            );
-          },
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ChangePasswordForm(
+                        formKey: _formKey,
+                        confirmPasswordFocus: confirmPasswordFocus,
+                        newPasswordFocus: newPasswordFocus,
+                        newPasswordController: newPasswordController,
+                        passwordController: passwordController,
+                        autoValidate: autoValidate,
+                        isLoading: isLoading,
+                        local: local,
+                        onChanged: _validateForm,
+                      ),
+                      SizedBox(height: MyResponsive.height(context, value: 24)),
+                      CustomButton(
+                        title: local.update,
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                final isValid =
+                                    _formKey.currentState?.validate() ?? false;
+                                if (!isValid) {
+                                  setState(() {
+                                    autoValidate = true;
+                                  });
+                                  return;
+                                }
+
+                                context.read<ChangePasswordCubit>().doEvents(
+                                  SubmitChangePasswordEvent(
+                                    changePasswordRequestEntity:
+                                        ChangePasswordRequestEntity(
+                                          password: passwordController.text
+                                              .trim(),
+                                          newPassword: newPasswordController
+                                              .text
+                                              .trim(),
+                                        ),
+                                  ),
+                                );
+                              },
+                        isLoading: isLoading,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

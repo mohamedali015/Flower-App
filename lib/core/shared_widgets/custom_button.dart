@@ -12,9 +12,13 @@ class CustomButton extends StatelessWidget {
     this.foregroundColor,
     this.radiusValue = 100,
     this.isLoading = false,
+    this.titleStyle,
+    this.borderColor,
   });
 
   final String title;
+  final Color? borderColor;
+  final TextStyle? titleStyle;
   final VoidCallback? onPressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -34,7 +38,7 @@ class CustomButton extends StatelessWidget {
           side: BorderSide(
             color: onPressed == null || isLoading
                 ? AppColors.disabledGray
-                : AppColors.primaryColor,
+                : borderColor ?? AppColors.primaryColor,
             width: MyResponsive.width(value: 1, context),
           ),
         ),
@@ -50,9 +54,11 @@ class CustomButton extends StatelessWidget {
             )
           : Text(
               title,
-              style: AppTextStyles.medium16(
-                context,
-              ).copyWith(color: foregroundColor),
+              style:
+                  titleStyle ??
+                  AppTextStyles.medium16(
+                    context,
+                  ).copyWith(color: foregroundColor),
             ),
     );
   }

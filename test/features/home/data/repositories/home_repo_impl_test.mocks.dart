@@ -6,10 +6,9 @@
 import 'dart:async' as _i3;
 
 import 'package:flower_app/config/error_handling/result.dart' as _i4;
-import 'package:flower_app/features/logout/home/api/data_source/home_data_source_impl.dart'
+import 'package:flower_app/features/home/api/data_source/home_data_source_impl.dart'
     as _i2;
-import 'package:flower_app/features/logout/home/data/model/home_response.dart'
-    as _i5;
+import 'package:flower_app/features/home/data/model/home_response.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
 

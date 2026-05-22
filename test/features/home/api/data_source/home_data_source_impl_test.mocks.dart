@@ -5,10 +5,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:flower_app/features/logout/home/api/home_api_client.dart'
-    as _i3;
-import 'package:flower_app/features/logout/home/data/model/home_response.dart'
-    as _i2;
+import 'package:flower_app/features/home/api/home_api_client.dart' as _i3;
+import 'package:flower_app/features/home/data/model/home_response.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint

@@ -101,5 +101,7 @@
    "resetPassword":"Reset password",
    "currentPassword":"Current password",
    "newPassword":"New password",
-   "update":"Update"
+   "update":"Update",
+   "confirmLogout":"Confirm logout!!",
+   "cancle":"Cancle"
 }

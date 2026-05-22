@@ -86,19 +86,20 @@
 
 "english": "الإنجليزية",
 "arabic": "العربية",
- "logout" : "تسجيل خروج",
  "aboutUs":"معلومات عنا",
   "language":"اللغة",
   "changeLanguage":"تغير اللغة",
   "myOrders": "طلباتي",
   "myAddress": "عناويني",
   "notification":"الاشعارات",
-  "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
   "editProfile" : "تعديل الحساب الشخصى",
   "change" : "تغير",
-  "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
   "resetPassword": "إعادة تعيين كلمة المرور",
   "currentPassword": "كلمة المرور الحالية",
   "newPassword": "كلمة المرور الجديدة",
-  "update":"تعديل"
+  "update":"تعديل",
+"searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
+   "logout":"تسجيل الخروج",
+   "confirmLogout":"تأكيد تسجيل الخروج!!",
+   "cancle":"إلغاء"
 }
