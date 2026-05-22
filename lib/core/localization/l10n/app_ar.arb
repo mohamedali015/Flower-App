@@ -96,5 +96,9 @@
   "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
   "editProfile" : "تعديل الحساب الشخصى",
   "change" : "تغير",
-  "update" : "تحديث"
+  "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "currentPassword": "كلمة المرور الحالية",
+  "newPassword": "كلمة المرور الجديدة",
+  "update":"تعديل"
 }

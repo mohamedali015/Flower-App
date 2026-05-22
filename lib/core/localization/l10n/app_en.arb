@@ -98,5 +98,8 @@
    "notification":"Notification",
    "editProfile": "Edit Profile",
    "change": "Change",
-   "update" : "Update"
+   "resetPassword":"Reset password",
+   "currentPassword":"Current password",
+   "newPassword":"New password",
+   "update":"Update"
 }

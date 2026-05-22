@@ -16,4 +16,5 @@ abstract class ApiEndPoints {
 
   static const String editProfile = '/auth/editProfile';
   static const String uploadPhoto = '/auth/upload-photo';
+  static const String changePassword = '/auth/change-password';
 }

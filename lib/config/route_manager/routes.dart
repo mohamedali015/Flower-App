@@ -22,4 +22,5 @@ abstract class Routes {
   static const String searchScreenRoute = '/SearchScreen';
 
   static const String editProfileScreenRoute = '/EditProfileScreen';
+  static const String changePasswordRoute = '/changePassword';
 }

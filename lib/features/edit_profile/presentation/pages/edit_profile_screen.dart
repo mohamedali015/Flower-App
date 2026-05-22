@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flower_app/config/base_state/base_state.dart';
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/config/user/domain/entities/user_entity.dart';
 import 'package:flower_app/config/user/manager/user_cubit.dart';
 import 'package:flower_app/config/user/manager/user_events.dart';
@@ -371,7 +372,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       ).copyWith(color: AppColors.primaryColor),
                                     ),
 
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        Routes.changePasswordRoute,
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
