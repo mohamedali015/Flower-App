@@ -90,6 +90,7 @@
  "logout" : "تسجيل خروج",
  "aboutUs":"معلومات عنا",
   "language":"اللغة",
+  "changeLanguage":"تغير اللغة",
   "myOrders": "طلباتي",
   "myAddress": "عناويني",
   "notification":"الاشعارات"

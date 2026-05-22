@@ -92,6 +92,7 @@
    "logout" : "Logout",
    "aboutUs":"About US",
    "language":"Language",
+   "changeLanguage":"Change Language",
    "myOrders" : "My Orders",
    "myAddress" : "My Address",
    "notification":"Notification"

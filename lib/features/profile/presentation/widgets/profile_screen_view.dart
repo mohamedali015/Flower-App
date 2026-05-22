@@ -151,7 +151,7 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                   iconPath: AppAssets.language,
                 ),
                 right: TextButton(
-                  onPressed: () => _changeLocale(context),
+                  onPressed: () => _showBottomSheet(context),
                   child: Text(
                     currentLocale,
                     style: AppTextStyles.regular12(
@@ -203,9 +203,125 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
     );
   }
 
-  void _changeLocale(BuildContext context) {
+  void _showBottomSheet(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
     final localeCubit = context.read<LocaleCubit>();
-    final currentLocale = localeCubit.state.languageCode;
-    localeCubit.changeLanguage(currentLocale == 'en' ? 'ar' : 'en');
+    showModalBottomSheet(
+      backgroundColor: AppColors.background,
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: MyResponsive.paddingOnly(
+            context,
+            bottom: 16,
+            top: 36,
+            start: 16,
+            end: 16,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: MyResponsive.width(context, value: 80),
+                height: MyResponsive.height(context, value: 4),
+                color: AppColors.grayDark,
+              ),
+              SizedBox(height: MyResponsive.height(context, value: 16)),
+              Align(
+                alignment: AlignmentGeometry.topStart,
+                child: Text(
+                  locale.changeLanguage,
+                  style: AppTextStyles.bold20(
+                    context,
+                  ).copyWith(color: AppColors.primaryColor),
+                ),
+              ),
+              SizedBox(height: MyResponsive.height(context, value: 16)),
+              Container(
+                padding: MyResponsive.paddingSymmetric(
+                  context,
+                  vertical: 18.5,
+                  horizontal: 16,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    MyResponsive.radius(context, value: 8),
+                  ),
+                  color: AppColors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x1A000000),
+                      blurRadius: 5,
+                      spreadRadius: 0,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        locale.arabic,
+                        style: AppTextStyles.medium18(context),
+                      ),
+                    ),
+                    Radio<String>(
+                      activeColor: AppColors.primaryColor,
+                      value: "ar",
+                      groupValue: localeCubit.state.languageCode,
+                      onChanged: (value) {
+                        localeCubit.changeLanguage(value!);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: MyResponsive.height(context, value: 16)),
+              Container(
+                padding: MyResponsive.paddingSymmetric(
+                  context,
+                  vertical: 18.5,
+                  horizontal: 16,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    MyResponsive.radius(context, value: 8),
+                  ),
+                  color: AppColors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x1A000000),
+                      blurRadius: 5,
+                      spreadRadius: 0,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        locale.english,
+                        style: AppTextStyles.medium18(context),
+                      ),
+                    ),
+                    Radio<String>(
+                      activeColor: AppColors.primaryColor,
+                      value: "en",
+                      groupValue: localeCubit.state.languageCode,
+                      onChanged: (value) {
+                        localeCubit.changeLanguage(value!);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
