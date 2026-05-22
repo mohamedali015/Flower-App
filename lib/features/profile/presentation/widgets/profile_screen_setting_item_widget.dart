@@ -27,10 +27,12 @@ class ProfileScreenSettingItemWidget extends StatelessWidget {
         children: [
           left,
 
-          Transform.flip(
+          right is IconButton
+              ? Transform.flip(
             flipX: isArabic,
             child: right,
-          ),
+          )
+              : right,
         ],
       ),
     );

@@ -24,4 +24,6 @@ abstract class AppAssets {
   static const String iosForwardBtn = "$_baseIconsPath/ios_forward.svg";
   static const String language = "$_baseIconsPath/language.svg";
   static const String notification = "$_baseIconsPath/notification.svg";
+
+  static const String pen = "$_baseIconsPath/pen.svg";
 }
