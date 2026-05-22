@@ -16,4 +16,7 @@ abstract class UserApiClient {
 
   @GET(ApiEndPoints.getUserData)
   Future<GetUserDataResponse> getUserData();
+  
+/*  @GET(ApiEndPoints.logout)
+  Future<Map<String,String>> logout();*/
 }

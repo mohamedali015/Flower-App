@@ -18,4 +18,12 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       return response;
     });
   }
+
+/*  @override
+  Future<Result<Map<String, String>>> logout() async {
+    return executeApi(() async {
+      var response = await _apiClient.logout();
+      return response;
+    },);
+  }*/
 }

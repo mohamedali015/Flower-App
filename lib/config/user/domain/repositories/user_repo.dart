@@ -3,4 +3,5 @@ import '../../../error_handling/result.dart';
 
 abstract interface class UserRepo {
   Future<Result<UserEntity>> getUserData();
+  // Future<Result<Map<String,String>>> logout();
 }

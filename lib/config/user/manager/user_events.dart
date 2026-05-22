@@ -13,3 +13,5 @@ class SetUserDataEvent extends UserEvents {
 class UnauthorizedUserEvent extends UserEvents {}
 
 class ResetUnauthorizedEvent extends UserEvents {}
+
+// class LogoutUserEvent extends UserEvents {}

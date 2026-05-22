@@ -17,7 +17,11 @@ abstract class AppAssets {
   static const String sortIcons = "$_baseIconsPath/sort.svg";
 
   static const String location = "$_baseIconsPath/location.svg";
+  static const String myOrders = "$_baseIconsPath/orders.svg";
   static const String pinkArrow = "$_baseIconsPath/pink_arrow.svg";
 
   static const String logout = "$_baseIconsPath/logout.svg";
+  static const String iosForwardBtn = "$_baseIconsPath/ios_forward.svg";
+  static const String language = "$_baseIconsPath/language.svg";
+  static const String notification = "$_baseIconsPath/notification.svg";
 }

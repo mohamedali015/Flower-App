@@ -15,6 +15,7 @@ class IconTextWidget extends StatelessWidget {
     return Row(
       children: [
         SvgWrapper(path: iconPath),
+
         Padding(
           padding: MyResponsive.paddingSymmetric(context, horizontal: 2),
           child: Text(

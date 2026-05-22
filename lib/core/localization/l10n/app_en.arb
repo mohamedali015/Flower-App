@@ -84,5 +84,12 @@
   "deliverTo": "Deliver to",
   "viewAll": "View All",
 
-   "searchForAnyProductYouWant": "Search For Any Product You Want"
+   "searchForAnyProductYouWant": "Search For Any Product You Want",
+
+   "logout" : "Logout",
+   "aboutUs":"About US",
+   "language":"Language",
+   "myOrders" : "My Orders",
+   "myAddress" : "My Address",
+   "notification":"Notification"
 }

@@ -84,5 +84,11 @@
   "deliverTo": "توصيل الي",
   "viewAll": "المزيد",
 
-"searchForAnyProductYouWant": "ابحث عن أي منتج تريده"
+"searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
+ "logout" : "تسجيل خروج",
+ "aboutUs":"معلومات عنا",
+  "language":"اللغة",
+  "myOrders": "طلباتي",
+  "myAddress": "عناويني",
+  "notification":"الاشعارات"
 }

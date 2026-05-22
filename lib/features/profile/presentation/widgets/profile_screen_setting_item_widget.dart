@@ -4,6 +4,7 @@ import '../../../../core/helpers/my_responsive.dart';
 
 class ProfileScreenSettingItemWidget extends StatelessWidget {
   const ProfileScreenSettingItemWidget({
+    super.key,
     required this.left,
     required this.right,
   });
@@ -13,11 +14,24 @@ class ProfileScreenSettingItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isArabic =
+        Directionality.of(context) == TextDirection.rtl;
+
     return Padding(
-      padding: MyResponsive.paddingSymmetric(context, horizontal: 16),
+      padding: MyResponsive.paddingSymmetric(
+        context,
+        horizontal: 16,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [left, right],
+        children: [
+          left,
+
+          Transform.flip(
+            flipX: isArabic,
+            child: right,
+          ),
+        ],
       ),
     );
   }

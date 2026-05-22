@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Flower APP',
 
-            initialRoute: Routes.bottomNavBarRoute,
+            initialRoute: Routes.loginRoute,
             onGenerateRoute: RouteGenerator.getRoute,
 
             locale: locale,
