@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../core/shared_widgets/custom_add_to_cart.dart';
 import '../widgets/carousel_slider_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -121,9 +122,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       style: AppTextStyles.regular14(context),
                     ),
                     SizedBox(height: MyResponsive.height(context, value: 133)),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text(local.addToCart),
+                    CustomAddToCart(
+                      productId: widget.entity.id,
                     ),
                   ],
                 ),
