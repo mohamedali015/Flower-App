@@ -1,0 +1,31 @@
+name: Flutter Unit Tests
+
+on:
+  pull_request:
+    types: [ opened, closed , reopened,ready_for_review, synchronize ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.2'
+          channel: 'stable'
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Run Build Runner
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Analyze Project
+        run: flutter analyze
+
+      - name: Run Unit Tests
+        run: flutter test
