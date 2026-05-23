@@ -4,10 +4,10 @@ import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
-import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
-import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
+import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
+import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,7 +59,7 @@ abstract class RouteGenerator {
           return MaterialPageRoute(
             builder: (_) => BlocProvider(
               create: (_) => getIt<ForgetPasswordCubit>(),
-              child: ForgetPasswordEnterEmailView(),
+              child: const ForgetPasswordEnterEmailView(),
             ),
           );
 
@@ -101,7 +101,7 @@ abstract class RouteGenerator {
             builder: (_) => BlocProvider(
               create: (context) =>
                   getIt<BestSellerCubit>()..doEvent(GetBestSellerEvent()),
-              child: BestSellerScreen(),
+              child: const BestSellerScreen(),
             ),
           );
 
@@ -124,12 +124,11 @@ abstract class RouteGenerator {
             builder: (_) => ProductDetailsScreen(entity: entity),
           );
 
-          ///? search Screen
+        ///? search Screen
         case Routes.searchScreenRoute:
           return CupertinoPageRoute(builder: (_) => const SearchScreen());
 
-
-      /// Default
+        /// Default
         default:
           return _errorRoute();
       }

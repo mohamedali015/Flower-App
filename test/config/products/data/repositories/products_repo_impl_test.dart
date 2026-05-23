@@ -28,7 +28,7 @@ void main() {
   setUpAll(() {
     errorMessage = "Something went wrong. Please try again later.";
 
-    params = ProductQueryParams(page: 1, limit: 10);
+    params = const ProductQueryParams(page: 1, limit: 10);
 
     productsModels = List.generate(
       5,

@@ -23,7 +23,7 @@ class OccasionTabsWidget extends StatelessWidget {
         tabAlignment: TabAlignment.start,
         onTap: onTap,
         indicatorColor: AppColors.primaryColor,
-        indicatorPadding: EdgeInsets.symmetric(horizontal: 2),
+        indicatorPadding: const EdgeInsets.symmetric(horizontal: 2),
         indicatorWeight: 4,
         indicatorSize: TabBarIndicatorSize.label,
         dividerColor: Colors.transparent,

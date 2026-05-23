@@ -11,14 +11,14 @@ import 'package:mockito/mockito.dart';
 import 'forget_password_remote_data_source_imp_test.mocks.dart';
 
 @GenerateMocks([ForgetPasswordClient])
-main() {
+void main() {
   late ForgetPasswordRemoteDataSourceContract dataSource;
   late MockForgetPasswordClient mockClient;
   String successEmail = "dygofile@fxzig.com";
   String errorEmail = "error@test.com";
   String resetCode = "754274";
   String newPassword = "123456";
-  late String error_msg;
+  late String errorMsg;
 
   setUpAll(() {
     mockClient = MockForgetPasswordClient();
@@ -47,7 +47,7 @@ main() {
     });
 
     setUp(() {
-      error_msg = "Failed to send reset email";
+      errorMsg = "Failed to send reset email";
     });
     test("test forgetPassword API Failed and throw DioException", () async {
       //Arrange
@@ -56,7 +56,7 @@ main() {
           type: DioExceptionType.badResponse,
           response: Response(
             requestOptions: RequestOptions(),
-            data: {'message': error_msg},
+            data: {'message': errorMsg},
           ),
           requestOptions: RequestOptions(),
         ),
@@ -67,7 +67,7 @@ main() {
       //Assert
       expect(result, isA<Failure<String?>>());
       expect(result, isNotNull);
-      expect((result as Failure<String?>).errorMessage, error_msg);
+      expect((result as Failure<String?>).errorMessage, errorMsg);
       expect(result.errorMessage, isNotEmpty);
       verify(mockClient.forgetPassword(errorEmail)).called(1);
       verifyNever(mockClient.forgetPassword(successEmail));
@@ -76,7 +76,7 @@ main() {
     });
 
     setUp(() {
-      error_msg = AppResponseErrorMessages.unexpectedErrorMessage;
+      errorMsg = AppResponseErrorMessages.unexpectedErrorMessage;
     });
     test("test forgetPassword API Failed and throw Exception", () async {
       //Arrange
@@ -87,7 +87,7 @@ main() {
       //Assert
       expect(result, isA<Failure<String?>>());
       expect(result, isNotNull);
-      expect((result as Failure<String?>).errorMessage, error_msg);
+      expect((result as Failure<String?>).errorMessage, errorMsg);
       expect(result.errorMessage, isNotEmpty);
       verify(mockClient.forgetPassword(errorEmail)).called(1);
       verifyNever(mockClient.forgetPassword(successEmail));
@@ -136,7 +136,7 @@ main() {
     });
 
     setUp(() {
-      error_msg = AppResponseErrorMessages.unexpectedErrorMessage;
+      errorMsg = AppResponseErrorMessages.unexpectedErrorMessage;
     });
     test("Test VerifyReset API Failure and throw Exception", () async {
       //Arrange
@@ -145,7 +145,7 @@ main() {
       var result = await dataSource.verifyReset(resetCode: resetCode);
       //Assert
       expect(result, isA<Failure<bool>>());
-      expect((result as Failure<bool>).errorMessage, error_msg);
+      expect((result as Failure<bool>).errorMessage, errorMsg);
       expect(result.errorMessage, isNotNull);
       expect(result.errorMessage, isNot(false));
       verify(mockClient.verifyReset(resetCode)).called(1);
@@ -180,7 +180,7 @@ main() {
       },
     );
     setUp(() {
-      error_msg = 'password too weak';
+      errorMsg = 'password too weak';
     });
     test("Test ResetPassword APi Case throw DioException", () async {
       // Arrange
@@ -189,7 +189,7 @@ main() {
           type: DioExceptionType.badResponse,
           response: Response(
             requestOptions: RequestOptions(),
-            data: {'message': error_msg},
+            data: {'message': errorMsg},
           ),
           requestOptions: RequestOptions(),
         ),
@@ -203,7 +203,7 @@ main() {
 
       //Assert
       expect(result, isA<Failure<bool>>());
-      expect((result as Failure<bool>).errorMessage, error_msg);
+      expect((result as Failure<bool>).errorMessage, errorMsg);
       expect(result.errorMessage, isNotEmpty);
       expect(result.errorMessage, isNotNull);
       verify(mockClient.resetPassword(successEmail, newPassword)).called(1);
@@ -212,7 +212,7 @@ main() {
     });
 
     setUp(() {
-      error_msg = AppResponseErrorMessages.unexpectedErrorMessage;
+      errorMsg = AppResponseErrorMessages.unexpectedErrorMessage;
     });
     test("Test ResetPassword APi Case throw Exception", () async {
       // Arrange
@@ -228,7 +228,7 @@ main() {
 
       //Assert
       expect(result, isA<Failure<bool>>());
-      expect((result as Failure<bool>).errorMessage, error_msg);
+      expect((result as Failure<bool>).errorMessage, errorMsg);
       expect(result.errorMessage, isNotEmpty);
       expect(result.errorMessage, isNotNull);
       verify(mockClient.resetPassword(successEmail, newPassword)).called(1);

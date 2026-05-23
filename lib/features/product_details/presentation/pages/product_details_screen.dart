@@ -54,12 +54,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               horizontal: 22,
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Center(
                             child: AnimatedSmoothIndicator(
                               activeIndex: imageIndex,
                               count: widget.entity.images.length,
-                              effect: SlideEffect(
+                              effect: const SlideEffect(
                                 dotColor: AppColors.grayMedium,
                                 activeDotColor: AppColors.primaryColor,
                               ),

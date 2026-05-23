@@ -1,8 +1,6 @@
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/utils/app_assets.dart';
-import 'package:flower_app/core/utils/app_colors.dart';
-import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/shared_widgets/custom_search_bar.dart';
@@ -22,7 +20,7 @@ class LogoAndSearchBar extends StatelessWidget {
           width: MyResponsive.width(context, value: 90),
         ),
         SizedBox(width: MyResponsive.width(context, value: 17)),
-        CustomSearchBar(),
+        const CustomSearchBar(),
       ],
     );
   }

@@ -54,7 +54,7 @@ class GenderSectionWidget extends StatelessWidget {
                     children: [
                       Transform.scale(
                         scale: MyResponsive.width(context, value: 1),
-                        child: Radio<UserGender>(
+                        child: const Radio<UserGender>(
                           value: UserGender.female,
                           activeColor: AppColors.primaryColor,
                         ),
@@ -79,7 +79,7 @@ class GenderSectionWidget extends StatelessWidget {
                     children: [
                       Transform.scale(
                         scale: MyResponsive.width(context, value: 1),
-                        child: Radio<UserGender>(
+                        child: const Radio<UserGender>(
                           value: UserGender.male,
                           activeColor: AppColors.primaryColor,
                         ),

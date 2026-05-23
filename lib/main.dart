@@ -1,6 +1,7 @@
 import 'package:flower_app/core/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'config/di/di.dart';
 import 'config/route_manager/route_generator.dart';
 import 'config/route_manager/routes.dart';
@@ -18,7 +19,7 @@ void main() async {
 
   Bloc.observer = CustomBlocObserver();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
 
             initialRoute: Routes.splashRoute,
             onGenerateRoute: RouteGenerator.getRoute,
-            locale: const Locale("en"),
+            locale: const Locale("ar"),
             theme: AppTheme.appTheme(context),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,

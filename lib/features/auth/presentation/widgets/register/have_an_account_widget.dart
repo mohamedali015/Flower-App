@@ -23,7 +23,7 @@ class HaveAnAccountWidget extends StatelessWidget {
         TextSpan(
           children: [
             TextSpan(text: title, style: AppTextStyles.regular16(context)),
-            TextSpan(text: ' '),
+            const TextSpan(text: ' '),
             TextSpan(
               text: actionText,
               style: AppTextStyles.medium16(context).copyWith(
