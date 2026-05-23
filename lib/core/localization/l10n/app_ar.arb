@@ -101,5 +101,16 @@
 "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
    "logout":"تسجيل الخروج",
    "confirmLogout":"تأكيد تسجيل الخروج!!",
-   "cancle":"إلغاء"
+   "cancle":"إلغاء",
+"searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
+"items": "العناصر",
+  "checkout": "إتمام الطلب",
+  "subTotal": "المجموع الفرعي",
+  "deliveryFee": "رسوم التوصيل",
+  "total": "الإجمالي",
+  "addedSuccessfully" : "تم الاضافة بنجاح",
+  "sub_total": "المجموع الفرعي",
+      "delivery_fee": "رسوم التوصيل",
+      "total": "الإجمالي",
+      "your_cart_is_empty": "سلة التسوق فارغة"
 }

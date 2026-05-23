@@ -25,6 +25,8 @@ import '../../features/auth/presentation/manager/login/login_cubit.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
 import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
+import '../../features/cart/presentation/manager/cart_cubit.dart';
+import '../../features/cart/presentation/manager/cart_event.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
@@ -90,8 +92,19 @@ abstract class RouteGenerator {
           final args = settings.arguments as Map<String, dynamic>?;
 
           return CupertinoPageRoute(
-            builder: (_) => BlocProvider(
-              create: (context) => getIt<HomeCubit>()..doEvents(GetHomeEvent()),
+            builder: (_) => MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) =>
+                      getIt<HomeCubit>()..doEvents(GetHomeEvent()),
+                ),
+
+                BlocProvider(
+                  create: (context) =>
+                      getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
+                ),
+              ],
+
               child: CustomBottomNavBar(
                 initialIndex: args?['initialIndex'] ?? 0,
                 categoryIndex: args?['categoryIndex'] ?? 0,
@@ -124,7 +137,10 @@ abstract class RouteGenerator {
           final entity = settings.arguments as ProductEntity;
 
           return CupertinoPageRoute(
-            builder: (_) => ProductDetailsScreen(entity: entity),
+            builder: (_) => BlocProvider.value(
+              value: getIt<CartCubit>(),
+              child: ProductDetailsScreen(entity: entity),
+            ),
           );
 
         case Routes.changePasswordRoute:
