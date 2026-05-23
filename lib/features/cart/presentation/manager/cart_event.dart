@@ -1,22 +1,18 @@
-import 'package:equatable/equatable.dart';
 import '../../data/model/request/update_cart_request.dart';
 
-sealed class CartEvent extends Equatable {
-  @override
-  List<Object?> get props => [];
-}
+sealed class CartEvent {}
 
-class GetAllCartEvent extends CartEvent {}
+class GetCartItemsEvent extends CartEvent {}
 
-class RemoveToCart extends CartEvent {
-  final String id;
-  RemoveToCart(this.id);
-  @override
-  List<Object?> get props => [id];
-}
-
-class UpdateCart extends CartEvent {
+class UpdateCartItemEvent extends CartEvent {
   final UpdateCartRequest quantity;
-  final String id;
-  UpdateCart(this.quantity,this.id);
+  final String productId;
+
+  UpdateCartItemEvent({required this.quantity, required this.productId});
+}
+
+class DeleteCartItemEvent extends CartEvent {
+  final String productId;
+
+  DeleteCartItemEvent({required this.productId});
 }

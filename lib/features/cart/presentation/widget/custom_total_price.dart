@@ -29,70 +29,49 @@ class CustomTotalPrice extends StatelessWidget {
           children: [
             Text(
               local.sub_total,
-              style: AppTextStyles.regular16(context).copyWith(
-                color: AppColors.grayDark,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyles.regular16(
+                context,
+              ).copyWith(color: AppColors.grayDark),
             ),
             const Spacer(),
             Text(
               '\$$subTotal',
-              style: AppTextStyles.regular16(context).copyWith(
-                color: AppColors.grayDark,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyles.regular16(
+                context,
+              ).copyWith(color: AppColors.grayDark),
             ),
           ],
         ),
 
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
 
         Row(
           children: [
             Text(
               local.deliveryFee,
-              style: AppTextStyles.regular16(context).copyWith(
-                color: AppColors.grayDark,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyles.regular16(
+                context,
+              ).copyWith(color: AppColors.grayDark),
             ),
             const Spacer(),
             Text(
               '\$$deliveryFee',
-              style: AppTextStyles.regular16(context).copyWith(
-                color: AppColors.grayDark,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyles.regular16(
+                context,
+              ).copyWith(color: AppColors.grayDark),
             ),
           ],
         ),
 
-        const SizedBox(height: 10),
+        const SizedBox(height: 16),
 
-        const Divider(
-          thickness: 2,
-          color: AppColors.grayDark,
-        ),
+        const Divider(thickness: 2, color: AppColors.grayMedium),
 
         Row(
           children: [
-            Text(
-              local.total,
-              style: AppTextStyles.regular16(
-                context,
-              ).copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text(local.total, style: AppTextStyles.medium18(context)),
             const Spacer(),
-            Text(
-              '\$$total',
-              style: AppTextStyles.regular16(
-                context,
-              ).copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text('\$$total', style: AppTextStyles.medium18(context)),
           ],
         ),
       ],

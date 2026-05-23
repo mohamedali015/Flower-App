@@ -6,6 +6,8 @@ import '../../config/add_to_cart/presentation/manager/add_cart_cubit.dart';
 import '../../config/add_to_cart/presentation/manager/add_cart_event.dart';
 import '../../config/di/di.dart';
 import '../../features/cart/data/model/request/add_to_cart_request.dart';
+import '../../features/cart/presentation/manager/cart_cubit.dart';
+import '../../features/cart/presentation/manager/cart_event.dart';
 import '../helpers/app_snack_bar.dart';
 import '../localization/l10n/app_localizations.dart';
 import '../utils/app_assets.dart';
@@ -36,6 +38,7 @@ class CustomAddToCart extends StatelessWidget {
           if (state.addToCartSuccess.isSuccess) {
             Future.microtask(() {
               if (!context.mounted) return;
+              context.read<CartCubit>().doEvent(GetCartItemsEvent());
               AppSnackBar.success(context, local.addedSuccessfully);
             });
           }
@@ -60,7 +63,7 @@ class CustomAddToCart extends StatelessWidget {
                     );
 
                     onSuccess?.call();
-            },
+                  },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 30),
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
@@ -69,31 +72,31 @@ class CustomAddToCart extends StatelessWidget {
 
             child: state.addToCartSuccess.isLoading
                 ? const SizedBox(
-              height: 15,
-              width: 15,
-              child: CircularProgressIndicator(
-                color: AppColors.baseWhite,
-                strokeWidth: 2,
-              ),
-            )
+                    height: 15,
+                    width: 15,
+                    child: CircularProgressIndicator(
+                      color: AppColors.baseWhite,
+                      strokeWidth: 2,
+                    ),
+                  )
                 : Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SvgWrapper(
-                  path: AppAssets.cartIcon,
-                  color: AppColors.white,
-                  width: 15,
-                  height: 15,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  local.addToCart,
-                  style: AppTextStyles.medium13(
-                    context,
-                  ).copyWith(color: AppColors.white),
-                ),
-              ],
-            ),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SvgWrapper(
+                        path: AppAssets.cartIcon,
+                        color: AppColors.white,
+                        width: 15,
+                        height: 15,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        local.addToCart,
+                        style: AppTextStyles.medium13(
+                          context,
+                        ).copyWith(color: AppColors.white),
+                      ),
+                    ],
+                  ),
           );
         },
       ),

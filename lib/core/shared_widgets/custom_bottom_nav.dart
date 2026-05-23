@@ -37,11 +37,11 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
     screens = [
       const HomeScreen(),
 
-     CategoryScreen(initialIndex: widget.categoryIndex),
+      CategoryScreen(initialIndex: widget.categoryIndex),
 
       const CartScreen(),
 
-    const ProfileScreen(),
+      const ProfileScreen(),
     ];
   }
 
@@ -139,26 +139,4 @@ class _BottomNavIcon extends StatelessWidget {
       color: isSelected ? AppColors.primaryColor : AppColors.disabledGray,
     );
   }
-}
-
-class _KeepAlivePage extends StatefulWidget {
-  const _KeepAlivePage({required this.child});
-
-  final Widget child;
-
-  @override
-  State<_KeepAlivePage> createState() => _KeepAlivePageState();
-}
-
-class _KeepAlivePageState extends State<_KeepAlivePage>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-
-    return widget.child;
-  }
-
-  @override
-  bool get wantKeepAlive => true;
 }

@@ -27,8 +27,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<UserCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<UserCubit>()),
+        // BlocProvider(create: (context) => getIt<AddCartCubit>()),
+      ],
       child: Builder(
         builder: (context) {
           return MaterialApp(

@@ -89,15 +89,14 @@ abstract class RouteGenerator {
           return CupertinoPageRoute(
             builder: (_) => MultiBlocProvider(
               providers: [
-
                 BlocProvider(
                   create: (context) =>
-                  getIt<HomeCubit>()..doEvents(GetHomeEvent()),
+                      getIt<HomeCubit>()..doEvents(GetHomeEvent()),
                 ),
 
                 BlocProvider(
                   create: (context) =>
-                  getIt<CartCubit>()..doEvent(GetAllCartEvent()),
+                      getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
                 ),
               ],
 
@@ -133,7 +132,10 @@ abstract class RouteGenerator {
           final entity = settings.arguments as ProductEntity;
 
           return CupertinoPageRoute(
-            builder: (_) => ProductDetailsScreen(entity: entity),
+            builder: (_) => BlocProvider.value(
+              value: getIt<CartCubit>(),
+              child: ProductDetailsScreen(entity: entity),
+            ),
           );
 
         ///? search Screen

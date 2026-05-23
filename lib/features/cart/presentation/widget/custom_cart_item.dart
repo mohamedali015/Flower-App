@@ -1,158 +1,287 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../core/shared_widgets/cached_network_image_wrapper.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_text_styles.dart';
+import '../../data/model/request/update_cart_request.dart';
 import '../../domain/entities/cart_item_entity.dart';
+import '../manager/cart_cubit.dart';
+import '../manager/cart_event.dart';
+import '../manager/cart_state.dart';
 
-class CustomCartItem extends StatelessWidget {
-  const CustomCartItem({
-    super.key,
-    required this.cartItem,
-    this.onDelete,
-    this.onIncrease,
-    this.onDecrease,
-  });
+class CustomCartItem extends StatefulWidget {
+  const CustomCartItem({super.key, required this.cartItem});
 
   final CartItemEntity cartItem;
-  final VoidCallback? onDelete;
-  final VoidCallback? onIncrease;
-  final VoidCallback? onDecrease;
+
+  @override
+  State<CustomCartItem> createState() => _CustomCartItemState();
+}
+
+class _CustomCartItemState extends State<CustomCartItem> {
+  bool isUpdating = false;
+  bool isDeleting = false;
 
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 15),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: AppColors.background,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(color: AppColors.grayDark),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          /// Image
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: CachedNetworkImageWrapper(
-              imagePath: cartItem.productEntity.imgCover,
-              width: 95,
-              height: 120,
-            ),
-          ),
-
-          const SizedBox(width: 12),
-
-          /// Details
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    cartItem.productEntity.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.medium16(
-                      context,
-                    ).copyWith(fontWeight: FontWeight.bold),
-                  ),
-
-                  const SizedBox(height: 6),
-
-                  Text(
-                    cartItem.productEntity.description,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.medium14(
-                      context,
-                    ).copyWith(color: AppColors.darkBase.withOpacity(0.6)),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  Text(
-                    "${local.egp} ${cartItem.productEntity.priceAfterDiscount}",
-                    style: AppTextStyles.semiBold14(context).copyWith(
-                      color: AppColors.error,
-                      fontWeight: FontWeight.bold,
+          /// Content with Opacity & IgnorePointer for deleting state
+          Opacity(
+            opacity: isDeleting ? 0.4 : 1.0,
+            child: IgnorePointer(
+              ignoring: isDeleting,
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    /// Image
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: CachedNetworkImageWrapper(
+                        imagePath: widget.cartItem.productEntity.imgCover,
+                        width: 100,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 10),
+
+                    /// Content
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Column(
+                          children: [
+                            /// Top Section
+                            ListTile(
+                              dense: true,
+                              contentPadding: EdgeInsets.zero,
+                              minVerticalPadding: 0,
+                              title: Text(
+                                widget.cartItem.productEntity.title,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.medium16(
+                                  context,
+                                ).copyWith(fontWeight: FontWeight.w600),
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: Text(
+                                  widget.cartItem.productEntity.description,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.regular13(
+                                    context,
+                                  ).copyWith(color: AppColors.grayDark),
+                                ),
+                              ),
+                              trailing: BlocListener<CartCubit, CartState>(
+                                listenWhen: (previous, current) {
+                                  return previous.deleteCartItemState !=
+                                      current.deleteCartItemState;
+                                },
+                                listener: (context, state) {
+                                  if (!state.deleteCartItemState.isLoading) {
+                                    if (mounted) {
+                                      setState(() {
+                                        isDeleting = false;
+                                      });
+                                    }
+                                  }
+                                },
+                                child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      setState(() {
+                                        isDeleting = true;
+                                      });
+
+                                      context.read<CartCubit>().doEvent(
+                                        DeleteCartItemEvent(
+                                          productId:
+                                              widget.cartItem.productEntity.id,
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      CupertinoIcons.delete,
+                                      color: AppColors.error,
+                                      size: 22,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+
+                            /// Bottom Section
+                            Row(
+                              children: [
+                                /// Price
+                                Expanded(
+                                  child: Text(
+                                    "${local.egp} ${widget.cartItem.productEntity.priceAfterDiscount}",
+                                    style: AppTextStyles.semiBold16(
+                                      context,
+                                    ).copyWith(color: AppColors.primaryColor),
+                                  ),
+                                ),
+
+                                /// Quantity Controls
+                                isUpdating
+                                    ? const SizedBox(
+                                        width: 90,
+                                        height: 40,
+                                        child: Center(
+                                          child: SizedBox(
+                                            width: 24,
+                                            height: 24,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2.5,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          /// Minus
+                                          IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                isUpdating = true;
+                                              });
+
+                                              final qty =
+                                                  widget.cartItem.quantity ?? 0;
+
+                                              if (qty <= 1) {
+                                                setState(() {
+                                                  isDeleting = true;
+                                                  isUpdating = false;
+                                                });
+
+                                                context
+                                                    .read<CartCubit>()
+                                                    .doEvent(
+                                                      DeleteCartItemEvent(
+                                                        productId: widget
+                                                            .cartItem
+                                                            .productEntity
+                                                            .id,
+                                                      ),
+                                                    );
+
+                                                return;
+                                              }
+
+                                              context.read<CartCubit>().doEvent(
+                                          UpdateCartItemEvent(
+                                            quantity: UpdateCartRequest(
+                                              quantity: qty - 1,
+                                            ),
+                                            productId: widget
+                                                .cartItem
+                                                .productEntity
+                                                .id,
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.remove,
+                                        size: 18,
+                                      ),
+                                    ),
+
+                                          /// Quantity
+                                          Text(
+                                            widget.cartItem.quantity.toString(),
+                                            style: AppTextStyles.semiBold14(
+                                              context,
+                                            ),
+                                          ),
+
+                                          /// Plus
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isUpdating = true;
+                                        });
+
+                                        context.read<CartCubit>().doEvent(
+                                          UpdateCartItemEvent(
+                                            quantity: UpdateCartRequest(
+                                              quantity:
+                                              (widget
+                                                  .cartItem
+                                                  .quantity ??
+                                                  0) +
+                                                  1,
+                                            ),
+                                            productId: widget
+                                                .cartItem
+                                                .productEntity
+                                                .id,
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.add,
+                                        size: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+
+                            /// Update Listener
+                            BlocListener<CartCubit, CartState>(
+                              listenWhen: (previous, current) {
+                                return previous.updateCartItemState !=
+                                    current.updateCartItemState;
+                              },
+                              listener: (context, state) {
+                                if (!state.updateCartItemState.isLoading) {
+                                  if (mounted) {
+                                    setState(() {
+                                      isUpdating = false;
+                                    });
+                                  }
+                                }
+                              },
+                              child: const SizedBox.shrink(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
 
-          const SizedBox(width: 10),
-
-          /// Action ( Add , Delete)
-          SizedBox(
-            height: 90,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: onDelete,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.error.withOpacity(0.1),
-                    ),
-                    child: const Icon(
-                      CupertinoIcons.delete,
-                      color: AppColors.error,
-                      size: 25,
-                    ),
-                  ),
-                ),
-
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: AppColors.grayDark.withOpacity(0.3),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: onDecrease,
-                        child: const Icon(CupertinoIcons.minus, size: 25),
-                      ),
-
-                      const SizedBox(width: 8),
-
-                      Text(
-                        cartItem.quantity.toString(),
-                        style: AppTextStyles.medium14(
-                          context,
-                        ).copyWith(fontWeight: FontWeight.bold),
-                      ),
-
-                      const SizedBox(width: 10),
-
-                      GestureDetector(
-                        onTap: onIncrease,
-                        child: const Icon(CupertinoIcons.plus, size: 25),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          /// Delete Loading Indicator
+          if (isDeleting) const CircularProgressIndicator(),
         ],
       ),
     );
