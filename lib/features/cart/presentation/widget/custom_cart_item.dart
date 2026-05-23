@@ -83,7 +83,7 @@ class _CustomCartItemState extends State<CustomCartItem> {
                                 padding: const EdgeInsets.only(top: 4),
                                 child: Text(
                                   widget.cartItem.productEntity.description,
-                                  maxLines: 2,
+                                  maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.regular13(
                                     context,
@@ -130,7 +130,7 @@ class _CustomCartItemState extends State<CustomCartItem> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
 
                             /// Bottom Section
                             Row(

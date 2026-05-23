@@ -1,7 +1,6 @@
 import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../config/add_to_cart/presentation/manager/add_cart_cubit.dart';
 import '../../config/add_to_cart/presentation/manager/add_cart_event.dart';
 import '../../config/di/di.dart';
