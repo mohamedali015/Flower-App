@@ -7,7 +7,6 @@ import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flower_app/core/values/app_strings.dart';
 import 'package:flutter/material.dart';
 
-import '../../../cart/domain/entities/get_cart_entity.dart';
 
 class LocationBar extends StatelessWidget {
   const LocationBar({super.key });

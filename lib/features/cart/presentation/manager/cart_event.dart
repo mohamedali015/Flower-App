@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import '../../data/model/request/add_to_cart_request.dart';
 import '../../data/model/request/update_cart_request.dart';
 
 sealed class CartEvent extends Equatable {

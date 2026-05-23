@@ -1,6 +1,9 @@
+import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/shared_widgets/custom_button.dart';
+import '../../../../core/utils/app_colors.dart';
 import '../../../home/presentation/widgets/location_bar.dart';
 import '../../data/model/request/update_cart_request.dart';
 import '../manager/cart_cubit.dart';
@@ -17,13 +20,10 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: RefreshIndicator(
-
         onRefresh: () async {
           context.read<CartCubit>().doEvent(GetAllCartEvent());
 
-          await Future.delayed(
-            const Duration(milliseconds: 500),
-          );
+          await Future.delayed(const Duration(milliseconds: 500));
         },
 
         child: Padding(
@@ -31,17 +31,12 @@ class CartScreen extends StatelessWidget {
 
           child: BlocBuilder<CartCubit, CartState>(
             builder: (context, state) {
-
               if (state.getCart.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const Center(child: CircularProgressIndicator());
               }
 
               if (state.getCart.errorMessage != null) {
-                return Center(
-                  child: Text(state.getCart.errorMessage!),
-                );
+                return Center(child: Text(state.getCart.errorMessage!));
               }
 
               final cartData = state.getCart.data;
@@ -49,35 +44,29 @@ class CartScreen extends StatelessWidget {
               final isEmpty = cartData == null || cartData.cartItems.isEmpty;
 
               if (isEmpty) {
-                return ListView(
-                  children: const [
-
-                    SizedBox(height: 250),
-
-                    Icon(
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
                       Icons.shopping_cart_outlined,
+                      color: AppColors.primaryColor,
                       size: 80,
                     ),
-
-                    SizedBox(height: 10),
-
+                    const SizedBox(height: 10),
                     Center(
                       child: Text(
                         "Your cart is empty",
-                        style: TextStyle(fontSize: 16),
+                        style: AppTextStyles.bold18(context),
                       ),
                     ),
                   ],
                 );
               }
 
-
               return Column(
                 children: [
-
-                  CustomHeaderCart(
-                    getCart: state.getCart,
-                  ),
+                  CustomHeaderCart(getCart: state.getCart),
 
                   const SizedBox(height: 10),
 
@@ -87,29 +76,22 @@ class CartScreen extends StatelessWidget {
 
                   Expanded(
                     child: ListView.builder(
-                      physics:
-                      const AlwaysScrollableScrollPhysics(),
+                      physics: const AlwaysScrollableScrollPhysics(),
 
-                      itemCount:
-                      cartData.cartItems.length,
+                      itemCount: cartData.cartItems.length,
 
                       itemBuilder: (context, index) {
-
-                        final cartItem =
-                        cartData.cartItems[index];
+                        final cartItem = cartData.cartItems[index];
 
                         return CustomCartItem(
                           cartItem: cartItem,
 
                           //? Increase
                           onIncrease: () {
-                            context
-                                .read<CartCubit>()
-                                .doEvent(
+                            context.read<CartCubit>().doEvent(
                               UpdateCart(
                                 UpdateCartRequest(
-                                  quantity:
-                                  (cartItem.quantity ?? 0) + 1,
+                                  quantity: (cartItem.quantity ?? 0) + 1,
                                 ),
 
                                 cartItem.productEntity.id,
@@ -119,30 +101,19 @@ class CartScreen extends StatelessWidget {
 
                           //? Decrease
                           onDecrease: () {
-
-                            final qty =
-                                cartItem.quantity ?? 0;
+                            final qty = cartItem.quantity ?? 0;
 
                             if (qty <= 1) {
-
-                              context
-                                  .read<CartCubit>()
-                                  .doEvent(
-                                RemoveToCart(
-                                  cartItem.productEntity.id,
-                                ),
+                              context.read<CartCubit>().doEvent(
+                                RemoveToCart(cartItem.productEntity.id),
                               );
 
                               return;
                             }
 
-                            context
-                                .read<CartCubit>()
-                                .doEvent(
+                            context.read<CartCubit>().doEvent(
                               UpdateCart(
-                                UpdateCartRequest(
-                                  quantity: qty - 1,
-                                ),
+                                UpdateCartRequest(quantity: qty - 1),
 
                                 cartItem.productEntity.id,
                               ),
@@ -151,13 +122,8 @@ class CartScreen extends StatelessWidget {
 
                           //? Delete
                           onDelete: () {
-
-                            context
-                                .read<CartCubit>()
-                                .doEvent(
-                              RemoveToCart(
-                                cartItem.productEntity.id,
-                              ),
+                            context.read<CartCubit>().doEvent(
+                              RemoveToCart(cartItem.productEntity.id),
                             );
                           },
                         );
@@ -168,19 +134,14 @@ class CartScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   CustomTotalPrice(
-                    subTotal:
-                    cartData.totalPriceAfterDiscount ?? 0,
+                    subTotal: cartData.totalPriceAfterDiscount ?? 0,
 
                     deliveryFee: 10,
                   ),
 
                   const SizedBox(height: 20),
 
-                  CustomButton(
-                    title: "Check out",
-
-                    onPressed: () {},
-                  ),
+                  CustomButton(title: "Check out", onPressed: () {}),
 
                   const SizedBox(height: 20),
                 ],

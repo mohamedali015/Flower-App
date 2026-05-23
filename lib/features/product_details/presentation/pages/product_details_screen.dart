@@ -1,13 +1,20 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_cubit.dart';
+import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_state.dart';
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
+import 'package:flower_app/core/shared_widgets/custom_button.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../../config/add_to_cart/presentation/manager/add_cart_event.dart';
+import '../../../../config/di/di.dart';
+import '../../../../core/helpers/app_snack_bar.dart';
 import '../../../../core/localization/l10n/app_localizations.dart';
-import '../../../../core/shared_widgets/custom_add_to_cart.dart';
+import '../../../cart/data/model/request/add_to_cart_request.dart';
 import '../widgets/carousel_slider_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -122,9 +129,47 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       style: AppTextStyles.regular14(context),
                     ),
                     SizedBox(height: MyResponsive.height(context, value: 133)),
-                    CustomAddToCart(
-                      productId: widget.entity.id,
+                    BlocProvider(
+                      create: (context) => getIt<AddCartCubit>(),
+                      child: BlocBuilder<AddCartCubit, AddCartState>(
+                        builder: (context, state) {
+                          if (state.addToCartSuccess.isSuccess) {
+                            Future.microtask(() {
+                              if (!context.mounted) return;
+                              AppSnackBar.success(
+                                context,
+                                local.addedSuccessfully,
+                              );
+                            });
+                          }
+
+                          if (state.addToCartSuccess.errorMessage != null) {
+                            Future.microtask(() {
+                              if (!context.mounted) return;
+                              AppSnackBar.error(
+                                context,
+                                state.addToCartSuccess.errorMessage!,
+                              );
+                            });
+                          }
+                          return CustomButton(
+                            title: local.addToCart,
+                            isLoading: state.addToCartSuccess.isLoading,
+                            onPressed: () {
+                              context.read<AddCartCubit>().doEvent(
+                                AddToCart(
+                                  AddToCartRequest(
+                                    product: widget.entity.id,
+                                    quantity: 1,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
+                    SizedBox(height: MyResponsive.height(context, value: 20)),
                   ],
                 ),
               ),

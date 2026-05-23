@@ -4,7 +4,6 @@ import 'package:flower_app/features/cart/domain/entities/get_cart_entity.dart';
 import '../../../../config/base_state/base_state.dart';
 
 class CartState extends Equatable {
-
   final BaseState<GetCartEntity> getCart;
   final BaseState<GetCartEntity> addToCartSuccess;
   final BaseState<GetCartEntity> removeFromCartSuccess;
@@ -15,7 +14,7 @@ class CartState extends Equatable {
     this.addToCartSuccess = const BaseState(),
     this.removeFromCartSuccess = const BaseState(),
     this.updateCartSuccess = const BaseState(),
-});
+  });
 
   CartState copyWith({
     BaseState<GetCartEntity>? getCart,
@@ -26,7 +25,8 @@ class CartState extends Equatable {
     return CartState(
       getCart: getCart ?? this.getCart,
       addToCartSuccess: addToCartSuccess ?? this.addToCartSuccess,
-      removeFromCartSuccess: removeFromCartSuccess ?? this.removeFromCartSuccess,
+      removeFromCartSuccess:
+          removeFromCartSuccess ?? this.removeFromCartSuccess,
       updateCartSuccess: updateCartSuccess ?? this.updateCartSuccess,
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flower_app/config/error_handling/execute_api.dart';
-import 'package:flower_app/features/cart/data/model/request/add_to_cart_request.dart';
 import 'package:flower_app/features/cart/data/model/request/update_cart_request.dart';
 import 'package:flower_app/features/cart/data/model/response/cart_response.dart';
 import 'package:injectable/injectable.dart';

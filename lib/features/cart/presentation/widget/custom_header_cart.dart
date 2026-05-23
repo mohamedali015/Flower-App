@@ -17,7 +17,7 @@ class CustomHeaderCart extends StatelessWidget {
     var local = AppLocalizations.of(context)!;
     return Row(
       children: [
-        SvgWrapper(path: AppAssets.backBtn),
+        const SvgWrapper(path: AppAssets.backBtn),
         SizedBox(width: MyResponsive.width(context, value: 8)),
         Text(
           local.cart,

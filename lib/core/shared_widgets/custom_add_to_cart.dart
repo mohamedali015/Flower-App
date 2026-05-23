@@ -1,6 +1,7 @@
 import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../config/add_to_cart/presentation/manager/add_cart_cubit.dart';
 import '../../config/add_to_cart/presentation/manager/add_cart_event.dart';
 import '../../config/di/di.dart';
@@ -34,57 +35,64 @@ class CustomAddToCart extends StatelessWidget {
         builder: (context, state) {
           if (state.addToCartSuccess.isSuccess) {
             Future.microtask(() {
-              AppSnackBar.success(context,local.addedSuccessfully );
+              if (!context.mounted) return;
+              AppSnackBar.success(context, local.addedSuccessfully);
             });
           }
 
           if (state.addToCartSuccess.errorMessage != null) {
             Future.microtask(() {
-              AppSnackBar.error(
-                context,
-                state.addToCartSuccess.errorMessage!,
-              );
+              if (!context.mounted) return;
+              AppSnackBar.error(context, state.addToCartSuccess.errorMessage!);
             });
           }
-          return GestureDetector(
-            onTap: () {
-              context.read<AddCartCubit>().doEvent(
-                AddToCart(
-                  AddToCartRequest(
-                    product: productId,
-                  quantity: quantity,
-                  )
-                ),
-              );
+          return ElevatedButton(
+            onPressed: state.addToCartSuccess.isLoading
+                ? null
+                : () {
+                    context.read<AddCartCubit>().doEvent(
+                      AddToCart(
+                        AddToCartRequest(
+                          product: productId,
+                          quantity: quantity,
+                        ),
+                      ),
+                    );
 
-              onSuccess?.call();
+                    onSuccess?.call();
             },
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 24,
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 30),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+              textStyle: AppTextStyles.medium13(context),
+            ),
+
+            child: state.addToCartSuccess.isLoading
+                ? const SizedBox(
+              height: 15,
+              width: 15,
+              child: CircularProgressIndicator(
+                color: AppColors.baseWhite,
+                strokeWidth: 2,
               ),
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SvgWrapper(
-                    path: AppAssets.cartIcon,
-                    color: AppColors.white,
-                    width: 15,
-                    height: 15,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    local.addToCart,
-                    style: AppTextStyles.medium13(context)
-                        .copyWith(color: AppColors.white),
-                  ),
-                ],
-              ),
+            )
+                : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SvgWrapper(
+                  path: AppAssets.cartIcon,
+                  color: AppColors.white,
+                  width: 15,
+                  height: 15,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  local.addToCart,
+                  style: AppTextStyles.medium13(
+                    context,
+                  ).copyWith(color: AppColors.white),
+                ),
+              ],
             ),
           );
         },
