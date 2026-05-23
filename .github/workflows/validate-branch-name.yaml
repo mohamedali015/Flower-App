@@ -1,0 +1,30 @@
+name: Branch Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate branch name
+        run: |
+          BRANCH_NAME=${GITHUB_HEAD_REF}
+
+          echo "Validating branch: $BRANCH_NAME"
+
+          PATTERN="^(feature|test|fix|demo)\/[a-z0-9-]+$"
+
+          if [[ ! "$BRANCH_NAME" =~ $PATTERN ]]; then
+            echo "❌ Invalid branch name!"
+            echo "Allowed formats:"
+            echo "feature/login"
+            echo "test/login"
+            echo "fix/login"
+            exit 1
+          fi
+
+          echo "✅ Branch name is valid"
