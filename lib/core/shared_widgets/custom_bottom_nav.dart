@@ -35,13 +35,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
     currentIndex = widget.initialIndex;
 
     screens = [
-      const _KeepAlivePage(child: HomeScreen()),
+      const HomeScreen(),
 
-      _KeepAlivePage(child: CategoryScreen(initialIndex: widget.categoryIndex)),
+     CategoryScreen(initialIndex: widget.categoryIndex),
 
-      const _KeepAlivePage(child: CartScreen()),
+      const CartScreen(),
 
-      const _KeepAlivePage(child: ProfileScreen()),
+    const ProfileScreen(),
     ];
   }
 

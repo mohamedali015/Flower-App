@@ -90,5 +90,9 @@
   "subTotal": "المجموع الفرعي",
   "deliveryFee": "رسوم التوصيل",
   "total": "الإجمالي",
-  "addedSuccessfully" : "تم الاضافة بنجاح"
+  "addedSuccessfully" : "تم الاضافة بنجاح",
+  "sub_total": "المجموع الفرعي",
+      "delivery_fee": "رسوم التوصيل",
+      "total": "الإجمالي",
+      "your_cart_is_empty": "سلة التسوق فارغة"
 }
