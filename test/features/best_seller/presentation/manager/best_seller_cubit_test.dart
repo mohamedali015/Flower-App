@@ -15,10 +15,30 @@ import 'best_seller_cubit_test.mocks.dart';
 @GenerateMocks([GetProductsUseCase])
 void main() {
   late BestSellerCubit cubit;
+
   late MockGetProductsUseCase mockGetProductsUseCase;
+
+  late ProductsResponseEntity productsResponseEntity;
+
+  setUpAll(() {
+    productsResponseEntity = const ProductsResponseEntity(
+      products: [],
+      metadata: MetadataEntity(
+        currentPage: 1,
+        totalPages: 1,
+        limit: 1,
+        totalItems: 1,
+      ),
+    );
+
+    provideDummy<Result<ProductsResponseEntity>>(
+      Success<ProductsResponseEntity>(data: productsResponseEntity),
+    );
+  });
 
   setUp(() {
     mockGetProductsUseCase = MockGetProductsUseCase();
+
     cubit = BestSellerCubit(mockGetProductsUseCase);
   });
 
@@ -33,64 +53,85 @@ void main() {
 
     blocTest<BestSellerCubit, BestSellerState>(
       'يجب emit loading ثم success عند نجاح العملية',
-      build: () {
+
+      setUp: () {
         when(
           mockGetProductsUseCase.call(params: anyNamed('params')),
         ).thenAnswer(
-          (_) async => Success<ProductsResponseEntity>(
-            data: const ProductsResponseEntity(
-              products: [],
-              metadata: MetadataEntity(
-                currentPage: 1,
-                totalPages: 1,
-                limit: 1,
-                totalItems: 1,
-              ),
-            ),
-          ),
+          (_) async =>
+              Success<ProductsResponseEntity>(data: productsResponseEntity),
         );
-
-        return cubit;
       },
-      act: (cubit) => cubit.doEvent(GetBestSellerEvent()),
+
+      build: () => cubit,
+
+      act: (cubit) {
+        cubit.doEvent(GetBestSellerEvent());
+      },
+
       expect: () => [
         isA<BestSellerState>().having(
           (s) => s.bestSellerState.isLoading,
           'loading',
           true,
         ),
+
         isA<BestSellerState>().having(
           (s) => s.bestSellerState.isSuccess,
           'success',
           true,
         ),
       ],
+
+      verify: (_) {
+        verify(
+          mockGetProductsUseCase.call(params: anyNamed('params')),
+        ).called(1);
+
+        verifyNoMoreInteractions(mockGetProductsUseCase);
+      },
     );
 
     blocTest<BestSellerCubit, BestSellerState>(
       'يجب emit loading ثم failure عند حدوث خطأ',
-      build: () {
+
+      setUp: () {
         when(
           mockGetProductsUseCase.call(params: anyNamed('params')),
         ).thenAnswer(
-          (_) async => Failure(errorMessage: 'Error fetching products'),
+          (_) async => Failure<ProductsResponseEntity>(
+            errorMessage: 'Error fetching products',
+          ),
         );
-
-        return cubit;
       },
-      act: (cubit) => cubit.doEvent(GetBestSellerEvent()),
+
+      build: () => cubit,
+
+      act: (cubit) {
+        cubit.doEvent(GetBestSellerEvent());
+      },
+
       expect: () => [
         isA<BestSellerState>().having(
           (s) => s.bestSellerState.isLoading,
           'loading',
           true,
         ),
+
         isA<BestSellerState>().having(
           (s) => s.bestSellerState.errorMessage,
           'error message',
           'Error fetching products',
         ),
       ],
+
+      verify: (_) {
+        verify(
+          mockGetProductsUseCase.call(params: anyNamed('params')),
+        ).called(1);
+
+        verifyNoMoreInteractions(mockGetProductsUseCase);
+      },
     );
   });
 }

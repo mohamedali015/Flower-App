@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/config/user/data/models/responses/get_user_response/user_response.dart';
-import 'package:flower_app/config/user/domain/entities/user_entity.dart';
 import 'package:flower_app/features/auth/domain/entities/auth_entity.dart';
 import 'package:flower_app/features/edit_profile/data/data_source/remote/edit_profile_remote_data_source.dart';
 import 'package:flower_app/features/edit_profile/data/model/response/edit_profile_response.dart';
