@@ -16,7 +16,7 @@ import '../../../../core/utils/app_colors.dart';
 import 'icon_text_widget.dart';
 
 class ProfileScreenView extends StatefulWidget {
-  const ProfileScreenView({required this.user});
+  const ProfileScreenView({super.key, required this.user});
 
   final UserEntity user;
 
@@ -36,109 +36,104 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
         : locale.arabic;
 
     return SafeArea(
-      child: Padding(
-        padding: MyResponsive.paddingSymmetric(context, vertical: 11.5),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ProfileScreenSettingItemWidget(
-                left: Image.asset(
-                  AppAssets.logo,
-                  height: MyResponsive.height(context, value: 25),
-                  width: MyResponsive.width(context, value: 90),
-                ),
-                right: IconButton(
-                  onPressed: () {},
-                  icon: const SvgWrapper(path: AppAssets.notification),
-                ),
-              ),
-              SizedBox(height: MyResponsive.height(context, value: 16)),
-              Center(
-                child: Padding(
-                  padding: MyResponsive.paddingOnly(
-                    context,
-                    top: 16,
-                    bottom: 32,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: MyResponsive.paddingSymmetric(
-                          context,
-                          vertical: 8,
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        decoration: const BoxDecoration(
-                          color: AppColors.lightPink,
-                          shape: BoxShape.circle,
-                        ),
-                        child: CachedNetworkImageWrapper(
-                          height: MyResponsive.height(context, value: 81),
-                          width: MyResponsive.width(context, value: 81),
-                          imagePath: widget.user.userPhoto,
-                          fit: BoxFit.cover,
-                        ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.editProfileScreenRoute);
+              },
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: MyResponsive.paddingSymmetric(
+                        context,
+                        vertical: 8,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            widget.user.firstName,
-                            style: AppTextStyles.medium18(context),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                Routes.editProfileScreenRoute,
-                              );
-                            },
-                            icon: const SvgWrapper(path: AppAssets.pen),
-                          ),
-                        ],
+                      clipBehavior: Clip.antiAlias,
+                      decoration: const BoxDecoration(
+                        color: AppColors.lightPink,
+                        shape: BoxShape.circle,
                       ),
-                      SizedBox(height: MyResponsive.height(context, value: 6)),
-                      Text(
-                        widget.user.email,
-                        style: AppTextStyles.medium18(
-                          context,
-                        ).copyWith(color: AppColors.grayDark),
+                      child: CachedNetworkImageWrapper(
+                        height: MyResponsive.height(context, value: 81),
+                        width: MyResponsive.width(context, value: 81),
+                        imagePath: widget.user.userPhoto,
+                        fit: BoxFit.cover,
                       ),
-                    ],
-                  ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.user.firstName,
+                          style: AppTextStyles.medium18(context),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              Routes.editProfileScreenRoute,
+                            );
+                          },
+                          icon: const SvgWrapper(path: AppAssets.pen),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: MyResponsive.height(context, value: 6)),
+                    Text(
+                      widget.user.email,
+                      style: AppTextStyles.medium18(
+                        context,
+                      ).copyWith(color: AppColors.grayDark),
+                    ),
+                  ],
                 ),
               ),
-              ProfileScreenSettingItemWidget(
-                left: IconTextWidget(
-                  text: locale.myOrders,
-                  iconPath: AppAssets.myOrders,
-                ),
-                right: IconButton(
-                  onPressed: () {},
-                  icon: const SvgWrapper(path: AppAssets.iosForwardBtn),
+            ),
+            const SizedBox(height: 30),
+            ProfileScreenSettingItemWidget(
+              onTap: () {},
+              start: IconTextWidget(
+                text: locale.myOrders,
+                iconPath: AppAssets.myOrders,
+              ),
+              end: IconButton(
+                onPressed: () {},
+                icon: const SvgWrapper(
+                  path: AppAssets.iosForwardBtn,
+                  width: 24,
+                  height: 24,
                 ),
               ),
-              ProfileScreenSettingItemWidget(
-                left: IconTextWidget(
-                  text: locale.myAddress,
-                  iconPath: AppAssets.location,
-                ),
-                right: IconButton(
-                  onPressed: () {},
-                  icon: const SvgWrapper(path: AppAssets.iosForwardBtn),
+            ),
+            ProfileScreenSettingItemWidget(
+              onTap: () {},
+              start: IconTextWidget(
+                text: locale.myAddress,
+                iconPath: AppAssets.location,
+              ),
+              end: IconButton(
+                onPressed: () {},
+                icon: const SvgWrapper(
+                  path: AppAssets.iosForwardBtn,
+                  width: 24,
+                  height: 24,
                 ),
               ),
-              const Divider(color: AppColors.hintTextGray, endIndent: 0),
-              Row(
+            ),
+            const SizedBox(height: 10),
+            const Divider(color: AppColors.hintTextGray, endIndent: 0),
+            const SizedBox(height: 10),
+            ProfileScreenSettingItemWidget(
+              onTap: () {},
+              start: Row(
                 children: [
                   Switch(
-                    padding: MyResponsive.paddingSymmetric(
-                      context,
-                      horizontal: 4,
-                    ),
                     activeTrackColor: AppColors.primaryColor,
                     value: switchState,
                     onChanged: (value) {
@@ -147,70 +142,100 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                       });
                     },
                   ),
+                  const SizedBox(width: 4),
                   Text(locale.notification),
                 ],
               ),
 
-              const Divider(color: AppColors.hintTextGray, endIndent: 0),
-              ProfileScreenSettingItemWidget(
-                left: IconTextWidget(
-                  text: locale.language,
-                  iconPath: AppAssets.language,
-                ),
-                right: TextButton(
-                  onPressed: () => _showBottomSheet(context),
-                  child: Text(
-                    currentLocale,
-                    style: AppTextStyles.regular12(
-                      context,
-                    ).copyWith(fontSize: 11, color: AppColors.primaryColor),
-                  ),
+              end: IconButton(
+                onPressed: () {},
+                icon: const SvgWrapper(
+                  path: AppAssets.iosForwardBtn,
+                  width: 24,
+                  height: 24,
                 ),
               ),
+            ),
 
-              ProfileScreenSettingItemWidget(
-                left: Text(
-                  locale.aboutUs,
-                  style: AppTextStyles.regular14(
+            const SizedBox(height: 10),
+            const Divider(color: AppColors.hintTextGray, endIndent: 0),
+            const SizedBox(height: 10),
+            ProfileScreenSettingItemWidget(
+              onTap: () => _showBottomSheet(context),
+              start: IconTextWidget(
+                text: locale.language,
+                iconPath: AppAssets.language,
+              ),
+              end: TextButton(
+                onPressed: () => _showBottomSheet(context),
+                child: Text(
+                  currentLocale,
+                  style: AppTextStyles.regular12(
                     context,
-                  ).copyWith(fontSize: 13),
-                ),
-                right: IconButton(
-                  onPressed: () {},
-                  icon: const SvgWrapper(path: AppAssets.iosForwardBtn),
+                  ).copyWith(fontSize: 11, color: AppColors.primaryColor),
                 ),
               ),
-              ProfileScreenSettingItemWidget(
-                left: Text(
-                  locale.termsAndConditions,
-                  style: AppTextStyles.regular14(
-                    context,
-                  ).copyWith(fontSize: 13),
-                ),
-                right: IconButton(
-                  onPressed: () {},
-                  icon: const SvgWrapper(path: AppAssets.iosForwardBtn),
+            ),
+
+            ProfileScreenSettingItemWidget(
+              onTap: () {},
+              start: Text(
+                locale.aboutUs,
+                style: AppTextStyles.regular13(context),
+              ),
+              end: IconButton(
+                onPressed: () {},
+                icon: const SvgWrapper(
+                  path: AppAssets.iosForwardBtn,
+                  width: 24,
+                  height: 24,
                 ),
               ),
-              const Divider(color: AppColors.hintTextGray, endIndent: 0),
-              ProfileScreenSettingItemWidget(
-                left: IconTextWidget(
-                  text: locale.logout,
-                  iconPath: AppAssets.logout,
-                ),
-                right: IconButton(
-                  onPressed: () async {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (BuildContext context) => const LogoutDialog(),
-                    );
-                  },
-                  icon: const SvgWrapper(path: AppAssets.logout),
+            ),
+            ProfileScreenSettingItemWidget(
+              onTap: () {},
+
+              start: Text(
+                locale.termsAndConditions,
+                style: AppTextStyles.regular13(context),
+              ),
+              end: IconButton(
+                onPressed: () {},
+                icon: const SvgWrapper(
+                  path: AppAssets.iosForwardBtn,
+                  width: 24,
+                  height: 24,
                 ),
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 16),
+            const Divider(color: AppColors.hintTextGray, endIndent: 0),
+            const SizedBox(height: 16),
+
+            ProfileScreenSettingItemWidget(
+              onTap: () async {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) => const LogoutDialog(),
+                );
+              },
+              start: IconTextWidget(
+                text: locale.logout,
+                iconPath: AppAssets.logout,
+              ),
+              end: IconButton(
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context) => const LogoutDialog(),
+                  );
+                },
+                icon: const SvgWrapper(path: AppAssets.logout),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -219,122 +244,118 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
   void _showBottomSheet(BuildContext context) {
     final locale = AppLocalizations.of(context)!;
     final localeCubit = context.read<LocaleCubit>();
+
     showModalBottomSheet(
       backgroundColor: AppColors.background,
       context: context,
       builder: (context) {
-        return Padding(
-          padding: MyResponsive.paddingOnly(
-            context,
-            bottom: 16,
-            top: 36,
-            start: 16,
-            end: 16,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: MyResponsive.width(context, value: 80),
-                height: MyResponsive.height(context, value: 4),
-                color: AppColors.grayDark,
-              ),
-              SizedBox(height: MyResponsive.height(context, value: 16)),
-              Align(
-                alignment: AlignmentGeometry.topStart,
-                child: Text(
-                  locale.changeLanguage,
-                  style: AppTextStyles.bold20(
-                    context,
-                  ).copyWith(color: AppColors.primaryColor),
+        return RadioGroup<String>(
+          groupValue: localeCubit.state.languageCode,
+          onChanged: (value) {
+            localeCubit.changeLanguage(value!);
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: MyResponsive.paddingOnly(
+              context,
+              bottom: 16,
+              top: 36,
+              start: 16,
+              end: 16,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: MyResponsive.width(context, value: 80),
+                  height: MyResponsive.height(context, value: 4),
+                  color: AppColors.grayDark,
                 ),
-              ),
-              SizedBox(height: MyResponsive.height(context, value: 16)),
-              Container(
-                padding: MyResponsive.paddingSymmetric(
-                  context,
-                  vertical: 18.5,
-                  horizontal: 16,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    MyResponsive.radius(context, value: 8),
+
+                SizedBox(height: MyResponsive.height(context, value: 16)),
+
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    locale.changeLanguage,
+                    style: AppTextStyles.bold20(
+                      context,
+                    ).copyWith(color: AppColors.primaryColor),
                   ),
-                  color: AppColors.white,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x1A000000),
-                      blurRadius: 5,
-                      spreadRadius: 0,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
                 ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        locale.arabic,
-                        style: AppTextStyles.medium18(context),
-                      ),
-                    ),
-                    Radio<String>(
-                      activeColor: AppColors.primaryColor,
-                      value: "ar",
-                      groupValue: localeCubit.state.languageCode,
-                      onChanged: (value) {
-                        localeCubit.changeLanguage(value!);
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
+
+                SizedBox(height: MyResponsive.height(context, value: 16)),
+
+                _languageCard(
+                  context: context,
+                  title: locale.arabic,
+                  value: "ar",
+                  onTap: () {
+                    localeCubit.changeLanguage("ar");
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
-              SizedBox(height: MyResponsive.height(context, value: 16)),
-              Container(
-                padding: MyResponsive.paddingSymmetric(
-                  context,
-                  vertical: 18.5,
-                  horizontal: 16,
+
+                SizedBox(height: MyResponsive.height(context, value: 16)),
+
+                _languageCard(
+                  context: context,
+                  title: locale.english,
+                  value: "en",
+                  onTap: () {
+                    localeCubit.changeLanguage("en");
+                    Navigator.pop(context);
+                  },
                 ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    MyResponsive.radius(context, value: 8),
-                  ),
-                  color: AppColors.white,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x1A000000),
-                      blurRadius: 5,
-                      spreadRadius: 0,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        locale.english,
-                        style: AppTextStyles.medium18(context),
-                      ),
-                    ),
-                    Radio<String>(
-                      activeColor: AppColors.primaryColor,
-                      value: "en",
-                      groupValue: localeCubit.state.languageCode,
-                      onChanged: (value) {
-                        localeCubit.changeLanguage(value!);
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
+    );
+  }
+
+  Widget _languageCard({
+    required BuildContext context,
+    required String title,
+    required String value,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(
+        MyResponsive.radius(context, value: 8),
+      ),
+      onTap: onTap,
+      child: Container(
+        padding: MyResponsive.paddingSymmetric(
+          context,
+          vertical: 18.5,
+          horizontal: 16,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            MyResponsive.radius(context, value: 8),
+          ),
+          color: AppColors.white,
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x1A000000),
+              blurRadius: 5,
+              spreadRadius: 0,
+              offset: Offset(0, 0),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(title, style: AppTextStyles.medium18(context)),
+            ),
+
+            Radio<String>(value: value, activeColor: AppColors.primaryColor),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,38 +1,29 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/helpers/my_responsive.dart';
-
 class ProfileScreenSettingItemWidget extends StatelessWidget {
   const ProfileScreenSettingItemWidget({
     super.key,
-    required this.left,
-    required this.right,
+    required this.start,
+    required this.end,
+    required this.onTap,
   });
 
-  final Widget left;
-  final Widget right;
+  final Widget start;
+  final Widget end;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final isArabic =
-        Directionality.of(context) == TextDirection.rtl;
+    final isArabic = Directionality.of(context) == TextDirection.rtl;
 
-    return Padding(
-      padding: MyResponsive.paddingSymmetric(
-        context,
-        horizontal: 16,
-      ),
+    return InkWell(
+      onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          left,
+          start,
 
-          right is IconButton
-              ? Transform.flip(
-            flipX: isArabic,
-            child: right,
-          )
-              : right,
+          end is IconButton ? Transform.flip(flipX: isArabic, child: end) : end,
         ],
       ),
     );

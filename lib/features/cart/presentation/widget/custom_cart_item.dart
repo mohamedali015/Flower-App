@@ -42,7 +42,7 @@ class _CustomCartItemState extends State<CustomCartItem> {
         children: [
           /// Content with Opacity & IgnorePointer for deleting state
           Opacity(
-            opacity: isDeleting ? 0.4 : 1.0,
+            opacity: isDeleting || isUpdating ? 0.4 : 1.0,
             child: IgnorePointer(
               ignoring: isDeleting,
               child: IntrinsicHeight(
@@ -83,7 +83,7 @@ class _CustomCartItemState extends State<CustomCartItem> {
                                 padding: const EdgeInsets.only(top: 4),
                                 child: Text(
                                   widget.cartItem.productEntity.description,
-                                  maxLines: 1,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.regular13(
                                     context,
