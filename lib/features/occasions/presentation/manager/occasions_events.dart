@@ -7,3 +7,9 @@ class GetOccasionProductsEvent extends OccasionsEvents {
 
   GetOccasionProductsEvent({required this.occasionId});
 }
+
+class LoadMoreOccasionProductsEvent extends OccasionsEvents {
+  final String occasionId;
+
+  LoadMoreOccasionProductsEvent({required this.occasionId});
+}

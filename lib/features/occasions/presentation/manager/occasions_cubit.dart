@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../config/error_handling/result.dart';
+import '../../../../config/products/domain/entities/products_response_entity.dart';
 import 'occasions_state.dart';
 
 @injectable
@@ -23,6 +24,9 @@ class OccasionsCubit extends Cubit<OccasionsState> {
 
       case GetOccasionProductsEvent():
         _getOccasionProducts(event);
+
+      case LoadMoreOccasionProductsEvent():
+        _loadMoreOccasionProducts(event);
     }
   }
 
@@ -72,7 +76,11 @@ class OccasionsCubit extends Cubit<OccasionsState> {
     );
 
     final result = await _getProductsUseCase.call(
-      params: ProductQueryParams(occasionId: event.occasionId),
+      params: ProductQueryParams(
+        occasionId: event.occasionId,
+        page: 1,
+        limit: 10,
+      ),
     );
 
     switch (result) {
@@ -97,6 +105,52 @@ class OccasionsCubit extends Cubit<OccasionsState> {
             ),
           ),
         );
+    }
+  }
+
+  Future<void> _loadMoreOccasionProducts(
+    LoadMoreOccasionProductsEvent event,
+  ) async {
+    if (state.isFetchingMore) return;
+
+    final currentData = state.occasionProductsState.data;
+    if (currentData == null) return;
+
+    final currentPage = currentData.metadata.currentPage;
+    final totalPages = currentData.metadata.totalPages;
+
+    if (currentPage >= totalPages) return;
+
+    emit(state.copyWith(isFetchingMoreParam: true));
+
+    final result = await _getProductsUseCase.call(
+      params: ProductQueryParams(
+        occasionId: event.occasionId,
+        page: (currentPage + 1).toInt(),
+        limit: 10,
+      ),
+    );
+
+    switch (result) {
+      case Success():
+        final newProducts = result.data.products;
+
+        final updatedData = ProductsResponseEntity(
+          products: [...currentData.products, ...newProducts],
+          metadata: result.data.metadata,
+        );
+
+        emit(
+          state.copyWith(
+            isFetchingMoreParam: false,
+            occasionProductsStateParam: state.occasionProductsState.copyWith(
+              dataParam: updatedData,
+            ),
+          ),
+        );
+
+      case Failure():
+        emit(state.copyWith(isFetchingMoreParam: false));
     }
   }
 }
