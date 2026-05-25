@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/shared_widgets/custom_grid_view.dart';
+import '../../../../core/shared_widgets/shimmer/bottom_pagination_shimmer.dart';
 import '../../../../core/shared_widgets/shimmer/grid_product_shimmer.dart';
 import '../../../../core/shared_widgets/shimmer/tabs_shimmer.dart';
 import '../../../../core/utils/app_constants.dart';
@@ -45,23 +46,18 @@ class _OccasionScreenState extends State<OccasionScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
-
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
-
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
             Text(local.occasion),
             Text(
               local.occasionSubTitle,
-
               style: AppTextStyles.medium13(
                 context,
               ).copyWith(color: AppColors.grayDark),
@@ -69,12 +65,10 @@ class _OccasionScreenState extends State<OccasionScreen> {
           ],
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppConstants.paddingHorizontal,
         ),
-
         child: BlocConsumer<OccasionsCubit, OccasionsState>(
           listener: (context, state) {
             final occasions = state.occasionsCategoryState.data;
@@ -97,13 +91,13 @@ class _OccasionScreenState extends State<OccasionScreen> {
             return previous.occasionsCategoryState !=
                 current.occasionsCategoryState;
           },
-
           buildWhen: (previous, current) {
             return previous.occasionsCategoryState !=
                     current.occasionsCategoryState ||
-                previous.occasionProductsState != current.occasionProductsState;
+                previous.occasionProductsState !=
+                    current.occasionProductsState ||
+                previous.isFetchingMore != current.isFetchingMore;
           },
-
           builder: (context, state) {
             final occasions = state.occasionsCategoryState.data;
 
@@ -113,9 +107,7 @@ class _OccasionScreenState extends State<OccasionScreen> {
                 state.occasionsCategoryState.errorMessage!.isNotEmpty) {
               return CustomErrorWidget(
                 errorMessage: state.occasionsCategoryState.errorMessage!,
-
                 haveTryAgain: true,
-
                 onPressed: () {
                   cubit.doEvent(GetOccasionsCategoriesEvent());
                 },
@@ -125,7 +117,6 @@ class _OccasionScreenState extends State<OccasionScreen> {
             }
 
             final productsState = state.occasionProductsState;
-
             final products = productsState.data?.products;
 
             return Column(
@@ -134,7 +125,6 @@ class _OccasionScreenState extends State<OccasionScreen> {
                 OccasionTabsWidget(
                   occasions: occasions,
                   initialIndex: widget.currentIndex ?? 0,
-
                   onTap: (index) {
                     if (selectedIndex == index) return;
 
@@ -147,12 +137,10 @@ class _OccasionScreenState extends State<OccasionScreen> {
                     );
                   },
                 ),
-
                 const SizedBox(height: 16),
-
                 Expanded(
                   child: () {
-                    if (productsState.isLoading) {
+                    if (productsState.isLoading && !state.isFetchingMore) {
                       return const GridProductShimmer();
                     } else if (productsState.errorMessage != null &&
                         productsState.errorMessage!.isNotEmpty) {
@@ -173,22 +161,55 @@ class _OccasionScreenState extends State<OccasionScreen> {
                       );
                     }
 
-                    return RefreshIndicator(
-                      onRefresh: () async {
-                        cubit.doEvent(
-                          GetOccasionProductsEvent(
-                            occasionId: occasions[selectedIndex].id,
-                          ),
-                        );
+                    return NotificationListener<ScrollNotification>(
+                      onNotification: (ScrollNotification notification) {
+                        if (notification is ScrollEndNotification) {
+                          final pixel = notification.metrics.pixels;
+                          final max = notification.metrics.maxScrollExtent;
+                          const triggerDistance = 200;
+
+                          if (pixel >= max - triggerDistance) {
+                            if (!state.isFetchingMore) {
+                              cubit.doEvent(
+                                LoadMoreOccasionProductsEvent(
+                                  occasionId: occasions[selectedIndex].id,
+                                ),
+                              );
+                            }
+                          }
+                        }
+
+                        return false;
                       },
-                      child: CustomGridView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        childAspectRatio: 163 / 229,
-                        itemCount: products.length,
-                        padding: const EdgeInsets.only(bottom: 16),
-                        itemBuilder: (context, index) {
-                          return ProductCard(product: products[index]);
-                        },
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: RefreshIndicator(
+                              onRefresh: () async {
+                                cubit.doEvent(
+                                  GetOccasionProductsEvent(
+                                    occasionId: occasions[selectedIndex].id,
+                                  ),
+                                );
+                              },
+                              child: CustomGridView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                childAspectRatio: 163 / 229,
+                                itemCount: products.length,
+                                padding: const EdgeInsets.only(bottom: 16),
+                                itemBuilder: (context, index) {
+                                  return ProductCard(product: products[index]);
+                                },
+                              ),
+                            ),
+                          ),
+
+                          if (state.isFetchingMore)
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 16.0, top: 8.0),
+                              child: BottomPaginationShimmer(),
+                            ),
+                        ],
                       ),
                     );
                   }(),
