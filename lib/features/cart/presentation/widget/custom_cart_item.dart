@@ -146,54 +146,38 @@ class _CustomCartItemState extends State<CustomCartItem> {
                                 ),
 
                                 /// Quantity Controls
-                                isUpdating
-                                    ? const SizedBox(
-                                        width: 90,
-                                        height: 40,
-                                        child: Center(
-                                          child: SizedBox(
-                                            width: 24,
-                                            height: 24,
-                                            child: CircularProgressIndicator(
-                                              strokeWidth: 2.5,
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    /// Minus
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isUpdating = true;
+                                        });
+
+                                        final qty =
+                                            widget.cartItem.quantity ?? 0;
+
+                                        if (qty <= 1) {
+                                          setState(() {
+                                            isDeleting = true;
+                                            isUpdating = false;
+                                          });
+
+                                          context.read<CartCubit>().doEvent(
+                                            DeleteCartItemEvent(
+                                              productId: widget
+                                                  .cartItem
+                                                  .productEntity
+                                                  .id,
                                             ),
-                                          ),
-                                        ),
-                                      )
-                                    : Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          /// Minus
-                                          IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                isUpdating = true;
-                                              });
+                                          );
 
-                                              final qty =
-                                                  widget.cartItem.quantity ?? 0;
+                                          return;
+                                        }
 
-                                              if (qty <= 1) {
-                                                setState(() {
-                                                  isDeleting = true;
-                                                  isUpdating = false;
-                                                });
-
-                                                context
-                                                    .read<CartCubit>()
-                                                    .doEvent(
-                                                      DeleteCartItemEvent(
-                                                        productId: widget
-                                                            .cartItem
-                                                            .productEntity
-                                                            .id,
-                                                      ),
-                                                    );
-
-                                                return;
-                                              }
-
-                                              context.read<CartCubit>().doEvent(
+                                        context.read<CartCubit>().doEvent(
                                           UpdateCartItemEvent(
                                             quantity: UpdateCartRequest(
                                               quantity: qty - 1,
@@ -205,21 +189,16 @@ class _CustomCartItemState extends State<CustomCartItem> {
                                           ),
                                         );
                                       },
-                                      icon: const Icon(
-                                        Icons.remove,
-                                        size: 18,
-                                      ),
+                                      icon: const Icon(Icons.remove, size: 18),
                                     ),
 
-                                          /// Quantity
-                                          Text(
-                                            widget.cartItem.quantity.toString(),
-                                            style: AppTextStyles.semiBold14(
-                                              context,
-                                            ),
-                                          ),
+                                    /// Quantity
+                                    Text(
+                                      widget.cartItem.quantity.toString(),
+                                      style: AppTextStyles.semiBold14(context),
+                                    ),
 
-                                          /// Plus
+                                    /// Plus
                                     IconButton(
                                       onPressed: () {
                                         setState(() {
@@ -230,10 +209,8 @@ class _CustomCartItemState extends State<CustomCartItem> {
                                           UpdateCartItemEvent(
                                             quantity: UpdateCartRequest(
                                               quantity:
-                                              (widget
-                                                  .cartItem
-                                                  .quantity ??
-                                                  0) +
+                                                  (widget.cartItem.quantity ??
+                                                      0) +
                                                   1,
                                             ),
                                             productId: widget
@@ -243,10 +220,7 @@ class _CustomCartItemState extends State<CustomCartItem> {
                                           ),
                                         );
                                       },
-                                      icon: const Icon(
-                                        Icons.add,
-                                        size: 18,
-                                      ),
+                                      icon: const Icon(Icons.add, size: 18),
                                     ),
                                   ],
                                 ),
@@ -281,7 +255,7 @@ class _CustomCartItemState extends State<CustomCartItem> {
           ),
 
           /// Delete Loading Indicator
-          if (isDeleting) const CircularProgressIndicator(),
+          if (isDeleting || isUpdating) const CircularProgressIndicator(),
         ],
       ),
     );
