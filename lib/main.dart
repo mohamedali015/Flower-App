@@ -13,6 +13,7 @@ import 'core/helpers/show_session_expired_dialog.dart';
 import 'core/localization/l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
