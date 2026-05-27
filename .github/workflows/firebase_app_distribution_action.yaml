@@ -4,7 +4,6 @@ on:
   pull_request:
     types:
       - labeled
-      - synchronize
 
 jobs:
   distribute:
@@ -28,6 +27,9 @@ jobs:
           flutter-version: '3.41.2'
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Generate localization files
+        run: flutter gen-l10n
 
       - name: Generate files
         run: dart run build_runner build --delete-conflicting-outputs
