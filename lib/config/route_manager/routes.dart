@@ -25,4 +25,5 @@ abstract class Routes {
   static const String changePasswordRoute = '/changePassword';
 
   static const String termsAndConditionsRoute = '/termsAndConditions';
+  static const String aboutUsRoute = '/aboutUs';
 }

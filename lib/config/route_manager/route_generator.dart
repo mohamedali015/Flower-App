@@ -1,6 +1,7 @@
 import 'package:flower_app/config/di/di.dart';
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
+import 'package:flower_app/features/about_us/presentation/screens/about_us_screen.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
@@ -170,6 +171,9 @@ abstract class RouteGenerator {
           return CupertinoPageRoute(
             builder: (_) => const TermsAndConditionsScreen(),
           );
+
+        case Routes.aboutUsRoute:
+          return CupertinoPageRoute(builder: (_) => const AboutUsScreen());
 
         /// Default
         default:
