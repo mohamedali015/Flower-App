@@ -17,19 +17,13 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -58,5 +52,24 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1035074510871',
     projectId: 'elevate-flower-app-92318',
     storageBucket: 'elevate-flower-app-92318.firebasestorage.app',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCHChjWy3Qf9LfYb1JemsjmJj4YSud4Tf0',
+    appId: '1:1035074510871:web:af72154623b82c7c0c3c52',
+    messagingSenderId: '1035074510871',
+    projectId: 'elevate-flower-app-92318',
+    authDomain: 'elevate-flower-app-92318.firebaseapp.com',
+    storageBucket: 'elevate-flower-app-92318.firebasestorage.app',
+    measurementId: 'G-DWZER0QBKE',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCHM48UlRvGVR0UPIazn6Sw8zO4bdvp9qQ',
+    appId: '1:1035074510871:ios:6649438b1a97bf670c3c52',
+    messagingSenderId: '1035074510871',
+    projectId: 'elevate-flower-app-92318',
+    storageBucket: 'elevate-flower-app-92318.firebasestorage.app',
+    iosBundleId: 'com.example.flowerApp',
   );
 }

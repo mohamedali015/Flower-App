@@ -60,6 +60,8 @@ dependencies:
   shimmer: ^3.0.0
   image_picker: ^1.2.2
   firebase_core: ^4.9.0
+  flutter_local_notifications: ^18.0.1
+  firebase_messaging: ^16.2.2
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,4 @@
-package com.example.flower_app;
+package com.elevate.flower_app;
 
 import io.flutter.embedding.android.FlutterActivity;
 
