@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.elevate.flowerapp"
+    namespace = "com.elevate.flower_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
