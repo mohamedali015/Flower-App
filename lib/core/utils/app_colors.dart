@@ -37,6 +37,7 @@ abstract class AppColors {
   static const Color darkShade4 = Color(0xFFaeafb1);
   static const Color darkShade5 = Color(0xFFcecfd0);
   static const Color darkShade6 = Color(0xFF35383C);
+  static const Color darkShade7 = Color(0xFFEAEAEA);
 
   static const Color textHint = Color(0xFFA6A6A6);
   static const Color textMuted = Color(0xFF7C7C7C);
