@@ -22,7 +22,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
-
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -34,8 +33,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               LogoAndSearchBar(local: local),
-              const LocationBar(),
-
+               LocationBar(),
               Expanded(
                 child: BlocBuilder<HomeCubit, HomeState>(
                   builder: (context, state) {
@@ -72,12 +70,10 @@ class HomeScreen extends StatelessWidget {
                               ),
                               CategoriesList(
                                 categories: home.categories,
-
                                 onPressed: (index) {
                                   Navigator.pushReplacementNamed(
                                     context,
                                     Routes.bottomNavBarRoute,
-
                                     arguments: {
                                       "initialIndex": 1,
                                       "categoryIndex": index + 1,
