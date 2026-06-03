@@ -14,7 +14,7 @@ class OrdersEntity extends Equatable {
   final String? updatedAt;
   final String? orderNumber;
 
-  OrdersEntity({
+  const OrdersEntity({
     this.id,
     this.user,
     this.orderItems,

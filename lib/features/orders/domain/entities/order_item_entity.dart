@@ -6,7 +6,7 @@ class OrderItemEntity extends Equatable {
   final int? price;
   final int? quantity;
 
-  OrderItemEntity({this.product, this.price, this.quantity});
+  const OrderItemEntity({this.product, this.price, this.quantity});
 
   @override
   List<Object?> get props => [product, price, quantity];

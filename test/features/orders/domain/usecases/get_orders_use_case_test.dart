@@ -35,8 +35,8 @@ void main() {
     );
 
     orders = [
-      OrdersEntity(id: '1', isDelivered: false),
-      OrdersEntity(id: '2', isDelivered: true),
+      const OrdersEntity(id: '1', isDelivered: false),
+      const OrdersEntity(id: '2', isDelivered: true),
     ];
   });
 

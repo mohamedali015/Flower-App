@@ -29,7 +29,7 @@ void main() {
         limit: 10,
         totalItems: 50,
       ),
-      orders: [Orders(Id: 'order_1')],
+      orders: [Orders(id: 'order_1')],
     );
   });
 
@@ -48,7 +48,7 @@ void main() {
         success.data.metadata?.currentPage,
         responseDto.metadata?.currentPage,
       );
-      expect(success.data.orders?.first.Id, responseDto.orders?.first.Id);
+      expect(success.data.orders?.first.id, responseDto.orders?.first.id);
 
       verify(
         mockOrdersApiClient.getOrders(queryParams: anyNamed('queryParams')),

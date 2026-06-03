@@ -6,7 +6,7 @@ part 'orders.g.dart';
 @JsonSerializable()
 class Orders {
   @JsonKey(name: "_id")
-  final String? Id;
+  final String? id;
   @JsonKey(name: "user")
   final String? user;
   @JsonKey(name: "orderItems")
@@ -31,7 +31,7 @@ class Orders {
   final int? v;
 
   Orders({
-    this.Id,
+    this.id,
     this.user,
     this.orderItems,
     this.totalPrice,

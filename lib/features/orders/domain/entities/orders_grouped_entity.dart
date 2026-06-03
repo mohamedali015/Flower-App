@@ -7,7 +7,7 @@ class OrdersGroupedEntity extends Equatable {
   final List<OrdersEntity> delivered;
   final MetadataEntity metadata;
 
-  OrdersGroupedEntity({
+  const OrdersGroupedEntity({
     required this.active,
     required this.delivered,
     required this.metadata,

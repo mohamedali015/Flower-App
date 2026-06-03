@@ -33,8 +33,8 @@ void main() {
     totalItems: 20,
   );
 
-  final page1Orders = [OrdersEntity(id: '1', isDelivered: false)];
-  final page2Orders = [OrdersEntity(id: '2', isDelivered: true)];
+  final page1Orders = [const OrdersEntity(id: '1', isDelivered: false)];
+  final page2Orders = [const OrdersEntity(id: '2', isDelivered: true)];
 
   final groupedPage1 = OrdersGroupedEntity(
     active: page1Orders,
