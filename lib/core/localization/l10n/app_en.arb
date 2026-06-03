@@ -114,5 +114,6 @@
       "sub_total": "Sub Total",
          "delivery_fee": "Delivery Fee",
          "total": "Total",
-         "your_cart_is_empty": "Your cart is empty"
+         "your_cart_is_empty": "Your cart is empty",
+         "noProductsFound": "No products found"
 }
