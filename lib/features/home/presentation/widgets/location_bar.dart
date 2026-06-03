@@ -10,9 +10,9 @@ import 'package:flower_app/features/home/presentation/widgets/home_shimmer_loadi
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../user_address/manger/user_address_cubit.dart';
-import '../../../user_address/manger/user_address_events.dart';
-import '../../../user_address/manger/user_address_state.dart';
+import '../../../user_address/presentation/manger/user_address_cubit.dart';
+import '../../../user_address/presentation/manger/user_address_events.dart';
+import '../../../user_address/presentation/manger/user_address_state.dart';
 
 class LocationBar extends StatelessWidget {
   UserAddressCubit userAddressCubit = getIt<UserAddressCubit>()
@@ -27,14 +27,11 @@ class LocationBar extends StatelessWidget {
       value: userAddressCubit,
       child: BlocConsumer<UserAddressCubit, UserAddressState>(
         buildWhen: (previous, current) =>
-            previous.currentUserAddress != current.currentUserAddress ||
-            previous.placeMark != current.placeMark,
+            previous.currentUserAddress != current.currentUserAddress,
         builder: (BuildContext context, state) {
-          if (state.getLoggedUserAddressState.isLoading ||
-              state.placeMark.isLoading) {
+          if (state.currentUserAddress == null) {
             return const HomeShimmerLoading();
-          } else if (state.currentUserAddress!=null &&
-              state.placeMark.isSuccess) {
+          } else if (state.currentUserAddress != null) {
             return Padding(
               padding: MyResponsive.paddingSymmetric(context, vertical: 17),
               child: Row(
@@ -55,8 +52,12 @@ class LocationBar extends StatelessWidget {
                           ).copyWith(color: AppColors.grayDark),
                         ),
                         TextSpan(
-                          text:
-                              state.placeMark.data?.first.subAdministrativeArea,
+                          text: state
+                              .currentUserAddress!
+                              .last
+                              .placeMarks!
+                              .first
+                              .subAdministrativeArea,
                           style: AppTextStyles.medium14(
                             context,
                           ).copyWith(color: AppColors.black100),
@@ -80,15 +81,6 @@ class LocationBar extends StatelessWidget {
         listenWhen: (previous, current) =>
             previous.currentUserAddress != current.currentUserAddress,
         listener: (BuildContext context, state) {
-          if (state.getLoggedUserAddressState.isSuccess) {
-            userAddressCubit.doEvent(
-              PlaceMarkFromCoordinatesEvent(
-                lat: state.currentUserAddress!.address!.last.lat!,
-                long: state.currentUserAddress!.address!.last.long!,
-              ),
-            );
-          }
-
           if (state.getLoggedUserAddressState.isLoading == false &&
               state.getLoggedUserAddressState.isSuccess == false) {
             AppSnackBar.error(

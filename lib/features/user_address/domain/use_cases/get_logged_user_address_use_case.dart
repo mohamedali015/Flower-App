@@ -1,3 +1,4 @@
+import 'package:flower_app/features/user_address/domain/entities/address.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../config/error_handling/result.dart';
@@ -9,12 +10,12 @@ class GetLoggedUserAddressUseCase {
   const GetLoggedUserAddressUseCase(this._userAddressRepo);
 
   final UserAddressRepoContract _userAddressRepo;
-  Future<Result<UserAddressDto>> call() async {
+  Future<Result<List<Address>>> call() async {
     var response = await _userAddressRepo.getLoggedUserAddress();
     switch (response) {
-      case Success<UserAddressDto>():
+      case Success<List<Address>>():
         return Success(data: response.data);
-      case Failure<UserAddressDto>():
+      case Failure<List<Address>>():
         return Failure(errorMessage: response.errorMessage);
     }
   }

@@ -1,17 +1,16 @@
 import '../../../../config/error_handling/result.dart';
-
 import '../../data/models/address_dto.dart';
-import '../../data/models/user_address_dto.dart';
+import '../entities/address.dart';
 
 abstract interface class UserAddressRepoContract {
-  Future<Result<UserAddressDto>> getLoggedUserAddress();
+  Future<Result<List<Address>>> getLoggedUserAddress();
 
-  Future<Result<UserAddressDto>> addUserAddress(AddressDto address);
+  Future<Result<List<Address>>> addUserAddress(AddressDto address);
 
-  Future<Result<UserAddressDto>> updateUserAddress(
+  Future<Result<List<Address>>> updateUserAddress(
     AddressDto address,
     String id,
   );
 
-  Future<Result<UserAddressDto>> removeUserAddress(String id);
+  Future<Result<List<Address>>> removeUserAddress(String id);
 }

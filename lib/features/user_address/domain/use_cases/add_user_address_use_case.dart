@@ -1,4 +1,5 @@
 import 'package:flower_app/config/error_handling/result.dart';
+import 'package:flower_app/features/user_address/domain/entities/address.dart';
 
 import 'package:injectable/injectable.dart';
 
@@ -12,12 +13,12 @@ class AddUserAddressUseCase {
 
   final UserAddressRepoContract _userAddressRepo;
 
-  Future<Result<UserAddressDto>> call(AddressDto address) async {
+  Future<Result<List<Address>>> call(AddressDto address) async {
     var response = await _userAddressRepo.addUserAddress(address);
     switch (response) {
-      case Success<UserAddressDto>():
+      case Success<List<Address>>():
         return Success(data: response.data);
-      case Failure<UserAddressDto>():
+      case Failure<List<Address>>():
         return Failure(errorMessage: response.errorMessage);
     }
   }

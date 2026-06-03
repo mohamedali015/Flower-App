@@ -1,9 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flower_app/config/base_state/base_state.dart';
-import 'package:geocoding/geocoding.dart';
-
-import '../data/models/user_address_dto.dart';
-
+import 'package:flower_app/features/user_address/domain/entities/address.dart';
 
 class UserAddressState extends Equatable {
   const UserAddressState({
@@ -11,24 +8,21 @@ class UserAddressState extends Equatable {
     required this.getLoggedUserAddressState,
     required this.removeUserAddressState,
     required this.updateUserAddressState,
-    required this.placeMark,
-    required this.currentUserAddress
+    required this.currentUserAddress,
   });
 
   final BaseState addUserAddressState;
   final BaseState updateUserAddressState;
   final BaseState removeUserAddressState;
-  final BaseState<UserAddressDto> getLoggedUserAddressState;
-  final BaseState<List<Placemark>> placeMark;
-  final UserAddressDto? currentUserAddress;
+  final BaseState getLoggedUserAddressState;
+  final List<Address>? currentUserAddress;
 
   UserAddressState copyWith({
-    BaseState<UserAddressDto>? addUserAddressState,
-    BaseState<UserAddressDto>? updateUserAddressState,
-    BaseState<UserAddressDto>? removeUserAddressState,
-    BaseState<UserAddressDto>? getLoggedUserAddressState,
-    BaseState<List<Placemark>>? placeMark,
-    UserAddressDto? currentUserAddress,
+    BaseState<List<Address>>? addUserAddressState,
+    BaseState<List<Address>>? updateUserAddressState,
+    BaseState<List<Address>>? removeUserAddressState,
+    BaseState<List<Address>>? getLoggedUserAddressState,
+    List<Address>? currentUserAddress,
   }) {
     return UserAddressState(
       addUserAddressState: addUserAddressState ?? this.addUserAddressState,
@@ -38,8 +32,7 @@ class UserAddressState extends Equatable {
           removeUserAddressState ?? this.removeUserAddressState,
       updateUserAddressState:
           updateUserAddressState ?? this.updateUserAddressState,
-      placeMark: placeMark ?? this.placeMark,
-      currentUserAddress: currentUserAddress ?? this.currentUserAddress
+      currentUserAddress: currentUserAddress ?? this.currentUserAddress,
     );
   }
 
@@ -49,6 +42,6 @@ class UserAddressState extends Equatable {
     removeUserAddressState,
     getLoggedUserAddressState,
     updateUserAddressState,
-    placeMark,
+    currentUserAddress,
   ];
 }

@@ -1,4 +1,4 @@
-import '../data/models/address_dto.dart';
+import '../../data/models/address_dto.dart';
 
 sealed class UserAddressEvents {
   const UserAddressEvents();
@@ -25,9 +25,4 @@ class RemoveUserAddressEvent extends UserAddressEvents {
 
 class GetLoggedUserAddressEvent extends UserAddressEvents {}
 
-class PlaceMarkFromCoordinatesEvent extends UserAddressEvents {
-  PlaceMarkFromCoordinatesEvent({required this.lat, required this.long});
 
-  final String lat;
-  final String long;
-}

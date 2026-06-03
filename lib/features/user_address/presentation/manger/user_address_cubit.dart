@@ -1,17 +1,17 @@
 import 'package:flower_app/config/base_state/base_state.dart';
 import 'package:flower_app/config/error_handling/result.dart';
-import 'package:flower_app/features/user_address/manger/user_address_events.dart';
-import 'package:flower_app/features/user_address/manger/user_address_state.dart';
+import 'package:flower_app/features/user_address/presentation/manger/user_address_events.dart';
+import 'package:flower_app/features/user_address/presentation/manger/user_address_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:injectable/injectable.dart';
 
-import '../data/models/address_dto.dart';
-import '../data/models/user_address_dto.dart';
-import '../domain/use_cases/add_user_address_use_case.dart';
-import '../domain/use_cases/get_logged_user_address_use_case.dart';
-import '../domain/use_cases/remove_user_address_use_case.dart';
-import '../domain/use_cases/update_user_address_use_case.dart';
+import '../../data/models/address_dto.dart';
+import '../../data/models/user_address_dto.dart';
+import '../../domain/entities/address.dart';
+import '../../domain/use_cases/add_user_address_use_case.dart';
+import '../../domain/use_cases/get_logged_user_address_use_case.dart';
+import '../../domain/use_cases/remove_user_address_use_case.dart';
+import '../../domain/use_cases/update_user_address_use_case.dart';
 
 @LazySingleton()
 class UserAddressCubit extends Cubit<UserAddressState> {
@@ -26,7 +26,6 @@ class UserAddressCubit extends Cubit<UserAddressState> {
           getLoggedUserAddressState: BaseState<UserAddressDto>(),
           removeUserAddressState: BaseState<UserAddressDto>(),
           updateUserAddressState: BaseState<UserAddressDto>(),
-          placeMark: BaseState(),
           currentUserAddress: null,
         ),
       );
@@ -46,15 +45,13 @@ class UserAddressCubit extends Cubit<UserAddressState> {
         _removeUserAddress(id: event.addressId);
       case GetLoggedUserAddressEvent():
         _getLoggedUserAddress();
-      case PlaceMarkFromCoordinatesEvent():
-        _placeMarkFromCoordinates(event.lat, event.long);
     }
   }
 
   Future<void> _getLoggedUserAddress() async {
     emit(
       state.copyWith(
-        getLoggedUserAddressState: const BaseState<UserAddressDto>(
+        getLoggedUserAddressState: const BaseState<List<Address>>(
           isLoading: true,
           isSuccess: false,
           errorMessage: null,
@@ -66,10 +63,10 @@ class UserAddressCubit extends Cubit<UserAddressState> {
     var response = await _getLoggedUserAddressUseCase();
 
     switch (response) {
-      case Success<UserAddressDto>():
+      case Success<List<Address>>():
         emit(
           state.copyWith(
-            getLoggedUserAddressState: BaseState<UserAddressDto>(
+            getLoggedUserAddressState: BaseState<List<Address>>(
               isLoading: false,
               isSuccess: true,
               errorMessage: null,
@@ -78,10 +75,10 @@ class UserAddressCubit extends Cubit<UserAddressState> {
             currentUserAddress: response.data,
           ),
         );
-      case Failure<UserAddressDto>():
+      case Failure<List<Address>>():
         emit(
           state.copyWith(
-            getLoggedUserAddressState: BaseState<UserAddressDto>(
+            getLoggedUserAddressState: BaseState<List<Address>>(
               isLoading: false,
               isSuccess: false,
               errorMessage: response.errorMessage,
@@ -107,7 +104,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
     var response = await _addUserAddressUseCase(newAddress);
 
     switch (response) {
-      case Success<UserAddressDto>():
+      case Success<List<Address>>():
         emit(
           state.copyWith(
             addUserAddressState: BaseState(
@@ -119,7 +116,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
             currentUserAddress: response.data,
           ),
         );
-      case Failure<UserAddressDto>():
+      case Failure<List<Address>>():
         emit(
           state.copyWith(
             addUserAddressState: BaseState(
@@ -151,7 +148,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
     var response = await _updateUserAddressUseCase(newAddress, id);
 
     switch (response) {
-      case Success<UserAddressDto>():
+      case Success<List<Address>>():
         emit(
           state.copyWith(
             updateUserAddressState: BaseState(
@@ -163,7 +160,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
             currentUserAddress: response.data,
           ),
         );
-      case Failure<UserAddressDto>():
+      case Failure<List<Address>>():
         emit(
           state.copyWith(
             updateUserAddressState: BaseState(
@@ -192,7 +189,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
     var response = await _removeUserAddressUseCase(id);
 
     switch (response) {
-      case Success<UserAddressDto>():
+      case Success<List<Address>>():
         emit(
           state.copyWith(
             removeUserAddressState: BaseState(
@@ -204,7 +201,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
             currentUserAddress: response.data,
           ),
         );
-      case Failure<UserAddressDto>():
+      case Failure<List<Address>>():
         emit(
           state.copyWith(
             removeUserAddressState: BaseState(
@@ -216,34 +213,5 @@ class UserAddressCubit extends Cubit<UserAddressState> {
           ),
         );
     }
-  }
-
-  Future<void> _placeMarkFromCoordinates(String lat, String long) async {
-    emit(
-      state.copyWith(
-        placeMark: const BaseState(
-          isLoading: true,
-          isSuccess: false,
-          data: null,
-          errorMessage: null,
-        ),
-      ),
-    );
-
-    final placeMarks = await placemarkFromCoordinates(
-      double.parse(lat),
-      double.parse(long),
-    );
-
-    emit(
-      state.copyWith(
-        placeMark: BaseState(
-          data: placeMarks,
-          errorMessage: null,
-          isSuccess: true,
-          isLoading: false,
-        ),
-      ),
-    );
   }
 }
