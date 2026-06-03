@@ -43,7 +43,7 @@ void main() {
   );
 
   final groupedPage2 = OrdersGroupedEntity(
-    active: [],
+    active: const [],
     delivered: page2Orders,
     metadata: metadataPage2,
   );

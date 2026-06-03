@@ -12,7 +12,7 @@ class OrderCard extends StatelessWidget {
   final OrdersEntity order;
   late AppLocalizations local;
 
-  OrderCard({required this.order, required this.local});
+  OrderCard({super.key, required this.order, required this.local});
 
   String get title {
     final firstItem = order.orderItems?.first;
