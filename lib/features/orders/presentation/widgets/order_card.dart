@@ -8,6 +8,7 @@ import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flower_app/features/orders/domain/entities/orders_entity.dart';
 
+// ignore: must_be_immutable
 class OrderCard extends StatelessWidget {
   final OrdersEntity order;
   late AppLocalizations local;
