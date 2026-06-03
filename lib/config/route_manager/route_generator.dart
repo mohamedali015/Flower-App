@@ -18,6 +18,7 @@ import 'package:flower_app/features/orders/presentation/manager/orders_cubit.dar
 import 'package:flower_app/features/orders/presentation/manager/orders_events.dart';
 import 'package:flower_app/features/orders/presentation/pages/orders_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
+import 'package:flower_app/features/search/presentation/manager/search_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -159,7 +160,12 @@ abstract class RouteGenerator {
 
         ///? search Screen
         case Routes.searchScreenRoute:
-          return CupertinoPageRoute(builder: (_) => const SearchScreen());
+          return CupertinoPageRoute(builder: (_) =>
+          BlocProvider(
+              create:(context) => getIt<SearchCubit>(),
+            child:  SearchScreen(),
+          )
+          );
 
         case Routes.editProfileScreenRoute:
           return CupertinoPageRoute(

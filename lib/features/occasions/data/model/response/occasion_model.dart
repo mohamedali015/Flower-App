@@ -34,4 +34,5 @@ class OccasionModel {
 
   factory OccasionModel.fromJson(Map<String, dynamic> json) =>
       _$OccasionModelFromJson(json);
+  Map<String, dynamic> toJson() => _$OccasionModelToJson(this);
 }
