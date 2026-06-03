@@ -74,10 +74,10 @@ void main() {
     build: () => ordersCubit,
     act: (cubit) => cubit.doEvent(GetOrdersEvent()),
     expect: () => [
-      OrdersState().copyWith(
+      const OrdersState().copyWith(
         ordersStateParam: const BaseState<OrdersGroupedEntity>(isLoading: true),
       ),
-      OrdersState().copyWith(
+      const OrdersState().copyWith(
         ordersStateParam: BaseState<OrdersGroupedEntity>(
           isLoading: false,
           isSuccess: true,
@@ -100,10 +100,10 @@ void main() {
     build: () => ordersCubit,
     act: (cubit) => cubit.doEvent(GetOrdersEvent()),
     expect: () => [
-      OrdersState().copyWith(
+      const OrdersState().copyWith(
         ordersStateParam: const BaseState<OrdersGroupedEntity>(isLoading: true),
       ),
-      OrdersState().copyWith(
+      const OrdersState().copyWith(
         ordersStateParam: const BaseState<OrdersGroupedEntity>(
           isLoading: false,
           isSuccess: false,
