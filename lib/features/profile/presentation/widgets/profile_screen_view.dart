@@ -118,7 +118,9 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
                 iconPath: AppAssets.location,
               ),
               end: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.savedAddressesRoute);
+                },
                 icon: const SvgWrapper(
                   path: AppAssets.iosForwardBtn,
                   width: 24,

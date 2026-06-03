@@ -10,6 +10,7 @@ import 'package:flower_app/features/home/presentation/widgets/home_shimmer_loadi
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../profile/presentation/widgets/location_bar_shimmer.dart';
 import '../../../user_address/presentation/manger/user_address_cubit.dart';
 import '../../../user_address/presentation/manger/user_address_events.dart';
 import '../../../user_address/presentation/manger/user_address_state.dart';
@@ -17,7 +18,6 @@ import '../../../user_address/presentation/manger/user_address_state.dart';
 class LocationBar extends StatelessWidget {
   UserAddressCubit userAddressCubit = getIt<UserAddressCubit>()
     ..doEvent(GetLoggedUserAddressEvent());
-
   LocationBar({super.key});
 
   @override
@@ -30,7 +30,7 @@ class LocationBar extends StatelessWidget {
             previous.currentUserAddress != current.currentUserAddress,
         builder: (BuildContext context, state) {
           if (state.currentUserAddress == null) {
-            return const HomeShimmerLoading();
+            return const LocationBarShimmer();
           } else if (state.currentUserAddress != null) {
             return Padding(
               padding: MyResponsive.paddingSymmetric(context, vertical: 17),

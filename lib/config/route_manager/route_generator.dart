@@ -167,9 +167,9 @@ abstract class RouteGenerator {
         /// Saved Addresses
         case Routes.savedAddressesRoute:
           return CupertinoPageRoute(
-            builder: (_) => BlocProvider.value(
+            builder: (_) => BlocProvider<UserAddressCubit>.value(
               value: getIt<UserAddressCubit>(),
-              child: const SavedAddressesScreen(),
+              child: SavedAddressesScreen(),
             ),
           );
 
