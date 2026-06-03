@@ -14,4 +14,6 @@ class LoginRequest {
   Map<String, dynamic> toJson() {
     return _$LoginRequestToJson(this);
   }
+  factory LoginRequest.fromJson(Map<String, dynamic> json) =>
+      _$LoginRequestFromJson(json);
 }
