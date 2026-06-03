@@ -42,7 +42,7 @@ class CustomSwitchFields extends StatelessWidget {
                 Switch(
                   value: value,
                   onChanged: onChanged,
-                  activeColor: AppColors.primaryColor,
+                  activeThumbColor: AppColors.primaryColor,
                   inactiveThumbColor: AppColors.grayDark,
                   inactiveTrackColor: AppColors.grayLight,
                 ),
