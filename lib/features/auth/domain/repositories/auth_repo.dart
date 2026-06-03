@@ -10,4 +10,5 @@ abstract interface class AuthRepo {
   });
 
   Future<Result<AuthEntity>> register({required RegisterParams params});
+
 }
