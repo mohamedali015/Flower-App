@@ -17,6 +17,7 @@ import 'package:flower_app/features/occasions/presentation/manager/occasions_eve
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flower_app/features/terms_and_conditions/presentation/screens/terms_and_conditions_screen.dart';
+import 'package:flower_app/features/search/presentation/manager/search_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -158,7 +159,12 @@ abstract class RouteGenerator {
 
         ///? search Screen
         case Routes.searchScreenRoute:
-          return CupertinoPageRoute(builder: (_) => const SearchScreen());
+          return CupertinoPageRoute(builder: (_) =>
+          BlocProvider(
+              create:(context) => getIt<SearchCubit>(),
+            child:  SearchScreen(),
+          )
+          );
 
         case Routes.editProfileScreenRoute:
           return CupertinoPageRoute(
