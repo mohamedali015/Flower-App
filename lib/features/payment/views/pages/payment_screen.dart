@@ -6,15 +6,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../core/localization/l10n/app_localizations.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
+  const PaymentScreen({super.key, required this.paymentUrl});
+
+  final String paymentUrl;
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  static const paymentUrl =
-      "https://checkout.stripe.com/c/pay/cs_test_a1g6yyPhy4aLql8K2X4ltGBatayBZOghX0b5xgOuPdBev98nrp2z2SJwvM#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdicGRmZGhqaWBTZHdsZGtxJz8nZmprcXdqaScpJ2R1bE5gfCc%2FJ3VuWnFgdnFaMDRIdWJiXUA1VjJTak5faFVVb0BKZkFQSWlrYUtWcFRAajZQV25QSEhcfH1oSGNqcEZnU3FndEo1VW1dbFxJMnxDPHZpZmRQQGkxckJdVEdOQjFnMFJmaEQ1NTFgdUoxSlBXJyknY3dqaFZgd3Ngdyc%2FcXdwYCknZ2RmbmJ3anBrYUZqaWp3Jz8nJmNjY2NjYycpJ2lkfGpwcVF8dWAnPyd2bGtiaWBabHFgaCcpJ2BrZGdpYFVpZGZgbWppYWB3dic%2FcXdwYHgl";
   late final WebViewController _controller;
 
   @override
@@ -60,7 +60,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(paymentUrl));
+      ..loadRequest(Uri.parse(widget.paymentUrl));
   }
 
   late AppLocalizations local;
