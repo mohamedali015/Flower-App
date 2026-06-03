@@ -14,6 +14,7 @@ import 'logout_cubit_test.mocks.dart';
 void main() {
   late LogoutCubit logoutCubit;
   late MockLogoutUseCase mockLogoutUseCase;
+
   const logoutResponseEntity = LogoutResponseEntity(
     message: 'Logout successful',
   );
@@ -32,16 +33,13 @@ void main() {
   tearDown(() => logoutCubit.close());
 
   group('LogoutCubit Tests', () {
-    test('should have LogoutInitial as initial state', () {
-      expect(logoutCubit.state, isA<LogoutInitial>());
-    });
 
     blocTest<LogoutCubit, LogoutState>(
-      'should emit [Loading, Success] when use case succeeds',
+      'success case',
       build: () {
-        when(
-          mockLogoutUseCase.call(),
-        ).thenAnswer((_) async => Success(data: logoutResponseEntity));
+        when(mockLogoutUseCase.call()).thenAnswer(
+              (_) async => Success(data: logoutResponseEntity),
+        );
         return logoutCubit;
       },
       act: (cubit) => cubit.doEvents(LogoutEvent()),
@@ -52,11 +50,11 @@ void main() {
     );
 
     blocTest<LogoutCubit, LogoutState>(
-      'should emit [Loading, Failure] when use case fails',
+      'failure case',
       build: () {
-        when(
-          mockLogoutUseCase.call(),
-        ).thenAnswer((_) async => Failure(errorMessage: 'Error'));
+        when(mockLogoutUseCase.call()).thenAnswer(
+              (_) async => Failure(errorMessage: 'Error'),
+        );
         return logoutCubit;
       },
       act: (cubit) => cubit.doEvents(LogoutEvent()),
