@@ -131,5 +131,6 @@
                 "next": "التالي",
                 "invalidData": "بيانات غير صحيحة",
                   "pleaseSelectAddress": "من فضلك اختر عنوان",
-                  "pleaseSelectPayment": "من فضلك اختر طريقة الدفع"
+                  "pleaseSelectPayment": "من فضلك اختر طريقة الدفع",
+      "noProductsFound": "لا توجد منتجات مطابقة للبحث"
 }

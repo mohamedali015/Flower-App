@@ -46,6 +46,6 @@ class UserResponse {
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
       _$UserResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 
+  Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 }

@@ -13,4 +13,5 @@ class EditProfileResponse {
 
   factory EditProfileResponse.fromJson(Map<String, dynamic> json) =>
       _$EditProfileResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$EditProfileResponseToJson(this);
 }

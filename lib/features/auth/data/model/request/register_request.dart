@@ -30,6 +30,7 @@ class RegisterRequest {
   });
 
   Map<String, dynamic> toJson() => _$RegisterRequestToJson(this);
+
   factory RegisterRequest.fromJson(Map<String, dynamic> json) =>
       _$RegisterRequestFromJson(json);
 }
