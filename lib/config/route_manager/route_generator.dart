@@ -14,6 +14,9 @@ import 'package:flower_app/features/home/presentation/manager/cubit/home_events.
 import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
+import 'package:flower_app/features/orders/presentation/manager/orders_cubit.dart';
+import 'package:flower_app/features/orders/presentation/manager/orders_events.dart';
+import 'package:flower_app/features/orders/presentation/pages/orders_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -163,6 +166,15 @@ abstract class RouteGenerator {
             builder: (_) => BlocProvider(
               create: (context) => getIt<EditProfileCubit>(),
               child: const EditProfileScreen(),
+            ),
+          );
+
+        case Routes.ordersRoute:
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) =>
+                  getIt<OrdersCubit>()..doEvent(GetOrdersEvent()),
+              child: const OrdersScreen(),
             ),
           );
 

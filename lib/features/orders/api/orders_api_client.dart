@@ -14,5 +14,5 @@ abstract class OrdersApiClient {
   factory OrdersApiClient(Dio dio) = _OrdersApiClient;
 
   @GET(ApiEndPoints.getOrders)
-  Future<OrdersDto> getOrders();
+  Future<OrdersDto> getOrders({@Queries() Map<String, dynamic>? queryParams});
 }

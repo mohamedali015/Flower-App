@@ -3,6 +3,7 @@ import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/orders/api/orders_api_client.dart';
 import 'package:flower_app/features/orders/data/data_source/orders_remote_data_source.dart';
 import 'package:flower_app/features/orders/data/models/orders_dto.dart';
+import 'package:flower_app/features/orders/data/params/orders_query_params.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: OrdersRemoteDataSource)
@@ -10,9 +11,9 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
   final OrdersApiClient _apiClient;
   OrdersRemoteDataSourceImpl(this._apiClient);
   @override
-  Future<Result<OrdersDto>> getOrders() {
+  Future<Result<OrdersDto>> getOrders({OrdersQueryParams? params}) {
     return executeApi<OrdersDto>(() {
-      return _apiClient.getOrders();
+      return _apiClient.getOrders(queryParams: params?.toJson());
     });
   }
 }

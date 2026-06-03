@@ -114,5 +114,13 @@
       "sub_total": "Sub Total",
          "delivery_fee": "Delivery Fee",
          "total": "Total",
-         "your_cart_is_empty": "Your cart is empty"
+         "your_cart_is_empty": "Your cart is empty",
+         "active":"Active",
+         "completed":"Completed",
+         "reorder":"Reorder",
+         "trackOrder":"Track order",
+         "noOrdersFound":"No Orders Found",
+         "orderNumber":"Order number",
+      "order":"Order"
+
 }

@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:flower_app/features/orders/domain/entities/order_item_entity.dart';
 
-class OrdersEntity {
+class OrdersEntity extends Equatable {
   final String? id;
   final String? user;
   final List<OrderItemEntity>? orderItems;
@@ -26,4 +27,19 @@ class OrdersEntity {
     this.updatedAt,
     this.orderNumber,
   });
+
+  @override
+  List<Object?> get props => [
+        id,
+        user,
+        orderItems,
+        totalPrice,
+        paymentType,
+        isPaid,
+        isDelivered,
+        state,
+        createdAt,
+        updatedAt,
+        orderNumber,
+      ];
 }

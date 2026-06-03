@@ -112,5 +112,14 @@
   "sub_total": "المجموع الفرعي",
       "delivery_fee": "رسوم التوصيل",
       "total": "الإجمالي",
-      "your_cart_is_empty": "سلة التسوق فارغة"
+      "your_cart_is_empty": "سلة التسوق فارغة",
+        "active":"قيد التنفيذ",
+         "completed":"تم التسليم",
+                  "reorder":"أعد الطلب",
+         "trackOrder":"تتبع الطلب",
+                  "noOrdersFound":"لا توجد طلبات",
+                           "orderNumber":"رقم الطلب",
+                           "order":"الطلب"
+
+
 }
