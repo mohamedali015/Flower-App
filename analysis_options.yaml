@@ -1,18 +1,16 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
-
 include: package:flutter_lints/flutter.yaml
 
-exclude:
-  - build/**
-  - "*.g.dart"
+analyzer:
+  exclude:
+    - build/**
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
+  errors:
+    unused_element: ignore
 
 linter:
   rules:
     prefer_const_constructors: true
     prefer_const_literals_to_create_immutables: true
     prefer_const_declarations: true
-    unused_element: false  # Add this line to suppress unused element warnings
-
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
