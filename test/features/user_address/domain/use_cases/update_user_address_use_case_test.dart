@@ -1,9 +1,9 @@
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/user_address/data/models/address_dto.dart';
 import 'package:flower_app/features/user_address/data/models/user_address_dto.dart';
+import 'package:flower_app/features/user_address/domain/entities/address.dart';
 import 'package:flower_app/features/user_address/domain/repositories/user_address_repo_contract.dart';
 import 'package:flower_app/features/user_address/domain/use_cases/update_user_address_use_case.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -15,17 +15,15 @@ main() {
   late UpdateUserAddressUseCase useCase;
   late MockUserAddressRepoContract mockRepo;
   late AddressDto addAddress;
-  late List<AddressDto> mockCurrentServerAddresses;
+  late List<Address> mockCurrentServerAddresses;
   String successMessage = "success";
   String errorMessage = "error";
   setUpAll(() {
-    provideDummy<Result<UserAddressDto>>(
-      Success<UserAddressDto>(data: UserAddressDto()),
-    );
+    provideDummy<Result<List<Address>>>(Success<List<Address>>(data: []));
     mockRepo = MockUserAddressRepoContract();
     useCase = UpdateUserAddressUseCase(mockRepo);
     mockCurrentServerAddresses = [
-      AddressDto(
+      Address(
         street: "initial 12 Nile Street",
         phone: "initial 01012345678",
         city: "initial Cairo",
@@ -50,34 +48,25 @@ main() {
       "case dataSource return Success<UserAddressDto> list of update Addresses when updateAddress called",
       () async {
         //Arrange
-        List<AddressDto> processedAddresses = List.from(
+        List<Address> processedAddresses = List.from(
           mockCurrentServerAddresses,
         );
         when(
           mockRepo.updateUserAddress(addAddress, processedAddresses.last.id),
         ).thenAnswer((_) async {
-          return Success<UserAddressDto>(
-            data: UserAddressDto(
-              message: successMessage,
-              address: processedAddresses,
-            ),
-          );
+          return Success<List<Address>>(data: processedAddresses);
         });
         //Act
         var response = await useCase(addAddress, processedAddresses.last.id!);
         //Assert
-        expect(response, isA<Success<UserAddressDto>>());
+        expect(response, isA<Success<List<Address>>>());
         expect(
-          (response as Success<UserAddressDto>).data.address,
+          (response as Success<List<Address>>).data,
           equals(processedAddresses),
         );
-        expect(response.data.message, successMessage);
-        expect(response.data.address, isNotEmpty);
-        expect(response.data.address, isNotNull);
-        expect(
-          response.data.address!.length,
-          mockCurrentServerAddresses.length,
-        );
+        expect(response.data, isNotEmpty);
+        expect(response.data, isNotNull);
+        expect(response.data.length, mockCurrentServerAddresses.length);
         verify(
           mockRepo.updateUserAddress(addAddress, processedAddresses.last.id!),
         ).called(1);
@@ -100,8 +89,8 @@ main() {
           mockCurrentServerAddresses.last.id!,
         );
         //assert
-        expect(response, isA<Failure<UserAddressDto>>());
-        expect((response as Failure<UserAddressDto>).errorMessage, isNotNull);
+        expect(response, isA<Failure<List<Address>>>());
+        expect((response as Failure<List<Address>>).errorMessage, isNotNull);
         expect(response.errorMessage, isNotNull);
         verify(
           mockRepo.updateUserAddress(
