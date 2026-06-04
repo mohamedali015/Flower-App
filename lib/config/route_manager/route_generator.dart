@@ -1,3 +1,4 @@
+import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_cubit.dart';
 import 'package:flower_app/config/di/di.dart';
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
@@ -158,11 +159,17 @@ abstract class RouteGenerator {
 
         ///? search Screen
         case Routes.searchScreenRoute:
-          return CupertinoPageRoute(builder: (_) =>
-          BlocProvider(
-              create:(context) => getIt<SearchCubit>(),
-            child:  SearchScreen(),
-          )
+          return CupertinoPageRoute(
+            builder: (_) => MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => getIt<SearchCubit>()),
+                BlocProvider(create: (context) => getIt<AddCartCubit>()),
+                BlocProvider(
+                  create: (_) => getIt<CartCubit>(),
+                ),
+              ],
+              child: const SearchScreen(),
+            ),
           );
 
         case Routes.editProfileScreenRoute:
@@ -173,13 +180,14 @@ abstract class RouteGenerator {
             ),
           );
 
-      ////? Check out
+        ////? Check out
         case Routes.checkOutRoute:
           return CupertinoPageRoute(
             builder: (_) => MultiBlocProvider(
               providers: [
                 BlocProvider<CartCubit>(
-                  create: (context) => getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
+                  create: (context) =>
+                      getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
                 ),
 
                 // مثال لو عندك Cubit للـ checkout
