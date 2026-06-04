@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:geocoding/geocoding.dart';
 
-class Address {
+class Address extends Equatable {
   String? street;
   String? phone;
   String? city;
@@ -21,5 +22,6 @@ class Address {
     this.placeMarks,
   });
 
-
+  @override
+  List<Object?> get props => [street, phone, city, lat, long, username, id];
 }

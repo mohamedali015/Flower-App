@@ -44,10 +44,7 @@ class AddressDto {
     List<Placemark> placeMarks = [];
 
     if (latitude != null && longitude != null) {
-      placeMarks = await placemarkFromCoordinates(
-        latitude,
-        longitude,
-      );
+      placeMarks = await placemarkFromCoordinates(latitude, longitude);
     }
 
     return Address(

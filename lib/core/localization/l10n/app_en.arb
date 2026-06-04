@@ -114,5 +114,8 @@
       "sub_total": "Sub Total",
          "delivery_fee": "Delivery Fee",
          "total": "Total",
-         "your_cart_is_empty": "Your cart is empty"
+         "your_cart_is_empty": "Your cart is empty",
+         "address":"Address",
+         "saved_address": "Saved Address",
+         "add_address":"Add Address"
 }

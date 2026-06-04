@@ -112,5 +112,8 @@
   "sub_total": "المجموع الفرعي",
       "delivery_fee": "رسوم التوصيل",
       "total": "الإجمالي",
-      "your_cart_is_empty": "سلة التسوق فارغة"
+      "your_cart_is_empty": "سلة التسوق فارغة",
+      "address":"العنوان",
+      "saved_address": "العناوين المسجلة",
+      "add_address":"اضافة عنوان"
 }
