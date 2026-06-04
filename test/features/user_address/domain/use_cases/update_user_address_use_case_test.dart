@@ -1,6 +1,5 @@
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/user_address/data/models/address_dto.dart';
-import 'package:flower_app/features/user_address/data/models/user_address_dto.dart';
 import 'package:flower_app/features/user_address/domain/entities/address.dart';
 import 'package:flower_app/features/user_address/domain/repositories/user_address_repo_contract.dart';
 import 'package:flower_app/features/user_address/domain/use_cases/update_user_address_use_case.dart';
