@@ -1,9 +1,9 @@
 import 'package:flower_app/config/error_handling/result.dart';
-
 import 'package:flower_app/features/user_address/data/data_sources/user_address_remote_data_source_contract.dart';
 import 'package:flower_app/features/user_address/data/models/address_dto.dart';
 import 'package:flower_app/features/user_address/data/models/user_address_dto.dart';
 import 'package:flower_app/features/user_address/data/repositories/user_address_repo_imp.dart';
+import 'package:flower_app/features/user_address/domain/entities/address.dart';
 import 'package:flower_app/features/user_address/domain/repositories/user_address_repo_contract.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -15,7 +15,7 @@ import 'user_address_repo_imp_test.mocks.dart';
 main() {
   late UserAddressRepoContract repo;
   late MockUserAddressRemoteDataSourceContract mockRemoteDataSource;
-  late AddressDto addAddress;
+  late AddressDto addAddressDto;
   late List<AddressDto> mockCurrentServerAddresses;
   String successMessage = "success";
   String errorMessage = "error";
@@ -36,7 +36,8 @@ main() {
         id: "000000000000000000000000",
       ),
     ];
-    addAddress = AddressDto(
+
+    addAddressDto = AddressDto(
       street: "add 12 Nile Street",
       phone: "add 01012345678",
       city: "add Cairo",
@@ -51,36 +52,39 @@ main() {
       "case dataSource return Success<UserAddressDto> list of addresses when addAddress called",
       () async {
         //Arrange
-        List<AddressDto> processedAddresses = List.from(
+
+        List<AddressDto> processedAddressesDto = List.from(
           mockCurrentServerAddresses,
         );
-        when(mockRemoteDataSource.addUserAddress(addAddress)).thenAnswer((
+        List<Address> processedAddresses = await Future.wait(
+          processedAddressesDto.map((e) => e.toEntity()),
+        );
+
+        when(mockRemoteDataSource.addUserAddress(addAddressDto)).thenAnswer((
           _,
         ) async {
-          processedAddresses.add(addAddress);
+          processedAddressesDto.add(addAddressDto);
+          processedAddresses.add(await addAddressDto.toEntity());
           return Success<UserAddressDto>(
             data: UserAddressDto(
               message: successMessage,
-              address: processedAddresses,
+              address: processedAddressesDto,
             ),
           );
         });
         //Act
-        var response = await repo.addUserAddress(addAddress);
+        var response = await repo.addUserAddress(addAddressDto);
+
         //Assert
-        expect(response, isA<Success<UserAddressDto>>());
+        expect(response, isA<Success<List<Address>>>());
         expect(
-          (response as Success<UserAddressDto>).data.address,
+          (response as Success<List<Address>>).data,
           equals(processedAddresses),
         );
-        expect(response.data.message, successMessage);
-        expect(response.data.address, isNotEmpty);
-        expect(response.data.address, isNotNull);
-        expect(
-          response.data.address!.length,
-          mockCurrentServerAddresses.length + 1,
-        );
-        verify(mockRemoteDataSource.addUserAddress(addAddress)).called(1);
+        expect(response.data, isNotEmpty);
+        expect(response.data, isNotNull);
+        expect(response.data.length, mockCurrentServerAddresses.length + 1);
+        verify(mockRemoteDataSource.addUserAddress(addAddressDto)).called(1);
       },
     );
 
@@ -89,15 +93,15 @@ main() {
       () async {
         //arrange
         when(
-          mockRemoteDataSource.addUserAddress(addAddress),
+          mockRemoteDataSource.addUserAddress(addAddressDto),
         ).thenAnswer((_) async => Failure(errorMessage: errorMessage));
         //act
-        var response = await repo.addUserAddress(addAddress);
+        var response = await repo.addUserAddress(addAddressDto);
         //assert
-        expect(response, isA<Failure<UserAddressDto>>());
-        expect((response as Failure<UserAddressDto>).errorMessage, isNotNull);
+        expect(response, isA<Failure<List<Address>>>());
+        expect((response as Failure<List<Address>>).errorMessage, isNotNull);
         expect(response.errorMessage, isNotNull);
-        verify(mockRemoteDataSource.addUserAddress(addAddress)).called(1);
+        verify(mockRemoteDataSource.addUserAddress(addAddressDto)).called(1);
       },
     );
   });
@@ -107,43 +111,42 @@ main() {
       "case dataSource return Success<UserAddressDto> list of update Addresses when updateAddress called",
       () async {
         //Arrange
-        List<AddressDto> processedAddresses = List.from(
+        List<AddressDto> processedAddressesDto = List.from(
           mockCurrentServerAddresses,
+        );
+        List<Address> processedAddresses = await Future.wait(
+          processedAddressesDto.map((e) => e.toEntity()),
         );
         when(
           mockRemoteDataSource.updateUserAddress(
-            addAddress,
+            addAddressDto,
             processedAddresses.last.id,
           ),
         ).thenAnswer((_) async {
           return Success<UserAddressDto>(
             data: UserAddressDto(
               message: successMessage,
-              address: processedAddresses,
+              address: processedAddressesDto,
             ),
           );
         });
         //Act
         var response = await repo.updateUserAddress(
-          addAddress,
+          addAddressDto,
           processedAddresses.last.id!,
         );
         //Assert
-        expect(response, isA<Success<UserAddressDto>>());
+        expect(response, isA<Success<List<Address>>>());
         expect(
-          (response as Success<UserAddressDto>).data.address,
+          (response as Success<List<Address>>).data,
           equals(processedAddresses),
         );
-        expect(response.data.message, successMessage);
-        expect(response.data.address, isNotEmpty);
-        expect(response.data.address, isNotNull);
-        expect(
-          response.data.address!.length,
-          mockCurrentServerAddresses.length,
-        );
+        expect(response.data, isNotEmpty);
+        expect(response.data, isNotNull);
+        expect(response.data.length, mockCurrentServerAddresses.length);
         verify(
           mockRemoteDataSource.updateUserAddress(
-            addAddress,
+            addAddressDto,
             processedAddresses.last.id!,
           ),
         ).called(1);
@@ -156,22 +159,22 @@ main() {
         //arrange
         when(
           mockRemoteDataSource.updateUserAddress(
-            addAddress,
+            addAddressDto,
             mockCurrentServerAddresses.last.id,
           ),
         ).thenAnswer((_) async => Failure(errorMessage: errorMessage));
         //act
         var response = await repo.updateUserAddress(
-          addAddress,
+          addAddressDto,
           mockCurrentServerAddresses.last.id!,
         );
         //assert
-        expect(response, isA<Failure<UserAddressDto>>());
-        expect((response as Failure<UserAddressDto>).errorMessage, isNotNull);
+        expect(response, isA<Failure<List<Address>>>());
+        expect((response as Failure<List<Address>>).errorMessage, isNotNull);
         expect(response.errorMessage, isNotNull);
         verify(
           mockRemoteDataSource.updateUserAddress(
-            addAddress,
+            addAddressDto,
             mockCurrentServerAddresses.last.id,
           ),
         ).called(1);
@@ -184,6 +187,11 @@ main() {
       "case dataSource return Success<UserAddressDto> list of addresses when getLoggedUserAddress is  called",
       () async {
         //arrange
+
+        List<Address> processedAddresses = await Future.wait(
+          mockCurrentServerAddresses.map((e) => e.toEntity()),
+        );
+
         when(mockRemoteDataSource.getLoggedUserAddress()).thenAnswer(
           (_) async => Success<UserAddressDto>(
             data: UserAddressDto(
@@ -195,14 +203,10 @@ main() {
         //act
         var response = await repo.getLoggedUserAddress();
         //assert
-        expect(response, isA<Success<UserAddressDto>>());
-        expect(
-          (response as Success<UserAddressDto>).data.message,
-          successMessage,
-        );
-        expect(response.data.address, isNotNull);
-        expect(response.data.address, isNotEmpty);
-        expect(response.data.address, equals(mockCurrentServerAddresses));
+        expect(response, isA<Success<List<Address>>>());
+        expect((response as Success<List<Address>>).data, isNotNull);
+        expect(response.data, isNotEmpty);
+        expect(response.data, equals(processedAddresses));
         verify(mockRemoteDataSource.getLoggedUserAddress()).called(1);
       },
     );
@@ -217,8 +221,8 @@ main() {
         // act
         var response = await repo.getLoggedUserAddress();
         //assert
-        expect(response, isA<Failure<UserAddressDto>>());
-        expect((response as Failure<UserAddressDto>).errorMessage, isNotNull);
+        expect(response, isA<Failure<List<Address>>>());
+        expect((response as Failure<List<Address>>).errorMessage, isNotNull);
         expect(response.errorMessage, isNotEmpty);
       },
     );
@@ -229,16 +233,21 @@ main() {
       "case dataSource return Success<UserAddressDto> list of remove Addresses when updateAddress called",
       () async {
         //Arrange
-        List<AddressDto> processedAddresses = List.from(
+        List<AddressDto> processedAddressesDto = List.from(
           mockCurrentServerAddresses,
         );
+
+        List<Address> processedAddresses = await Future.wait(
+          processedAddressesDto.map((e) => e.toEntity()),
+        );
+
         when(
           mockRemoteDataSource.removeUserAddress(processedAddresses.last.id),
         ).thenAnswer((_) async {
           return Success<UserAddressDto>(
             data: UserAddressDto(
               message: successMessage,
-              address: processedAddresses,
+              address: processedAddressesDto,
             ),
           );
         });
@@ -247,18 +256,14 @@ main() {
           processedAddresses.last.id!,
         );
         //Assert
-        expect(response, isA<Success<UserAddressDto>>());
+        expect(response, isA<Success<List<Address>>>());
         expect(
-          (response as Success<UserAddressDto>).data.address,
+          (response as Success<List<Address>>).data,
           equals(processedAddresses),
         );
-        expect(response.data.message, successMessage);
-        expect(response.data.address, isNotEmpty);
-        expect(response.data.address, isNotNull);
-        expect(
-          response.data.address!.length,
-          mockCurrentServerAddresses.length,
-        );
+        expect(response.data, isNotEmpty);
+        expect(response.data, isNotNull);
+        expect(response.data.length, mockCurrentServerAddresses.length);
         verify(
           mockRemoteDataSource.removeUserAddress(processedAddresses.last.id!),
         ).called(1);
@@ -279,8 +284,8 @@ main() {
           mockCurrentServerAddresses.last.id!,
         );
         //assert
-        expect(response, isA<Failure<UserAddressDto>>());
-        expect((response as Failure<UserAddressDto>).errorMessage, isNotNull);
+        expect(response, isA<Failure<List<Address>>>());
+        expect((response as Failure<List<Address>>).errorMessage, isNotNull);
         expect(response.errorMessage, isNotNull);
         verify(
           mockRemoteDataSource.removeUserAddress(
