@@ -16,4 +16,5 @@ class GetUserDataResponse {
       _$GetUserDataResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetUserDataResponseToJson(this);
+
 }

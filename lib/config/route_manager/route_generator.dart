@@ -4,19 +4,20 @@ import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
-import 'package:flower_app/features/change_password/presentation/manager/cubit/change_password_cubit.dart';
-import 'package:flower_app/features/change_password/presentation/screens/change_password_screen.dart';
 import 'package:flower_app/features/edit_profile/presentation/manager/edit_profile_cubit.dart';
 import 'package:flower_app/features/edit_profile/presentation/pages/edit_profile_screen.dart';
+import 'package:flower_app/features/change_password/presentation/manager/cubit/change_password_cubit.dart';
+import 'package:flower_app/features/change_password/presentation/screens/change_password_screen.dart';
+import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cubit.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
-import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_cubit.dart';
 import 'package:flower_app/features/user_address/presentation/screens/saved_addresses_screen.dart';
+import 'package:flower_app/features/search/presentation/manager/search_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -89,8 +90,10 @@ abstract class RouteGenerator {
             builder: (_) =>
                 BlocProvider.value(value: cubit, child: const ResetPassword()),
           );
+
         case Routes.bottomNavBarRoute:
           final args = settings.arguments as Map<String, dynamic>?;
+
           return CupertinoPageRoute(
             builder: (_) => MultiBlocProvider(
               providers: [
@@ -123,6 +126,7 @@ abstract class RouteGenerator {
 
         case Routes.occasionRoute:
           final currentIndex = settings.arguments as int?;
+
           return CupertinoPageRoute(
             builder: (_) => BlocProvider(
               create: (context) =>
@@ -134,6 +138,7 @@ abstract class RouteGenerator {
 
         case Routes.productDetailsRoute:
           final entity = settings.arguments as ProductEntity;
+
           return CupertinoPageRoute(
             builder: (_) => BlocProvider.value(
               value: getIt<CartCubit>(),
@@ -154,7 +159,12 @@ abstract class RouteGenerator {
 
         ///? search Screen
         case Routes.searchScreenRoute:
-          return CupertinoPageRoute(builder: (_) => const SearchScreen());
+          return CupertinoPageRoute(builder: (_) =>
+          BlocProvider(
+              create:(context) => getIt<SearchCubit>(),
+            child:  SearchScreen(),
+          )
+          );
 
         case Routes.editProfileScreenRoute:
           return CupertinoPageRoute(
@@ -180,6 +190,7 @@ abstract class RouteGenerator {
     } catch (e, stackTrace) {
       debugPrint("Route error: $e");
       debugPrint("$stackTrace");
+
       return _errorRoute();
     }
   }

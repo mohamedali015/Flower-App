@@ -113,6 +113,8 @@
       "delivery_fee": "رسوم التوصيل",
       "total": "الإجمالي",
       "your_cart_is_empty": "سلة التسوق فارغة",
+      "noProductsFound": "لا توجد منتجات مطابقة للبحث"
+      "your_cart_is_empty": "سلة التسوق فارغة",
       "address":"العنوان",
       "saved_address": "العناوين المسجلة",
       "add_address":"اضافة عنوان",
