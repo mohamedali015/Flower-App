@@ -115,5 +115,7 @@
       "your_cart_is_empty": "سلة التسوق فارغة",
       "address":"العنوان",
       "saved_address": "العناوين المسجلة",
-      "add_address":"اضافة عنوان"
+      "add_address":"اضافة عنوان",
+      "confirm_delete":"انت علي وشك الغاء هذا العنوان الالغاء",
+        "delete":"إلغاء"
 }

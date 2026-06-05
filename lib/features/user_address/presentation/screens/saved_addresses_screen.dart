@@ -1,3 +1,4 @@
+import 'package:flower_app/core/helpers/app_snack_bar.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_cubit.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_state.dart';
@@ -30,18 +31,33 @@ class SavedAddressesScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              BlocBuilder<UserAddressCubit, UserAddressState>(
+              BlocConsumer<UserAddressCubit, UserAddressState>(
                 builder: (context, state) {
+                  if (state.removeUserAddressState.isLoading) {
+                    return const CircularProgressIndicator();
+                  }
                   return Column(
                     children: List.generate(
                       userAddressCubit.state.currentUserAddress!.length,
-                      (index) {
+                          (index) {
                         return AddressCard(
                           userAddressCubit.state.currentUserAddress![index],
                         );
                       },
                     ),
                   );
+                },
+                listenWhen: (previous, current) =>
+                previous.removeUserAddressState !=
+                    current.removeUserAddressState,
+                listener: (BuildContext context, UserAddressState state) {
+                  if (state.removeUserAddressState.isLoading == false &&
+                      state.removeUserAddressState.errorMessage != null) {
+                    AppSnackBar.error(
+                      context,
+                      state.removeUserAddressState.errorMessage!,
+                    );
+                  }
                 },
               ),
               const SizedBox(height: 32),
