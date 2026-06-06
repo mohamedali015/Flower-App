@@ -16,7 +16,7 @@ import '../../../user_address/presentation/manger/user_address_events.dart';
 import '../../../user_address/presentation/manger/user_address_state.dart';
 
 class LocationBar extends StatelessWidget {
-  UserAddressCubit userAddressCubit = getIt<UserAddressCubit>()
+  final UserAddressCubit userAddressCubit = getIt<UserAddressCubit>()
     ..doEvent(GetLoggedUserAddressEvent());
 
   LocationBar({super.key});
@@ -54,12 +54,9 @@ class LocationBar extends StatelessWidget {
                           ).copyWith(color: AppColors.grayDark),
                         ),
                         TextSpan(
-                          text: state
-                              .currentUserAddress!
-                              .last
-                              .placeMarks!
-                              .first
-                              .subAdministrativeArea,
+                          text: state.currentUserAddress!.last.placeMarks
+                                  ?.firstOrNull?.subAdministrativeArea ??
+                              "",
                           style: AppTextStyles.medium14(
                             context,
                           ).copyWith(color: AppColors.black100),
