@@ -1,4 +1,5 @@
 import 'package:flower_app/config/di/di.dart';
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/core/helpers/app_snack_bar.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
@@ -6,7 +7,6 @@ import 'package:flower_app/core/shared_widgets/svg_wrapper.dart';
 import 'package:flower_app/core/utils/app_assets.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
-import 'package:flower_app/features/home/presentation/widgets/home_shimmer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,6 +18,7 @@ import '../../../user_address/presentation/manger/user_address_state.dart';
 class LocationBar extends StatelessWidget {
   UserAddressCubit userAddressCubit = getIt<UserAddressCubit>()
     ..doEvent(GetLoggedUserAddressEvent());
+
   LocationBar({super.key});
 
   @override
@@ -31,7 +32,8 @@ class LocationBar extends StatelessWidget {
         builder: (BuildContext context, state) {
           if (state.currentUserAddress == null) {
             return const LocationBarShimmer();
-          } else if (state.currentUserAddress != null) {
+          } else if (state.currentUserAddress != null &&
+              state.currentUserAddress!.isNotEmpty) {
             return Padding(
               padding: MyResponsive.paddingSymmetric(context, vertical: 17),
               child: Row(
@@ -75,7 +77,22 @@ class LocationBar extends StatelessWidget {
               ),
             );
           } else {
-            return const Placeholder();
+            return Align(
+              alignment: AlignmentGeometry.centerStart,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.savedAddressesRoute);
+                },
+                child: Text(
+                  local.add_address,
+                  style: AppTextStyles.medium14(context).copyWith(
+                    color: AppColors.primaryColor,
+                    decoration: TextDecoration.underline,
+                    decorationColor: AppColors.primaryColor,
+                  ),
+                ),
+              ),
+            );
           }
         },
         listenWhen: (previous, current) =>
