@@ -34,6 +34,7 @@ class HomeScreen extends StatelessWidget {
             vertical: 16,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LogoAndSearchBar(local: local),
                LocationBar(),

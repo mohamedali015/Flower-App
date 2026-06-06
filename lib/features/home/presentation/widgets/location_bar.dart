@@ -77,19 +77,16 @@ class LocationBar extends StatelessWidget {
               ),
             );
           } else {
-            return Align(
-              alignment: AlignmentGeometry.centerStart,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.savedAddressesRoute);
-                },
-                child: Text(
-                  local.add_address,
-                  style: AppTextStyles.medium14(context).copyWith(
-                    color: AppColors.primaryColor,
-                    decoration: TextDecoration.underline,
-                    decorationColor: AppColors.primaryColor,
-                  ),
+            return TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.savedAddressesRoute);
+              },
+              child: Text(
+                local.add_address,
+                style: AppTextStyles.medium14(context).copyWith(
+                  color: AppColors.primaryColor,
+                  decoration: TextDecoration.underline,
+                  decorationColor: AppColors.primaryColor,
                 ),
               ),
             );
