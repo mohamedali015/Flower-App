@@ -115,5 +115,12 @@
          "delivery_fee": "Delivery Fee",
          "total": "Total",
          "your_cart_is_empty": "Your cart is empty",
-         "noProductsFound": "No products found"
+         "noProductsFound": "No products found",
+         "lowestPrice":"Lowest Price",
+         "highestPrice":"Highest Price",
+         "old":"Old",
+         "newest":"New",
+         "discount":"Discount",
+         "filter":"Filter",
+         "sortBy":"Sort by"
 }

@@ -1,8 +1,10 @@
+import 'package:flower_app/features/filter/domain/enums/sort_options.dart';
+
 class ProductQueryParams {
   final String? categoryId;
   final String? occasionId;
   final String? search;
-  final String? sort;
+  final SortOption? sort;
   final int? page;
   final int? limit;
 

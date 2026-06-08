@@ -1,5 +1,4 @@
 abstract class AppStrings {
-
   static const String cubit = "Cubit";
   // validators
   static const String emptyField = "This field cannot be empty";
@@ -90,6 +89,11 @@ abstract class AppStrings {
   static const String category = "Category";
   static const String cart = "Cart";
   static const String all = "All";
+  static const String priceAsc = "price_asc";
+  static const String priceDesc = "price_desc";
+  static const String discount = "discount";
+  static const String newest = "newest";
+  static const String oldest = "oldest";
 
   static const String address = " 2XVP+XC - Sheikh Zayed";
 }

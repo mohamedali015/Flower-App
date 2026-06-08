@@ -113,5 +113,12 @@
       "delivery_fee": "رسوم التوصيل",
       "total": "الإجمالي",
       "your_cart_is_empty": "سلة التسوق فارغة",
-      "noProductsFound": "لا توجد منتجات مطابقة للبحث"
+      "noProductsFound": "لا توجد منتجات مطابقة للبحث",
+     "lowestPrice": "الأقل سعراً",
+      "highestPrice": "الأعلى سعراً",
+      "new": "الأحدث",
+      "old": "الأقدم",
+      "discount": "نسبة الخصم",
+      "filter": "تصفية",
+      "sortBy": "ترتيب حسب"
 }
