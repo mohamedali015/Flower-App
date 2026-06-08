@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flower_app/config/notification_services/notification_service.dart';
 import 'package:flower_app/core/utils/app_constants.dart';
@@ -25,6 +28,17 @@ void main() async {
   await setupFlutterNotifications();
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+  /// main thread errors
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+
+  /// platform specific errors (android & ios) & api requests errors
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   configureDependencies();
 
