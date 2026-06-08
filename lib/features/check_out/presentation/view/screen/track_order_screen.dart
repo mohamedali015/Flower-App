@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import '../../../../core/shared_widgets/custom_button.dart';
+import '../../../../../core/shared_widgets/custom_button.dart';
 
 class TrackOrderStep extends StatelessWidget {
-  const TrackOrderStep({
-    super.key,
-    required this.onBack,
-  });
+  const TrackOrderStep({super.key, required this.onBack});
 
   final VoidCallback onBack;
 
@@ -13,11 +10,7 @@ class TrackOrderStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Expanded(
-          child: Center(
-            child: Text('Track Order'),
-          ),
-        ),
+        const Expanded(child: Center(child: Text('Track Order'))),
 
         Padding(
           padding: const EdgeInsets.all(16),

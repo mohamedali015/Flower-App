@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../core/helpers/validator.dart';
-import '../../../../core/localization/l10n/app_localizations.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_text_styles.dart';
-import '../../../auth/presentation/widgets/register/custom_phone_field.dart';
+import '../../../../../core/helpers/validator.dart';
+import '../../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/app_text_styles.dart';
+import '../../../../auth/presentation/widgets/register/custom_phone_field.dart';
 
 class CustomSwitchFields extends StatelessWidget {
   const CustomSwitchFields({
@@ -49,14 +49,14 @@ class CustomSwitchFields extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   local.itIsAGift,
-                  style: AppTextStyles.medium18(context)
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: AppTextStyles.medium18(
+                    context,
+                  ).copyWith(fontWeight: FontWeight.bold),
                 ),
               ],
             ),
 
-
-            const SizedBox(height: 16,),
+            const SizedBox(height: 16),
 
             if (value) ...[
               const SizedBox(height: 16),

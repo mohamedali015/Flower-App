@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../core/localization/l10n/app_localizations.dart';
-import '../../../../core/shared_widgets/custom_button.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_text_styles.dart';
+import '../../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../../core/shared_widgets/custom_button.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/app_text_styles.dart';
 
 class CustomCheckoutButton extends StatelessWidget {
   const CustomCheckoutButton({

@@ -1,9 +1,9 @@
 import 'package:flower_app/core/shared_widgets/svg_wrapper.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flutter/cupertino.dart';
-import '../../../../core/localization/l10n/app_localizations.dart';
-import '../../../../core/utils/app_assets.dart';
-import '../../../../core/utils/app_text_styles.dart';
+import '../../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../../core/utils/app_assets.dart';
+import '../../../../../core/utils/app_text_styles.dart';
 
 class CustomDeliveryTime extends StatelessWidget {
   const CustomDeliveryTime({

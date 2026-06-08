@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../config/enums/payment_method.dart';
-import '../../../../core/localization/l10n/app_localizations.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_text_styles.dart';
+import '../../../../../config/enums/payment_method.dart';
+import '../../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/app_text_styles.dart';
 
 class PaymentMethodSelector extends StatelessWidget {
   const PaymentMethodSelector({
@@ -20,7 +20,7 @@ class PaymentMethodSelector extends StatelessWidget {
     final local = AppLocalizations.of(context)!;
 
     return Padding(
-      padding: const EdgeInsetsGeometry.symmetric(horizontal: 16,vertical: 24),
+      padding: const EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

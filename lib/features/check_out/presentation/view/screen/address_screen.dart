@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/localization/l10n/app_localizations.dart';
-import '../../../../core/shared_widgets/custom_button.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_text_styles.dart';
+import '../../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../../core/shared_widgets/custom_button.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/app_text_styles.dart';
 import '../widgets/custom_checkout_button.dart';
 import '../widgets/custom_delivery_address.dart';
 import '../widgets/custom_switch_fields.dart';
@@ -42,8 +42,7 @@ class _AddressStepState extends State<AddressStep> {
 
   bool get isFormValid {
     if (isEnabled) {
-      return nameController.text.isNotEmpty &&
-          phoneController.text.isNotEmpty;
+      return nameController.text.isNotEmpty && phoneController.text.isNotEmpty;
     }
     return selectedAddress != null;
   }
@@ -75,9 +74,9 @@ class _AddressStepState extends State<AddressStep> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             local.deliveryAddress,
-            style: AppTextStyles.medium18(context).copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.medium18(
+              context,
+            ).copyWith(fontWeight: FontWeight.bold),
           ),
         ),
 
@@ -109,10 +108,6 @@ class _AddressStepState extends State<AddressStep> {
                     isSelected: selectedAddress == 'Office',
                   ),
                 ),
-
-
-
-
 
                 Padding(
                   padding: const EdgeInsets.symmetric(

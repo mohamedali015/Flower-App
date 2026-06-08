@@ -161,8 +161,8 @@
 //   }
 // }
 import 'package:flutter/material.dart';
-import '../../../../config/route_manager/routes.dart';
-import '../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../../config/route_manager/routes.dart';
+import '../../../../../core/localization/l10n/app_localizations.dart';
 import '../widgets/checkout_stepper.dart';
 import 'address_screen.dart';
 import 'payment_screen.dart';
@@ -194,11 +194,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
 
-    final titles = [
-      local.address,
-      local.payment,
-      local.trackOrder,
-    ];
+    final titles = [local.address, local.payment, local.trackOrder];
 
     final pages = [
       AddressStep(onNext: nextStep),
@@ -225,10 +221,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           CheckoutStepper(currentStep: currentStep),
 
           Expanded(
-            child: IndexedStack(
-              index: currentStep,
-              children: pages,
-            ),
+            child: IndexedStack(index: currentStep, children: pages),
           ),
         ],
       ),

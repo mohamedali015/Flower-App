@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/shared_widgets/svg_wrapper.dart';
-import '../../../../core/utils/app_assets.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_text_styles.dart';
+import '../../../../../core/shared_widgets/svg_wrapper.dart';
+import '../../../../../core/utils/app_assets.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/app_text_styles.dart';
 
 class CustomDeliveryAddress extends StatelessWidget {
   const CustomDeliveryAddress({
@@ -22,19 +22,13 @@ class CustomDeliveryAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 16,
-        right: 16,
-        top: 16,
-      ),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: AppColors.background,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected
-                ? AppColors.primaryColor
-                : Colors.transparent,
+            color: isSelected ? AppColors.primaryColor : Colors.transparent,
             width: 2,
           ),
           boxShadow: [
@@ -67,15 +61,15 @@ class CustomDeliveryAddress extends StatelessWidget {
                   ),
                   child: isSelected
                       ? Center(
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-                  )
+                          child: Container(
+                            width: 10,
+                            height: 10,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        )
                       : null,
                 ),
 
@@ -86,9 +80,7 @@ class CustomDeliveryAddress extends StatelessWidget {
                     title,
                     style: AppTextStyles.medium16(
                       context,
-                    ).copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    ).copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -99,9 +91,7 @@ class CustomDeliveryAddress extends StatelessWidget {
                 subTitle,
                 style: AppTextStyles.regular14(
                   context,
-                ).copyWith(
-                  color: AppColors.grayDark,
-                ),
+                ).copyWith(color: AppColors.grayDark),
               ),
             ),
             trailing: IconButton(
