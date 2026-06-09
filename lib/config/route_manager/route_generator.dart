@@ -29,7 +29,8 @@ import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
 import '../../features/cart/presentation/manager/cart_cubit.dart';
 import '../../features/cart/presentation/manager/cart_event.dart';
-import '../../features/check_out/presentation/screen/check_out_screen.dart';
+import '../../features/check_out/presentation/view/screen/check_out_screen.dart';
+import '../../features/check_out/presentation/manager/checkout_cubit.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
@@ -189,11 +190,9 @@ abstract class RouteGenerator {
                   create: (context) =>
                       getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
                 ),
-
-                // مثال لو عندك Cubit للـ checkout
-                // BlocProvider<CheckoutCubit>(
-                //   create: (context) => CheckoutCubit(),
-                // ),
+                BlocProvider<CheckoutCubit>(
+                  create: (context) => getIt<CheckoutCubit>(),
+                ),
               ],
               child: const CheckOutScreen(),
             ),
