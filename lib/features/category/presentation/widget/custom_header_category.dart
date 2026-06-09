@@ -4,7 +4,7 @@ import 'package:flower_app/features/filter/domain/enums/sort_options.dart';
 import 'package:flower_app/features/filter/presentation/widget/filter_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flower_app/core/localization/l10n/app_localizations.dart'; // تأكدي من المسار
+import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 
 import '../../../../config/products/data/params/product_query_params.dart';
 import '../../../../core/helpers/my_responsive.dart';
