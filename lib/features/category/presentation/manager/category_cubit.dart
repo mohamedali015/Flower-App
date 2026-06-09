@@ -54,7 +54,7 @@ class CategoryCubit extends Cubit<CategoryState> {
     final response = await _getProductsUseCase.call(
       params: ProductQueryParams(
         categoryId: params.categoryId,
-        sort: params.sort, // ✅ تحويل هنا
+        sort: params.sort,
       ),
     );
 

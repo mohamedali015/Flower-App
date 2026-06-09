@@ -19,7 +19,7 @@ class ProductQueryParams {
 
   Map<String, dynamic> toJson() {
     return {
-      if (categoryId != null) 'category': categoryId,
+      if (categoryId != null && categoryId!.isNotEmpty) 'category': categoryId,
       if (occasionId != null) 'occasion': occasionId,
       if (search != null) 'search': search,
       if (sort != null) 'sort': sort,

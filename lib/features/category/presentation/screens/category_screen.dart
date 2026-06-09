@@ -49,7 +49,6 @@ class _CategoryViewState extends State<_CategoryView> {
   }
 
   void _loadProducts(CategoryState state) {
-    /// ALL TAB
     if (selectedIndex == 0) {
       context.read<CategoryCubit>().doEvent(
         ProductEvent(

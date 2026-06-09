@@ -88,7 +88,7 @@ class _FilterSheetState extends State<FilterSheet> {
                       borderRadius: BorderRadius.circular(
                         MyResponsive.radius(context, value: 16),
                       ),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: AppColors.grayLight, blurRadius: 5),
                       ],
                     ),
