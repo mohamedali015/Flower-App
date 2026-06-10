@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class UnreadCountResponseEntity extends Equatable {
-  final int unreadCount;
+  final num unreadCount;
 
   const UnreadCountResponseEntity({required this.unreadCount});
 

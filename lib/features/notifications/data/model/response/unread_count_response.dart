@@ -6,7 +6,7 @@ part 'unread_count_response.g.dart';
 class UnreadCountResponse {
   final String? message;
 
-  final int? unreadCount;
+  final num? unreadCount;
 
   UnreadCountResponse({this.message, this.unreadCount});
 

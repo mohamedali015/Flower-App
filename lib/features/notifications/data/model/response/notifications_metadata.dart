@@ -4,11 +4,11 @@ part 'notifications_metadata.g.dart';
 
 @JsonSerializable()
 class NotificationsMetadata {
-  final int? currentPage;
-  final int? totalPages;
-  final int? limit;
-  final int? totalItems;
-  final int? unreadCount;
+  final num? currentPage;
+  final num? totalPages;
+  final num? limit;
+  final num? totalItems;
+  final num? unreadCount;
 
   NotificationsMetadata({
     this.currentPage,

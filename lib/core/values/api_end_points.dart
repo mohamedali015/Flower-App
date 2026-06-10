@@ -19,6 +19,6 @@ abstract class ApiEndPoints {
   static const String changePassword = '/auth/change-password';
   static const String cart = "/cart";
 
-  static const String userNotifications = 'notifications/user';
-  static const String unreadCount = 'notifications/unread-count';
+  static const String userNotifications = '/notifications/user';
+  static const String unreadCount = '/notifications/unread-count';
 }

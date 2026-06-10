@@ -3,6 +3,15 @@ import '../model/response/notification_model.dart';
 
 extension NotificationMapper on NotificationModel {
   NotificationEntity toEntity() {
-    return const NotificationEntity();
+    return NotificationEntity(
+      id: id ?? '',
+      title: title ?? '',
+      body: body ?? '',
+      type: type ?? '',
+      isRead: isRead ?? false,
+      createdAt:
+          DateTime.tryParse(createdAt ?? '') ??
+          DateTime.fromMillisecondsSinceEpoch(0),
+    );
   }
 }
