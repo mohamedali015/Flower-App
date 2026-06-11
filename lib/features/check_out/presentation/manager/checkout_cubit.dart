@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flower_app/features/check_out/presentation/factory/checkout_factory.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,11 +16,9 @@ part 'checkout_state.dart';
 
 @injectable
 class CheckoutCubit extends Cubit<CheckoutState> {
-  final CashPaymentUsecase _cashPaymentUsecase;
-  final CreditPaymentUsecase _creditPaymentUsecase;
+  final CheckoutFactory _checkoutFactory;
 
-  CheckoutCubit(this._cashPaymentUsecase, this._creditPaymentUsecase)
-    : super(const CheckoutState());
+  CheckoutCubit(this._checkoutFactory) : super(const CheckoutState());
 
   void doIntent(CheckoutIntent intent) {
     switch (intent) {
@@ -34,7 +33,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
 
   Future<void> _executeCashPayment() async {
     emit(state.copyWith(cashPaymentState: const BaseState(isLoading: true)));
-    final result = await _cashPaymentUsecase.call();
+    final result = await _checkoutFactory.cashPaymentUsecase().call();
     switch (result) {
       case Success():
         emit(
@@ -55,7 +54,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
 
   Future<void> _executeCreditPayment(CheckoutPaymentRequest request) async {
     emit(state.copyWith(creditPaymentState: const BaseState(isLoading: true)));
-    final result = await _creditPaymentUsecase.call(request);
+    final result = await _checkoutFactory.creditPaymentUsecase().call(request);
     switch (result) {
       case Success():
         emit(
