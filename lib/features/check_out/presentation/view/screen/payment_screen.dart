@@ -35,13 +35,7 @@ class PaymentStep extends StatefulWidget {
 class _PaymentStepState extends State<PaymentStep> {
   PaymentMethod? selectedMethod;
 
-  void _payWithCard() {
-    final request = widget.buildPaymentRequest();
 
-    context.read<CheckoutCubit>().doIntent(
-      CreditPaymentIntent(request),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +51,9 @@ class _PaymentStepState extends State<PaymentStep> {
             });
           },
           onCardSelected: () {
-            _payWithCard();
+            setState(() {
+              selectedMethod = PaymentMethod.card;
+            });
           },
         ),
 

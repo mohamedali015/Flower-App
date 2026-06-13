@@ -212,9 +212,11 @@ class _AddressStepState extends State<AddressStep> {
                 : local.pleaseSelectAddress,
             validator: () => isFormValid,
             onNext: () {
+              if (!isFormValid) return;
+              final Address addressToSend = selectedAddress!;
               widget.onAddressSelected(
                 isGift: isEnabled,
-                address: selectedAddress,
+                address: addressToSend,
                 giftName: isEnabled ? nameController.text : null,
                 giftPhone: isEnabled ? phoneController.text : null,
               );
