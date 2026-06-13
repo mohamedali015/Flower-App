@@ -137,5 +137,12 @@
   "trackOrder": "Track Order",
   "noOrdersFound": "No Orders Found",
   "orderNumber": "Order Number",
-  "order": "Order"
+  "order": "Order",
+         "lowestPrice":"Lowest Price",
+         "highestPrice":"Highest Price",
+         "old":"Old",
+         "newest":"New",
+         "discount":"Discount",
+         "filter":"Filter",
+         "sortBy":"Sort by"
 }
