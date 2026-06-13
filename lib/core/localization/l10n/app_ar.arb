@@ -119,5 +119,6 @@
       "saved_address": "العناوين المسجلة",
       "add_address":"اضافة عنوان",
       "confirm_delete":"انت علي وشك الغاء هذا العنوان الالغاء",
-       "delete":"إلغاء"
+       "delete":"إلغاء",
+        "recipient_name":"اسم المستلم"
 }

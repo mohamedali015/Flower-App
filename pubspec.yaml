@@ -60,6 +60,7 @@ dependencies:
   shimmer: ^3.0.0
   image_picker: ^1.2.2
   geocoding: ^4.0.0
+  google_maps_flutter: ^2.17.1
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +99,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/cities.json
+    - assets/states.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

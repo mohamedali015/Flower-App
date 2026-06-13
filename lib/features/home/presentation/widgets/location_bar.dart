@@ -28,12 +28,12 @@ class LocationBar extends StatelessWidget {
       value: userAddressCubit,
       child: BlocConsumer<UserAddressCubit, UserAddressState>(
         buildWhen: (previous, current) =>
-            previous.currentUserAddress != current.currentUserAddress,
+            previous.currentUserAddresses != current.currentUserAddresses,
         builder: (BuildContext context, state) {
-          if (state.currentUserAddress == null) {
+          if (state.currentUserAddresses == null) {
             return const LocationBarShimmer();
-          } else if (state.currentUserAddress != null &&
-              state.currentUserAddress!.isNotEmpty) {
+          } else if (state.currentUserAddresses != null &&
+              state.currentUserAddresses!.isNotEmpty) {
             return Padding(
               padding: MyResponsive.paddingSymmetric(context, vertical: 17),
               child: Row(
@@ -54,7 +54,7 @@ class LocationBar extends StatelessWidget {
                           ).copyWith(color: AppColors.grayDark),
                         ),
                         TextSpan(
-                          text: state.currentUserAddress!.last.placeMarks
+                          text: state.currentUserAddresses!.last.placeMarks
                                   ?.firstOrNull?.subAdministrativeArea ??
                               "",
                           style: AppTextStyles.medium14(
@@ -90,7 +90,7 @@ class LocationBar extends StatelessWidget {
           }
         },
         listenWhen: (previous, current) =>
-            previous.currentUserAddress != current.currentUserAddress,
+            previous.currentUserAddresses != current.currentUserAddresses,
         listener: (BuildContext context, state) {
           if (state.getLoggedUserAddressState.isLoading == false &&
               state.getLoggedUserAddressState.isSuccess == false) {

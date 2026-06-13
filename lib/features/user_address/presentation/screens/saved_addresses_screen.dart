@@ -1,3 +1,4 @@
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/core/helpers/app_snack_bar.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_cubit.dart';
@@ -38,17 +39,17 @@ class SavedAddressesScreen extends StatelessWidget {
                   }
                   return Column(
                     children: List.generate(
-                      userAddressCubit.state.currentUserAddress!.length,
-                          (index) {
+                      userAddressCubit.state.currentUserAddresses!.length,
+                      (index) {
                         return AddressCard(
-                          userAddressCubit.state.currentUserAddress![index],
+                          userAddressCubit.state.currentUserAddresses![index],
                         );
                       },
                     ),
                   );
                 },
                 listenWhen: (previous, current) =>
-                previous.removeUserAddressState !=
+                    previous.removeUserAddressState !=
                     current.removeUserAddressState,
                 listener: (BuildContext context, UserAddressState state) {
                   if (state.removeUserAddressState.isLoading == false &&
@@ -61,7 +62,12 @@ class SavedAddressesScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 32),
-              ElevatedButton(onPressed: () {}, child: Text(local.add_address)),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.addAddressRoute);
+                },
+                child: Text(local.add_address),
+              ),
             ],
           ),
         ),

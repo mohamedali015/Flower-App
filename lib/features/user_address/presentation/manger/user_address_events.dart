@@ -23,6 +23,20 @@ class RemoveUserAddressEvent extends UserAddressEvents {
   final String addressId;
 }
 
+class MapLoadingEvent extends UserAddressEvents {
+  bool mapLoading;
+
+  MapLoadingEvent(this.mapLoading);
+}
+
+class LoadCitiesEvent extends UserAddressEvents {
+  int governorateID;
+
+  LoadCitiesEvent(this.governorateID);
+}
+
+class LoadGovernorateEvent extends UserAddressEvents {}
+
+class ClearCitiesListEvent extends UserAddressEvents{}
+
 class GetLoggedUserAddressEvent extends UserAddressEvents {}
-
-

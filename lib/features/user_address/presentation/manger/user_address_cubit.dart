@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flower_app/config/base_state/base_state.dart';
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_events.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_state.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/address_dto.dart';
+import '../../data/models/city.dart';
+import '../../data/models/governorate.dart';
 import '../../data/models/user_address_dto.dart';
 import '../../domain/entities/address.dart';
 import '../../domain/use_cases/add_user_address_use_case.dart';
@@ -26,7 +31,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
           getLoggedUserAddressState: BaseState<UserAddressDto>(),
           removeUserAddressState: BaseState<UserAddressDto>(),
           updateUserAddressState: BaseState<UserAddressDto>(),
-          currentUserAddress: null,
+          currentUserAddresses: null,
         ),
       );
 
@@ -45,6 +50,14 @@ class UserAddressCubit extends Cubit<UserAddressState> {
         _removeUserAddress(id: event.addressId);
       case GetLoggedUserAddressEvent():
         _getLoggedUserAddress();
+      case MapLoadingEvent():
+        _mapLoading(event.mapLoading);
+      case LoadCitiesEvent():
+        _loadCities(event.governorateID);
+      case LoadGovernorateEvent():
+        _loadGovernorates();
+      case ClearCitiesListEvent():
+        _clearCitiesList();
     }
   }
 
@@ -213,5 +226,50 @@ class UserAddressCubit extends Cubit<UserAddressState> {
           ),
         );
     }
+  }
+
+  void _mapLoading(bool mapLoading) {
+    emit(state.copyWith(mapLoading: mapLoading));
+  }
+
+  Future<void> _loadCities(int governorateID) async {
+    emit(state.copyWith(cities: null));
+    final jsonString = await rootBundle.loadString('assets/states.json');
+
+    final List<dynamic> jsonData = jsonDecode(jsonString);
+
+    final table = jsonData.firstWhere(
+      (item) => item['type'] == 'table' && item['name'] == 'cities',
+    );
+
+    final List<dynamic> citiesData = table['data'];
+
+    final cities = citiesData
+        .map((e) => City.fromJson(e as Map<String, dynamic>))
+        .where((city) => city.governorateId == governorateID)
+        .toList();
+
+    emit(state.copyWith(cities: cities));
+  }
+
+  Future<void> _loadGovernorates() async {
+    emit(state.copyWith(governorate: null));
+    final String jsonString = await rootBundle.loadString('assets/cities.json');
+
+    final List<dynamic> jsonData = jsonDecode(jsonString);
+
+    final table = jsonData.firstWhere(
+      (item) => item['type'] == 'table' && item['name'] == 'governorates',
+    );
+
+    final governorate = (table['data'] as List)
+        .map((e) => Governorate.fromJson(e))
+        .toList();
+
+    emit(state.copyWith(governorate: governorate));
+  }
+
+  void _clearCitiesList() {
+    emit(state.copyWith(cities: null));
   }
 }
