@@ -137,12 +137,11 @@
   "trackOrder": "تتبع الطلب",
   "noOrdersFound": "لا توجد طلبات",
   "orderNumber": "رقم الطلب",
-  "order": "الطلب",
-     "lowestPrice": "الأقل سعراً",
-      "highestPrice": "الأعلى سعراً",
-      "new": "الأحدث",
-      "old": "الأقدم",
-      "discount": "نسبة الخصم",
-      "filter": "تصفية",
-      "sortBy": "ترتيب حسب"
+   "order": "الطلب",
+   "lowestPrice": "الأقل سعراً",
+   "highestPrice": "الأعلى سعراً",
+   "newest": "الأحدث",
+   "old": "الأقدم",
+   "discount": "نسبة الخصم",
+   "sortBy": "ترتيب حسب"
 }

@@ -5,7 +5,7 @@ class Governorate extends Equatable {
   final String governorateNameAr;
   final String governorateNameEn;
 
-  Governorate({
+  const Governorate({
     required this.id,
     required this.governorateNameAr,
     required this.governorateNameEn,
