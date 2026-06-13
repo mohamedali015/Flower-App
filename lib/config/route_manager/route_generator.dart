@@ -20,8 +20,8 @@ import 'package:flower_app/features/orders/presentation/manager/orders_cubit.dar
 import 'package:flower_app/features/orders/presentation/manager/orders_events.dart';
 import 'package:flower_app/features/orders/presentation/pages/orders_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
-import 'package:flower_app/features/terms_and_conditions/presentation/screens/terms_and_conditions_screen.dart';
 import 'package:flower_app/features/search/presentation/manager/search_cubit.dart';
+import 'package:flower_app/features/terms_and_conditions/presentation/screens/terms_and_conditions_screen.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_cubit.dart';
 import 'package:flower_app/features/user_address/presentation/screens/add_address_screen.dart';
 import 'package:flower_app/features/user_address/presentation/screens/saved_addresses_screen.dart';
@@ -37,8 +37,8 @@ import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
 import '../../features/cart/presentation/manager/cart_cubit.dart';
 import '../../features/cart/presentation/manager/cart_event.dart';
-import '../../features/check_out/presentation/view/screen/check_out_screen.dart';
 import '../../features/check_out/presentation/manager/checkout_cubit.dart';
+import '../../features/check_out/presentation/view/screen/check_out_screen.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
@@ -175,11 +175,10 @@ abstract class RouteGenerator {
             builder: (_) => MultiBlocProvider(
               providers: [
                 BlocProvider(create: (context) => getIt<SearchCubit>()),
-              BlocProvider(create: (context) => getIt<AddCartCubit>()),
-                BlocProvider(
-                  create: (_) => getIt<CartCubit>(),
-                ),
-              ],child: const SearchScreen(),
+                BlocProvider(create: (context) => getIt<AddCartCubit>()),
+                BlocProvider(create: (_) => getIt<CartCubit>()),
+              ],
+              child: const SearchScreen(),
             ),
           );
 
@@ -224,8 +223,10 @@ abstract class RouteGenerator {
           );
 
         case Routes.paymentScreenRoute:
+          final paymentLink = settings.arguments as String;
+
           return CupertinoPageRoute(
-            builder: (_) => const PaymentScreen(paymentUrl: ''),
+            builder: (_) => PaymentScreen(paymentUrl: paymentLink),
           );
 
         case Routes.ordersRoute:
@@ -249,8 +250,11 @@ abstract class RouteGenerator {
                 BlocProvider<CheckoutCubit>(
                   create: (context) => getIt<CheckoutCubit>(),
                 ),
-      BlocProvider(
-      create: (context) =>getIt<UserAddressCubit>()..doEvent(GetLoggedUserAddressEvent()),)
+                BlocProvider(
+                  create: (context) =>
+                      getIt<UserAddressCubit>()
+                        ..doEvent(GetLoggedUserAddressEvent()),
+                ),
               ],
               child: const CheckOutScreen(),
             ),
