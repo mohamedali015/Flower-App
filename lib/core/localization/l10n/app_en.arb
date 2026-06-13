@@ -97,4 +97,38 @@
   "delete": "Delete",
   "recipient_name": "Recipient name",
   "noNotificationsYet": "No Notifications Yet"
+
+   "searchForAnyProductYouWant": "Search For Any Product You Want",
+
+   "english":"English",
+   "arabic":"Arabic",
+
+   "logout" : "Logout",
+   "aboutUs":"About US",
+   "language":"Language",
+   "changeLanguage":"Change Language",
+   "myOrders" : "My Orders",
+   "myAddress" : "My Address",
+   "notification":"Notification",
+   "editProfile": "Edit Profile",
+   "change": "Change",
+   "resetPassword":"Reset password",
+   "currentPassword":"Current password",
+   "newPassword":"New password",
+   "update":"Update",
+   "confirmLogout":"Confirm logout!!",
+   "cancle":"Cancle",
+   "searchForAnyProductYouWant": "Search For Any Product You Want",
+   "items": "Items",
+     "checkout": "Checkout",
+     "subTotal": "Sub Total",
+     "deliveryFee": "Delivery Fee",
+     "total": "Total",
+     "addedSuccessfully" : "Added successfully",
+      "sub_total": "Sub Total",
+         "delivery_fee": "Delivery Fee",
+         "total": "Total",
+         "your_cart_is_empty": "Your cart is empty",
+               "payment" : "Payment"
+
 }

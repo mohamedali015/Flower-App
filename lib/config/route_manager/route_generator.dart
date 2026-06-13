@@ -37,6 +37,7 @@ import '../../features/forget_password/presentation/pages/forget_password_enter_
 import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
 import '../../features/notifications/presentation/pages/notifications_screen.dart';
+import '../../features/payment/views/pages/payment_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
 
@@ -200,6 +201,9 @@ abstract class RouteGenerator {
           return CupertinoPageRoute(
             builder: (_) => const NotificationsScreen(),
           );
+
+        case Routes.paymentScreenRoute:
+          return CupertinoPageRoute(builder: (_) => const PaymentScreen());
 
         /// Default
         default:
