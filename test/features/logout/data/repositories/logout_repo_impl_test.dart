@@ -8,12 +8,9 @@ import 'package:flower_app/features/logout/domain/entities/logout_response_entit
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-
 import 'logout_repo_impl_test.mocks.dart';
 
-class MockSecureCache extends Mock implements SecureCache {}
-
-@GenerateMocks([LogoutDataSourceImpl])
+@GenerateMocks([LogoutDataSourceImpl, SecureCache])
 void main() {
   late LogoutRepoImpl logoutRepoImpl;
   late MockLogoutDataSourceImpl mockLogoutDataSourceImpl;
@@ -46,22 +43,20 @@ void main() {
           );
           when(
             mockSecureCache.removeData(key: CacheKeys.token),
-          ).thenAnswer((_) async {});
+          ).thenAnswer((_) => Future<void>.value());
           when(
             mockSecureCache.removeData(key: CacheKeys.rememberMe),
-          ).thenAnswer((_) async {});
+          ).thenAnswer((_) => Future<void>.value());
 
           final result = await logoutRepoImpl.logout();
 
           expect(result, isA<Success<LogoutResponseEntity>>());
           final success = result as Success<LogoutResponseEntity>;
           expect(success.data.message, equals(logoutResponse.message));
-          verify(() => mockLogoutDataSourceImpl.logout()).called(1);
+          verify(mockLogoutDataSourceImpl.logout()).called(1);
+          verify(mockSecureCache.removeData(key: CacheKeys.token)).called(1);
           verify(
-            () => mockSecureCache.removeData(key: CacheKeys.token),
-          ).called(1);
-          verify(
-            () => mockSecureCache.removeData(key: CacheKeys.rememberMe),
+            mockSecureCache.removeData(key: CacheKeys.rememberMe),
           ).called(1);
         },
       );
