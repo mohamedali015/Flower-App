@@ -4,7 +4,6 @@ import 'package:flower_app/features/check_out/data/models/response/cash_order_re
 import 'package:flower_app/features/check_out/data/models/response/credit_payment_response.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:retrofit/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import '../../../core/values/api_end_points.dart';
