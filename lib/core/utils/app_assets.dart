@@ -26,6 +26,8 @@ abstract class AppAssets {
   static const String notification = "$_baseIconsPath/notification.svg";
 
   static const String pen = "$_baseIconsPath/pen.svg";
+  static const String edit = "$_baseIconsPath/edit.svg";
+  static const String schedule = "$_baseIconsPath/schedule.svg";
   static const String bin = "$_baseIconsPath/bin.svg";
   static const String edit = "$_baseIconsPath/edit.svg";
 }
