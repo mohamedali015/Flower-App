@@ -1,171 +1,18 @@
-// import 'package:flower_app/config/route_manager/routes.dart';
-// import 'package:flower_app/core/utils/app_colors.dart';
-// import 'package:flower_app/core/utils/app_text_styles.dart';
-// import 'package:flower_app/features/check_out/presentation/widgets/custom_delivery_time.dart';
-// import 'package:flutter/material.dart';
-// import '../../../../config/enums/payment_method.dart';
-// import '../../../../core/localization/l10n/app_localizations.dart';
-// import '../../../../core/shared_widgets/custom_button.dart';
-// import '../widgets/custom_delivery_address.dart';
-// import '../widgets/custom_divider.dart';
-// import '../widgets/custom_payment_method_selector.dart';
-// import '../widgets/custom_switch_fields.dart';
-//
-// class CheckOutScreen extends StatefulWidget {
-//   const CheckOutScreen({super.key});
-//
-//   @override
-//   State<CheckOutScreen> createState() => _CheckOutScreenState();
-// }
-//
-// class _CheckOutScreenState extends State<CheckOutScreen> {
-//   bool isEnabled = false;
-//
-//   PaymentMethod? selectedMethod;
-//
-//   final TextEditingController nameController = TextEditingController();
-//   final TextEditingController phoneController = TextEditingController();
-//   final FocusNode phoneFocus = FocusNode();
-//
-//   @override
-//   void dispose() {
-//     nameController.dispose();
-//     phoneController.dispose();
-//     phoneFocus.dispose();
-//     super.dispose();
-//   }
-//
-//   String getPaymentType(PaymentMethod method) {
-//     switch (method) {
-//       case PaymentMethod.cash:
-//         return "cash_on_delivery";
-//       case PaymentMethod.card:
-//         return "credit_card";
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final local = AppLocalizations.of(context)!;
-//
-//     return Scaffold(
-//       ///? AppBar
-//       appBar: AppBar(
-//         title: Text(local.checkout),
-//         leading: IconButton(
-//           onPressed: () {
-//             Navigator.pushReplacementNamed(context, Routes.cartRoute);
-//           },
-//           icon: const Icon(Icons.arrow_back_ios_new),
-//         ),
-//       ),
-//
-//       body: SingleChildScrollView(
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//
-//             const CustomDeliveryTime(),
-//
-//             const CustomDivider(),
-//
-//             const SizedBox(height: 24),
-//
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-//               child: Text(
-//                 local.deliveryAddress,
-//                 style: AppTextStyles.medium18(
-//                   context,
-//                 ).copyWith(fontWeight: FontWeight.bold),
-//               ),
-//             ),
-//             const SizedBox(height: 8,),
-//             const CustomDeliveryAddress(
-//               title: "Home",
-//               onTapEdit: AboutDialog.adaptive,
-//               subTitle: "2XVP+XC - Sheikh Zayed",
-//             ),
-//             const CustomDeliveryAddress(
-//               title: "office",
-//               onTapEdit: AboutDialog.adaptive,
-//               subTitle: "2XVP+XC - Sheikh Zayed",
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 24),
-//               child: CustomButton(
-//                 title: local.addNew,
-//                 backgroundColor: AppColors.background,
-//                 borderColor: AppColors.hintTextGray,
-//                 titleStyle: AppTextStyles.medium16(context).copyWith(
-//                   color: AppColors.primaryColor,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//                 onPressed: () {},
-//               ),
-//             ),
-//
-//             const CustomDivider(),
-//
-//             ///? Payment
-//             PaymentMethodSelector(
-//               selectedMethod: selectedMethod,
-//               onChanged: (method) {
-//                 setState(() {
-//                   selectedMethod = method;
-//                 });
-//               },
-//             ),
-//             const CustomDivider(),
-//
-//             ///?  Gift Section
-//             CustomSwitchFields(
-//               value: isEnabled,
-//               onChanged: (value) {
-//                 setState(() {
-//                   isEnabled = value;
-//                 });
-//               },
-//               nameController: nameController,
-//               phoneController: phoneController,
-//               phoneFocus: phoneFocus,
-//               isLoading: false,
-//             ),
-//
-//
-//
-//             ///?  Place Order Button
-//             Padding(
-//               padding: const EdgeInsetsGeometry.symmetric(horizontal: 16),
-//               child: CustomButton(
-//                 title: local.placeOrder,
-//                 onPressed: () {
-//                   if (selectedMethod == null) {
-//                     ScaffoldMessenger.of(context).showSnackBar(
-//                       const SnackBar(
-//                         content: Text("Please select payment method"),
-//                       ),
-//                     );
-//                     return;
-//                   }
-//
-//                   // TODO: API CALL
-//                 },
-//               ),
-//             ),
-//             const SizedBox(height: 25,),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../config/enums/payment_method.dart';
 import '../../../../../config/route_manager/routes.dart';
+import '../../../../../config/user/manager/user_cubit.dart';
 import '../../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../cart/presentation/manager/cart_cubit.dart';
+import '../../../../cart/presentation/manager/cart_event.dart';
+import '../../../data/models/request/credit_payment_request.dart';
+import '../../manager/checkout_cubit.dart';
+import '../../manager/checkout_intents.dart';
 import '../widgets/checkout_stepper.dart';
 import 'address_screen.dart';
 import 'payment_screen.dart';
+import 'payment_webview_screen.dart';
 import 'track_order_screen.dart';
 
 class CheckOutScreen extends StatefulWidget {
@@ -177,6 +24,13 @@ class CheckOutScreen extends StatefulWidget {
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
   int currentStep = 0;
+
+  // Checkout flow state
+  bool isGift = false;
+  String? addressType;
+  String? giftName;
+  String? giftPhone;
+  PaymentMethod? selectedPaymentMethod;
 
   void nextStep() {
     if (currentStep < 2) {
@@ -190,6 +44,29 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     }
   }
 
+  void _placeOrder() {
+    if (selectedPaymentMethod == PaymentMethod.cash) {
+      context.read<CheckoutCubit>().doIntent(CashPaymentIntent());
+    } else if (selectedPaymentMethod == PaymentMethod.card) {
+      final userPhone = context.read<UserCubit>().state.user?.phone ?? "+201234567890";
+      final streetStr = isGift
+          ? "Gift to $giftName"
+          : "${addressType ?? 'Home'} (2XVP+XC - Sheikh Zayed)";
+      final phoneStr = isGift ? (giftPhone ?? userPhone) : userPhone;
+
+      final request = CheckoutPaymentRequest(
+        shippingAddress: ShippingAddress(
+          street: streetStr,
+          phone: phoneStr,
+          city: "Cairo",
+          lat: "30.0768",
+          long: "31.0182",
+        ),
+      );
+      context.read<CheckoutCubit>().doIntent(CreditPaymentIntent(request));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
@@ -197,9 +74,35 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     final titles = [local.address, local.payment, local.trackOrder];
 
     final pages = [
-      AddressStep(onNext: nextStep),
-      PaymentStep(onNext: nextStep, onBack: previousStep),
-      TrackOrderStep(onBack: previousStep),
+      AddressStep(
+        onNext: nextStep,
+        onAddressSelected: ({
+          required bool isGift,
+          required String? addressType,
+          required String? giftName,
+          required String? giftPhone,
+        }) {
+          setState(() {
+            this.isGift = isGift;
+            this.addressType = addressType;
+            this.giftName = giftName;
+            this.giftPhone = giftPhone;
+          });
+        },
+      ),
+      PaymentStep(
+        onNext: nextStep,
+        onBack: previousStep,
+        onPaymentMethodSelected: (method) {
+          setState(() {
+            selectedPaymentMethod = method;
+          });
+        },
+      ),
+      TrackOrderStep(
+        onBack: previousStep,
+        onPlaceOrder: _placeOrder,
+      ),
     ];
 
     return Scaffold(
@@ -216,14 +119,99 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           },
         ),
       ),
-      body: Column(
-        children: [
-          CheckoutStepper(currentStep: currentStep),
+      body: BlocConsumer<CheckoutCubit, CheckoutState>(
+        listener: (context, state) async {
+          // Cash Payment listeners
+          if (state.cashPaymentState.isSuccess) {
+            context.read<CartCubit>().doEvent(GetCartItemsEvent());
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => AlertDialog(
+                title: const Text('Order Placed'),
+                content: const Text('Your cash order has been placed successfully!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // pop dialog
+                      Navigator.of(context).pushReplacementNamed(Routes.bottomNavBarRoute);
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            );
+          } else if (state.cashPaymentState.errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.cashPaymentState.errorMessage!)),
+            );
+          }
 
-          Expanded(
-            child: IndexedStack(index: currentStep, children: pages),
-          ),
-        ],
+          // Credit Payment listeners
+          if (state.creditPaymentState.isSuccess) {
+            final url = state.creditPaymentState.data?.session?.url;
+            if (url != null) {
+              final isSuccess = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentWebViewScreen(url: url),
+                ),
+              );
+              if (!context.mounted) return;
+              if (isSuccess == true) {
+                context.read<CartCubit>().doEvent(GetCartItemsEvent());
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Payment Successful'),
+                    content: const Text('Your payment has been processed successfully!'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacementNamed(Routes.bottomNavBarRoute);
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Payment cancelled or failed.')),
+                );
+              }
+            }
+          } else if (state.creditPaymentState.errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.creditPaymentState.errorMessage!)),
+            );
+          }
+        },
+        builder: (context, state) {
+          final isLoading = state.cashPaymentState.isLoading || state.creditPaymentState.isLoading;
+
+          return Stack(
+            children: [
+              Column(
+                children: [
+                  CheckoutStepper(currentStep: currentStep),
+                  Expanded(
+                    child: IndexedStack(index: currentStep, children: pages),
+                  ),
+                ],
+              ),
+              if (isLoading)
+                Container(
+                  color: Colors.black45,
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }

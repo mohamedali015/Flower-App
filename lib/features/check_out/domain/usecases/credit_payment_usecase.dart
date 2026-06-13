@@ -10,7 +10,10 @@ class CreditPaymentUsecase {
 
   CreditPaymentUsecase(this._repo);
 
-  Future<Result<CreditPaymentEntity>> call(CheckoutPaymentRequest request) {
-    return _repo.creditcheckout(request);
+  Future<Result<CreditPaymentEntity>> call(
+    String token,
+    CheckoutPaymentRequest request,
+  ) {
+    return _repo.creditcheckout(token, request);
   }
 }

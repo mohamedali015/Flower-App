@@ -9,7 +9,7 @@ class CashPaymentUsecase {
 
   CashPaymentUsecase(this._repo);
 
-  Future<Result<CashorderEntity>> call() {
-    return _repo.cashorder();
+  Future<Result<CashorderEntity>> call(String token) {
+    return _repo.cashorder(token);
   }
 }

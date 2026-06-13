@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flower_app/config/secure_cache/secure_cache/secure_cache.dart';
 import 'package:flower_app/features/check_out/presentation/factory/checkout_factory.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -8,8 +9,6 @@ import '../../../../config/error_handling/result.dart';
 import '../../data/models/request/credit_payment_request.dart';
 import '../../domain/Entities/cashorder_entity.dart';
 import '../../domain/Entities/credit_payment.dart';
-import '../../domain/usecases/cash_payment_usecase.dart';
-import '../../domain/usecases/credit_payment_usecase.dart';
 import 'checkout_intents.dart';
 
 part 'checkout_state.dart';
@@ -17,8 +16,10 @@ part 'checkout_state.dart';
 @injectable
 class CheckoutCubit extends Cubit<CheckoutState> {
   final CheckoutFactory _checkoutFactory;
+  final SecureCache _secureCache;
 
-  CheckoutCubit(this._checkoutFactory) : super(const CheckoutState());
+  CheckoutCubit(this._checkoutFactory, this._secureCache)
+    : super(const CheckoutState());
 
   void doIntent(CheckoutIntent intent) {
     switch (intent) {
@@ -28,12 +29,16 @@ class CheckoutCubit extends Cubit<CheckoutState> {
       case CreditPaymentIntent():
         _executeCreditPayment(intent.request);
         break;
+      case PlaceOrderIntent():
+        _executePlaceOrder();
+        break;
     }
   }
 
   Future<void> _executeCashPayment() async {
+    final token = await _secureCache.getData(key: 'token');
     emit(state.copyWith(cashPaymentState: const BaseState(isLoading: true)));
-    final result = await _checkoutFactory.cashPaymentUsecase().call();
+    final result = await _checkoutFactory.cashPaymentUsecase().call(token!);
     switch (result) {
       case Success():
         emit(
@@ -53,8 +58,12 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   }
 
   Future<void> _executeCreditPayment(CheckoutPaymentRequest request) async {
+    final token = await _secureCache.getData(key: 'token');
     emit(state.copyWith(creditPaymentState: const BaseState(isLoading: true)));
-    final result = await _checkoutFactory.creditPaymentUsecase().call(request);
+    final result = await _checkoutFactory.creditPaymentUsecase().call(
+      token!,
+      request,
+    );
     switch (result) {
       case Success():
         emit(
@@ -72,4 +81,6 @@ class CheckoutCubit extends Cubit<CheckoutState> {
         break;
     }
   }
+
+  void _executePlaceOrder() {}
 }

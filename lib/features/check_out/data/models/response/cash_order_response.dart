@@ -1,6 +1,5 @@
 import 'package:flower_app/features/check_out/domain/Entities/cashorder_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'dart:convert';
 
 part 'cash_order_response.g.dart';
 
@@ -25,7 +24,7 @@ class CashOrderResponse {
   Map<String, dynamic> toJson() => _$CashOrderResponseToJson(this);
 
   CashorderEntity toEntity() {
-    return CashorderEntity();
+    return const CashorderEntity();
   }
 }
 

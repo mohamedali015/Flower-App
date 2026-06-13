@@ -10,10 +10,16 @@ import '../../../../cart/presentation/widget/custom_total_price.dart';
 import '../widgets/custom_checkout_button.dart';
 
 class PaymentStep extends StatefulWidget {
-  const PaymentStep({super.key, required this.onNext, required this.onBack});
+  const PaymentStep({
+    super.key,
+    required this.onNext,
+    required this.onBack,
+    required this.onPaymentMethodSelected,
+  });
 
   final VoidCallback onNext;
   final VoidCallback onBack;
+  final ValueChanged<PaymentMethod> onPaymentMethodSelected;
 
   @override
   State<PaymentStep> createState() => _PaymentStepState();
@@ -60,7 +66,10 @@ class _PaymentStepState extends State<PaymentStep> {
             title: local.trackOrder,
             errorMessage: local.pleaseSelectPayment,
             validator: () => selectedMethod != null,
-            onNext: widget.onNext,
+            onNext: () {
+              widget.onPaymentMethodSelected(selectedMethod!);
+              widget.onNext();
+            },
           ),
         ),
       ],

@@ -9,3 +9,5 @@ class CreditPaymentIntent extends CheckoutIntent {
 
   CreditPaymentIntent(this.request);
 }
+
+class PlaceOrderIntent extends CheckoutIntent {}

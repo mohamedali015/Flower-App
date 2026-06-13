@@ -2,9 +2,14 @@ import 'package:flutter/cupertino.dart';
 import '../../../../../core/shared_widgets/custom_button.dart';
 
 class TrackOrderStep extends StatelessWidget {
-  const TrackOrderStep({super.key, required this.onBack});
+  const TrackOrderStep({
+    super.key,
+    required this.onBack,
+    required this.onPlaceOrder,
+  });
 
   final VoidCallback onBack;
+  final VoidCallback onPlaceOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class TrackOrderStep extends StatelessWidget {
           child: CustomButton(
             title: 'Place Order',
             onPressed: () {
-              // API Call
+              onPlaceOrder();
             },
           ),
         ),

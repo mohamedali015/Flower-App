@@ -1,6 +1,5 @@
 import 'package:flower_app/features/check_out/domain/Entities/credit_payment.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'dart:convert';
 
 part 'credit_payment_response.g.dart';
 
@@ -25,7 +24,7 @@ class CreditPaymentResponse {
   Map<String, dynamic> toJson() => _$CreditPaymentResponseToJson(this);
 
   CreditPaymentEntity toEntity() {
-    return CreditPaymentEntity();
+    return const CreditPaymentEntity();
   }
 }
 

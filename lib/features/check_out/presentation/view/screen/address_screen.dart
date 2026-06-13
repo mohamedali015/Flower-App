@@ -9,9 +9,19 @@ import '../widgets/custom_delivery_address.dart';
 import '../widgets/custom_switch_fields.dart';
 
 class AddressStep extends StatefulWidget {
-  const AddressStep({super.key, required this.onNext});
+  const AddressStep({
+    super.key,
+    required this.onNext,
+    required this.onAddressSelected,
+  });
 
   final VoidCallback onNext;
+  final void Function({
+    required bool isGift,
+    required String? addressType,
+    required String? giftName,
+    required String? giftPhone,
+  }) onAddressSelected;
 
   @override
   State<AddressStep> createState() => _AddressStepState();
@@ -141,7 +151,15 @@ class _AddressStepState extends State<AddressStep> {
                 ? local.invalidData
                 : local.pleaseSelectAddress,
             validator: () => isFormValid,
-            onNext: widget.onNext,
+            onNext: () {
+              widget.onAddressSelected(
+                isGift: isEnabled,
+                addressType: selectedAddress,
+                giftName: isEnabled ? nameController.text : null,
+                giftPhone: isEnabled ? phoneController.text : null,
+              );
+              widget.onNext();
+            },
           ),
         ),
       ],
