@@ -58,7 +58,6 @@
 
   "search": "بحث",
   "filter": "تصفية",
-
   "addToCart": "أضف إلى السلة",
 
   "egp": "ج.م",
@@ -131,17 +130,12 @@
 
   "noNotificationsYet": "لا توجد إشعارات حتى الآن",
 
-  "payment": "المدفوعات"
-      "delivery_fee": "رسوم التوصيل",
-      "total": "الإجمالي",
-      "your_cart_is_empty": "سلة التسوق فارغة",
-        "active":"قيد التنفيذ",
-         "completed":"تم التسليم",
-                  "reorder":"أعد الطلب",
-         "trackOrder":"تتبع الطلب",
-                  "noOrdersFound":"لا توجد طلبات",
-                           "orderNumber":"رقم الطلب",
-                           "order":"الطلب"
-
-
+  "payment": "المدفوعات",
+  "active": "قيد التنفيذ",
+  "completed": "تم التسليم",
+  "reorder": "إعادة الطلب",
+  "trackOrder": "تتبع الطلب",
+  "noOrdersFound": "لا توجد طلبات",
+  "orderNumber": "رقم الطلب",
+  "order": "الطلب"
 }
