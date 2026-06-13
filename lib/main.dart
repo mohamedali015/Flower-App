@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flower_app/config/notification_services/notification_service.dart';
+import 'package:flower_app/core/helpers/custom_logger.dart';
 import 'package:flower_app/core/utils/app_constants.dart';
 import 'package:flower_app/features/notifications/presentation/manager/notifications_cubit.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,12 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await setupFlutterNotifications();
+
+  String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+  CustomLogger.bgCyan("-------------------------------------");
+  CustomLogger.bgGreen(fcmToken ?? "");
+  CustomLogger.bgCyan("-------------------------------------");
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
