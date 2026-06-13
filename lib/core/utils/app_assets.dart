@@ -29,5 +29,4 @@ abstract class AppAssets {
   static const String edit = "$_baseIconsPath/edit.svg";
   static const String schedule = "$_baseIconsPath/schedule.svg";
   static const String bin = "$_baseIconsPath/bin.svg";
-  static const String edit = "$_baseIconsPath/edit.svg";
 }

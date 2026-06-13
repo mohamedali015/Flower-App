@@ -41,6 +41,7 @@ import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
+import '../../features/user_address/presentation/manger/user_address_events.dart';
 
 abstract class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -171,7 +172,7 @@ abstract class RouteGenerator {
                 BlocProvider(
                   create: (_) => getIt<CartCubit>(),
                 ),
-              ],child: constSearchScreen(),
+              ],child: const SearchScreen(),
             ),
           );
 
@@ -213,6 +214,8 @@ abstract class RouteGenerator {
                 BlocProvider<CheckoutCubit>(
                   create: (context) => getIt<CheckoutCubit>(),
                 ),
+      BlocProvider(
+      create: (context) =>getIt<UserAddressCubit>()..doEvent(GetLoggedUserAddressEvent()),)
               ],
               child: const CheckOutScreen(),
             ),

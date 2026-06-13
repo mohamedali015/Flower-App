@@ -134,7 +134,6 @@
       "invalidData": "Invalid data",
         "pleaseSelectAddress": "Please select an address",
         "pleaseSelectPayment": "Please select payment method",
-         "noProductsFound": "No products found"
          "noProductsFound": "No products found",
          "your_cart_is_empty": "Your cart is empty",
          "address":"Address",
