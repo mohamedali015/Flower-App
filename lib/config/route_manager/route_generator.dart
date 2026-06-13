@@ -1,4 +1,3 @@
-import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_cubit.dart';
 import 'package:flower_app/config/di/di.dart';
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
@@ -48,6 +47,8 @@ import '../../features/notifications/presentation/pages/notifications_screen.dar
 import '../../features/payment/views/pages/payment_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
+import '../../features/terms_and_conditions/presentation/screens/terms_and_conditions_screen.dart';
+import '../../features/user_address/domain/entities/address.dart';
 import '../../features/user_address/presentation/manger/user_address_events.dart';
 
 abstract class RouteGenerator {
@@ -209,10 +210,11 @@ abstract class RouteGenerator {
 
         /// Add Addresses
         case Routes.addAddressRoute:
+          final editAddress = settings.arguments as Address?;
           return CupertinoPageRoute(
             builder: (_) => BlocProvider<UserAddressCubit>.value(
               value: getIt<UserAddressCubit>(),
-              child: AddAddressScreen(),
+              child: AddAddressScreen(editAddress: editAddress),
             ),
           );
 
