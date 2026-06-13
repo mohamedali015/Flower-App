@@ -22,4 +22,6 @@ abstract class ApiEndPoints {
   static const userAddress = "/addresses";
   static const addressById = "$userAddress/{id}";
 
+  static const String userNotifications = '/notifications/user';
+  static const String unreadCount = '/notifications/unread-count';
 }

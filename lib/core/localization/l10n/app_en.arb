@@ -124,4 +124,7 @@
          "delete":"Delete",
          "recipient_name":"Recipient name"
 
+         "your_cart_is_empty": "Your cart is empty",
+         "notification" : "Notification",
+         "noNotificationsYet" : "No Notifications Yet"
 }

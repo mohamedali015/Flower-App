@@ -167,6 +167,7 @@ abstract class RouteGenerator {
             ),
           );
 
+        ///? edit profile screen
         case Routes.editProfileScreenRoute:
           return CupertinoPageRoute(
             builder: (_) => BlocProvider(
@@ -191,6 +192,12 @@ abstract class RouteGenerator {
               value: getIt<UserAddressCubit>(),
               child: AddAddressScreen(),
             ),
+          );
+
+        ///? notifications Screen
+        case Routes.notificationScreenRoute:
+          return CupertinoPageRoute(
+            builder: (_) => const NotificationsScreen(),
           );
 
         /// Default

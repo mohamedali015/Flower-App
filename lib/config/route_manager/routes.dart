@@ -25,4 +25,6 @@ abstract class Routes {
   static const String changePasswordRoute = '/changePassword';
   static const String savedAddressesRoute = '/savedAddresses';
   static const String addAddressRoute = '/addAddress';
+
+  static const String notificationScreenRoute = '/notificationsScreen';
 }
