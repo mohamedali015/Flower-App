@@ -79,7 +79,7 @@ class LocationBar extends StatelessWidget {
                 Navigator.pushNamed(context, Routes.savedAddressesRoute);
               },
               child: Text(
-                local.add_address,
+                local.address,
                 style: AppTextStyles.medium14(context).copyWith(
                   color: AppColors.primaryColor,
                   decoration: TextDecoration.underline,

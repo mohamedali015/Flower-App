@@ -104,7 +104,7 @@
 
   "logout": "تسجيل الخروج",
   "confirmLogout": "تأكيد تسجيل الخروج",
-  "cancle": "إلغاء",
+  "cancel": "إلغاء",
 
   "items": "العناصر",
   "checkout": "إتمام الطلب",
@@ -144,4 +144,34 @@
    "old": "الأقدم",
    "discount": "نسبة الخصم",
    "sortBy": "ترتيب حسب"
+      "delivery_fee": "رسوم التوصيل",
+      "total": "الإجمالي",
+      "your_cart_is_empty": "سلة التسوق فارغة",
+
+       "deliveryTime":"موعد التسليم",
+       "deliveryAddress": "عنوان التسليم",
+       "paymentMethod" :"طريقة الدفع",
+       "itIsAGift":"إنها هدية",
+        "name": "الاسم",
+           "enterName": "أدخل الاسم",
+           "cashOnDelivery": "الدفع عند الاستلام",
+               "creditCard": "بطاقة ائتمان",
+               "placeOrder": "إتمام الطلب",
+               "instant":"فوري",
+               "addNew":"أضف جديدا",
+               "address":"عنوان",
+               "payment":"الدفع",
+               "trackOrder":"تتبع الطلب",
+                "next": "التالي",
+                "invalidData": "بيانات غير صحيحة",
+                  "pleaseSelectAddress": "من فضلك اختر عنوان",
+                  "pleaseSelectPayment": "من فضلك اختر طريقة الدفع",
+      "noProductsFound": "لا توجد منتجات مطابقة للبحث",
+      "your_cart_is_empty": "سلة التسوق فارغة",
+      "address":"العنوان",
+      "saved_address": "العناوين المسجلة",
+      "add_address":"اضافة عنوان",
+      "confirm_delete":"انت علي وشك الغاء هذا العنوان الالغاء",
+       "delete":"إلغاء",
+        "recipient_name":"اسم المستلم"
 }
