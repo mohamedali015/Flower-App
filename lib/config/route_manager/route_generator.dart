@@ -203,7 +203,9 @@ abstract class RouteGenerator {
           );
 
         case Routes.paymentScreenRoute:
-          return CupertinoPageRoute(builder: (_) => const PaymentScreen());
+          return CupertinoPageRoute(
+            builder: (_) => const PaymentScreen(paymentUrl: ''),
+          );
 
         /// Default
         default:
