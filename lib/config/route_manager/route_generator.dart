@@ -36,6 +36,7 @@ import '../../features/forget_password/presentation/manager/event/forget_passwor
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
 import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
+import '../../features/notifications/presentation/pages/notifications_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
 

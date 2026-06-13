@@ -120,7 +120,7 @@
       "add_address":"اضافة عنوان",
       "confirm_delete":"انت علي وشك الغاء هذا العنوان الالغاء",
        "delete":"إلغاء",
-        "recipient_name":"اسم المستلم"
+        "recipient_name":"اسم المستلم",
       "your_cart_is_empty": "سلة التسوق فارغة",
       "notification" : "الاشعارات",
       "noNotificationsYet" : "لا توجد اشعارات حتي الان"
