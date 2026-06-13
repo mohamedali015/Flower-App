@@ -10,9 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data/models/city.dart';
+import '../../domain/entities/address.dart';
 import '../manger/user_address_events.dart';
 
 class AddAddressScreen extends StatefulWidget {
+  AddAddressScreen({super.key, this.editAddress});
+
+  Address? editAddress;
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(30.039551857900626, 31.233740663484312),
     zoom: 14,
@@ -29,8 +33,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
   late TextEditingController recipientNameController;
 
-  late Governorate selectedGovernorate;
-  late City selectedCity;
+  Governorate? selectedGovernorate;
+  City? selectedCity;
 
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
@@ -41,6 +45,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     addressController = TextEditingController();
     phoneNumberController = TextEditingController();
     recipientNameController = TextEditingController();
+    if (widget.editAddress != null) {
+      addressController.text =
+          widget.editAddress!.placeMarks?.firstOrNull?.subAdministrativeArea ??
+          "";
+      phoneNumberController.text = widget.editAddress!.phone ?? "";
+      recipientNameController.text = widget.editAddress!.username ?? "";
+    }
     userAddressCubit = context.read<UserAddressCubit>();
     userAddressCubit.doEvent(MapLoadingEvent(true));
     userAddressCubit.doEvent(LoadGovernorateEvent());
@@ -82,6 +93,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     child: Stack(
                       children: [
                         GoogleMap(
+                          onTap: (argument) {
+
+                          },
                           initialCameraPosition: AddAddressScreen._kGooglePlex,
                           onMapCreated: (GoogleMapController controller) {
                             _controller.complete(controller);
@@ -124,7 +138,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             child: CircularProgressIndicator(),
                           );
                         }
-                        return DropdownButtonFormField<Governorate>(
+                        return DropdownButtonFormField<Governorate?>(
+                          initialValue: selectedGovernorate,
                           isExpanded: true,
                           decoration: const InputDecoration(
                             labelText: 'Governorate',
@@ -160,7 +175,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       buildWhen: (previous, current) =>
                           previous.cities != current.cities,
                       builder: (BuildContext context, state) {
-                        return DropdownButtonFormField<City>(
+                        return DropdownButtonFormField<City?>(
+                          initialValue: selectedCity,
                           isExpanded: true,
                           decoration: const InputDecoration(
                             labelText: 'City',
@@ -191,8 +207,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               ),
               SizedBox(height: MyResponsive.height(context, value: 24)),
               ElevatedButton(
-                onPressed: () {},
-                child: Text(local.saved_address),
+                onPressed: () {
+                  if(widget.editAddress != null){
+
+                  }else{
+
+                  }
+
+                },
+                child: Text(local.add_address),
               ),
             ],
           ),

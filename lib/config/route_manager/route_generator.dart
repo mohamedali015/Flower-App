@@ -38,6 +38,7 @@ import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
+import '../../features/user_address/domain/entities/address.dart';
 
 abstract class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -186,10 +187,11 @@ abstract class RouteGenerator {
 
         /// Add Addresses
         case Routes.addAddressRoute:
+          final editAddress = settings.arguments as Address?;
           return CupertinoPageRoute(
             builder: (_) => BlocProvider<UserAddressCubit>.value(
               value: getIt<UserAddressCubit>(),
-              child: AddAddressScreen(),
+              child: AddAddressScreen(editAddress: editAddress),
             ),
           );
 
