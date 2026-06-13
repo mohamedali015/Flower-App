@@ -24,4 +24,6 @@ abstract class ApiEndPoints {
 
   static const String userNotifications = '/notifications/user';
   static const String unreadCount = '/notifications/unread-count';
+
+  static const String getOrders = "/orders";
 }
