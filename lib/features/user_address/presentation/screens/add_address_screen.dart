@@ -213,7 +213,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   }else{
 
                   }
-
                 },
                 child: Text(local.add_address),
               ),
