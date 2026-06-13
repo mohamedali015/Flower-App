@@ -31,4 +31,7 @@ abstract class Routes {
   static const String paymentScreenRoute = '/paymentScreen';
 
   static const String ordersRoute = '/orders';
+
+  static const String termsAndConditionsRoute = '/termsAndConditions';
+  static const String aboutUsRoute = '/aboutUs';
 }
