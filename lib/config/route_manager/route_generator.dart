@@ -1,4 +1,3 @@
-import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_cubit.dart';
 import 'package:flower_app/config/di/di.dart';
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
@@ -27,8 +26,6 @@ import '../../features/auth/presentation/manager/login/login_cubit.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
 import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
-import '../../features/cart/presentation/manager/cart_cubit.dart';
-import '../../features/cart/presentation/manager/cart_event.dart';
 import '../../features/check_out/presentation/screen/check_out_screen.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
@@ -37,6 +34,8 @@ import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
+import '../cart/manager/cart_cubit.dart';
+import '../cart/manager/cart_event.dart';
 
 abstract class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -102,10 +101,6 @@ abstract class RouteGenerator {
                       getIt<HomeCubit>()..doEvents(GetHomeEvent()),
                 ),
 
-                BlocProvider(
-                  create: (context) =>
-                      getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
-                ),
               ],
 
               child: CustomBottomNavBar(
@@ -163,10 +158,10 @@ abstract class RouteGenerator {
             builder: (_) => MultiBlocProvider(
               providers: [
                 BlocProvider(create: (context) => getIt<SearchCubit>()),
-                BlocProvider(create: (context) => getIt<AddCartCubit>()),
-                BlocProvider(
-                  create: (_) => getIt<CartCubit>(),
-                ),
+                // BlocProvider(create: (context) => getIt<AddCartCubit>()),
+                // BlocProvider(
+                //   create: (_) => getIt<CartCubit>(),
+                // ),
               ],
               child: const SearchScreen(),
             ),

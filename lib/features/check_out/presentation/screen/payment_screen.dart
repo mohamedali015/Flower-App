@@ -3,9 +3,9 @@ import 'package:flower_app/features/check_out/presentation/widgets/custom_paymen
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../config/cart/manager/cart_cubit.dart';
+import '../../../../config/cart/manager/cart_state.dart';
 import '../../../../core/localization/l10n/app_localizations.dart';
-import '../../../cart/presentation/manager/cart_cubit.dart';
-import '../../../cart/presentation/manager/cart_state.dart';
 import '../../../cart/presentation/widget/custom_total_price.dart';
 import '../widgets/custom_checkout_button.dart';
 
