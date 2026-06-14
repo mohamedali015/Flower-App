@@ -3,10 +3,9 @@ import 'package:flower_app/features/check_out/data/models/request/credit_payment
 import 'package:flower_app/features/check_out/data/models/response/cash_order_response.dart';
 import 'package:flower_app/features/check_out/data/models/response/credit_payment_response.dart';
 import 'package:injectable/injectable.dart';
-
-import 'package:retrofit/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+
 import '../../../core/values/api_end_points.dart';
 
 part 'checkout_api_client.g.dart';
@@ -18,11 +17,10 @@ abstract class CheckoutApiClient {
   factory CheckoutApiClient(Dio dio) = _CheckoutApiClient;
 
   @POST(ApiEndPoints.cashOrderCheckout)
-  Future<CashOrderResponse> cashOrder(@Header("Authorization") String token);
+  Future<CashOrderResponse> cashOrder();
 
   @POST(ApiEndPoints.creditCheckout)
   Future<CreditPaymentResponse> creditCheckout(
-    @Header("Authorization") String token,
     @Body() CheckoutPaymentRequest? request,
   );
 }
