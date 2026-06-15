@@ -33,9 +33,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
   late TextEditingController recipientNameController;
 
-  Governorate? selectedGovernorate;
-  City? selectedCity;
-
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   late UserAddressCubit userAddressCubit;
@@ -55,7 +52,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     userAddressCubit = context.read<UserAddressCubit>();
     userAddressCubit.doEvent(MapLoadingEvent(true));
     userAddressCubit.doEvent(LoadGovernorateEvent());
-    userAddressCubit.doEvent(ClearCitiesListEvent());
+    userAddressCubit.doEvent(LoadCitiesEvent());
     super.initState();
   }
 
@@ -87,15 +84,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           child: Column(
             children: [
               BlocBuilder<UserAddressCubit, UserAddressState>(
+                buildWhen: (previous, current) =>
+                    previous.mapLoading != current.mapLoading,
                 builder: (context, state) {
                   return SizedBox(
                     height: MyResponsive.height(context, value: 145),
                     child: Stack(
                       children: [
                         GoogleMap(
-                          onTap: (argument) {
-
-                          },
+                          onTap: (argument) {},
                           initialCameraPosition: AddAddressScreen._kGooglePlex,
                           onMapCreated: (GoogleMapController controller) {
                             _controller.complete(controller);
@@ -131,15 +128,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   Expanded(
                     child: BlocBuilder<UserAddressCubit, UserAddressState>(
                       buildWhen: (previous, current) =>
-                          previous.governorate != current.governorate,
+                          previous.governorates != current.governorates,
                       builder: (BuildContext context, UserAddressState state) {
-                        if (state.governorate == null) {
+                        if (state.governorates == null) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
                         return DropdownButtonFormField<Governorate?>(
-                          initialValue: selectedGovernorate,
+                          initialValue: state.selectedGovernorate,
                           isExpanded: true,
                           decoration: const InputDecoration(
                             labelText: 'Governorate',
@@ -148,7 +145,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               vertical: 10,
                             ),
                           ),
-                          items: state.governorate?.map((g) {
+                          items: state.governorates?.map((g) {
                             return DropdownMenuItem(
                               value: g,
                               child: Text(
@@ -159,9 +156,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           }).toList(),
                           onChanged: (governorate) {
                             if (governorate != null) {
-                              selectedGovernorate = governorate;
                               userAddressCubit.doEvent(
-                                LoadCitiesEvent(governorate.id),
+                                SetSelectedGovernorateEvent(
+                                  governorate: governorate,
+                                ),
                               );
                             }
                           },
@@ -173,10 +171,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   Expanded(
                     child: BlocBuilder<UserAddressCubit, UserAddressState>(
                       buildWhen: (previous, current) =>
-                          previous.cities != current.cities,
+                          previous.filteredCities != current.filteredCities,
                       builder: (BuildContext context, state) {
                         return DropdownButtonFormField<City?>(
-                          initialValue: selectedCity,
+                          initialValue: state.selectedCity,
                           isExpanded: true,
                           decoration: const InputDecoration(
                             labelText: 'City',
@@ -185,7 +183,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               vertical: 10,
                             ),
                           ),
-                          items: state.cities?.map((city) {
+                          items: state.filteredCities?.map((city) {
                             return DropdownMenuItem(
                               value: city,
                               child: Text(
@@ -196,7 +194,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           }).toList(),
                           onChanged: (city) {
                             if (city != null) {
-                              selectedCity = city;
+                              userAddressCubit.doEvent(
+                                SetSelectedCityEvent(city),
+                              );
                             }
                           },
                         );
@@ -208,11 +208,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               SizedBox(height: MyResponsive.height(context, value: 24)),
               ElevatedButton(
                 onPressed: () {
-                  if(widget.editAddress != null){
-
-                  }else{
-
-                  }
+                  if (widget.editAddress != null) {
+                  } else {}
                 },
                 child: Text(local.add_address),
               ),

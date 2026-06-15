@@ -13,8 +13,11 @@ class UserAddressState extends Equatable {
     required this.updateUserAddressState,
     required this.currentUserAddresses,
     this.mapLoading = false,
-    this.governorate,
+    this.governorates,
     this.cities,
+    this.selectedGovernorate,
+    this.selectedCity,
+    this.filteredCities,
   });
 
   final BaseState addUserAddressState;
@@ -23,8 +26,11 @@ class UserAddressState extends Equatable {
   final BaseState getLoggedUserAddressState;
   final List<Address>? currentUserAddresses;
   final bool mapLoading;
-  final List<Governorate>? governorate;
+  final List<Governorate>? governorates;
   final List<City>? cities;
+  final List<City>? filteredCities;
+  final Governorate? selectedGovernorate;
+  final City? selectedCity;
 
   UserAddressState copyWith({
     BaseState<List<Address>>? addUserAddressState,
@@ -32,10 +38,13 @@ class UserAddressState extends Equatable {
     BaseState<List<Address>>? removeUserAddressState,
     BaseState<List<Address>>? getLoggedUserAddressState,
     List<Address>? currentUserAddress,
-    List<Governorate>? governorate,
+    List<Governorate>? governorates,
     List<City>? cities,
+    List<City>? filteredCities,
     bool? mapLoading,
     int? governorateID,
+    City? selectedCity,
+    Governorate? selectedGovernorate,
   }) {
     return UserAddressState(
       addUserAddressState: addUserAddressState ?? this.addUserAddressState,
@@ -47,8 +56,11 @@ class UserAddressState extends Equatable {
           updateUserAddressState ?? this.updateUserAddressState,
       currentUserAddresses: currentUserAddress ?? this.currentUserAddresses,
       mapLoading: mapLoading ?? this.mapLoading,
-      governorate: governorate ?? this.governorate,
-      cities: cities
+      governorates: governorates ?? this.governorates,
+      cities: cities ?? this.cities,
+      filteredCities: this.filteredCities ?? filteredCities,
+      selectedCity: selectedCity ?? this.selectedCity,
+      selectedGovernorate: selectedGovernorate ?? this.selectedGovernorate,
     );
   }
 
@@ -60,7 +72,9 @@ class UserAddressState extends Equatable {
     updateUserAddressState,
     currentUserAddresses,
     mapLoading,
-    governorate,
+    governorates,
     cities,
+    selectedGovernorate,
+    selectedCity,
   ];
 }

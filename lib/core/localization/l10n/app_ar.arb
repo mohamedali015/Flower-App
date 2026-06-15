@@ -118,7 +118,8 @@
       "address":"العنوان",
       "saved_address": "العناوين المسجلة",
       "add_address":"اضافة عنوان",
+      "edit_address":"تعجيل عنوان",
       "confirm_delete":"انت علي وشك الغاء هذا العنوان الالغاء",
-       "delete":"إلغاء",
-        "recipient_name":"اسم المستلم"
+      "delete":"إلغاء",
+      "recipient_name":"اسم المستلم"
 }

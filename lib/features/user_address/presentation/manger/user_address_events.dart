@@ -1,4 +1,7 @@
+import 'package:flower_app/features/user_address/data/models/governorate.dart';
+
 import '../../data/models/address_dto.dart';
+import '../../data/models/city.dart';
 
 sealed class UserAddressEvents {
   const UserAddressEvents();
@@ -29,14 +32,22 @@ class MapLoadingEvent extends UserAddressEvents {
   MapLoadingEvent(this.mapLoading);
 }
 
-class LoadCitiesEvent extends UserAddressEvents {
-  int governorateID;
-
-  LoadCitiesEvent(this.governorateID);
-}
+class LoadCitiesEvent extends UserAddressEvents {}
 
 class LoadGovernorateEvent extends UserAddressEvents {}
 
-class ClearCitiesListEvent extends UserAddressEvents{}
+class SetSelectedGovernorateEvent extends UserAddressEvents {
+  SetSelectedGovernorateEvent({
+    required this.governorate,
+  });
+
+  Governorate governorate;
+}
+
+class SetSelectedCityEvent extends UserAddressEvents {
+  SetSelectedCityEvent(this.city);
+
+  City city;
+}
 
 class GetLoggedUserAddressEvent extends UserAddressEvents {}

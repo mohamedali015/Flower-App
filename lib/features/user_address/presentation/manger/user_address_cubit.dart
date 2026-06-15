@@ -53,11 +53,13 @@ class UserAddressCubit extends Cubit<UserAddressState> {
       case MapLoadingEvent():
         _mapLoading(event.mapLoading);
       case LoadCitiesEvent():
-        _loadCities(event.governorateID);
+        _loadCities();
       case LoadGovernorateEvent():
         _loadGovernorates();
-      case ClearCitiesListEvent():
-        _clearCitiesList();
+      case SetSelectedGovernorateEvent():
+        _setSelectedGovernorate(governorate: event.governorate);
+      case SetSelectedCityEvent():
+        _setSelectedCity(event.city);
     }
   }
 
@@ -232,7 +234,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
     emit(state.copyWith(mapLoading: mapLoading));
   }
 
-  Future<void> _loadCities(int governorateID) async {
+  Future<void> _loadCities() async {
     emit(state.copyWith(cities: null));
     final jsonString = await rootBundle.loadString('assets/states.json');
 
@@ -246,14 +248,13 @@ class UserAddressCubit extends Cubit<UserAddressState> {
 
     final cities = citiesData
         .map((e) => City.fromJson(e as Map<String, dynamic>))
-        .where((city) => city.governorateId == governorateID)
         .toList();
 
     emit(state.copyWith(cities: cities));
   }
 
   Future<void> _loadGovernorates() async {
-    emit(state.copyWith(governorate: null));
+    emit(state.copyWith(governorates: null));
     final String jsonString = await rootBundle.loadString('assets/cities.json');
 
     final List<dynamic> jsonData = jsonDecode(jsonString);
@@ -266,10 +267,30 @@ class UserAddressCubit extends Cubit<UserAddressState> {
         .map((e) => Governorate.fromJson(e))
         .toList();
 
-    emit(state.copyWith(governorate: governorate));
+    emit(state.copyWith(governorates: governorate));
   }
 
-  void _clearCitiesList() {
-    emit(state.copyWith(cities: null));
+  void _setSelectedGovernorate({required Governorate governorate}) {
+    final filteredCities = _loadFilteredCities(governorate.id);
+    print("filteredCities size  is ${filteredCities?.length}");
+    emit(
+      state.copyWith(
+        selectedGovernorate: governorate,
+        selectedCity: null,
+        filteredCities: filteredCities,
+      ),
+    );
+  }
+
+  void _setSelectedCity(City? city) {
+    emit(state.copyWith(selectedCity: city));
+  }
+
+  List<City>? _loadFilteredCities(int governorateID) {
+    final filteredCities = state.cities?.where((city) {
+      return city.governorateId == governorateID;
+    }).toList();
+
+    return filteredCities;
   }
 }
