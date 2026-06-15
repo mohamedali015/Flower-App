@@ -272,7 +272,6 @@ class UserAddressCubit extends Cubit<UserAddressState> {
 
   void _setSelectedGovernorate({required Governorate governorate}) {
     final filteredCities = _loadFilteredCities(governorate.id);
-    print("filteredCities size  is ${filteredCities?.length}");
     emit(
       state.copyWith(
         selectedGovernorate: governorate,
