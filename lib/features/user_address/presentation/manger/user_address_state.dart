@@ -59,8 +59,8 @@ class UserAddressState extends Equatable {
       governorates: governorates ?? this.governorates,
       cities: cities ?? this.cities,
       filteredCities: filteredCities ?? this.filteredCities,
-      selectedCity: selectedCity ?? this.selectedCity,
-      selectedGovernorate: selectedGovernorate ?? this.selectedGovernorate,
+      selectedCity: selectedCity,
+      selectedGovernorate: selectedGovernorate
     );
   }
 

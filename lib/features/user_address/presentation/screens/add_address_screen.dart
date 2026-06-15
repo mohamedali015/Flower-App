@@ -67,6 +67,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
+    String appBarTitle = widget.editAddress != null
+        ? local.edit_address
+        : local.add_address;
+
+    String btnTitle = widget.editAddress != null
+        ? local.update_address
+        : local.add_address;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -76,7 +84,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           },
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
-        title: Text(local.add_address),
+        title: Text(appBarTitle),
       ),
       body: Padding(
         padding: MyResponsive.paddingSymmetric(context, horizontal: 16),
@@ -92,7 +100,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     child: Stack(
                       children: [
                         GoogleMap(
-                          onTap: (argument) {},
+                          onTap: (argument) {
+                            print("${argument.latitude},${argument.longitude}");
+                          },
                           initialCameraPosition: AddAddressScreen._kGooglePlex,
                           onMapCreated: (GoogleMapController controller) {
                             _controller.complete(controller);
@@ -211,7 +221,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   if (widget.editAddress != null) {
                   } else {}
                 },
-                child: Text(local.add_address),
+                child: Text(btnTitle),
               ),
             ],
           ),

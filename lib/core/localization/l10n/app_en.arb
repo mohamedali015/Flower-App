@@ -121,6 +121,7 @@
          "saved_address": "Saved Address",
          "add_address":"Add Address",
          "edit_address":"Edit Address",
+         "update_address":"Update Address",
          "confirm_delete":"Confirm Delete",
          "delete":"Delete",
          "recipient_name":"Recipient name"
