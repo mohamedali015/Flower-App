@@ -55,6 +55,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     userAddressCubit.doEvent(MapLoadingEvent(true));
     userAddressCubit.doEvent(LoadGovernorateEvent());
     userAddressCubit.doEvent(LoadCitiesEvent());
+    userAddressCubit.doEvent(SetMarkerIconEvent());
     super.initState();
   }
 
@@ -109,6 +110,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               Marker(
                                 markerId: const MarkerId('selected_location'),
                                 position: position,
+                                icon:
+                                    state.markerIcon ??
+                                    BitmapDescriptor.defaultMarker,
                               ),
                             );
                             userAddressCubit.doEvent(

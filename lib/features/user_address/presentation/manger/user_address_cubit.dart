@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'dart:ui' as ui;
 
 import 'package:flower_app/config/base_state/base_state.dart';
 import 'package:flower_app/config/error_handling/result.dart';
+import 'package:flower_app/core/utils/app_assets.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_events.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/bitmap.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 import 'package:injectable/injectable.dart';
 
@@ -63,6 +67,8 @@ class UserAddressCubit extends Cubit<UserAddressState> {
         _setSelectedCity(event.city);
       case SetLocationEvent():
         _setSelectedLocation(event.location);
+      case SetMarkerIconEvent():
+        _setMarkerIcon();
     }
   }
 
@@ -306,5 +312,19 @@ class UserAddressCubit extends Cubit<UserAddressState> {
         selectedCity: state.selectedCity,
       ),
     );
+  }
+
+  Future<void> _setMarkerIcon() async {
+    final svgString = await rootBundle.loadString(AppAssets.locationPicker);
+
+    final pictureInfo = await vg.loadPicture(SvgStringLoader(svgString), null);
+
+    final image = await pictureInfo.picture.toImage(45, 45);
+
+    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
+    final markerIcon = BitmapDescriptor.bytes(byteData!.buffer.asUint8List());
+
+    emit(state.copyWith(markerIcon: markerIcon));
   }
 }

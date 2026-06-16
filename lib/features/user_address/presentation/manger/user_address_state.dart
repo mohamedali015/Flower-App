@@ -20,6 +20,7 @@ class UserAddressState extends Equatable {
     this.selectedCity,
     this.filteredCities,
     this.selectedLocation,
+    this.markerIcon
   });
 
   final BaseState addUserAddressState;
@@ -34,6 +35,7 @@ class UserAddressState extends Equatable {
   final Governorate? selectedGovernorate;
   final City? selectedCity;
   final LatLng? selectedLocation;
+  final BitmapDescriptor? markerIcon;
 
   UserAddressState copyWith({
     BaseState<List<Address>>? addUserAddressState,
@@ -49,6 +51,7 @@ class UserAddressState extends Equatable {
     City? selectedCity,
     LatLng? selectedLocation,
     Governorate? selectedGovernorate,
+    BitmapDescriptor? markerIcon,
   }) {
     return UserAddressState(
       addUserAddressState: addUserAddressState ?? this.addUserAddressState,
@@ -66,6 +69,7 @@ class UserAddressState extends Equatable {
       selectedCity: selectedCity,
       selectedGovernorate: selectedGovernorate,
       selectedLocation: selectedLocation,
+      markerIcon: markerIcon ?? this.markerIcon
     );
   }
 
@@ -83,5 +87,6 @@ class UserAddressState extends Equatable {
     selectedGovernorate,
     selectedCity,
     selectedLocation,
+    markerIcon
   ];
 }

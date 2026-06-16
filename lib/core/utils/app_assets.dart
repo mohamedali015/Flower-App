@@ -17,6 +17,7 @@ abstract class AppAssets {
   static const String sortIcons = "$_baseIconsPath/sort.svg";
 
   static const String location = "$_baseIconsPath/location.svg";
+  static const String locationPicker = "$_baseIconsPath/location_picker.svg";
   static const String myOrders = "$_baseIconsPath/orders.svg";
   static const String pinkArrow = "$_baseIconsPath/pink_arrow.svg";
 

@@ -49,8 +49,11 @@ class SetSelectedCityEvent extends UserAddressEvents {
   City city;
 }
 
-class SetLocationEvent extends UserAddressEvents{
+class SetMarkerIconEvent extends UserAddressEvents {}
+
+class SetLocationEvent extends UserAddressEvents {
   SetLocationEvent(this.location);
+
   LatLng location;
 }
 
