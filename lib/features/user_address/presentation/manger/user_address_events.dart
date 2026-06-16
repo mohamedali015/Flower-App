@@ -1,4 +1,5 @@
 import 'package:flower_app/features/user_address/data/models/governorate.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data/models/address_dto.dart';
 import '../../data/models/city.dart';
@@ -46,6 +47,11 @@ class SetSelectedCityEvent extends UserAddressEvents {
   SetSelectedCityEvent(this.city);
 
   City city;
+}
+
+class SetLocationEvent extends UserAddressEvents{
+  SetLocationEvent(this.location);
+  LatLng location;
 }
 
 class GetLoggedUserAddressEvent extends UserAddressEvents {}

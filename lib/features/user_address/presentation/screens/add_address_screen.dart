@@ -37,6 +37,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       Completer<GoogleMapController>();
   late UserAddressCubit userAddressCubit;
 
+  Set<Marker> markers = {};
+
   @override
   void initState() {
     addressController = TextEditingController();
@@ -93,21 +95,32 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             children: [
               BlocBuilder<UserAddressCubit, UserAddressState>(
                 buildWhen: (previous, current) =>
-                    previous.mapLoading != current.mapLoading,
+                    previous.mapLoading != current.mapLoading ||
+                    previous.selectedLocation != current.selectedLocation,
                 builder: (context, state) {
                   return SizedBox(
                     height: MyResponsive.height(context, value: 145),
                     child: Stack(
                       children: [
                         GoogleMap(
-                          onTap: (argument) {
-                            print("${argument.latitude},${argument.longitude}");
+                          onTap: (position) {
+                            markers.clear();
+                            markers.add(
+                              Marker(
+                                markerId: const MarkerId('selected_location'),
+                                position: position,
+                              ),
+                            );
+                            userAddressCubit.doEvent(
+                              SetLocationEvent(position),
+                            );
                           },
                           initialCameraPosition: AddAddressScreen._kGooglePlex,
                           onMapCreated: (GoogleMapController controller) {
                             _controller.complete(controller);
                             userAddressCubit.doEvent(MapLoadingEvent(false));
                           },
+                          markers: markers,
                         ),
                         if (state.mapLoading)
                           const Center(child: CircularProgressIndicator()),

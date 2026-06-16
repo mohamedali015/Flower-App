@@ -6,6 +6,7 @@ import 'package:flower_app/features/user_address/presentation/manger/user_addres
 import 'package:flower_app/features/user_address/presentation/manger/user_address_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/address_dto.dart';
@@ -60,6 +61,8 @@ class UserAddressCubit extends Cubit<UserAddressState> {
         _setSelectedGovernorate(governorate: event.governorate);
       case SetSelectedCityEvent():
         _setSelectedCity(event.city);
+      case SetLocationEvent():
+        _setSelectedLocation(event.location);
     }
   }
 
@@ -278,9 +281,6 @@ class UserAddressCubit extends Cubit<UserAddressState> {
         filteredCities: filteredCities,
       ),
     );
-    print('selected gov ${state.selectedGovernorate}');
-    print('selected city ${state.selectedCity}');
-    print('selected filterCity ${state.filteredCities?.length}');
   }
 
   void _setSelectedCity(City? city) {
@@ -295,5 +295,16 @@ class UserAddressCubit extends Cubit<UserAddressState> {
     }).toList();
 
     return filteredCities;
+  }
+
+  void _setSelectedLocation(LatLng location) {
+    emit(
+      state.copyWith(
+        selectedLocation: location,
+        filteredCities: state.filteredCities,
+        selectedGovernorate: state.selectedGovernorate,
+        selectedCity: state.selectedCity,
+      ),
+    );
   }
 }

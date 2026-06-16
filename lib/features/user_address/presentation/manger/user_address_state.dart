@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flower_app/config/base_state/base_state.dart';
 import 'package:flower_app/features/user_address/data/models/city.dart';
 import 'package:flower_app/features/user_address/domain/entities/address.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../data/models/governorate.dart';
 
@@ -18,6 +19,7 @@ class UserAddressState extends Equatable {
     this.selectedGovernorate,
     this.selectedCity,
     this.filteredCities,
+    this.selectedLocation,
   });
 
   final BaseState addUserAddressState;
@@ -31,6 +33,7 @@ class UserAddressState extends Equatable {
   final List<City>? filteredCities;
   final Governorate? selectedGovernorate;
   final City? selectedCity;
+  final LatLng? selectedLocation;
 
   UserAddressState copyWith({
     BaseState<List<Address>>? addUserAddressState,
@@ -44,6 +47,7 @@ class UserAddressState extends Equatable {
     bool? mapLoading,
     int? governorateID,
     City? selectedCity,
+    LatLng? selectedLocation,
     Governorate? selectedGovernorate,
   }) {
     return UserAddressState(
@@ -60,7 +64,8 @@ class UserAddressState extends Equatable {
       cities: cities ?? this.cities,
       filteredCities: filteredCities,
       selectedCity: selectedCity,
-      selectedGovernorate: selectedGovernorate
+      selectedGovernorate: selectedGovernorate,
+      selectedLocation: selectedLocation,
     );
   }
 
@@ -77,5 +82,6 @@ class UserAddressState extends Equatable {
     filteredCities,
     selectedGovernorate,
     selectedCity,
+    selectedLocation,
   ];
 }
