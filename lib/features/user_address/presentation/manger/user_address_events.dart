@@ -37,9 +37,7 @@ class LoadCitiesEvent extends UserAddressEvents {}
 class LoadGovernorateEvent extends UserAddressEvents {}
 
 class SetSelectedGovernorateEvent extends UserAddressEvents {
-  SetSelectedGovernorateEvent({
-    required this.governorate,
-  });
+  SetSelectedGovernorateEvent(this.governorate);
 
   Governorate governorate;
 }

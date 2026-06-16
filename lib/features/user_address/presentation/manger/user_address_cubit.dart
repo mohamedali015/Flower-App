@@ -275,14 +275,18 @@ class UserAddressCubit extends Cubit<UserAddressState> {
     emit(
       state.copyWith(
         selectedGovernorate: governorate,
-        selectedCity: null,
         filteredCities: filteredCities,
       ),
     );
+    print('selected gov ${state.selectedGovernorate}');
+    print('selected city ${state.selectedCity}');
+    print('selected filterCity ${state.filteredCities?.length}');
   }
 
   void _setSelectedCity(City? city) {
-    emit(state.copyWith(selectedCity: city));
+    emit(
+      state.copyWith(selectedCity: city, filteredCities: state.filteredCities),
+    );
   }
 
   List<City>? _loadFilteredCities(int governorateID) {

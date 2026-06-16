@@ -167,9 +167,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           onChanged: (governorate) {
                             if (governorate != null) {
                               userAddressCubit.doEvent(
-                                SetSelectedGovernorateEvent(
-                                  governorate: governorate,
-                                ),
+                                SetSelectedGovernorateEvent(governorate),
                               );
                             }
                           },
@@ -181,7 +179,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   Expanded(
                     child: BlocBuilder<UserAddressCubit, UserAddressState>(
                       buildWhen: (previous, current) =>
-                          previous.filteredCities != current.filteredCities,
+                          previous.filteredCities != current.filteredCities ||
+                          previous.selectedCity != current.selectedCity,
                       builder: (BuildContext context, state) {
                         return DropdownButtonFormField<City?>(
                           initialValue: state.selectedCity,
