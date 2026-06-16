@@ -4,7 +4,11 @@ import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../config/cart/data/model/request/add_to_cart_request.dart';
+import '../../config/cart/manager/cart_cubit.dart';
+import '../../config/cart/manager/cart_event.dart';
 import 'cached_network_image_wrapper.dart';
 import 'custom_add_to_cart.dart';
 
@@ -110,7 +114,16 @@ class ProductCard extends StatelessWidget {
             const SizedBox(height: 8),
 
             CustomAddToCart(
-              productId: product.id,
+              onPressed: () {
+                context.read<CartCubit>().doEvent(
+                  AddToCart(
+                    AddToCartRequest(
+                      product: product.id,
+                      quantity: 1,
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),

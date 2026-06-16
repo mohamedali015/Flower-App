@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../../../config/base_state/base_state.dart';
+import '../../../../config/cart/domain/entities/get_cart_entity.dart';
 import '../../../../core/helpers/my_responsive.dart';
 import '../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_text_styles.dart';
-import '../../domain/entities/get_cart_entity.dart';
 
 class CustomHeaderCart extends StatelessWidget {
   const CustomHeaderCart({super.key, required this.getCart});

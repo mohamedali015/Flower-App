@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../../config/cart/domain/entities/get_cart_entity.dart';
 import '../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_text_styles.dart';
-import '../../domain/entities/get_cart_entity.dart';
 
 class CustomTotalPrice extends StatelessWidget {
   const CustomTotalPrice({

@@ -1,15 +1,9 @@
-import 'dart:ui';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flower_app/config/notification_services/notification_service.dart';
-import 'package:flower_app/core/helpers/custom_logger.dart';
 import 'package:flower_app/core/utils/app_constants.dart';
-import 'package:flower_app/features/notifications/presentation/manager/notifications_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'config/cart/manager/cart_cubit.dart';
+import 'config/cart/manager/cart_event.dart';
 import 'config/di/di.dart';
 import 'config/route_manager/route_generator.dart';
 import 'config/route_manager/routes.dart';
@@ -78,6 +72,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => getIt<LocaleCubit>()),
 
         BlocProvider(create: (_) => getIt<NotificationsCubit>()),
+        BlocProvider(
+          create: (_) =>
+          getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
+        ),
       ],
       child: BlocBuilder<LocaleCubit, Locale>(
         builder: (context, locale) {

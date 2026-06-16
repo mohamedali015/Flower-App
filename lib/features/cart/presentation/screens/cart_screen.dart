@@ -5,12 +5,12 @@ import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../config/cart/manager/cart_cubit.dart';
+import '../../../../config/cart/manager/cart_event.dart';
+import '../../../../config/cart/manager/cart_state.dart';
 import '../../../../config/route_manager/routes.dart';
 import '../../../../core/shared_widgets/custom_button.dart';
 import '../../../../core/utils/app_colors.dart';
-import '../manager/cart_cubit.dart';
-import '../manager/cart_event.dart';
-import '../manager/cart_state.dart';
 import '../widget/custom_cart_item.dart';
 import '../widget/custom_total_price.dart';
 
