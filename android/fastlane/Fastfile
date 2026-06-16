@@ -1,0 +1,47 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Build Flutter AppBundle (APK) for release"
+  lane :build_apk_release do
+    UI.message("Cleaning Flutter project...")
+    sh "flutter clean"
+
+    UI.message("Building Flutter APK for release...")
+    sh "flutter build apk --release"
+
+    UI.success("APK built successfully at: build/app/outputs/flutter-apk/app-release.apk 🎉")
+  end
+
+  desc "Deploy APK to Google Play Internal Testing Track"
+  lane :deploy_internal do
+    build_apk_release
+
+    UI.message("Uploading to Google Play Internal Testing Track...")
+   firebase_app_distribution(
+     app: "1:1035074510871:android:0061ef9392b42fb30c3c52",
+     firebase_cli_token: ENV['FIREBASE_TOKEN'],
+     android_artifact_type: "APK",
+     android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
+     release_notes: "fastlane deployment",
+     groups: "elevate_team1_flower_app_testers",
+     debug: true
+    )
+
+    UI.success("Deployment to firebase Internal Testing completed! 🚀")
+  end
+end

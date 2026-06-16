@@ -40,23 +40,24 @@ class _CategoryView extends StatefulWidget {
 
 class _CategoryViewState extends State<_CategoryView> {
   late int selectedIndex;
-
   bool isFirstLoad = true;
 
   @override
   void initState() {
     super.initState();
-
     selectedIndex = widget.initialIndex;
   }
 
   void _loadProducts(CategoryState state) {
-    /// ALL TAB
     if (selectedIndex == 0) {
       context.read<CategoryCubit>().doEvent(
-        ProductEvent(categoryId: const ProductQueryParams(categoryId: null)),
+        ProductEvent(
+          categoryId: ProductQueryParams(
+            categoryId: null,
+            sort: state.selectedSortOption,
+          ),
+        ),
       );
-
       return;
     }
 
@@ -66,7 +67,12 @@ class _CategoryViewState extends State<_CategoryView> {
       final categoryId = state.categories[selectedIndex - 1].id!;
 
       context.read<CategoryCubit>().doEvent(
-        ProductEvent(categoryId: ProductQueryParams(categoryId: categoryId)),
+        ProductEvent(
+          categoryId: ProductQueryParams(
+            categoryId: categoryId,
+            sort: state.selectedSortOption,
+          ),
+        ),
       );
     }
   }
@@ -82,7 +88,15 @@ class _CategoryViewState extends State<_CategoryView> {
         children: [
           SizedBox(height: MyResponsive.height(context, value: 50)),
 
-          const CustomHeaderCategory(),
+          BlocBuilder<CategoryCubit, CategoryState>(
+            buildWhen: (previous, current) =>
+                previous.selectedCategoryId != current.selectedCategoryId,
+            builder: (context, state) {
+              return CustomHeaderCategory(
+                currentCategoryId: state.selectedCategoryId ?? '',
+              );
+            },
+          ),
 
           SizedBox(height: MyResponsive.height(context, value: 10)),
 
@@ -104,7 +118,6 @@ class _CategoryViewState extends State<_CategoryView> {
                   });
                 }
               },
-
               builder: (context, state) {
                 /// CATEGORY LOADING
                 if (state.isLoading) {
@@ -181,15 +194,11 @@ class _CategoryViewState extends State<_CategoryView> {
                             onRefresh: () async {
                               _loadProducts(state);
                             },
-
                             child: CustomGridView(
                               physics: const AlwaysScrollableScrollPhysics(),
-
                               itemCount: state.products.length,
-
                               itemBuilder: (context, index) {
                                 final product = state.products[index];
-
                                 return ProductCard(product: product);
                               },
                             ),
@@ -202,7 +211,6 @@ class _CategoryViewState extends State<_CategoryView> {
               },
             ),
           ),
-
           SizedBox(height: MyResponsive.height(context, value: 10)),
         ],
       ),

@@ -42,6 +42,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
       child: Column(
         children: [
           TextFormField(
+            obscureText: true,
             enabled: !widget.isLoading,
             controller: widget.passwordController,
             validator: Validator.password,
@@ -56,6 +57,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
           SizedBox(height: MyResponsive.height(context, value: 18)),
 
           TextFormField(
+            obscureText: true,
             controller: widget.newPasswordController,
             enabled: !widget.isLoading,
             validator: Validator.password,
@@ -75,6 +77,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
           SizedBox(height: MyResponsive.height(context, value: 18)),
 
           TextFormField(
+            obscureText: true,
             enabled: !widget.isLoading,
             validator: (value) => Validator.confirmPassword(
               value,
