@@ -24,11 +24,11 @@ void main() {
   late CheckoutCubit cubit;
 
   setUpAll(() {
-    provideDummy<Result<CashorderEntity>>(
-      Success<CashorderEntity>(data: const CashorderEntity()),
+    provideDummy<Result<CashOrderEntity>>(
+      Success<CashOrderEntity>(data: const CashOrderEntity()),
     );
-    provideDummy<Result<CashorderEntity>>(
-      Failure<CashorderEntity>(errorMessage: 'dummy'),
+    provideDummy<Result<CashOrderEntity>>(
+      Failure<CashOrderEntity>(errorMessage: 'dummy'),
     );
     provideDummy<Result<CreditPaymentEntity>>(
       Success<CreditPaymentEntity>(data: const CreditPaymentEntity()),
@@ -61,11 +61,11 @@ void main() {
 
     test('emits loading and success states when cash payment succeeds', () async {
       // Arrange
-      const expectedEntity = CashorderEntity(message: 'Success');
+      const expectedEntity = CashOrderEntity(message: 'Success');
       when(mockSecureCache.getData(key: 'token'))
           .thenAnswer((_) async => token);
       when(mockCashPaymentUsecase.call(any))
-          .thenAnswer((_) async => Success<CashorderEntity>(data: expectedEntity));
+          .thenAnswer((_) async => Success<CashOrderEntity>(data: expectedEntity));
 
       // Assert expected states in order
       expectLater(
@@ -92,7 +92,7 @@ void main() {
       when(mockSecureCache.getData(key: 'token'))
           .thenAnswer((_) async => token);
       when(mockCashPaymentUsecase.call(any))
-          .thenAnswer((_) async => Failure<CashorderEntity>(errorMessage: 'Error'));
+          .thenAnswer((_) async => Failure<CashOrderEntity>(errorMessage: 'Error'));
 
       // Assert expected states in order
       expectLater(

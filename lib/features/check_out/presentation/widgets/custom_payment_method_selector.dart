@@ -10,11 +10,14 @@ class PaymentMethodSelector extends StatelessWidget {
     required this.selectedMethod,
     required this.onChanged,
     required this.onCardSelected,
+    required this.availableMethods,
   });
 
   final PaymentMethod? selectedMethod;
   final ValueChanged<PaymentMethod> onChanged;
   final VoidCallback onCardSelected;
+
+  final List<PaymentMethod> availableMethods;
 
   @override
   Widget build(BuildContext context) {
@@ -33,24 +36,29 @@ class PaymentMethodSelector extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          _paymentCard(
-            context: context,
-            title: local.cashOnDelivery,
-            isSelected: selectedMethod == PaymentMethod.cash,
-            onTap: () => onChanged(PaymentMethod.cash),
-          ),
+          /// ================= CASH =================
+          if (availableMethods.contains(PaymentMethod.cash))
+            _paymentCard(
+              context: context,
+              title: local.cashOnDelivery,
+              isSelected: selectedMethod == PaymentMethod.cash,
+              onTap: () => onChanged(PaymentMethod.cash),
+            ),
 
-          const SizedBox(height: 8),
+          if (availableMethods.contains(PaymentMethod.cash))
+            const SizedBox(height: 8),
 
-          _paymentCard(
-            context: context,
-            title: local.creditCard,
-            isSelected: selectedMethod == PaymentMethod.card,
-            onTap: () {
-              onChanged(PaymentMethod.card);
-              onCardSelected();
-            },
-          ),
+          /// ================= CARD =================
+          if (availableMethods.contains(PaymentMethod.card))
+            _paymentCard(
+              context: context,
+              title: local.creditCard,
+              isSelected: selectedMethod == PaymentMethod.card,
+              onTap: () {
+                onChanged(PaymentMethod.card);
+                onCardSelected();
+              },
+            ),
         ],
       ),
     );

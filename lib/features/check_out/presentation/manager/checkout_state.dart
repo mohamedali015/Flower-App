@@ -1,7 +1,7 @@
 part of 'checkout_cubit.dart';
 
 class CheckoutState extends Equatable {
-  final BaseState<CashorderEntity> cashPaymentState;
+  final BaseState<CashOrderEntity> cashPaymentState;
   final BaseState<CreditPaymentEntity> creditPaymentState;
 
   const CheckoutState({
@@ -10,7 +10,7 @@ class CheckoutState extends Equatable {
   });
 
   CheckoutState copyWith({
-    BaseState<CashorderEntity>? cashPaymentState,
+    BaseState<CashOrderEntity>? cashPaymentState,
     BaseState<CreditPaymentEntity>? creditPaymentState,
   }) {
     return CheckoutState(

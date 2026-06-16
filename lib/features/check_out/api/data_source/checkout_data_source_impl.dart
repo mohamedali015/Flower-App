@@ -14,19 +14,18 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   CheckoutDataSourceImpl(this._checkoutApiClient);
 
   @override
-  Future<Result<CashOrderResponse>> cashOrder(String token) {
+  Future<Result<CashOrderResponse>> cashOrder({required CheckoutPaymentRequest request}) {
     return executeApi(() async {
-      return _checkoutApiClient.cashOrder(token);
+      return _checkoutApiClient.cashOrder(request);
     });
   }
 
   @override
   Future<Result<CreditPaymentResponse>> creditCheckout(
-    String token,
-    CheckoutPaymentRequest request,
+      {required String url,required CheckoutPaymentRequest request,}
   ) {
     return executeApi(() async {
-      return _checkoutApiClient.creditCheckout(token, request);
+      return _checkoutApiClient.creditCheckout(url, request);
     });
   }
 }

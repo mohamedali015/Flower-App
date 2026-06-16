@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 
-class CashorderEntity extends Equatable {
+class CashOrderEntity extends Equatable {
   final String? message;
   final OrderEntity? order;
 
-  const CashorderEntity({this.message, this.order});
+  const CashOrderEntity({this.message, this.order});
 
   @override
   List<Object?> get props => [message, order];

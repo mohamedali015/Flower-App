@@ -17,8 +17,8 @@ class CheckoutRepoImpl implements CheckoutRepo {
   CheckoutRepoImpl(this._checkoutDataSource, this.secureCache);
 
   @override
-  Future<Result<CashorderEntity>> cashorder(String token) async {
-    final response = await _checkoutDataSource.cashOrder(token);
+  Future<Result<CashOrderEntity>> cashOrder({required CheckoutPaymentRequest request}) async {
+    final response = await _checkoutDataSource.cashOrder(request: request);
 
     switch (response) {
       case Success<CashOrderResponse>():
@@ -29,11 +29,11 @@ class CheckoutRepoImpl implements CheckoutRepo {
   }
 
   @override
-  Future<Result<CreditPaymentEntity>> creditcheckout(
-    String token,
-    CheckoutPaymentRequest request,
+  Future<Result<CreditPaymentEntity>> creditCheckout(
+      {required String url,
+        required CheckoutPaymentRequest request,}
   ) async {
-    final response = await _checkoutDataSource.creditCheckout(token, request);
+    final response = await _checkoutDataSource.creditCheckout(url: url,request: request);
 
     switch (response) {
       case Success<CreditPaymentResponse>():

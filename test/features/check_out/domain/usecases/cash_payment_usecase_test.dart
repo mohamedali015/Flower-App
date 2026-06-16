@@ -14,11 +14,11 @@ void main() {
   late CashPaymentUsecase usecase;
 
   setUpAll(() {
-    provideDummy<Result<CashorderEntity>>(
-      Success<CashorderEntity>(data: const CashorderEntity()),
+    provideDummy<Result<CashOrderEntity>>(
+      Success<CashOrderEntity>(data: const CashOrderEntity()),
     );
-    provideDummy<Result<CashorderEntity>>(
-      Failure<CashorderEntity>(errorMessage: 'dummy'),
+    provideDummy<Result<CashOrderEntity>>(
+      Failure<CashOrderEntity>(errorMessage: 'dummy'),
     );
   });
 
@@ -32,30 +32,30 @@ void main() {
 
     test('should return Success<CashorderEntity> when repo succeeds', () async {
       // Arrange
-      const expectedEntity = CashorderEntity(message: 'Success');
+      const expectedEntity = CashOrderEntity(message: 'Success');
       when(mockRepo.cashorder(any))
-          .thenAnswer((_) async => Success<CashorderEntity>(data: expectedEntity));
+          .thenAnswer((_) async => Success<CashOrderEntity>(data: expectedEntity));
 
       // Act
       final result = await usecase.call(token);
 
       // Assert
-      expect(result, isA<Success<CashorderEntity>>());
-      expect((result as Success<CashorderEntity>).data, expectedEntity);
+      expect(result, isA<Success<CashOrderEntity>>());
+      expect((result as Success<CashOrderEntity>).data, expectedEntity);
       verify(mockRepo.cashorder(token)).called(1);
     });
 
     test('should return Failure<CashorderEntity> when repo fails', () async {
       // Arrange
       when(mockRepo.cashorder(any))
-          .thenAnswer((_) async => Failure<CashorderEntity>(errorMessage: 'Error'));
+          .thenAnswer((_) async => Failure<CashOrderEntity>(errorMessage: 'Error'));
 
       // Act
       final result = await usecase.call(token);
 
       // Assert
-      expect(result, isA<Failure<CashorderEntity>>());
-      expect((result as Failure<CashorderEntity>).errorMessage, 'Error');
+      expect(result, isA<Failure<CashOrderEntity>>());
+      expect((result as Failure<CashOrderEntity>).errorMessage, 'Error');
       verify(mockRepo.cashorder(token)).called(1);
     });
   });

@@ -3,7 +3,7 @@ import '../../../../../core/helpers/validator.dart';
 import '../../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_text_styles.dart';
-import '../../../../auth/presentation/widgets/register/custom_phone_field.dart';
+import '../../../auth/presentation/widgets/register/custom_phone_field.dart';
 
 class CustomSwitchFields extends StatelessWidget {
   const CustomSwitchFields({

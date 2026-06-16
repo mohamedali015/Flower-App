@@ -53,8 +53,8 @@ void main() {
       final result = await repo.cashorder(token);
 
       // Assert
-      expect(result, isA<Success<CashorderEntity>>());
-      expect((result as Success<CashorderEntity>).data, const CashorderEntity());
+      expect(result, isA<Success<CashOrderEntity>>());
+      expect((result as Success<CashOrderEntity>).data, const CashOrderEntity());
       verify(mockDataSource.cashOrder(token)).called(1);
     });
 
@@ -67,8 +67,8 @@ void main() {
       final result = await repo.cashorder(token);
 
       // Assert
-      expect(result, isA<Failure<CashorderEntity>>());
-      expect((result as Failure<CashorderEntity>).errorMessage, 'Error');
+      expect(result, isA<Failure<CashOrderEntity>>());
+      expect((result as Failure<CashOrderEntity>).errorMessage, 'Error');
       verify(mockDataSource.cashOrder(token)).called(1);
     });
   });

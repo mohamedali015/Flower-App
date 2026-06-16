@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../config/route_manager/routes.dart';
 import '../../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../../core/shared_widgets/custom_button.dart';
@@ -9,11 +8,12 @@ import '../../../../../core/utils/app_text_styles.dart';
 import '../../../../user_address/domain/entities/address.dart';
 import '../../../../user_address/presentation/manger/user_address_cubit.dart';
 import '../../../../user_address/presentation/manger/user_address_state.dart';
-import '../widgets/custom_checkout_button.dart';
-import '../widgets/custom_delivery_address.dart';
-import '../widgets/custom_switch_fields.dart';
+import '../../widgets/custom_checkout_button.dart';
+import '../../widgets/custom_delivery_address.dart';
+import '../../widgets/custom_switch_fields.dart';
 
 class AddressStep extends StatefulWidget {
+
   const AddressStep({
     super.key,
     required this.onNext,
@@ -58,8 +58,7 @@ class _AddressStepState extends State<AddressStep> {
 
   bool get isFormValid {
     if (isEnabled) {
-      return nameController.text.isNotEmpty &&
-          phoneController.text.isNotEmpty;
+      return nameController.text.isNotEmpty && phoneController.text.isNotEmpty;
     }
     return selectedAddress != null;
   }
@@ -71,7 +70,8 @@ class _AddressStepState extends State<AddressStep> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// SWITCH
+
+        /// Gift Option
         CustomSwitchFields(
           value: isEnabled,
           onChanged: (value) {
@@ -95,7 +95,6 @@ class _AddressStepState extends State<AddressStep> {
                 .copyWith(fontWeight: FontWeight.bold),
           ),
         ),
-
         const SizedBox(height: 8),
 
         /// ADDRESS LIST
@@ -105,11 +104,8 @@ class _AddressStepState extends State<AddressStep> {
             opacity: isEnabled ? 0.5 : 1,
             child: BlocBuilder<UserAddressCubit, UserAddressState>(
               builder: (context, state) {
-                final loading =
-                    state.getLoggedUserAddressState.isLoading;
-
-                final addresses =
-                    state.currentUserAddresses ?? <Address>[];
+                final loading = state.getLoggedUserAddressState.isLoading;
+                final addresses = state.currentUserAddresses ?? <Address>[];
 
                 if (loading) {
                   return const Padding(
@@ -149,8 +145,7 @@ class _AddressStepState extends State<AddressStep> {
                 }
 
                 return Column(
-                  children: [
-                    ...addresses.map(
+                  children: [...addresses.map(
                           (address) => GestureDetector(
                         onTap: () => selectAddress(address),
                         child: CustomDeliveryAddress(
@@ -199,7 +194,7 @@ class _AddressStepState extends State<AddressStep> {
 
         const Spacer(),
 
-        /// NEXT BUTTON
+        ///?  Next
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
@@ -207,20 +202,16 @@ class _AddressStepState extends State<AddressStep> {
           ),
           child: CustomCheckoutButton(
             title: local.next,
-            errorMessage: isEnabled
-                ? local.invalidData
-                : local.pleaseSelectAddress,
+            errorMessage: isEnabled ? local.invalidData : local.pleaseSelectAddress,
             validator: () => isFormValid,
             onNext: () {
               if (!isFormValid) return;
-              final Address addressToSend = selectedAddress!;
               widget.onAddressSelected(
                 isGift: isEnabled,
-                address: addressToSend,
+                address: isEnabled ? null : selectedAddress,
                 giftName: isEnabled ? nameController.text : null,
                 giftPhone: isEnabled ? phoneController.text : null,
               );
-
               widget.onNext();
             },
           ),

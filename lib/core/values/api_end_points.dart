@@ -23,6 +23,6 @@ abstract class ApiEndPoints {
   static const addressById = "$userAddress/{id}";
 
     static const String orders = 'orders';
-  static const String cashOrderCheckout = "/cash-order";
-  static const String creditCheckout = '$orders/checkout';
+  static const String cashOrderCheckout = "/orders";
+  static const String creditCheckout = '/orders/checkout';
 }

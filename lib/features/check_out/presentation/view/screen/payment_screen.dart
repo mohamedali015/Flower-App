@@ -6,12 +6,10 @@ import '../../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../cart/presentation/manager/cart_cubit.dart';
 import '../../../../cart/presentation/manager/cart_state.dart';
 import '../../../../cart/presentation/widget/custom_total_price.dart';
-import '../widgets/custom_checkout_button.dart';
-import '../widgets/custom_payment_method_selector.dart';
+import '../../widgets/custom_checkout_button.dart';
+import '../../widgets/custom_payment_method_selector.dart';
 
 import '../../../../check_out/data/models/request/credit_payment_request.dart';
-import '../../../../check_out/presentation/manager/checkout_cubit.dart';
-import '../../../../check_out/presentation/manager/checkout_intents.dart';
 
 class PaymentStep extends StatefulWidget {
   const PaymentStep({
@@ -20,10 +18,14 @@ class PaymentStep extends StatefulWidget {
     required this.onBack,
     required this.onPaymentMethodSelected,
     required this.buildPaymentRequest,
+    required this.isGift,
   });
+
+  final bool isGift;
 
   final VoidCallback onNext;
   final VoidCallback onBack;
+
   final ValueChanged<PaymentMethod> onPaymentMethodSelected;
 
   final CheckoutPaymentRequest Function() buildPaymentRequest;
@@ -35,7 +37,16 @@ class PaymentStep extends StatefulWidget {
 class _PaymentStepState extends State<PaymentStep> {
   PaymentMethod? selectedMethod;
 
+  List<PaymentMethod> get _methods {
+    if (widget.isGift) {
+      return [PaymentMethod.card]; // 👈 Gift = Card only
+    }
 
+    return [
+      PaymentMethod.cash,
+      PaymentMethod.card,
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +54,17 @@ class _PaymentStepState extends State<PaymentStep> {
 
     return Column(
       children: [
+        /// ================= PAYMENT METHODS =================
         PaymentMethodSelector(
           selectedMethod: selectedMethod,
+          availableMethods: _methods,
+
           onChanged: (method) {
             setState(() {
               selectedMethod = method;
             });
           },
+
           onCardSelected: () {
             setState(() {
               selectedMethod = PaymentMethod.card;
@@ -57,6 +72,7 @@ class _PaymentStepState extends State<PaymentStep> {
           },
         ),
 
+        /// ================= TOTAL PRICE =================
         BlocBuilder<CartCubit, CartState>(
           builder: (context, state) {
             final cartData = state.getCartItemsState.data;
@@ -74,6 +90,7 @@ class _PaymentStepState extends State<PaymentStep> {
           },
         ),
 
+        /// ================= NEXT BUTTON =================
         Padding(
           padding: const EdgeInsets.all(16),
           child: CustomCheckoutButton(

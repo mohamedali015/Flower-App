@@ -23,8 +23,8 @@ class CashOrderResponse {
 
   Map<String, dynamic> toJson() => _$CashOrderResponseToJson(this);
 
-  CashorderEntity toEntity() {
-    return const CashorderEntity();
+  CashOrderEntity toEntity() {
+    return const CashOrderEntity();
   }
 }
 
