@@ -46,10 +46,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
   @override
   void initState() {
+    userAddressCubit = context.read<UserAddressCubit>();
     addressController = TextEditingController();
     phoneNumberController = TextEditingController();
     recipientNameController = TextEditingController();
     streetController = TextEditingController();
+    userAddressCubit.doEvent(SetMarkerIconEvent());
     if (widget.editAddress != null) {
       addressController.text =
           widget.editAddress!.placeMarks?.firstOrNull?.subAdministrativeArea ??
@@ -57,12 +59,22 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       phoneNumberController.text = widget.editAddress!.phone ?? "";
       recipientNameController.text = widget.editAddress!.username ?? "";
       streetController.text = widget.editAddress!.street ?? "";
+      markers.add(
+        Marker(
+          icon:
+              userAddressCubit.state.markerIcon ??
+              BitmapDescriptor.defaultMarker,
+          markerId: const MarkerId('selected_location'),
+          position: LatLng(
+            double.parse(widget.editAddress!.lat ?? ""),
+            double.parse(widget.editAddress!.long ?? ""),
+          ),
+        ),
+      );
     }
-    userAddressCubit = context.read<UserAddressCubit>();
     userAddressCubit.doEvent(MapLoadingEvent(true));
     userAddressCubit.doEvent(LoadGovernorateEvent());
     userAddressCubit.doEvent(LoadCitiesEvent());
-    userAddressCubit.doEvent(SetMarkerIconEvent());
     super.initState();
   }
 
@@ -327,7 +339,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     if (state.addUserAddressState.isSuccess ||
                         state.updateUserAddressState.isSuccess) {
                       if (widget.editAddress != null) {
-                        AppSnackBar.success(context,local.success_update_address);
+                        AppSnackBar.success(
+                          context,
+                          local.success_update_address,
+                        );
                       } else {
                         AppSnackBar.success(context, local.success_add_address);
                       }
