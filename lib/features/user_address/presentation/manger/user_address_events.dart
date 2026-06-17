@@ -1,8 +1,8 @@
 import 'package:flower_app/features/user_address/data/models/governorate.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../data/models/address_dto.dart';
 import '../../data/models/city.dart';
+import '../../domain/entities/address.dart';
 
 sealed class UserAddressEvents {
   const UserAddressEvents();
@@ -11,13 +11,13 @@ sealed class UserAddressEvents {
 class AddUserAddressEvent extends UserAddressEvents {
   const AddUserAddressEvent(this.address);
 
-  final AddressDto address;
+  final Address address;
 }
 
 class UpdateUserAddressEvent extends UserAddressEvents {
   const UpdateUserAddressEvent(this.address, this.addressId);
 
-  final AddressDto address;
+  final Address address;
   final String addressId;
 }
 

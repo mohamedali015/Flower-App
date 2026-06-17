@@ -120,10 +120,13 @@
          "address":"Address",
          "saved_address": "Saved Address",
          "add_address":"Add Address",
+         "street":"Street",
          "edit_address":"Edit Address",
          "update_address":"Update Address",
          "confirm_delete":"Confirm Delete",
          "delete":"Delete",
-         "recipient_name":"Recipient name"
+         "recipient_name":"Recipient name",
+         "success_add_address":"Address added successfully",
+         "success_update_address":"Address updated successfully"
 
 }

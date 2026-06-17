@@ -13,7 +13,6 @@ import 'package:google_maps_flutter_platform_interface/src/types/bitmap.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../data/models/address_dto.dart';
 import '../../data/models/city.dart';
 import '../../data/models/governorate.dart';
 import '../../data/models/user_address_dto.dart';
@@ -113,7 +112,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
     }
   }
 
-  Future<void> _addUserAddress({required AddressDto newAddress}) async {
+  Future<void> _addUserAddress({required Address newAddress}) async {
     emit(
       state.copyWith(
         addUserAddressState: const BaseState(
@@ -155,7 +154,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
   }
 
   Future<void> _updateUserAddress({
-    required AddressDto newAddress,
+    required Address newAddress,
     required String id,
   }) async {
     emit(
@@ -285,13 +284,18 @@ class UserAddressCubit extends Cubit<UserAddressState> {
       state.copyWith(
         selectedGovernorate: governorate,
         filteredCities: filteredCities,
+        selectedLocation: state.selectedLocation,
       ),
     );
   }
 
   void _setSelectedCity(City? city) {
     emit(
-      state.copyWith(selectedCity: city, filteredCities: state.filteredCities),
+      state.copyWith(
+        selectedCity: city,
+        filteredCities: state.filteredCities,
+        selectedLocation: state.selectedLocation,
+      ),
     );
   }
 

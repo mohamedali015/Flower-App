@@ -13,8 +13,9 @@ class AddUserAddressUseCase {
 
   final UserAddressRepoContract _userAddressRepo;
 
-  Future<Result<List<Address>>> call(AddressDto address) async {
-    var response = await _userAddressRepo.addUserAddress(address);
+  Future<Result<List<Address>>> call(Address address) async {
+    
+    var response = await _userAddressRepo.addUserAddress(AddressDto.fromEntity(address));
     switch (response) {
       case Success<List<Address>>():
         return Success(data: response.data);

@@ -35,6 +35,18 @@ class AddressDto {
   factory AddressDto.fromJson(Map<String, dynamic> json) =>
       _$AddressDtoFromJson(json);
 
+  factory AddressDto.fromEntity(Address address) {
+    return AddressDto(
+      street: address.street,
+      phone: address.phone,
+      city: address.city,
+      lat: address.lat,
+      long: address.long,
+      username: address.username,
+      id: address.id,
+    );
+  }
+
   Map<String, dynamic> toJson() => _$AddressDtoToJson(this);
 
   Future<Address> toEntity() async {

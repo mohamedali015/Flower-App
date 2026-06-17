@@ -11,8 +11,11 @@ class UpdateUserAddressUseCase {
 
   final UserAddressRepoContract _userAddressRepo;
 
-  Future<Result<List<Address>>> call(AddressDto address, String id) async {
-    var response = await _userAddressRepo.updateUserAddress(address, id);
+  Future<Result<List<Address>>> call(Address address, String id) async {
+    var response = await _userAddressRepo.updateUserAddress(
+      AddressDto.fromEntity(address),
+      id,
+    );
     switch (response) {
       case Success<List<Address>>():
         return Success(data: response.data);

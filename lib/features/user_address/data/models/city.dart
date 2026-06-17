@@ -32,6 +32,8 @@ class City extends Equatable {
   }
 
   @override
-  // TODO: implement props
+  String toString() => cityNameEn;
+
+  @override
   List<Object?> get props => [id, governorateId, cityNameAr, cityNameEn];
 }
