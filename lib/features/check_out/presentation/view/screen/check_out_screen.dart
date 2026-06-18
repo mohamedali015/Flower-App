@@ -1,8 +1,8 @@
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../config/enums/payment_method.dart';
-import '../../../../../config/route_manager/routes.dart';
 import '../../../../../config/user/manager/user_cubit.dart';
 import '../../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../cart/presentation/manager/cart_cubit.dart';
@@ -14,7 +14,6 @@ import '../../manager/checkout_intents.dart';
 import '../widgets/checkout_stepper.dart';
 import 'address_screen.dart';
 import 'payment_screen.dart';
-import 'payment_webview_screen.dart';
 import 'track_order_screen.dart';
 
 class CheckOutScreen extends StatefulWidget {
@@ -31,6 +30,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   Address? selectedAddress;
   String? giftName;
   String? giftPhone;
+
   PaymentMethod? selectedPaymentMethod;
 
   void nextStep() {
@@ -45,36 +45,42 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     }
   }
 
-  void _placeOrder() {
+  ShippingAddress _buildShippingAddress() {
     final userPhone =
-        context.read<UserCubit>().state.user?.phone ??
-            "+201234567890";
+        context.read<UserCubit>().state.user?.phone ?? "+201234567890";
+
+    if (isGift) {
+      return ShippingAddress(
+        street: "Gift to $giftName",
+        phone: giftPhone ?? userPhone,
+        city: selectedAddress?.city ?? "Cairo",
+        lat: selectedAddress?.lat ?? "30.0768",
+        long: selectedAddress?.long ?? "31.0182",
+      );
+    }
+
+    return ShippingAddress(
+      street: selectedAddress?.street ?? "",
+      phone: selectedAddress?.phone ?? userPhone,
+      city: selectedAddress?.city ?? "Cairo",
+      lat: selectedAddress?.lat ?? "30.0768",
+      long: selectedAddress?.long ?? "31.0182",
+    );
+  }
+
+  void _placeOrder() {
+    final cubit = context.read<CheckoutCubit>();
+    final address = _buildShippingAddress();
 
     if (selectedPaymentMethod == PaymentMethod.cash) {
-      context.read<CheckoutCubit>().doIntent(CashPaymentIntent());
+      cubit.doIntent(CashPaymentIntent());
       return;
     }
 
     if (selectedPaymentMethod == PaymentMethod.card) {
-      if (selectedAddress == null) return;
+      final request = CheckoutPaymentRequest(shippingAddress: address);
 
-      final request = CheckoutPaymentRequest(
-        shippingAddress: ShippingAddress(
-          street: isGift
-              ? "Gift to $giftName"
-              : (selectedAddress!.street ?? ""),
-          phone: isGift
-              ? (giftPhone ?? userPhone)
-              : (selectedAddress!.phone ?? userPhone),
-          city: selectedAddress!.city ?? "Cairo",
-          lat: selectedAddress!.lat ?? "30.0768",
-          long: selectedAddress!.long ?? "31.0182",
-        ),
-      );
-
-      context
-          .read<CheckoutCubit>()
-          .doIntent(CreditPaymentIntent(request));
+      cubit.doIntent(CreditPaymentIntent(request));
     }
   }
 
@@ -82,30 +88,29 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
 
-    final titles = [
-      local.address,
-      local.payment,
-      local.trackOrder,
-    ];
+    final titles = [local.address, local.payment, local.trackOrder];
 
     final pages = [
+      /// ================= ADDRESS =================
       AddressStep(
         onNext: nextStep,
-        onAddressSelected: ({
-          required bool isGift,
-          required Address? address,
-          required String? giftName,
-          required String? giftPhone,
-        }) {
-          setState(() {
-            this.isGift = isGift;
-            this.selectedAddress = address;
-            this.giftName = giftName;
-            this.giftPhone = giftPhone;
-          });
-        },
+        onAddressSelected:
+            ({
+              required bool isGift,
+              required Address? address,
+              required String? giftName,
+              required String? giftPhone,
+            }) {
+              setState(() {
+                this.isGift = isGift;
+                selectedAddress = address;
+                this.giftName = giftName;
+                this.giftPhone = giftPhone;
+              });
+            },
       ),
 
+      /// ================= PAYMENT =================
       PaymentStep(
         onNext: nextStep,
         onBack: previousStep,
@@ -113,27 +118,16 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           setState(() {
             selectedPaymentMethod = method;
           });
-        }, buildPaymentRequest: () {
-        final userPhone =
-            context.read<UserCubit>().state.user?.phone ??
-                "+201234567890";
-
-        return CheckoutPaymentRequest(
-          shippingAddress: ShippingAddress(
-            street: selectedAddress?.street ?? "",
-            phone: selectedAddress?.phone ?? userPhone,
-            city: selectedAddress?.city ?? "Cairo",
-            lat: selectedAddress?.lat ?? "30.0768",
-            long: selectedAddress?.long ?? "31.0182",
-          ),
-        );
-      },
+        },
+        buildPaymentRequest: () {
+          return CheckoutPaymentRequest(
+            shippingAddress: _buildShippingAddress(),
+          );
+        },
       ),
 
-      TrackOrderStep(
-        onBack: previousStep,
-        onPlaceOrder: _placeOrder,
-      ),
+      /// ================= TRACK ORDER =================
+      TrackOrderStep(onBack: previousStep, onPlaceOrder: _placeOrder),
     ];
 
     return Scaffold(
@@ -145,43 +139,42 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             if (currentStep > 0) {
               previousStep();
             } else {
-              Navigator.pushReplacementNamed(
-                context,
-                Routes.cartRoute,
-              );
+              Navigator.pop(context);
             }
           },
         ),
       ),
+
       body: BlocConsumer<CheckoutCubit, CheckoutState>(
         listener: (context, state) async {
           if (state.cashPaymentState.isSuccess) {
             context.read<CartCubit>().doEvent(GetCartItemsEvent());
+            Navigator.pushReplacementNamed(context, Routes.ordersRoute);
           }
 
           if (state.creditPaymentState.isSuccess) {
             final url = state.creditPaymentState.data?.session?.url;
 
             if (url != null) {
-              final result = await Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => PaymentWebViewScreen(url: url),
-                ),
+                Routes.paymentScreenRoute,
+                arguments: url,
               );
 
-              if (!context.mounted) return;
-
-              if (result == true) {
-                context.read<CartCubit>().doEvent(GetCartItemsEvent());
-              }
+              // if (!context.mounted) return;
+              //
+              // if (result == true) {
+              //   context.read<CartCubit>().doEvent(GetCartItemsEvent());
+              // }
             }
           }
         },
+
         builder: (context, state) {
           final isLoading =
               state.cashPaymentState.isLoading ||
-                  state.creditPaymentState.isLoading;
+              state.creditPaymentState.isLoading;
 
           return Stack(
             children: [
@@ -189,19 +182,15 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 children: [
                   CheckoutStepper(currentStep: currentStep),
                   Expanded(
-                    child: IndexedStack(
-                      index: currentStep,
-                      children: pages,
-                    ),
+                    child: IndexedStack(index: currentStep, children: pages),
                   ),
                 ],
               ),
+
               if (isLoading)
                 Container(
                   color: Colors.black45,
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: const Center(child: CircularProgressIndicator()),
                 ),
             ],
           );

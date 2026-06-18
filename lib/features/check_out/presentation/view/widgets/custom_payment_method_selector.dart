@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../config/enums/payment_method.dart';
 import '../../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../../core/utils/app_colors.dart';
