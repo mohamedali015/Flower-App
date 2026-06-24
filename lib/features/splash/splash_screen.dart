@@ -83,15 +83,10 @@ class _SplashScreenState extends State<SplashScreen>
     final isSuccess = results[1] as bool;
 
     if (isSuccess) {
-      _replaceTo(Routes.bottomNavBarRoute);
+      Navigator.pushReplacementNamed(context, Routes.bottomNavBarRoute);
     } else {
-      _replaceTo(Routes.loginRoute);
+      Navigator.pushReplacementNamed(context, Routes.loginRoute);
     }
-  }
-
-  void _replaceTo(String routeName) {
-    if (!mounted) return;
-    Navigator.pushReplacementNamed(context, routeName);
   }
 
   @override
@@ -118,7 +113,7 @@ class _SplashScreenState extends State<SplashScreen>
 
           if (state.user != null) {
             _dataResult.complete(true);
-          } else if (state.error != null) {
+          } else if (!state.isLoading) {
             _dataResult.complete(false);
           }
         },
