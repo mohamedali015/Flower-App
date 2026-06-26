@@ -1,22 +1,38 @@
+import 'package:flower_app/config/products/data/params/product_query_params.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
+import 'package:flower_app/core/localization/l10n/app_localizations.dart';
+import 'package:flower_app/core/shared_widgets/custom_grid_view.dart';
+import 'package:flower_app/core/shared_widgets/product_card.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
+import 'package:flower_app/core/utils/app_text_styles.dart';
+import 'package:flower_app/features/search/presentation/manager/search_cubit.dart';
+import 'package:flower_app/features/search/presentation/manager/search_event.dart';
+import 'package:flower_app/features/search/presentation/manager/search_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../config/products/data/params/product_query_params.dart';
-import '../../../../core/localization/l10n/app_localizations.dart';
-import '../../../../core/shared_widgets/custom_grid_view.dart';
-import '../../../../core/shared_widgets/product_card.dart';
-import '../../../../core/utils/app_text_styles.dart';
-import '../manager/search_cubit.dart';
-import '../manager/search_event.dart';
-import '../manager/search_state.dart';
 
-class SearchScreen extends StatelessWidget {
-  SearchScreen({super.key});
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
 
-  final TextEditingController _searchController =
-  TextEditingController();
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +50,7 @@ class SearchScreen extends StatelessWidget {
 
             SearchBar(
               controller: _searchController,
-
-              onChanged: (value) {
-                if (value.trim().isEmpty) {
-                  cubit.clearSearch();
-                  return;
-                }
-
-                cubit.getSearchEvent(
-                  SearchProductEvent(
-                    search: ProductQueryParams(search: value),
-                  ),
-                );
-              },
+              hintText: local.search,
 
               leading: const Icon(
                 CupertinoIcons.search,
@@ -54,20 +58,39 @@ class SearchScreen extends StatelessWidget {
               ),
 
               trailing: [
-                IconButton(
-                  onPressed: () {
-                    _searchController.clear();
-                    cubit.clearSearch();
-                    FocusScope.of(context).unfocus();
-                  },
-                  icon: const Icon(
-                    Icons.cancel,
-                    color: AppColors.textHint,
+                if (_searchController.text.isNotEmpty)
+                  IconButton(
+                    onPressed: () {
+                      _searchController.clear();
+                      cubit.clearSearch();
+
+                      setState(() {});
+
+                      FocusScope.of(context).unfocus();
+                    },
+                    icon: const Icon(
+                      Icons.cancel,
+                      color: AppColors.textHint,
+                    ),
                   ),
-                ),
               ],
 
-              hintText: local.search,
+              onChanged: (value) {
+                setState(() {});
+
+                if (value.trim().isEmpty) {
+                  cubit.clearSearch();
+                  return;
+                }
+
+                cubit.getSearchEvent(
+                  SearchProductEvent(
+                    search: ProductQueryParams(
+                      search: value.trim(),
+                    ),
+                  ),
+                );
+              },
 
               onSubmitted: (_) {
                 FocusScope.of(context).unfocus();
@@ -87,19 +110,31 @@ class SearchScreen extends StatelessWidget {
 
                   if (state.searchProductErrorMessage != null) {
                     return Center(
-                      child: Text(state.searchProductErrorMessage!),
+                      child: Text(
+                        state.searchProductErrorMessage!,
+                      ),
+                    );
+                  }
+
+                  final hasSearchText =
+                      _searchController.text.trim().isNotEmpty;
+
+                  if (!hasSearchText) {
+                    return Center(
+                      child: Text(
+                        local.searchForAnyProductYouWant,
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.medium14(context).copyWith(
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
                     );
                   }
 
                   if (state.searchProducts.isEmpty) {
-                    final hasSearchText =
-                        _searchController.text.trim().isNotEmpty;
-
                     return Center(
                       child: Text(
-                        hasSearchText
-                            ? local.noProductsFound
-                            : local.searchForAnyProductYouWant,
+                        local.noProductsFound,
                         textAlign: TextAlign.center,
                         style: AppTextStyles.medium14(context).copyWith(
                           color: AppColors.primaryColor,

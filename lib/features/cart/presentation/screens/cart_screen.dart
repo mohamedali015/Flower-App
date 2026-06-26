@@ -5,6 +5,7 @@ import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../config/route_manager/routes.dart';
 import '../../../../core/shared_widgets/custom_button.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../manager/cart_cubit.dart';
@@ -135,7 +136,10 @@ class CartScreen extends StatelessWidget {
                       deliveryFee: 10,
                     ),
                     const SizedBox(height: 30),
-                    CustomButton(title: "Check out", onPressed: () {}),
+                    CustomButton(
+                        title: local.checkout, onPressed: () {
+                      Navigator.pushNamed(context, Routes.checkOutRoute);
+                    }),
                     const SizedBox(height: 20),
                   ],
                 ),

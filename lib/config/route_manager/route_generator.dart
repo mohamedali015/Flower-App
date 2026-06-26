@@ -1,3 +1,4 @@
+import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_cubit.dart';
 import 'package:flower_app/config/di/di.dart';
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
@@ -28,6 +29,8 @@ import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
 import '../../features/cart/presentation/manager/cart_cubit.dart';
 import '../../features/cart/presentation/manager/cart_event.dart';
+import '../../features/check_out/presentation/view/screen/check_out_screen.dart';
+import '../../features/check_out/presentation/manager/checkout_cubit.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
@@ -157,11 +160,17 @@ abstract class RouteGenerator {
 
         ///? search Screen
         case Routes.searchScreenRoute:
-          return CupertinoPageRoute(builder: (_) =>
-          BlocProvider(
-              create:(context) => getIt<SearchCubit>(),
-            child:  SearchScreen(),
-          )
+          return CupertinoPageRoute(
+            builder: (_) => MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => getIt<SearchCubit>()),
+                BlocProvider(create: (context) => getIt<AddCartCubit>()),
+                BlocProvider(
+                  create: (_) => getIt<CartCubit>(),
+                ),
+              ],
+              child: const SearchScreen(),
+            ),
           );
 
         case Routes.editProfileScreenRoute:
@@ -169,6 +178,23 @@ abstract class RouteGenerator {
             builder: (_) => BlocProvider(
               create: (context) => getIt<EditProfileCubit>(),
               child: const EditProfileScreen(),
+            ),
+          );
+
+        ////? Check out
+        case Routes.checkOutRoute:
+          return CupertinoPageRoute(
+            builder: (_) => MultiBlocProvider(
+              providers: [
+                BlocProvider<CartCubit>(
+                  create: (context) =>
+                      getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
+                ),
+                BlocProvider<CheckoutCubit>(
+                  create: (context) => getIt<CheckoutCubit>(),
+                ),
+              ],
+              child: const CheckOutScreen(),
             ),
           );
 
