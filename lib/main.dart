@@ -10,6 +10,8 @@ import 'package:flower_app/features/notifications/presentation/manager/notificat
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'config/cart/manager/cart_cubit.dart';
+import 'config/cart/manager/cart_event.dart';
 import 'config/di/di.dart';
 import 'config/route_manager/route_generator.dart';
 import 'config/route_manager/routes.dart';
@@ -78,6 +80,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => getIt<LocaleCubit>()),
 
         BlocProvider(create: (_) => getIt<NotificationsCubit>()),
+        BlocProvider(
+          create: (_) =>
+          getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
+        ),
       ],
       child: BlocBuilder<LocaleCubit, Locale>(
         builder: (context, locale) {
