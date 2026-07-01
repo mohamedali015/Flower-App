@@ -137,9 +137,11 @@ class CartScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     CustomButton(
-                        title: local.checkout, onPressed: () {
-                      Navigator.pushNamed(context, Routes.checkOutRoute);
-                    }),
+                      title: local.checkout,
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.checkOutRoute);
+                      },
+                    ),
                     const SizedBox(height: 20),
                   ],
                 ),

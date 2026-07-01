@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../config/cart/manager/cart_cubit.dart';
+import '../../../../../config/cart/manager/cart_state.dart';
 import '../../../../../config/enums/payment_method.dart';
 import '../../../../../core/localization/l10n/app_localizations.dart';
-import '../../../../cart/presentation/manager/cart_cubit.dart';
-import '../../../../cart/presentation/manager/cart_state.dart';
 import '../../../../cart/presentation/widget/custom_total_price.dart';
 import '../../widgets/custom_checkout_button.dart';
 import '../../widgets/custom_payment_method_selector.dart';

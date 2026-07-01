@@ -1,10 +1,10 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=C:\src\flutter_windows_3.7.12-stable\flutter
-FLUTTER_APPLICATION_PATH=E:\elevate\Flower-App
+FLUTTER_ROOT=D:\mousa\Dowload\flutter_windows_3.41.2-stable\flutter
+FLUTTER_APPLICATION_PATH=C:\Users\DELL\StudioProjects\flower_app
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.0
-FLUTTER_BUILD_NUMBER=1
+FLUTTER_BUILD_NUMBER=4
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false

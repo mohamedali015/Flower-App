@@ -133,9 +133,7 @@ class _AddressStepState extends State<AddressStep> {
                             fontWeight: FontWeight.bold,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              Routes.savedAddressesRoute,
+                            Navigator.pushNamed(context, Routes.savedAddressesRoute,
                             );
                           },
                         ),

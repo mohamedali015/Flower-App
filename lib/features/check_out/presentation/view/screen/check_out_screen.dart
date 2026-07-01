@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../../config/enums/payment_method.dart';
+import '../../../../../config/route_manager/routes.dart';
 import '../../../../../config/user/manager/user_cubit.dart';
 import '../../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../user_address/domain/entities/address.dart';
@@ -21,11 +23,8 @@ class CheckOutScreen extends StatefulWidget {
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
   int currentStep = 0;
-
   bool isGift = false;
-
   Address? selectedAddress;
-
   String? giftName;
   String? giftPhone;
 
@@ -73,18 +72,17 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
   void _placeOrder() {
     final cubit = context.read<CheckoutCubit>();
+
     final request = CheckoutPaymentRequest(
       shippingAddress: _buildShippingAddress(),
     );
 
     switch (selectedPaymentMethod) {
       case PaymentMethod.cash:
-        ///? delete cart items and Order Screen
         cubit.doIntent(CashPaymentIntent(request));
         break;
 
       case PaymentMethod.card:
-        ///? paymentScreen
         cubit.doIntent(
           CreditPaymentIntent(
             url: "http://flowerApp",
@@ -116,12 +114,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             selectedAddress = address;
             this.giftName = giftName;
             this.giftPhone = giftPhone;
-
             _resetPayment();
           });
         },
       ),
-
       PaymentStep(
         isGift: isGift,
         onNext: nextStep,
@@ -137,38 +133,50 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           );
         },
       ),
-
       TrackOrderStep(
         onBack: previousStep,
         onPlaceOrder: _placeOrder,
       ),
     ];
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text([
-          local.address,
-          local.payment,
-          local.trackOrder,
-        ][currentStep]),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {
-            currentStep == 0
-                ? Navigator.pop(context) : previousStep();
-          },
-        ),
-      ),
-      body: Column(
-        children: [
-          CheckoutStepper(currentStep: currentStep),
-          Expanded(
-            child: IndexedStack(
-              index: currentStep,
-              children: pages,
-            ),
+    return BlocListener<CheckoutCubit, CheckoutState>(
+      listener: (context, state) {
+        final paymentUrl =
+            state.creditPaymentState.data?.session?.url;
+
+        if (paymentUrl != null && paymentUrl.isNotEmpty) {
+          Navigator.pushReplacementNamed(
+            context,
+            Routes.paymentScreenRoute,
+            arguments: paymentUrl,
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            [local.address, local.payment, local.trackOrder][currentStep],
           ),
-        ],
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              currentStep == 0
+                  ? Navigator.pop(context)
+                  : previousStep();
+            },
+          ),
+        ),
+        body: Column(
+          children: [
+            CheckoutStepper(currentStep: currentStep),
+            Expanded(
+              child: IndexedStack(
+                index: currentStep,
+                children: pages,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
