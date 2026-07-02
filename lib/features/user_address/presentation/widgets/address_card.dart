@@ -1,4 +1,5 @@
 import 'package:flower_app/config/di/di.dart';
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/shared_widgets/svg_wrapper.dart';
 import 'package:flower_app/core/utils/app_assets.dart';
@@ -185,7 +186,13 @@ class AddressCard extends StatelessWidget {
                         ),
                         SizedBox(width: MyResponsive.width(context, value: 3)),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              Routes.addAddressRoute,
+                              arguments: address,
+                            );
+                          },
                           icon: const SvgWrapper(path: AppAssets.edit),
                         ),
                       ],

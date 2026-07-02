@@ -45,8 +45,8 @@ import '../../features/notifications/presentation/pages/notifications_screen.dar
 import '../../features/payment/views/pages/payment_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
+import '../../features/user_address/domain/entities/address.dart';
 import '../../features/user_address/presentation/manger/user_address_events.dart';
-import '../cart/manager/cart_cubit.dart';
 import '../cart/manager/cart_cubit.dart';
 import '../cart/manager/cart_event.dart';
 
@@ -213,10 +213,11 @@ abstract class RouteGenerator {
 
         /// Add Addresses
         case Routes.addAddressRoute:
+          final editAddress = settings.arguments as Address?;
           return CupertinoPageRoute(
             builder: (_) => BlocProvider<UserAddressCubit>.value(
               value: getIt<UserAddressCubit>(),
-              child: AddAddressScreen(),
+              child: AddAddressScreen(editAddress: editAddress),
             ),
           );
 
