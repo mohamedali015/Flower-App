@@ -101,7 +101,7 @@
 "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
    "logout":"تسجيل الخروج",
    "confirmLogout":"تأكيد تسجيل الخروج!!",
-   "cancle":"إلغاء",
+   "cancel":"إلغاء",
 "searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
 "items": "العناصر",
   "checkout": "إتمام الطلب",
@@ -126,4 +126,24 @@
       "recipient_name":"اسم المستلم",
       "success_add_address":"تم اضافة العنوان بنجاح",
       "success_update_address":"تم نعديل العنوان بنجاح"
+
+       "deliveryTime":"موعد التسليم",
+       "deliveryAddress": "عنوان التسليم",
+       "paymentMethod" :"طريقة الدفع",
+       "itIsAGift":"إنها هدية",
+        "name": "الاسم",
+           "enterName": "أدخل الاسم",
+           "cashOnDelivery": "الدفع عند الاستلام",
+               "creditCard": "بطاقة ائتمان",
+               "placeOrder": "إتمام الطلب",
+               "instant":"فوري",
+               "addNew":"أضف جديدا",
+               "address":"عنوان",
+               "payment":"الدفع",
+               "trackOrder":"تتبع الطلب",
+                "next": "التالي",
+                "invalidData": "بيانات غير صحيحة",
+                  "pleaseSelectAddress": "من فضلك اختر عنوان",
+                  "pleaseSelectPayment": "من فضلك اختر طريقة الدفع",
+      "noProductsFound": "لا توجد منتجات مطابقة للبحث"
 }

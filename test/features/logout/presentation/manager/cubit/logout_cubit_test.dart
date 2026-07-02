@@ -1,69 +1,93 @@
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flower_app/config/error_handling/result.dart';
+import 'package:flower_app/config/secure_cache/secure_cache/cache_keys.dart';
+import 'package:flower_app/config/secure_cache/secure_cache/secure_cache.dart';
+import 'package:flower_app/features/logout/api/data_source/logout_data_source_impl.dart';
+import 'package:flower_app/features/logout/data/models/logout_response.dart';
+import 'package:flower_app/features/logout/data/repositories/logout_repo_impl.dart';
 import 'package:flower_app/features/logout/domain/entities/logout_response_entity.dart';
-import 'package:flower_app/features/logout/domain/use_cases/logout_use_case.dart';
-import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cubit.dart';
-import 'package:flower_app/features/logout/presentation/manager/cubit/logout_events.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'logout_cubit_test.mocks.dart';
+import '../../../data/repositories/logout_repo_impl_test.mocks.dart';
 
-@GenerateMocks([LogoutUseCase])
+class FakeSecureCache implements SecureCache {
+  final List<String> removedKeys = [];
+
+  @override
+  Future<void> clear() async {}
+
+  @override
+  Future<String?> getData({required String key}) async => null;
+
+  @override
+  Future<void> removeData({required String key}) async {
+    removedKeys.add(key);
+    return Future<void>.value();
+  }
+
+  @override
+  Future<void> saveData({required String key, required String value}) async {}
+}
+
+@GenerateMocks([LogoutDataSourceImpl])
 void main() {
-  late LogoutCubit logoutCubit;
-  late MockLogoutUseCase mockLogoutUseCase;
-  const logoutResponseEntity = LogoutResponseEntity(
-    message: 'Logout successful',
-  );
+  late LogoutRepoImpl logoutRepoImpl;
+  late MockLogoutDataSourceImpl mockLogoutDataSourceImpl;
+  late FakeSecureCache mockSecureCache;
+  late LogoutResponse logoutResponse;
+  late String errorMessage;
 
   setUpAll(() {
-    provideDummy<Result<LogoutResponseEntity>>(
-      Success(data: logoutResponseEntity),
+    errorMessage = 'Something went wrong. Please try again later.';
+
+    provideDummy<Result<LogoutResponse>>(
+      Success<LogoutResponse>(data: LogoutResponse()),
     );
   });
 
   setUp(() {
-    mockLogoutUseCase = MockLogoutUseCase();
-    logoutCubit = LogoutCubit(mockLogoutUseCase);
+    mockLogoutDataSourceImpl = MockLogoutDataSourceImpl();
+    mockSecureCache = FakeSecureCache();
+    logoutRepoImpl = LogoutRepoImpl(mockLogoutDataSourceImpl, mockSecureCache);
+    logoutResponse = LogoutResponse(message: 'Logout successful');
   });
 
-  tearDown(() => logoutCubit.close());
+  group('LogoutRepoImpl', () {
+    group('logout', () {
+      test(
+        'should return Success<LogoutResponseEntity> when data source returns Success<LogoutResponse>',
+            () async {
+          when(mockLogoutDataSourceImpl.logout()).thenAnswer(
+                (_) async => Success<LogoutResponse>(data: logoutResponse),
+          );
 
-  group('LogoutCubit Tests', () {
-    test('should have LogoutInitial as initial state', () {
-      expect(logoutCubit.state, isA<LogoutInitial>());
+          final result = await logoutRepoImpl.logout();
+
+          expect(result, isA<Success<LogoutResponseEntity>>());
+          final success = result as Success<LogoutResponseEntity>;
+          expect(success.data.message, equals(logoutResponse.message));
+          verify(mockLogoutDataSourceImpl.logout()).called(1);
+          expect(mockSecureCache.removedKeys, contains(CacheKeys.token));
+          expect(mockSecureCache.removedKeys, contains(CacheKeys.rememberMe));
+        },
+      );
+
+      test(
+        'should return Failure<LogoutResponseEntity> when data source returns Failure<LogoutResponse>',
+            () async {
+          when(mockLogoutDataSourceImpl.logout()).thenAnswer(
+                (_) async => Failure<LogoutResponse>(errorMessage: errorMessage),
+          );
+
+          final result = await logoutRepoImpl.logout();
+
+          expect(result, isA<Failure<LogoutResponseEntity>>());
+          final failure = result as Failure<LogoutResponseEntity>;
+          expect(failure.errorMessage, equals(errorMessage));
+          verify(mockLogoutDataSourceImpl.logout()).called(1);
+        },
+      );
     });
-
-    blocTest<LogoutCubit, LogoutState>(
-      'should emit [Loading, Success] when use case succeeds',
-      build: () {
-        when(
-          mockLogoutUseCase.call(),
-        ).thenAnswer((_) async => Success(data: logoutResponseEntity));
-        return logoutCubit;
-      },
-      act: (cubit) => cubit.doEvents(LogoutEvent()),
-      expect: () => [isA<LogoutLoading>(), isA<LogoutSuccess>()],
-      verify: (_) {
-        verify(mockLogoutUseCase.call()).called(1);
-      },
-    );
-
-    blocTest<LogoutCubit, LogoutState>(
-      'should emit [Loading, Failure] when use case fails',
-      build: () {
-        when(
-          mockLogoutUseCase.call(),
-        ).thenAnswer((_) async => Failure(errorMessage: 'Error'));
-        return logoutCubit;
-      },
-      act: (cubit) => cubit.doEvents(LogoutEvent()),
-      expect: () => [isA<LogoutLoading>(), isA<LogoutFailure>()],
-      verify: (_) {
-        verify(mockLogoutUseCase.call()).called(1);
-      },
-    );
   });
 }
