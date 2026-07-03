@@ -97,7 +97,9 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
             ),
             const SizedBox(height: 30),
             ProfileScreenSettingItemWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, Routes.ordersRoute);
+              },
               start: IconTextWidget(
                 text: locale.myOrders,
                 iconPath: AppAssets.myOrders,

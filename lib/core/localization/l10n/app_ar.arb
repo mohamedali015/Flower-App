@@ -132,5 +132,13 @@
                 "invalidData": "بيانات غير صحيحة",
                   "pleaseSelectAddress": "من فضلك اختر عنوان",
                   "pleaseSelectPayment": "من فضلك اختر طريقة الدفع",
-      "noProductsFound": "لا توجد منتجات مطابقة للبحث"
+        "active":"قيد التنفيذ",
+         "completed":"تم التسليم",
+                  "reorder":"أعد الطلب",
+         "trackOrder":"تتبع الطلب",
+                  "noOrdersFound":"لا توجد طلبات",
+                           "orderNumber":"رقم الطلب",
+                           "order":"الطلب"
+
+
 }
