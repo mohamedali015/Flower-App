@@ -1,4 +1,3 @@
-import 'package:geocoding/geocoding.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../domain/entities/address.dart';
@@ -49,16 +48,7 @@ class AddressDto {
 
   Map<String, dynamic> toJson() => _$AddressDtoToJson(this);
 
-  Future<Address> toEntity() async {
-    final latitude = double.tryParse(lat ?? '');
-    final longitude = double.tryParse(long ?? '');
-
-    List<Placemark> placeMarks = [];
-
-    if (latitude != null && longitude != null) {
-      placeMarks = await placemarkFromCoordinates(latitude, longitude);
-    }
-
+  Address toEntity() {
     return Address(
       street: street,
       phone: phone,
@@ -67,7 +57,7 @@ class AddressDto {
       long: long,
       username: username,
       id: id,
-      placeMarks: placeMarks,
+      placeMarks: const [],
     );
   }
 }

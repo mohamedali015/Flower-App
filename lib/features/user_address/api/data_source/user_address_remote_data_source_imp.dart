@@ -16,22 +16,22 @@ class UserAddressRemoteDataSourceImp
   final UserAddressApiClient _userAddressApiClient;
 
   @override
-  Future<Result<UserAddressDto>> addUserAddress(AddressDto address) {
+  Future<Result<UserAddressResponseDto>> addUserAddress(AddressDto address) {
     return executeApi(() => _userAddressApiClient.addUserAddress(address));
   }
 
   @override
-  Future<Result<UserAddressDto>> getLoggedUserAddress() {
-    return executeApi(() => _userAddressApiClient.getLoggedUserAddress());
+  Future<Result<UserAddressResponseDto>> getLoggedUserAddresses() {
+    return executeApi(() => _userAddressApiClient.getLoggedUserAddresses());
   }
 
   @override
-  Future<Result<UserAddressDto>> removeUserAddress(String id) {
+  Future<Result<UserAddressResponseDto>> removeUserAddress(String id) {
     return executeApi(() => _userAddressApiClient.removeUserAddress(id));
   }
 
   @override
-  Future<Result<UserAddressDto>> updateUserAddress(
+  Future<Result<UserAddressResponseDto>> updateUserAddress(
     AddressDto address,
     String id,
   ) {

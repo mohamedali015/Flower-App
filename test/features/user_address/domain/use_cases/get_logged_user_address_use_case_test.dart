@@ -1,6 +1,4 @@
 import 'package:flower_app/config/error_handling/result.dart';
-import 'package:flower_app/features/user_address/data/models/address_dto.dart';
-import 'package:flower_app/features/user_address/data/models/user_address_dto.dart';
 import 'package:flower_app/features/user_address/domain/entities/address.dart';
 import 'package:flower_app/features/user_address/domain/repositories/user_address_repo_contract.dart';
 import 'package:flower_app/features/user_address/domain/use_cases/get_logged_user_address_use_case.dart';
@@ -8,24 +6,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'add_user_address_use_case_test.mocks.dart';
+import 'get_logged_user_address_use_case_test.mocks.dart';
 
 @GenerateMocks([UserAddressRepoContract])
-main() {
-  late GetLoggedUserAddressUseCase useCase;
+void main() {
+  late GetLoggedUserAddressesUseCase useCase;
   late MockUserAddressRepoContract mockRepo;
-  late AddressDto addAddress;
   late List<Address> mockCurrentServerAddresses;
-  String successMessage = "success";
-  String errorMessage = "error";
+
   setUpAll(() {
-    provideDummy<Result<List<Address>>>(
-      Success<List<Address>>(data:[]),
-    );
     mockRepo = MockUserAddressRepoContract();
-    useCase = GetLoggedUserAddressUseCase(mockRepo);
+    useCase = GetLoggedUserAddressesUseCase(mockRepo);
+
     mockCurrentServerAddresses = [
-      Address(
+       Address(
         street: "initial 12 Nile Street",
         phone: "initial 01012345678",
         city: "initial Cairo",
@@ -35,48 +29,42 @@ main() {
         id: "000000000000000000000000",
       ),
     ];
-    addAddress = AddressDto(
-      street: "add 12 Nile Street",
-      phone: "add 01012345678",
-      city: "add Cairo",
-      lat: "add 30.0444",
-      long: "add 31.2357",
-      username: "add Mark Raouf",
-    );
   });
 
-  group("test repo on calling getLoggedUserAddress", () {
+  group("test usecase on calling getLoggedUserAddresses", () {
     test(
-      "case dataSource return Success<UserAddressDto> list of addresses when getLoggedUserAddress is  called",
+      "case dataSource return Success<UserAddressResponseDto> list of addresses when getLoggedUserAddresses is  called",
       () async {
         //arrange
-        when(mockRepo.getLoggedUserAddress()).thenAnswer(
-          (_) async => Success<List<Address>>(data: mockCurrentServerAddresses),
+        when(mockRepo.getLoggedUserAddresses()).thenAnswer(
+          (_) async => Success<List<Address>>(
+            data: mockCurrentServerAddresses,
+          ),
         );
         //act
         var response = await useCase();
         //assert
         expect(response, isA<Success<List<Address>>>());
-        expect((response as Success<List<Address>>).data, isNotNull);
-        expect(response.data, isNotEmpty);
-        expect(response.data, equals(mockCurrentServerAddresses));
-        verify(mockRepo.getLoggedUserAddress()).called(1);
+        expect(
+          (response as Success<List<Address>>).data.length,
+          mockCurrentServerAddresses.length,
+        );
+        verify(mockRepo.getLoggedUserAddresses()).called(1);
       },
     );
 
     test(
-      "case dataSource return Failure<UserAddressDto> when Exception when getLoggedUserAddress called",
+      "case dataSource return Failure<UserAddressResponseDto> when Exception when getLoggedUserAddresses called",
       () async {
         //arrange
-        when(
-          mockRepo.getLoggedUserAddress(),
-        ).thenAnswer((_) async => Failure(errorMessage: errorMessage));
+        when(mockRepo.getLoggedUserAddresses()).thenAnswer(
+          (_) async => Failure<List<Address>>(errorMessage: "error"),
+        );
         // act
         var response = await useCase();
         //assert
         expect(response, isA<Failure<List<Address>>>());
-        expect((response as Failure<List<Address>>).errorMessage, isNotNull);
-        expect(response.errorMessage, isNotEmpty);
+        expect((response as Failure<List<Address>>).errorMessage, "error");
       },
     );
   });

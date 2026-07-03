@@ -27,14 +27,14 @@ class UserAddressCubit extends Cubit<UserAddressState> {
   UserAddressCubit(
     this._addUserAddressUseCase,
     this._removeUserAddressUseCase,
-    this._getLoggedUserAddressUseCase,
+    this._getLoggedUserAddressesUseCase,
     this._updateUserAddressUseCase,
   ) : super(
         const UserAddressState(
-          addUserAddressState: BaseState<UserAddressDto>(),
-          getLoggedUserAddressState: BaseState<UserAddressDto>(),
-          removeUserAddressState: BaseState<UserAddressDto>(),
-          updateUserAddressState: BaseState<UserAddressDto>(),
+          addUserAddressState: BaseState<UserAddressResponseDto>(),
+          getLoggedUserAddressesState: BaseState<UserAddressResponseDto>(),
+          removeUserAddressState: BaseState<UserAddressResponseDto>(),
+          updateUserAddressState: BaseState<UserAddressResponseDto>(),
           currentUserAddresses: null,
         ),
       );
@@ -42,7 +42,7 @@ class UserAddressCubit extends Cubit<UserAddressState> {
   final AddUserAddressUseCase _addUserAddressUseCase;
   final RemoveUserAddressUseCase _removeUserAddressUseCase;
   final UpdateUserAddressUseCase _updateUserAddressUseCase;
-  final GetLoggedUserAddressUseCase _getLoggedUserAddressUseCase;
+  final GetLoggedUserAddressesUseCase _getLoggedUserAddressesUseCase;
 
   void doEvent(UserAddressEvents event) {
     switch (event) {
@@ -52,8 +52,8 @@ class UserAddressCubit extends Cubit<UserAddressState> {
         _updateUserAddress(newAddress: event.address, id: event.addressId);
       case RemoveUserAddressEvent():
         _removeUserAddress(id: event.addressId);
-      case GetLoggedUserAddressEvent():
-        _getLoggedUserAddress();
+      case GetLoggedUserAddressesEvent():
+        _getLoggedUserAddresses();
       case MapLoadingEvent():
         _mapLoading(event.mapLoading);
       case LoadCitiesEvent():
@@ -66,15 +66,17 @@ class UserAddressCubit extends Cubit<UserAddressState> {
         _setSelectedCity(event.city);
       case SetLocationEvent():
         _setSelectedLocation(event.location);
+      case SetSelectedAddressEvent():
+        _setSelectedAddress(event.address);
       case SetMarkerIconEvent():
         _setMarkerIcon();
     }
   }
 
-  Future<void> _getLoggedUserAddress() async {
+  Future<void> _getLoggedUserAddresses() async {
     emit(
       state.copyWith(
-        getLoggedUserAddressState: const BaseState<List<Address>>(
+        getLoggedUserAddressesState: const BaseState<List<Address>>(
           isLoading: true,
           isSuccess: false,
           errorMessage: null,
@@ -83,25 +85,26 @@ class UserAddressCubit extends Cubit<UserAddressState> {
       ),
     );
 
-    var response = await _getLoggedUserAddressUseCase();
+    var response = await _getLoggedUserAddressesUseCase();
 
     switch (response) {
       case Success<List<Address>>():
         emit(
           state.copyWith(
-            getLoggedUserAddressState: BaseState<List<Address>>(
+            getLoggedUserAddressesState: BaseState<List<Address>>(
               isLoading: false,
               isSuccess: true,
               errorMessage: null,
               data: response.data,
             ),
-            currentUserAddress: response.data,
+            currentUserAddresses: response.data,
+            selectedAddress: response.data.isNotEmpty ? response.data.last : null,
           ),
         );
       case Failure<List<Address>>():
         emit(
           state.copyWith(
-            getLoggedUserAddressState: BaseState<List<Address>>(
+            getLoggedUserAddressesState: BaseState<List<Address>>(
               isLoading: false,
               isSuccess: false,
               errorMessage: response.errorMessage,
@@ -136,7 +139,8 @@ class UserAddressCubit extends Cubit<UserAddressState> {
               errorMessage: null,
               data: response.data,
             ),
-            currentUserAddress: response.data,
+            currentUserAddresses: response.data,
+            selectedAddress: response.data.isNotEmpty ? response.data.last : null,
           ),
         );
       case Failure<List<Address>>():
@@ -180,7 +184,8 @@ class UserAddressCubit extends Cubit<UserAddressState> {
               errorMessage: null,
               data: response.data,
             ),
-            currentUserAddress: response.data,
+            currentUserAddresses: response.data,
+            selectedAddress: response.data.isNotEmpty ? response.data.last : null,
           ),
         );
       case Failure<List<Address>>():
@@ -221,7 +226,8 @@ class UserAddressCubit extends Cubit<UserAddressState> {
               errorMessage: null,
               data: response.data,
             ),
-            currentUserAddress: response.data,
+            currentUserAddresses: response.data,
+            selectedAddress: response.data.isNotEmpty ? response.data.last : null,
           ),
         );
       case Failure<List<Address>>():
@@ -316,6 +322,10 @@ class UserAddressCubit extends Cubit<UserAddressState> {
         selectedCity: state.selectedCity,
       ),
     );
+  }
+
+  void _setSelectedAddress(Address address) {
+    emit(state.copyWith(selectedAddress: address));
   }
 
   Future<void> _setMarkerIcon() async {

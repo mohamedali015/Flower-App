@@ -33,6 +33,7 @@ class MapLoadingEvent extends UserAddressEvents {
   MapLoadingEvent(this.mapLoading);
 }
 
+
 class LoadCitiesEvent extends UserAddressEvents {}
 
 class LoadGovernorateEvent extends UserAddressEvents {}
@@ -57,4 +58,9 @@ class SetLocationEvent extends UserAddressEvents {
   LatLng location;
 }
 
-class GetLoggedUserAddressEvent extends UserAddressEvents {}
+class SetSelectedAddressEvent extends UserAddressEvents {
+  final Address address;
+  const SetSelectedAddressEvent(this.address);
+}
+
+class GetLoggedUserAddressesEvent extends UserAddressEvents {}

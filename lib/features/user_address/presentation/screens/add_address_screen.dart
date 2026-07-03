@@ -281,6 +281,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           final uploadAddress = Address(
+                            id: widget.editAddress?.id,
                             lat: userAddressCubit
                                 .state
                                 .selectedLocation
@@ -298,7 +299,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             username: recipientNameController.text,
                           );
                           if (widget.editAddress != null) {
-                            uploadAddress.id = widget.editAddress!.id;
                             userAddressCubit.doEvent(
                               UpdateUserAddressEvent(
                                 uploadAddress,

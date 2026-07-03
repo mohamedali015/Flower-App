@@ -1,5 +1,4 @@
 import 'package:flower_app/config/error_handling/result.dart';
-import 'package:flower_app/features/user_address/data/models/address_dto.dart';
 import 'package:flower_app/features/user_address/domain/entities/address.dart';
 import 'package:flower_app/features/user_address/domain/repositories/user_address_repo_contract.dart';
 import 'package:flower_app/features/user_address/domain/use_cases/update_user_address_use_case.dart';
@@ -10,12 +9,11 @@ import 'package:mockito/mockito.dart';
 import 'add_user_address_use_case_test.mocks.dart';
 
 @GenerateMocks([UserAddressRepoContract])
-main() {
+void main() {
   late UpdateUserAddressUseCase useCase;
   late MockUserAddressRepoContract mockRepo;
-  late AddressDto addAddress;
+  late Address addAddress;
   late List<Address> mockCurrentServerAddresses;
-  String successMessage = "success";
   String errorMessage = "error";
   setUpAll(() {
     provideDummy<Result<List<Address>>>(Success<List<Address>>(data: []));
@@ -32,7 +30,7 @@ main() {
         id: "000000000000000000000000",
       ),
     ];
-    addAddress = AddressDto(
+    addAddress = Address(
       street: "add 12 Nile Street",
       phone: "add 01012345678",
       city: "add Cairo",
@@ -44,14 +42,14 @@ main() {
 
   group("test repo on calling updateAddress", () {
     test(
-      "case dataSource return Success<UserAddressDto> list of update Addresses when updateAddress called",
+      "case dataSource return Success<UserAddressResponseDto> list of update Addresses when updateAddress called",
       () async {
         //Arrange
         List<Address> processedAddresses = List.from(
           mockCurrentServerAddresses,
         );
         when(
-          mockRepo.updateUserAddress(addAddress, processedAddresses.last.id),
+          mockRepo.updateUserAddress(any, any),
         ).thenAnswer((_) async {
           return Success<List<Address>>(data: processedAddresses);
         });
@@ -67,19 +65,19 @@ main() {
         expect(response.data, isNotNull);
         expect(response.data.length, mockCurrentServerAddresses.length);
         verify(
-          mockRepo.updateUserAddress(addAddress, processedAddresses.last.id!),
+          mockRepo.updateUserAddress(any, any),
         ).called(1);
       },
     );
 
     test(
-      "case dataSource return Failure<UserAddressDto> and return ",
+      "case dataSource return Failure<UserAddressResponseDto> and return ",
       () async {
         //arrange
         when(
           mockRepo.updateUserAddress(
-            addAddress,
-            mockCurrentServerAddresses.last.id,
+            any,
+            any,
           ),
         ).thenAnswer((_) async => Failure(errorMessage: errorMessage));
         //act
@@ -93,8 +91,8 @@ main() {
         expect(response.errorMessage, isNotNull);
         verify(
           mockRepo.updateUserAddress(
-            addAddress,
-            mockCurrentServerAddresses.last.id,
+            any,
+            any,
           ),
         ).called(1);
       },

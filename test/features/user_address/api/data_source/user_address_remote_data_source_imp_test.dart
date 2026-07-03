@@ -46,7 +46,7 @@ main() {
 
   group("test datasource on calling addAddress", () {
     test(
-      "case Client return UserAddressDto list of addresses when addAddress called",
+      "case Client return UserAddressResponseDto list of addresses when addAddress called",
       () async {
         //Arrange
         List<AddressDto> processedAddresses = List.from(
@@ -54,24 +54,24 @@ main() {
         );
         when(mockApiClient.addUserAddress(addAddress)).thenAnswer((_) async {
           processedAddresses.add(addAddress);
-          return UserAddressDto(
+          return UserAddressResponseDto(
             message: successMessage,
-            address: processedAddresses,
+            addresses: processedAddresses,
           );
         });
         //Act
         var response = await dataSource.addUserAddress(addAddress);
         //Assert
-        expect(response, isA<Success<UserAddressDto>>());
+        expect(response, isA<Success<UserAddressResponseDto>>());
         expect(
-          (response as Success<UserAddressDto>).data.address,
+          (response as Success<UserAddressResponseDto>).data.addresses,
           equals(processedAddresses),
         );
         expect(response.data.message, successMessage);
-        expect(response.data.address, isNotEmpty);
-        expect(response.data.address, isNotNull);
+        expect(response.data.addresses, isNotEmpty);
+        expect(response.data.addresses, isNotNull);
         expect(
-          response.data.address!.length,
+          response.data.addresses!.length,
           mockCurrentServerAddresses.length + 1,
         );
         verify(mockApiClient.addUserAddress(addAddress)).called(1);
@@ -84,8 +84,8 @@ main() {
       //act
       var response = await dataSource.addUserAddress(addAddress);
       //assert
-      expect(response, isA<Failure<UserAddressDto>>());
-      expect((response as Failure<UserAddressDto>).errorMessage, isNotNull);
+      expect(response, isA<Failure<UserAddressResponseDto>>());
+      expect((response as Failure<UserAddressResponseDto>).errorMessage, isNotNull);
       expect(response.errorMessage, isNotNull);
       verify(mockApiClient.addUserAddress(addAddress)).called(1);
     });
@@ -93,7 +93,7 @@ main() {
 
   group("test datasource on calling updateAddress", () {
     test(
-      "case Client return UserAddressDto list of update Addresses when updateAddress called",
+      "case Client return UserAddressResponseDto list of update Addresses when updateAddress called",
       () async {
         //Arrange
         List<AddressDto> processedAddresses = List.from(
@@ -105,9 +105,9 @@ main() {
             processedAddresses.last.id,
           ),
         ).thenAnswer((_) async {
-          return UserAddressDto(
+          return UserAddressResponseDto(
             message: successMessage,
-            address: processedAddresses,
+            addresses: processedAddresses,
           );
         });
         //Act
@@ -116,16 +116,16 @@ main() {
           processedAddresses.last.id!,
         );
         //Assert
-        expect(response, isA<Success<UserAddressDto>>());
+        expect(response, isA<Success<UserAddressResponseDto>>());
         expect(
-          (response as Success<UserAddressDto>).data.address,
+          (response as Success<UserAddressResponseDto>).data.addresses,
           equals(processedAddresses),
         );
         expect(response.data.message, successMessage);
-        expect(response.data.address, isNotEmpty);
-        expect(response.data.address, isNotNull);
+        expect(response.data.addresses, isNotEmpty);
+        expect(response.data.addresses, isNotNull);
         expect(
-          response.data.address!.length,
+          response.data.addresses!.length,
           mockCurrentServerAddresses.length,
         );
         verify(
@@ -151,8 +151,8 @@ main() {
         mockCurrentServerAddresses.last.id!,
       );
       //assert
-      expect(response, isA<Failure<UserAddressDto>>());
-      expect((response as Failure<UserAddressDto>).errorMessage, isNotNull);
+      expect(response, isA<Failure<UserAddressResponseDto>>());
+      expect((response as Failure<UserAddressResponseDto>).errorMessage, isNotNull);
       expect(response.errorMessage, isNotNull);
       verify(
         mockApiClient.updateUserAddress(
@@ -163,42 +163,42 @@ main() {
     });
   });
 
-  group("test dataSource on calling getLoggedUserAddress", () {
+  group("test dataSource on calling getLoggedUserAddresses", () {
     test(
-      "case Client return UserAddressDto list of addresses when getLoggedUserAddress is  called",
+      "case Client return UserAddressResponseDto list of addresses when getLoggedUserAddresses is  called",
       () async {
         //arrange
-        when(mockApiClient.getLoggedUserAddress()).thenAnswer(
-          (_) async => UserAddressDto(
+        when(mockApiClient.getLoggedUserAddresses()).thenAnswer(
+          (_) async => UserAddressResponseDto(
             message: successMessage,
-            address: mockCurrentServerAddresses,
+            addresses: mockCurrentServerAddresses,
           ),
         );
         //act
-        var response = await dataSource.getLoggedUserAddress();
+        var response = await dataSource.getLoggedUserAddresses();
         //assert
-        expect(response, isA<Success<UserAddressDto>>());
+        expect(response, isA<Success<UserAddressResponseDto>>());
         expect(
-          (response as Success<UserAddressDto>).data.message,
+          (response as Success<UserAddressResponseDto>).data.message,
           successMessage,
         );
-        expect(response.data.address, isNotNull);
-        expect(response.data.address, isNotEmpty);
-        expect(response.data.address, equals(mockCurrentServerAddresses));
-        verify(mockApiClient.getLoggedUserAddress()).called(1);
+        expect(response.data.addresses, isNotNull);
+        expect(response.data.addresses, isNotEmpty);
+        expect(response.data.addresses, equals(mockCurrentServerAddresses));
+        verify(mockApiClient.getLoggedUserAddresses()).called(1);
       },
     );
 
     test(
-      "case Client throw Exception when getLoggedUserAddress called",
+      "case Client throw Exception when getLoggedUserAddresses called",
       () async {
         //arrange
-        when(mockApiClient.getLoggedUserAddress()).thenThrow(Exception());
+        when(mockApiClient.getLoggedUserAddresses()).thenThrow(Exception());
         // act
-        var response = await dataSource.getLoggedUserAddress();
+        var response = await dataSource.getLoggedUserAddresses();
         //assert
-        expect(response, isA<Failure<UserAddressDto>>());
-        expect((response as Failure<UserAddressDto>).errorMessage, isNotNull);
+        expect(response, isA<Failure<UserAddressResponseDto>>());
+        expect((response as Failure<UserAddressResponseDto>).errorMessage, isNotNull);
         expect(response.errorMessage, isNotEmpty);
       },
     );
@@ -206,7 +206,7 @@ main() {
 
   group("test datasource on calling removeAddress", () {
     test(
-      "case Client return UserAddressDto list of remove Addresses when updateAddress called",
+      "case Client return UserAddressResponseDto list of remove Addresses when updateAddress called",
       () async {
         //Arrange
         List<AddressDto> processedAddresses = List.from(
@@ -215,9 +215,9 @@ main() {
         when(
           mockApiClient.removeUserAddress(processedAddresses.last.id),
         ).thenAnswer((_) async {
-          return UserAddressDto(
+          return UserAddressResponseDto(
             message: successMessage,
-            address: processedAddresses,
+            addresses: processedAddresses,
           );
         });
         //Act
@@ -225,16 +225,16 @@ main() {
           processedAddresses.last.id!,
         );
         //Assert
-        expect(response, isA<Success<UserAddressDto>>());
+        expect(response, isA<Success<UserAddressResponseDto>>());
         expect(
-          (response as Success<UserAddressDto>).data.address,
+          (response as Success<UserAddressResponseDto>).data.addresses,
           equals(processedAddresses),
         );
         expect(response.data.message, successMessage);
-        expect(response.data.address, isNotEmpty);
-        expect(response.data.address, isNotNull);
+        expect(response.data.addresses, isNotEmpty);
+        expect(response.data.addresses, isNotNull);
         expect(
-          response.data.address!.length,
+          response.data.addresses!.length,
           mockCurrentServerAddresses.length,
         );
         verify(
@@ -253,8 +253,8 @@ main() {
         mockCurrentServerAddresses.last.id!,
       );
       //assert
-      expect(response, isA<Failure<UserAddressDto>>());
-      expect((response as Failure<UserAddressDto>).errorMessage, isNotNull);
+      expect(response, isA<Failure<UserAddressResponseDto>>());
+      expect((response as Failure<UserAddressResponseDto>).errorMessage, isNotNull);
       expect(response.errorMessage, isNotNull);
       verify(
         mockApiClient.removeUserAddress(mockCurrentServerAddresses.last.id),

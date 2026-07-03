@@ -17,30 +17,28 @@ class UserAddressRepoImp implements UserAddressRepoContract {
   Future<Result<List<Address>>> addUserAddress(AddressDto address) async {
     var response = await _dataSource.addUserAddress(address);
     switch (response) {
-      case Success<UserAddressDto>():
-        final addresses = await Future.wait(
-          response.data.address!.map((e) => e.toEntity()),
-        );
+      case Success<UserAddressResponseDto>():
+        final addresses =
+            response.data.addresses!.map((e) => e.toEntity()).toList();
         return Success(
           data: addresses,
         );
-      case Failure<UserAddressDto>():
+      case Failure<UserAddressResponseDto>():
         return Failure(errorMessage: response.errorMessage);
     }
   }
 
   @override
-  Future<Result<List<Address>>> getLoggedUserAddress() async {
-    var response = await _dataSource.getLoggedUserAddress();
+  Future<Result<List<Address>>> getLoggedUserAddresses() async {
+    var response = await _dataSource.getLoggedUserAddresses();
     switch (response) {
-      case Success<UserAddressDto>():
-        final addresses = await Future.wait(
-          response.data.address!.map((e) => e.toEntity()),
-        );
+      case Success<UserAddressResponseDto>():
+        final addresses =
+            response.data.addresses!.map((e) => e.toEntity()).toList();
         return Success(
           data: addresses,
         );
-      case Failure<UserAddressDto>():
+      case Failure<UserAddressResponseDto>():
         return Failure(errorMessage: response.errorMessage);
     }
   }
@@ -49,14 +47,13 @@ class UserAddressRepoImp implements UserAddressRepoContract {
   Future<Result<List<Address>>> removeUserAddress(String id) async {
     var response = await _dataSource.removeUserAddress(id);
     switch (response) {
-      case Success<UserAddressDto>():
-        final addresses = await Future.wait(
-          response.data.address!.map((e) => e.toEntity()),
-        );
+      case Success<UserAddressResponseDto>():
+        final addresses =
+            response.data.addresses!.map((e) => e.toEntity()).toList();
         return Success(
           data: addresses,
         );
-      case Failure<UserAddressDto>():
+      case Failure<UserAddressResponseDto>():
         return Failure(errorMessage: response.errorMessage);
     }
   }
@@ -68,14 +65,13 @@ class UserAddressRepoImp implements UserAddressRepoContract {
   ) async {
     var response = await _dataSource.updateUserAddress(address, id);
     switch (response) {
-      case Success<UserAddressDto>():
-        final addresses = await Future.wait(
-          response.data.address!.map((e) => e.toEntity()),
-        );
+      case Success<UserAddressResponseDto>():
+        final addresses =
+            response.data.addresses!.map((e) => e.toEntity()).toList();
         return Success(
           data: addresses,
         );
-      case Failure<UserAddressDto>():
+      case Failure<UserAddressResponseDto>():
         return Failure(errorMessage: response.errorMessage);
     }
   }

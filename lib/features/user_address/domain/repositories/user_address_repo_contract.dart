@@ -3,7 +3,7 @@ import '../../data/models/address_dto.dart';
 import '../entities/address.dart';
 
 abstract interface class UserAddressRepoContract {
-  Future<Result<List<Address>>> getLoggedUserAddress();
+  Future<Result<List<Address>>> getLoggedUserAddresses();
 
   Future<Result<List<Address>>> addUserAddress(AddressDto address);
 

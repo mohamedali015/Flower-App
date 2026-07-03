@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                       return RefreshIndicator(
                         onRefresh: () async {
                           context.read<HomeCubit>().doEvents(GetHomeEvent());
-                          getIt<UserAddressCubit>().doEvent(GetLoggedUserAddressEvent());
+                          getIt<UserAddressCubit>().doEvent( GetLoggedUserAddressesEvent());
                         },
                         child: SingleChildScrollView(
                           child: Column(

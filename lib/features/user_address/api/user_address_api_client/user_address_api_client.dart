@@ -17,17 +17,17 @@ abstract class UserAddressApiClient {
   factory UserAddressApiClient(Dio dio) = _UserAddressApiClient;
 
   @GET(ApiEndPoints.userAddress)
-  Future<UserAddressDto> getLoggedUserAddress();
+  Future<UserAddressResponseDto> getLoggedUserAddresses();
 
   @PATCH(ApiEndPoints.userAddress)
-  Future<UserAddressDto> addUserAddress(@Body() AddressDto address);
+  Future<UserAddressResponseDto> addUserAddress(@Body() AddressDto address);
 
   @PATCH(ApiEndPoints.addressById)
-  Future<UserAddressDto> updateUserAddress(
+  Future<UserAddressResponseDto> updateUserAddress(
     @Body() AddressDto address,
     @Path(ApiStrings.id) String id,
   );
 
   @DELETE(ApiEndPoints.addressById)
-  Future<UserAddressDto> removeUserAddress(@Path(ApiStrings.id) String id);
+  Future<UserAddressResponseDto> removeUserAddress(@Path(ApiStrings.id) String id);
 }

@@ -4,14 +4,14 @@ import '../models/address_dto.dart';
 import '../models/user_address_dto.dart';
 
 abstract interface class UserAddressRemoteDataSourceContract {
-  Future<Result<UserAddressDto>> getLoggedUserAddress();
+  Future<Result<UserAddressResponseDto>> getLoggedUserAddresses();
 
-  Future<Result<UserAddressDto>> addUserAddress(AddressDto address);
+  Future<Result<UserAddressResponseDto>> addUserAddress(AddressDto address);
 
-  Future<Result<UserAddressDto>> updateUserAddress(
+  Future<Result<UserAddressResponseDto>> updateUserAddress(
     AddressDto address,
     String id,
   );
 
-  Future<Result<UserAddressDto>> removeUserAddress(String id);
+  Future<Result<UserAddressResponseDto>> removeUserAddress(String id);
 }

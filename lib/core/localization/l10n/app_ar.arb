@@ -125,7 +125,7 @@
       "delete":"إلغاء",
       "recipient_name":"اسم المستلم",
       "success_add_address":"تم اضافة العنوان بنجاح",
-      "success_update_address":"تم نعديل العنوان بنجاح"
+      "success_update_address":"تم نعديل العنوان بنجاح",
 
        "deliveryTime":"موعد التسليم",
        "deliveryAddress": "عنوان التسليم",

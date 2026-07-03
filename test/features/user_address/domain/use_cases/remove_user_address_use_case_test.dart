@@ -44,7 +44,7 @@ main() {
 
   group("test repo on calling removeAddress", () {
     test(
-      "case dataSource return Success<UserAddressDto> list of remove Addresses when updateAddress called",
+      "case dataSource return Success<UserAddressResponseDto> list of remove Addresses when updateAddress called",
       () async {
         //Arrange
         List<Address> processedAddresses = List.from(
@@ -73,7 +73,7 @@ main() {
     );
 
     test(
-      "case dataSource return Failure<UserAddressDto> and return ",
+      "case dataSource return Failure<UserAddressResponseDto> and return ",
       () async {
         //arrange
         when(

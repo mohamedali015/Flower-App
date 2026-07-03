@@ -1,32 +1,29 @@
-
-
-
 import 'package:json_annotation/json_annotation.dart';
 
 import 'address_dto.dart';
 
 part 'user_address_dto.g.dart';
 @JsonSerializable()
-class UserAddressDto {
+class UserAddressResponseDto {
   @JsonKey(name: "message")
   String? message;
 
   @JsonKey(
     readValue: _readAddress,
   )
-  List<AddressDto>? address;
+  List<AddressDto>? addresses;
 
-  UserAddressDto({
+  UserAddressResponseDto({
     this.message,
-    this.address,
+    this.addresses,
   });
 
   static Object? _readAddress(Map json, String key) {
     return json["addresses"] ?? json["address"];
   }
 
-  factory UserAddressDto.fromJson(Map<String, dynamic> json) =>
-      _$UserAddressDtoFromJson(json);
+  factory UserAddressResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$UserAddressResponseDtoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserAddressDtoToJson(this);
+  Map<String, dynamic> toJson() => _$UserAddressResponseDtoToJson(this);
 }

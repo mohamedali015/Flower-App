@@ -9,10 +9,11 @@ import '../../data/models/governorate.dart';
 class UserAddressState extends Equatable {
   const UserAddressState({
     required this.addUserAddressState,
-    required this.getLoggedUserAddressState,
+    required this.getLoggedUserAddressesState,
     required this.removeUserAddressState,
     required this.updateUserAddressState,
     required this.currentUserAddresses,
+    this.selectedAddress,
     this.mapLoading = false,
     this.governorates,
     this.cities,
@@ -26,8 +27,9 @@ class UserAddressState extends Equatable {
   final BaseState addUserAddressState;
   final BaseState updateUserAddressState;
   final BaseState removeUserAddressState;
-  final BaseState getLoggedUserAddressState;
+  final BaseState getLoggedUserAddressesState;
   final List<Address>? currentUserAddresses;
+  final Address? selectedAddress;
   final bool mapLoading;
   final List<Governorate>? governorates;
   final List<City>? cities;
@@ -41,8 +43,9 @@ class UserAddressState extends Equatable {
     BaseState<List<Address>>? addUserAddressState,
     BaseState<List<Address>>? updateUserAddressState,
     BaseState<List<Address>>? removeUserAddressState,
-    BaseState<List<Address>>? getLoggedUserAddressState,
-    List<Address>? currentUserAddress,
+    BaseState<List<Address>>? getLoggedUserAddressesState,
+    List<Address>? currentUserAddresses,
+    Address? selectedAddress,
     List<Governorate>? governorates,
     List<City>? cities,
     List<City>? filteredCities,
@@ -55,13 +58,14 @@ class UserAddressState extends Equatable {
   }) {
     return UserAddressState(
       addUserAddressState: addUserAddressState ?? this.addUserAddressState,
-      getLoggedUserAddressState:
-          getLoggedUserAddressState ?? this.getLoggedUserAddressState,
+      getLoggedUserAddressesState:
+          getLoggedUserAddressesState ?? this.getLoggedUserAddressesState,
       removeUserAddressState:
           removeUserAddressState ?? this.removeUserAddressState,
       updateUserAddressState:
           updateUserAddressState ?? this.updateUserAddressState,
-      currentUserAddresses: currentUserAddress ?? this.currentUserAddresses,
+      currentUserAddresses: currentUserAddresses ?? this.currentUserAddresses,
+      selectedAddress: selectedAddress ?? this.selectedAddress,
       mapLoading: mapLoading ?? this.mapLoading,
       governorates: governorates ?? this.governorates,
       cities: cities ?? this.cities,
@@ -77,9 +81,10 @@ class UserAddressState extends Equatable {
   List<Object?> get props => [
     addUserAddressState,
     removeUserAddressState,
-    getLoggedUserAddressState,
+    getLoggedUserAddressesState,
     updateUserAddressState,
     currentUserAddresses,
+    selectedAddress,
     mapLoading,
     governorates,
     cities,
