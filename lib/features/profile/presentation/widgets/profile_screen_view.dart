@@ -178,7 +178,9 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
             ),
 
             ProfileScreenSettingItemWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, Routes.aboutUsRoute);
+              },
               start: Text(
                 locale.aboutUs,
                 style: AppTextStyles.regular13(context),
@@ -193,7 +195,9 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
               ),
             ),
             ProfileScreenSettingItemWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, Routes.termsAndConditionsRoute);
+              },
 
               start: Text(
                 locale.termsAndConditions,
