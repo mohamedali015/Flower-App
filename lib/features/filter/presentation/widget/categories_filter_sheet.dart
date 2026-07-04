@@ -3,19 +3,19 @@ import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flower_app/features/filter/domain/enums/sort_options.dart';
-import 'package:flower_app/features/filter/presentation/extentions/sort_option_ui.dart';
+import 'package:flower_app/features/filter/domain/sort_option_factory.dart';
 import 'package:flutter/material.dart';
 
-class FilterSheet extends StatefulWidget {
+class CategoriesFilterSheet extends StatefulWidget {
   final SortOption? currentSort;
 
-  const FilterSheet({super.key, this.currentSort});
+  const CategoriesFilterSheet({super.key, this.currentSort});
 
   @override
-  State<FilterSheet> createState() => _FilterSheetState();
+  State<CategoriesFilterSheet> createState() => _CategoriesFilterSheetState();
 }
 
-class _FilterSheetState extends State<FilterSheet> {
+class _CategoriesFilterSheetState extends State<CategoriesFilterSheet> {
   SortOption? _selectedOption;
 
   @override
@@ -96,7 +96,7 @@ class _FilterSheetState extends State<FilterSheet> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          option.label(local),
+                          SortOptionFactory.label(option, local),
                           style: AppTextStyles.medium16(context),
                         ),
                         Container(

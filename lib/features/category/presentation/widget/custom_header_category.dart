@@ -1,10 +1,7 @@
-import 'package:flower_app/core/values/app_strings.dart';
-import 'package:flower_app/features/filter/data/extentions/sort_option_api.dart';
 import 'package:flower_app/features/filter/domain/enums/sort_options.dart';
-import 'package:flower_app/features/filter/presentation/widget/filter_sheet.dart';
+import 'package:flower_app/features/filter/presentation/widget/categories_filter_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 
 import '../../../../config/products/data/params/product_query_params.dart';
 import '../../../../core/helpers/my_responsive.dart';
@@ -74,28 +71,16 @@ class CustomHeaderCategory extends StatelessWidget {
       ],
     );
   }
-
-  String _mapToApiKey(String localOption, AppLocalizations local) {
-    final map = {
-      local.lowestPrice: AppStrings.priceAsc,
-      local.highestPrice: AppStrings.priceDesc,
-      local.newest: AppStrings.newest,
-      local.old: AppStrings.oldest,
-      local.discount: AppStrings.discount,
-    };
-
-    return map[localOption] ?? '';
-  }
 }
 
 Future<SortOption?> showFilterBottomSheet(BuildContext context) {
   final cubit = context.read<CategoryCubit>();
 
-  final currentSort = mapApiKeyToSort(cubit.state.selectedSortOption?.apiKey);
+  final currentSort = cubit.state.selectedSortOption;
 
   return showModalBottomSheet<SortOption>(
     context: context,
     isScrollControlled: true,
-    builder: (context) => FilterSheet(currentSort: currentSort),
+    builder: (context) => CategoriesFilterSheet(currentSort: currentSort),
   );
 }
