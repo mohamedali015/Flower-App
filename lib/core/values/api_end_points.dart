@@ -23,6 +23,9 @@ abstract class ApiEndPoints {
   static const addressById = "$userAddress/{id}";
 
   static const String getOrders = "/orders";
+
+  static const String userNotifications = '/notifications/user';
+  static const String unreadCount = '/notifications/unread-count';
     static const String orders = 'orders';
   static const String cashOrderCheckout = "/cash-order";
   static const String creditCheckout = '$orders/checkout';
