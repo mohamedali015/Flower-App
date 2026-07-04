@@ -34,6 +34,9 @@ import '../../features/forget_password/presentation/manager/event/forget_passwor
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
 import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
+import '../../features/search/presentation/manager/search_cubit.dart';
+import '../add_to_cart/presentation/manager/add_cart_cubit.dart';
+import '../../features/notifications/presentation/pages/notifications_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
 
@@ -158,31 +161,6 @@ abstract class RouteGenerator {
 
         ///? search Screen
         case Routes.searchScreenRoute:
-          return CupertinoPageRoute(builder: (_) => const SearchScreen());
-
-        case Routes.editProfileScreenRoute:
-          return CupertinoPageRoute(
-            builder: (_) => BlocProvider(
-              create: (context) => getIt<EditProfileCubit>(),
-              child: const EditProfileScreen(),
-            ),
-          );
-
-        /// Default
-        default:
-          return _errorRoute();
-      }
-    } catch (e, stackTrace) {
-      debugPrint("Route error: $e");
-      debugPrint("$stackTrace");
-
-      return _errorRoute();
-    }
-  }
-
-  static Route<dynamic> _errorRoute() {
-    return MaterialPageRoute(
-      builder: (_) => const Scaffold(
           return CupertinoPageRoute(
             builder: (_) => MultiBlocProvider(
               providers: [
@@ -195,7 +173,15 @@ abstract class RouteGenerator {
               child: const SearchScreen(),
             ),
           );
-        ///? edit profile screen
+
+        case Routes.editProfileScreenRoute:
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => getIt<EditProfileCubit>(),
+              child: const EditProfileScreen(),
+            ),
+          );
+
         ///? notifications Screen
         case Routes.notificationScreenRoute:
           return CupertinoPageRoute(
@@ -219,8 +205,24 @@ abstract class RouteGenerator {
             ),
           );
 
+        /// Default
+        default:
+          return _errorRoute();
+      }
+    } catch (e, stackTrace) {
+      debugPrint("Route error: $e");
+      debugPrint("$stackTrace");
+
+      return _errorRoute();
+    }
+  }
+
+  static Route<dynamic> _errorRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const Scaffold(
         body: Center(
-          child: Text(AppStrings.pageNotFound, style: TextStyle(fontSize: 18)),
+          child: Text(AppStrings.pageNotFound,
+              style: TextStyle(fontSize: 18)),
         ),
       ),
     );
