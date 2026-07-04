@@ -1,7 +1,10 @@
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/config/user/manager/user_cubit.dart';
 import 'package:flower_app/config/user/manager/user_events.dart';
 import 'package:flower_app/core/helpers/app_snack_bar.dart';
 import 'package:flower_app/core/shared_widgets/custom_error_widget.dart';
+import 'package:flower_app/core/utils/app_colors.dart';
+import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,6 +13,9 @@ import '../../../../core/helpers/my_responsive.dart';
 import '../../../../core/shared_widgets/svg_wrapper.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_constants.dart';
+import '../../../notifications/presentation/manager/notifications_cubit.dart';
+import '../../../notifications/presentation/manager/notifications_events.dart';
+import '../../../notifications/presentation/manager/notifications_state.dart';
 import '../widgets/profile_screen_view.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -24,6 +30,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     context.read<UserCubit>().doEvent(GetUserDataEvent());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NotificationsCubit>().doEvent(GetUnreadCountEvent());
+    });
   }
 
   @override
@@ -37,14 +46,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
           width: MyResponsive.width(context, value: 90),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const SvgWrapper(
-              path: AppAssets.notification,
-              width: 24,
-              height: 24,
-            ),
+          BlocBuilder<NotificationsCubit, NotificationsState>(
+            buildWhen: (previous, current) =>
+                previous.unreadCountState != current.unreadCountState,
+            builder: (context, state) {
+              final unreadCount = state.unreadCountState.data?.unreadCount ?? 0;
+
+              return IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.notificationScreenRoute);
+                },
+                icon: Badge(
+                  label: Text(
+                    '$unreadCount',
+                    style: AppTextStyles.medium10(
+                      context,
+                    ).copyWith(color: AppColors.white),
+                  ),
+                  isLabelVisible: true,
+                  backgroundColor: AppColors.error,
+                  largeSize: 16,
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: const SvgWrapper(
+                    path: AppAssets.notification,
+                    width: 24,
+                    height: 24,
+                  ),
+                ),
+              );
+            },
           ),
+          const SizedBox(width: 4),
         ],
       ),
       body: Padding(

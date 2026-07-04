@@ -1,4 +1,11 @@
+import 'dart:ui';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flower_app/config/notification_services/notification_service.dart';
 import 'package:flower_app/core/utils/app_constants.dart';
+import 'package:flower_app/features/notifications/presentation/manager/notifications_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,10 +19,27 @@ import 'core/helpers/custom_bloc_observer.dart';
 import 'core/helpers/show_session_expired_dialog.dart';
 import 'core/localization/l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
-
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await setupFlutterNotifications();
+
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+  /// main thread errors
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+
+  /// platform specific errors (android & ios) & api requests errors
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   configureDependencies();
 
@@ -24,8 +48,19 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.onMessage.listen(showFlutterNotification);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +69,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => getIt<UserCubit>()),
 
         BlocProvider(create: (_) => getIt<LocaleCubit>()),
+
+        BlocProvider(create: (_) => getIt<NotificationsCubit>()),
       ],
       child: BlocBuilder<LocaleCubit, Locale>(
         builder: (context, locale) {
