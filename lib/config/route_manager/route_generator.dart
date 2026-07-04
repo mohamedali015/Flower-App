@@ -11,7 +11,6 @@ import 'package:flower_app/features/edit_profile/presentation/pages/edit_profile
 import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
 import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cubit.dart';
-import 'package:flower_app/features/notifications/presentation/pages/notifications_screen.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
@@ -28,6 +27,8 @@ import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
 import '../../features/cart/presentation/manager/cart_cubit.dart';
 import '../../features/cart/presentation/manager/cart_event.dart';
+import '../../features/check_out/presentation/view/screen/check_out_screen.dart';
+import '../../features/check_out/presentation/manager/checkout_cubit.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
@@ -159,19 +160,12 @@ abstract class RouteGenerator {
         case Routes.searchScreenRoute:
           return CupertinoPageRoute(builder: (_) => const SearchScreen());
 
-        ///? edit profile screen
         case Routes.editProfileScreenRoute:
           return CupertinoPageRoute(
             builder: (_) => BlocProvider(
               create: (context) => getIt<EditProfileCubit>(),
               child: const EditProfileScreen(),
             ),
-          );
-
-        ///? notifications Screen
-        case Routes.notificationScreenRoute:
-          return CupertinoPageRoute(
-            builder: (_) => const NotificationsScreen(),
           );
 
         /// Default
@@ -189,6 +183,42 @@ abstract class RouteGenerator {
   static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(
       builder: (_) => const Scaffold(
+          return CupertinoPageRoute(
+            builder: (_) => MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => getIt<SearchCubit>()),
+                BlocProvider(create: (context) => getIt<AddCartCubit>()),
+                BlocProvider(
+                  create: (_) => getIt<CartCubit>(),
+                ),
+              ],
+              child: const SearchScreen(),
+            ),
+          );
+        ///? edit profile screen
+        ///? notifications Screen
+        case Routes.notificationScreenRoute:
+          return CupertinoPageRoute(
+            builder: (_) => const NotificationsScreen(),
+          );
+
+        ////? Check out
+        case Routes.checkOutRoute:
+          return CupertinoPageRoute(
+            builder: (_) => MultiBlocProvider(
+              providers: [
+                BlocProvider<CartCubit>(
+                  create: (context) =>
+                      getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
+                ),
+                BlocProvider<CheckoutCubit>(
+                  create: (context) => getIt<CheckoutCubit>(),
+                ),
+              ],
+              child: const CheckOutScreen(),
+            ),
+          );
+
         body: Center(
           child: Text(AppStrings.pageNotFound, style: TextStyle(fontSize: 18)),
         ),
