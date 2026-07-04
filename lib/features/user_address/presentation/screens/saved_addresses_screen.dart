@@ -8,6 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../core/shared_widgets/svg_wrapper.dart';
+import '../../../../core/utils/app_assets.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_text_styles.dart';
+import '../manger/user_address_events.dart';
 
 class SavedAddressesScreen extends StatelessWidget {
   const SavedAddressesScreen({super.key});
