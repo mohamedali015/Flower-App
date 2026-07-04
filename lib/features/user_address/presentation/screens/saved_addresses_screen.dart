@@ -34,23 +34,82 @@ class SavedAddressesScreen extends StatelessWidget {
             children: [
               BlocConsumer<UserAddressCubit, UserAddressState>(
                 builder: (context, state) {
-                  if (state.removeUserAddressState.isLoading) {
-                    return const CircularProgressIndicator();
+                  if (state.getLoggedUserAddressesState.isLoading ||
+                      state.removeUserAddressState.isLoading) {
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 32),
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
                   }
+
+                  if (state.getLoggedUserAddressesState.errorMessage != null) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 32),
+                        child: Column(
+                          children: [
+                            Text(
+                              state.getLoggedUserAddressesState.errorMessage!,
+                              style: AppTextStyles.medium14(context),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () {
+                                userAddressCubit.doEvent(
+                                  GetLoggedUserAddressesEvent(),
+                                );
+                              },
+                              child: const Text("Retry"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+
+                  if (state.currentUserAddresses == null ||
+                      state.currentUserAddresses!.isEmpty) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 32),
+                        child: Column(
+                          children: [
+                            const SvgWrapper(
+                              path: AppAssets.location,
+                              width: 64,
+                              height: 64,
+                              // color: AppColors.grayDark, // Assuming SvgWrapper might support color or it's already styled
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              "No saved addresses yet",
+                              style: AppTextStyles.medium14(context).copyWith(
+                                color: AppColors.grayDark,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+
                   return Column(
                     children: List.generate(
-                      userAddressCubit.state.currentUserAddresses!.length,
+                      state.currentUserAddresses!.length,
                       (index) {
-                        return AddressCard(
-                          userAddressCubit.state.currentUserAddresses![index],
-                        );
+                        return AddressCard(state.currentUserAddresses![index]);
                       },
                     ),
                   );
                 },
                 listenWhen: (previous, current) =>
                     previous.removeUserAddressState !=
-                    current.removeUserAddressState,
+                        current.removeUserAddressState ||
+                    previous.getLoggedUserAddressesState !=
+                        current.getLoggedUserAddressesState,
                 listener: (BuildContext context, UserAddressState state) {
                   if (state.removeUserAddressState.isLoading == false &&
                       state.removeUserAddressState.errorMessage != null) {
