@@ -6,13 +6,13 @@ import 'package:flower_app/features/about_us/presentation/screens/about_us_scree
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
-import 'package:flower_app/features/edit_profile/presentation/manager/edit_profile_cubit.dart';
-import 'package:flower_app/features/edit_profile/presentation/pages/edit_profile_screen.dart';
 import 'package:flower_app/features/change_password/presentation/manager/cubit/change_password_cubit.dart';
 import 'package:flower_app/features/change_password/presentation/screens/change_password_screen.dart';
-import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cubit.dart';
+import 'package:flower_app/features/edit_profile/presentation/manager/edit_profile_cubit.dart';
+import 'package:flower_app/features/edit_profile/presentation/pages/edit_profile_screen.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
+import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
@@ -22,6 +22,9 @@ import 'package:flower_app/features/orders/presentation/pages/orders_screen.dart
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flower_app/features/terms_and_conditions/presentation/screens/terms_and_conditions_screen.dart';
 import 'package:flower_app/features/search/presentation/manager/search_cubit.dart';
+import 'package:flower_app/features/user_address/presentation/manger/user_address_cubit.dart';
+import 'package:flower_app/features/user_address/presentation/screens/add_address_screen.dart';
+import 'package:flower_app/features/user_address/presentation/screens/saved_addresses_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,8 +37,8 @@ import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
 import '../../features/cart/presentation/manager/cart_cubit.dart';
 import '../../features/cart/presentation/manager/cart_event.dart';
-import '../../features/check_out/presentation/view/screen/check_out_screen.dart';
 import '../../features/check_out/presentation/manager/checkout_cubit.dart';
+import '../../features/check_out/presentation/view/screen/check_out_screen.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
@@ -43,6 +46,7 @@ import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
+import '../../features/user_address/domain/entities/address.dart';
 
 abstract class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -170,9 +174,7 @@ abstract class RouteGenerator {
               providers: [
                 BlocProvider(create: (context) => getIt<SearchCubit>()),
                 BlocProvider(create: (context) => getIt<AddCartCubit>()),
-                BlocProvider(
-                  create: (_) => getIt<CartCubit>(),
-                ),
+                BlocProvider(create: (_) => getIt<CartCubit>()),
               ],
               child: const SearchScreen(),
             ),
@@ -192,6 +194,25 @@ abstract class RouteGenerator {
 
         case Routes.aboutUsRoute:
           return CupertinoPageRoute(builder: (_) => const AboutUsScreen());
+
+        /// Saved Addresses
+        case Routes.savedAddressesRoute:
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider<UserAddressCubit>.value(
+              value: getIt<UserAddressCubit>(),
+              child: const SavedAddressesScreen(),
+            ),
+          );
+
+        /// Add Addresses
+        case Routes.addAddressRoute:
+          final editAddress = settings.arguments as Address?;
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider<UserAddressCubit>.value(
+              value: getIt<UserAddressCubit>(),
+              child: AddAddressScreen(editAddress: editAddress),
+            ),
+          );
 
         ////? Check out
         case Routes.checkOutRoute:
