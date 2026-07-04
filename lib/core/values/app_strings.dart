@@ -95,5 +95,7 @@ abstract class AppStrings {
   static const String newest = "newest";
   static const String oldest = "oldest";
 
+  static const String usersCollection = "users";
+
   // static const String address = " 2XVP+XC - Sheikh Zayed";
 }

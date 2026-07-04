@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flower_app/config/notification_services/notification_service.dart';
+import 'package:flower_app/config/notification_services/save_user_info_service.dart';
 import 'package:flower_app/core/utils/app_constants.dart';
 import 'package:flower_app/features/notifications/presentation/manager/notifications_cubit.dart';
 import 'package:flutter/material.dart';
@@ -95,10 +96,10 @@ class _MyAppState extends State<MyApp> {
                   final user = context.read<UserCubit>().state.user;
 
                   if (user != null) {
-                    FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(user.id)
-                        .update({'language': locale.languageCode});
+                    getIt<SaveUserInfoService>().updateUserLanguage(
+                      userId: user.id,
+                      language: locale.languageCode,
+                    );
                   }
                 },
                 child: child!,
