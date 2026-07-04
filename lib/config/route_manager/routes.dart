@@ -26,5 +26,10 @@ abstract class Routes {
   static const String savedAddressesRoute = '/savedAddresses';
   static const String addAddressRoute = '/addAddress';
 
+  static const String termsAndConditionsRoute = '/termsAndConditions';
+  static const String aboutUsRoute = '/aboutUs';
+
   static const String checkOutRoute = '/checkOut';
+
+  static const String ordersRoute = '/orders';
 }

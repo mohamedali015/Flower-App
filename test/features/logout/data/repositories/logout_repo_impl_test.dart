@@ -10,11 +10,30 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'logout_repo_impl_test.mocks.dart';
 
-@GenerateMocks([LogoutDataSourceImpl, SecureCache])
+class FakeSecureCache implements SecureCache {
+  final List<String> removedKeys = [];
+
+  @override
+  Future<void> clear() async {}
+
+  @override
+  Future<String?> getData({required String key}) async => null;
+
+  @override
+  Future<void> removeData({required String key}) async {
+    removedKeys.add(key);
+    return Future<void>.value();
+  }
+
+  @override
+  Future<void> saveData({required String key, required String value}) async {}
+}
+
+@GenerateMocks([LogoutDataSourceImpl])
 void main() {
   late LogoutRepoImpl logoutRepoImpl;
   late MockLogoutDataSourceImpl mockLogoutDataSourceImpl;
-  late MockSecureCache mockSecureCache;
+  late FakeSecureCache mockSecureCache;
   late LogoutResponse logoutResponse;
   late String errorMessage;
 
@@ -28,7 +47,7 @@ void main() {
 
   setUp(() {
     mockLogoutDataSourceImpl = MockLogoutDataSourceImpl();
-    mockSecureCache = MockSecureCache();
+    mockSecureCache = FakeSecureCache();
     logoutRepoImpl = LogoutRepoImpl(mockLogoutDataSourceImpl, mockSecureCache);
     logoutResponse = LogoutResponse(message: 'Logout successful');
   });
@@ -43,20 +62,22 @@ void main() {
           );
           when(
             mockSecureCache.removeData(key: CacheKeys.token),
-          ).thenAnswer((_) => Future<void>.value());
+          ).thenAnswer((_) async {});
           when(
             mockSecureCache.removeData(key: CacheKeys.rememberMe),
-          ).thenAnswer((_) => Future<void>.value());
+          ).thenAnswer((_) async {});
 
           final result = await logoutRepoImpl.logout();
 
           expect(result, isA<Success<LogoutResponseEntity>>());
           final success = result as Success<LogoutResponseEntity>;
           expect(success.data.message, equals(logoutResponse.message));
-          verify(mockLogoutDataSourceImpl.logout()).called(1);
-          verify(mockSecureCache.removeData(key: CacheKeys.token)).called(1);
+          verify(() => mockLogoutDataSourceImpl.logout()).called(1);
           verify(
-            mockSecureCache.removeData(key: CacheKeys.rememberMe),
+            () => mockSecureCache.removeData(key: CacheKeys.token),
+          ).called(1);
+          verify(
+            () => mockSecureCache.removeData(key: CacheKeys.rememberMe),
           ).called(1);
         },
       );

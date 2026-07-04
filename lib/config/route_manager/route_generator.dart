@@ -2,6 +2,7 @@ import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_cubi
 import 'package:flower_app/config/di/di.dart';
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
+import 'package:flower_app/features/about_us/presentation/screens/about_us_screen.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
@@ -15,7 +16,11 @@ import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cub
 import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
+import 'package:flower_app/features/orders/presentation/manager/orders_cubit.dart';
+import 'package:flower_app/features/orders/presentation/manager/orders_events.dart';
+import 'package:flower_app/features/orders/presentation/pages/orders_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
+import 'package:flower_app/features/terms_and_conditions/presentation/screens/terms_and_conditions_screen.dart';
 import 'package:flower_app/features/search/presentation/manager/search_cubit.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_cubit.dart';
 import 'package:flower_app/features/user_address/presentation/screens/add_address_screen.dart';
@@ -182,6 +187,13 @@ abstract class RouteGenerator {
               child: const EditProfileScreen(),
             ),
           );
+        case Routes.termsAndConditionsRoute:
+          return CupertinoPageRoute(
+            builder: (_) => const TermsAndConditionsScreen(),
+          );
+
+        case Routes.aboutUsRoute:
+          return CupertinoPageRoute(builder: (_) => const AboutUsScreen());
 
         /// Saved Addresses
         case Routes.savedAddressesRoute:
@@ -216,6 +228,15 @@ abstract class RouteGenerator {
                 ),
               ],
               child: const CheckOutScreen(),
+            ),
+          );
+
+        case Routes.ordersRoute:
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) =>
+                  getIt<OrdersCubit>()..doEvent(GetOrdersEvent()),
+              child: const OrdersScreen(),
             ),
           );
 

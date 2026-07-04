@@ -148,5 +148,12 @@
       "invalidData": "Invalid data",
         "pleaseSelectAddress": "Please select an address",
         "pleaseSelectPayment": "Please select payment method",
-         "noProductsFound": "No products found"
+         "active":"Active",
+         "completed":"Completed",
+         "reorder":"Reorder",
+         "trackOrder":"Track order",
+         "noOrdersFound":"No Orders Found",
+         "orderNumber":"Order number",
+      "order":"Order"
+
 }

@@ -97,7 +97,9 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
             ),
             const SizedBox(height: 30),
             ProfileScreenSettingItemWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, Routes.ordersRoute);
+              },
               start: IconTextWidget(
                 text: locale.myOrders,
                 iconPath: AppAssets.myOrders,
@@ -180,7 +182,9 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
             ),
 
             ProfileScreenSettingItemWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, Routes.aboutUsRoute);
+              },
               start: Text(
                 locale.aboutUs,
                 style: AppTextStyles.regular13(context),
@@ -195,7 +199,9 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
               ),
             ),
             ProfileScreenSettingItemWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, Routes.termsAndConditionsRoute);
+              },
 
               start: Text(
                 locale.termsAndConditions,
