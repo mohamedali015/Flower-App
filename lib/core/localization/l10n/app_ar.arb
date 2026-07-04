@@ -116,6 +116,19 @@
       "notification" : "الاشعارات",
       "noNotificationsYet" : "لا توجد اشعارات حتي الان",
       "your_cart_is_empty": "سلة التسوق فارغة",
+      "noProductsFound": "لا توجد منتجات مطابقة للبحث",
+      "your_cart_is_empty": "سلة التسوق فارغة",
+      "address":"العنوان",
+      "street":"الشاراع",
+      "saved_address": "العناوين المسجلة",
+      "add_address":"اضافة عنوان",
+      "edit_address":"تعديل عنوان",
+      "update_address":"تعديل العنوان",
+      "confirm_delete":"انت علي وشك الغاء هذا العنوان الالغاء",
+      "delete":"إلغاء",
+      "recipient_name":"اسم المستلم",
+      "success_add_address":"تم اضافة العنوان بنجاح",
+      "success_update_address":"تم نعديل العنوان بنجاح",
 
        "deliveryTime":"موعد التسليم",
        "deliveryAddress": "عنوان التسليم",
@@ -135,5 +148,13 @@
                 "invalidData": "بيانات غير صحيحة",
                   "pleaseSelectAddress": "من فضلك اختر عنوان",
                   "pleaseSelectPayment": "من فضلك اختر طريقة الدفع",
-      "noProductsFound": "لا توجد منتجات مطابقة للبحث"
+        "active":"قيد التنفيذ",
+         "completed":"تم التسليم",
+                  "reorder":"أعد الطلب",
+         "trackOrder":"تتبع الطلب",
+                  "noOrdersFound":"لا توجد طلبات",
+                           "orderNumber":"رقم الطلب",
+                           "order":"الطلب"
+
+
 }

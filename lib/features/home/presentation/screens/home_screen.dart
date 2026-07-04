@@ -1,3 +1,4 @@
+import 'package:flower_app/config/di/di.dart';
 import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
@@ -11,6 +12,8 @@ import 'package:flower_app/features/home/presentation/widgets/headline_widget.da
 import 'package:flower_app/features/home/presentation/widgets/location_bar.dart';
 import 'package:flower_app/features/home/presentation/widgets/logo_and_search_bar.dart';
 import 'package:flower_app/features/home/presentation/widgets/occasions/occasions_list.dart';
+import 'package:flower_app/features/user_address/presentation/manger/user_address_cubit.dart';
+import 'package:flower_app/features/user_address/presentation/manger/user_address_events.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +25,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
-
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -32,10 +34,10 @@ class HomeScreen extends StatelessWidget {
             vertical: 16,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LogoAndSearchBar(local: local),
-              const LocationBar(),
-
+               LocationBar(),
               Expanded(
                 child: BlocBuilder<HomeCubit, HomeState>(
                   builder: (context, state) {
@@ -51,6 +53,7 @@ class HomeScreen extends StatelessWidget {
                       return RefreshIndicator(
                         onRefresh: () async {
                           context.read<HomeCubit>().doEvents(GetHomeEvent());
+                          getIt<UserAddressCubit>().doEvent( GetLoggedUserAddressesEvent());
                         },
                         child: SingleChildScrollView(
                           child: Column(
@@ -72,12 +75,10 @@ class HomeScreen extends StatelessWidget {
                               ),
                               CategoriesList(
                                 categories: home.categories,
-
                                 onPressed: (index) {
                                   Navigator.pushReplacementNamed(
                                     context,
                                     Routes.bottomNavBarRoute,
-
                                     arguments: {
                                       "initialIndex": 1,
                                       "categoryIndex": index + 1,

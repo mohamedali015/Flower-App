@@ -118,6 +118,20 @@
          "notification" : "Notification",
          "noNotificationsYet" : "No Notifications Yet",
          "your_cart_is_empty": "Your cart is empty",
+         "noProductsFound": "No products found",
+         "your_cart_is_empty": "Your cart is empty",
+         "address":"Address",
+         "saved_address": "Saved Address",
+         "add_address":"Add Address",
+         "street":"Street",
+         "edit_address":"Edit Address",
+         "update_address":"Update Address",
+         "confirm_delete":"Confirm Delete",
+         "delete":"Delete",
+         "recipient_name":"Recipient name",
+         "success_add_address":"Address added successfully",
+         "success_update_address":"Address updated successfully",
+
 
          "deliveryTime": "Delivery time",
          "deliveryAddress": "Delivery address",
@@ -137,5 +151,12 @@
       "invalidData": "Invalid data",
         "pleaseSelectAddress": "Please select an address",
         "pleaseSelectPayment": "Please select payment method",
-         "noProductsFound": "No products found"
+         "active":"Active",
+         "completed":"Completed",
+         "reorder":"Reorder",
+         "trackOrder":"Track order",
+         "noOrdersFound":"No Orders Found",
+         "orderNumber":"Order number",
+      "order":"Order"
+
 }
