@@ -15,4 +15,6 @@ class OccasionsResponse {
 
   factory OccasionsResponse.fromJson(Map<String, dynamic> json) =>
       _$OccasionsResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OccasionsResponseToJson(this);
 }

@@ -67,7 +67,7 @@ class LogoutDialog extends StatelessWidget {
                   children: [
                     Expanded(
                       child: CustomButton(
-                        title: local.cancle,
+                        title: local.cancel,
                         borderColor: AppColors.grayDark,
                         titleStyle: AppTextStyles.medium14(
                           context,

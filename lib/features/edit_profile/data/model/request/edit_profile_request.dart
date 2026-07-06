@@ -19,4 +19,6 @@ class EditProfileRequest {
   EditProfileRequest({this.firstName, this.lastName, this.email, this.phone});
 
   Map<String, dynamic> toJson() => _$EditProfileRequestToJson(this);
+  factory EditProfileRequest.fromJson(Map<String, dynamic> json) =>
+      _$EditProfileRequestFromJson(json);
 }

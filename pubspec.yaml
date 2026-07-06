@@ -60,6 +60,14 @@ dependencies:
   shimmer: ^3.0.0
   image_picker: ^1.2.2
   webview_flutter: ^4.13.1
+  firebase_core: ^4.9.0
+  flutter_local_notifications: ^18.0.1
+  firebase_messaging: ^16.2.2
+  permission_handler: ^12.0.3
+  firebase_crashlytics: ^5.2.3
+  firebase_analytics: ^12.4.2
+  geocoding: ^4.0.0
+  google_maps_flutter: ^2.17.1
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +106,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/cities.json
+    - assets/states.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

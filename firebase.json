@@ -1,0 +1,23 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "elevate-flower-app-92318",
+          "appId": "1:1035074510871:android:0061ef9392b42fb30c3c52",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "elevate-flower-app-92318",
+          "configurations": {
+            "android": "1:1035074510871:android:0061ef9392b42fb30c3c52",
+            "ios": "1:1035074510871:ios:6649438b1a97bf670c3c52",
+            "web": "1:1035074510871:web:af72154623b82c7c0c3c52"
+          }
+        }
+      }
+    }
+  }
+}

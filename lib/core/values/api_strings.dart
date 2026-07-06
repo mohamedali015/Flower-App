@@ -6,4 +6,5 @@ abstract class ApiStrings {
   static const String resetCode = "resetCode";
 
   static const String photo = 'photo';
+  static const String id = "id";
 }
