@@ -1,18 +1,19 @@
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../../config/enums/payment_method.dart';
-import '../../../../../config/route_manager/routes.dart';
 import '../../../../../config/user/manager/user_cubit.dart';
 import '../../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../cart/presentation/manager/cart_cubit.dart';
 import '../../../../cart/presentation/manager/cart_event.dart';
+import '../../../../user_address/domain/entities/address.dart';
 import '../../../data/models/request/credit_payment_request.dart';
 import '../../manager/checkout_cubit.dart';
 import '../../manager/checkout_intents.dart';
 import '../widgets/checkout_stepper.dart';
 import 'address_screen.dart';
 import 'payment_screen.dart';
-import 'payment_webview_screen.dart';
 import 'track_order_screen.dart';
 
 class CheckOutScreen extends StatefulWidget {
@@ -25,11 +26,11 @@ class CheckOutScreen extends StatefulWidget {
 class _CheckOutScreenState extends State<CheckOutScreen> {
   int currentStep = 0;
 
-  // Checkout flow state
   bool isGift = false;
-  String? addressType;
+  Address? selectedAddress;
   String? giftName;
   String? giftPhone;
+
   PaymentMethod? selectedPaymentMethod;
 
   void nextStep() {
@@ -44,26 +45,42 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     }
   }
 
-  void _placeOrder() {
-    if (selectedPaymentMethod == PaymentMethod.cash) {
-      context.read<CheckoutCubit>().doIntent(CashPaymentIntent());
-    } else if (selectedPaymentMethod == PaymentMethod.card) {
-      final userPhone = context.read<UserCubit>().state.user?.phone ?? "+201234567890";
-      final streetStr = isGift
-          ? "Gift to $giftName"
-          : "${addressType ?? 'Home'} (2XVP+XC - Sheikh Zayed)";
-      final phoneStr = isGift ? (giftPhone ?? userPhone) : userPhone;
+  ShippingAddress _buildShippingAddress() {
+    final userPhone =
+        context.read<UserCubit>().state.user?.phone ?? "+201234567890";
 
-      final request = CheckoutPaymentRequest(
-        shippingAddress: ShippingAddress(
-          street: streetStr,
-          phone: phoneStr,
-          city: "Cairo",
-          lat: "30.0768",
-          long: "31.0182",
-        ),
+    if (isGift) {
+      return ShippingAddress(
+        street: "Gift to $giftName",
+        phone: giftPhone ?? userPhone,
+        city: selectedAddress?.city ?? "Cairo",
+        lat: selectedAddress?.lat ?? "30.0768",
+        long: selectedAddress?.long ?? "31.0182",
       );
-      context.read<CheckoutCubit>().doIntent(CreditPaymentIntent(request));
+    }
+
+    return ShippingAddress(
+      street: selectedAddress?.street ?? "",
+      phone: selectedAddress?.phone ?? userPhone,
+      city: selectedAddress?.city ?? "Cairo",
+      lat: selectedAddress?.lat ?? "30.0768",
+      long: selectedAddress?.long ?? "31.0182",
+    );
+  }
+
+  void _placeOrder() {
+    final cubit = context.read<CheckoutCubit>();
+    final address = _buildShippingAddress();
+
+    if (selectedPaymentMethod == PaymentMethod.cash) {
+      cubit.doIntent(CashPaymentIntent());
+      return;
+    }
+
+    if (selectedPaymentMethod == PaymentMethod.card) {
+      final request = CheckoutPaymentRequest(shippingAddress: address);
+
+      cubit.doIntent(CreditPaymentIntent(request));
     }
   }
 
@@ -74,22 +91,26 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     final titles = [local.address, local.payment, local.trackOrder];
 
     final pages = [
+      /// ================= ADDRESS =================
       AddressStep(
         onNext: nextStep,
-        onAddressSelected: ({
-          required bool isGift,
-          required String? addressType,
-          required String? giftName,
-          required String? giftPhone,
-        }) {
-          setState(() {
-            this.isGift = isGift;
-            this.addressType = addressType;
-            this.giftName = giftName;
-            this.giftPhone = giftPhone;
-          });
-        },
+        onAddressSelected:
+            ({
+              required bool isGift,
+              required Address? address,
+              required String? giftName,
+              required String? giftPhone,
+            }) {
+              setState(() {
+                this.isGift = isGift;
+                selectedAddress = address;
+                this.giftName = giftName;
+                this.giftPhone = giftPhone;
+              });
+            },
       ),
+
+      /// ================= PAYMENT =================
       PaymentStep(
         onNext: nextStep,
         onBack: previousStep,
@@ -98,11 +119,15 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             selectedPaymentMethod = method;
           });
         },
+        buildPaymentRequest: () {
+          return CheckoutPaymentRequest(
+            shippingAddress: _buildShippingAddress(),
+          );
+        },
       ),
-      TrackOrderStep(
-        onBack: previousStep,
-        onPlaceOrder: _placeOrder,
-      ),
+
+      /// ================= TRACK ORDER =================
+      TrackOrderStep(onBack: previousStep, onPlaceOrder: _placeOrder),
     ];
 
     return Scaffold(
@@ -114,83 +139,42 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             if (currentStep > 0) {
               previousStep();
             } else {
-              Navigator.pushReplacementNamed(context, Routes.cartRoute);
+              Navigator.pop(context);
             }
           },
         ),
       ),
+
       body: BlocConsumer<CheckoutCubit, CheckoutState>(
         listener: (context, state) async {
-          // Cash Payment listeners
           if (state.cashPaymentState.isSuccess) {
             context.read<CartCubit>().doEvent(GetCartItemsEvent());
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => AlertDialog(
-                title: const Text('Order Placed'),
-                content: const Text('Your cash order has been placed successfully!'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // pop dialog
-                      Navigator.of(context).pushReplacementNamed(Routes.bottomNavBarRoute);
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              ),
-            );
-          } else if (state.cashPaymentState.errorMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.cashPaymentState.errorMessage!)),
-            );
+            Navigator.pushReplacementNamed(context, Routes.ordersRoute);
           }
 
-          // Credit Payment listeners
           if (state.creditPaymentState.isSuccess) {
             final url = state.creditPaymentState.data?.session?.url;
+
             if (url != null) {
-              final isSuccess = await Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => PaymentWebViewScreen(url: url),
-                ),
+                Routes.paymentScreenRoute,
+                arguments: url,
               );
-              if (!context.mounted) return;
-              if (isSuccess == true) {
-                context.read<CartCubit>().doEvent(GetCartItemsEvent());
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => AlertDialog(
-                    title: const Text('Payment Successful'),
-                    content: const Text('Your payment has been processed successfully!'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pushReplacementNamed(Routes.bottomNavBarRoute);
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Payment cancelled or failed.')),
-                );
-              }
+
+              // if (!context.mounted) return;
+              //
+              // if (result == true) {
+              //   context.read<CartCubit>().doEvent(GetCartItemsEvent());
+              // }
             }
-          } else if (state.creditPaymentState.errorMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.creditPaymentState.errorMessage!)),
-            );
           }
         },
+
         builder: (context, state) {
-          final isLoading = state.cashPaymentState.isLoading || state.creditPaymentState.isLoading;
+          final isLoading =
+              state.cashPaymentState.isLoading ||
+              state.creditPaymentState.isLoading;
 
           return Stack(
             children: [
@@ -202,12 +186,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   ),
                 ],
               ),
+
               if (isLoading)
                 Container(
                   color: Colors.black45,
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: const Center(child: CircularProgressIndicator()),
                 ),
             ],
           );

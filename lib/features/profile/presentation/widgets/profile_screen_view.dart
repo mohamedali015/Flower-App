@@ -114,15 +114,15 @@ class _ProfileScreenViewState extends State<ProfileScreenView> {
               ),
             ),
             ProfileScreenSettingItemWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, Routes.savedAddressesRoute);
+              },
               start: IconTextWidget(
                 text: locale.myAddress,
                 iconPath: AppAssets.location,
               ),
               end: IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.savedAddressesRoute);
-                },
+                onPressed: () {},
                 icon: const SvgWrapper(
                   path: AppAssets.iosForwardBtn,
                   width: 24,

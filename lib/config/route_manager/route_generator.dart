@@ -19,8 +19,8 @@ import 'package:flower_app/features/orders/presentation/manager/orders_cubit.dar
 import 'package:flower_app/features/orders/presentation/manager/orders_events.dart';
 import 'package:flower_app/features/orders/presentation/pages/orders_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
-import 'package:flower_app/features/terms_and_conditions/presentation/screens/terms_and_conditions_screen.dart';
 import 'package:flower_app/features/search/presentation/manager/search_cubit.dart';
+import 'package:flower_app/features/terms_and_conditions/presentation/screens/terms_and_conditions_screen.dart';
 import 'package:flower_app/features/user_address/presentation/manger/user_address_cubit.dart';
 import 'package:flower_app/features/user_address/presentation/screens/add_address_screen.dart';
 import 'package:flower_app/features/user_address/presentation/screens/saved_addresses_screen.dart';
@@ -43,12 +43,13 @@ import '../../features/forget_password/presentation/manager/event/forget_passwor
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
 import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
-import '../../features/search/presentation/manager/search_cubit.dart';
 import '../add_to_cart/presentation/manager/add_cart_cubit.dart';
 import '../../features/notifications/presentation/pages/notifications_screen.dart';
+import '../../features/payment/views/pages/payment_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
 import '../../features/user_address/domain/entities/address.dart';
+import '../../features/user_address/presentation/manger/user_address_events.dart';
 
 abstract class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -222,6 +223,22 @@ abstract class RouteGenerator {
             builder: (_) => const NotificationsScreen(),
           );
 
+        case Routes.ordersRoute:
+          return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) =>
+                  getIt<OrdersCubit>()..doEvent(GetOrdersEvent()),
+              child: const OrdersScreen(),
+            ),
+          );
+
+        case Routes.paymentScreenRoute:
+          final paymentLink = settings.arguments as String;
+
+          return CupertinoPageRoute(
+            builder: (_) => PaymentScreen(paymentUrl: paymentLink),
+          );
+
         ////? Check out
         case Routes.checkOutRoute:
           return CupertinoPageRoute(
@@ -234,17 +251,13 @@ abstract class RouteGenerator {
                 BlocProvider<CheckoutCubit>(
                   create: (context) => getIt<CheckoutCubit>(),
                 ),
+                BlocProvider(
+                  create: (context) =>
+                      getIt<UserAddressCubit>()
+                        ..doEvent(GetLoggedUserAddressesEvent()),
+                ),
               ],
               child: const CheckOutScreen(),
-            ),
-          );
-
-        case Routes.ordersRoute:
-          return CupertinoPageRoute(
-            builder: (_) => BlocProvider(
-              create: (context) =>
-                  getIt<OrdersCubit>()..doEvent(GetOrdersEvent()),
-              child: const OrdersScreen(),
             ),
           );
 
@@ -264,8 +277,7 @@ abstract class RouteGenerator {
     return MaterialPageRoute(
       builder: (_) => const Scaffold(
         body: Center(
-          child: Text(AppStrings.pageNotFound,
-              style: TextStyle(fontSize: 18)),
+          child: Text(AppStrings.pageNotFound, style: TextStyle(fontSize: 18)),
         ),
       ),
     );

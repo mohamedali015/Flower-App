@@ -21,29 +21,28 @@
   "errors_defaultError": "An error occurred. Please try again.",
 
   "login": "Login",
-
   "cart": "Cart",
   "categories": "Categories",
   "home": "Home",
   "profile": "Profile",
 
-  "signUp": "Sign up",
-  "firstName": "First name",
-  "enterFirstName": "Enter first name",
-  "lastName": "Last name",
-  "enterLastName": "Enter last name",
+  "signUp": "Sign Up",
+  "firstName": "First Name",
+  "enterFirstName": "Enter First Name",
+  "lastName": "Last Name",
+  "enterLastName": "Enter Last Name",
 
   "email": "Email",
-  "enterEmail": "Enter your email",
+  "enterEmail": "Enter Your Email",
 
   "password": "Password",
-  "enterPassword": "Enter password",
+  "enterPassword": "Enter Password",
 
-  "confirmPassword": "Confirm password",
-  "confirmPasswordHint": "Confirm password",
+  "confirmPassword": "Confirm Password",
+  "confirmPasswordHint": "Confirm Password",
 
-  "phoneNumber": "Phone number",
-  "enterPhoneNumber": "Enter phone number",
+  "phoneNumber": "Phone Number",
+  "enterPhoneNumber": "Enter Phone Number",
 
   "gender": "Gender",
   "female": "Female",
@@ -55,12 +54,11 @@
   "alreadyHaveAccount": "Already have an account?",
   "rememberMe": "Remember me",
   "forgetPassword": "Forgot password?",
-  "doNotHaveAnAccount": "Don’t have an account?",
+  "doNotHaveAnAccount": "Don't have an account?",
 
   "search": "Search",
   "filter": "Filter",
-
-  "addToCart": "Add to cart",
+  "addToCart": "Add to Cart",
 
   "egp": "EGP",
 
@@ -79,15 +77,15 @@
 
   "noOccasionsFound": "No occasions found",
   "noCategoriesFound": "No categories found",
-  "noProductsFound": "No Products Found",
+  "noProductsFound": "No products found",
 
-  "deliverTo": "Deliver to",
+  "deliverTo": "Deliver To",
   "viewAll": "View All",
 
-   "searchForAnyProductYouWant": "Search For Any Product You Want",
+  "searchForAnyProductYouWant": "Search For Any Product You Want",
 
-   "english":"English",
-   "arabic":"Arabic",
+  "english": "English",
+  "arabic": "Arabic",
 
    "logout" : "Logout",
    "aboutUs":"About US",
@@ -157,6 +155,80 @@
          "trackOrder":"Track order",
          "noOrdersFound":"No Orders Found",
          "orderNumber":"Order number",
-      "order":"Order"
+      "order":"Order",
 
+  "aboutUs": "About Us",
+  "language": "Language",
+  "changeLanguage": "Change Language",
+  "myOrders": "My Orders",
+  "myAddress": "My Address",
+  "notification": "Notifications",
+  "editProfile": "Edit Profile",
+  "change": "Change",
+
+  "resetPassword": "Reset Password",
+  "currentPassword": "Current Password",
+  "newPassword": "New Password",
+
+  "update": "Update",
+
+   "logout": "Logout",
+   "confirmLogout": "Confirm Logout",
+   "cancel": "Cancel",
+
+  "items": "Items",
+  "checkout": "Checkout",
+  "subTotal": "Sub Total",
+  "deliveryFee": "Delivery Fee",
+  "total": "Total",
+
+  "addedSuccessfully": "Added Successfully",
+
+  "sub_total": "Sub Total",
+  "delivery_fee": "Delivery Fee",
+
+  "your_cart_is_empty": "Your Cart Is Empty",
+
+  "address": "Address",
+  "saved_address": "Saved Address",
+  "add_address": "Add Address",
+
+  "confirm_delete": "Confirm Delete",
+  "delete": "Delete",
+
+   "recipient_name": "Recipient Name",
+
+  "noNotificationsYet": "No Notifications Yet",
+
+  "payment": "Payment",
+  "active": "Active",
+  "completed": "Completed",
+  "reorder": "Reorder",
+  "trackOrder": "Track Order",
+  "noOrdersFound": "No Orders Found",
+  "orderNumber": "Order Number",
+  "order": "Order",
+
+  "lowestPrice": "Lowest Price",
+  "highestPrice": "Highest Price",
+  "newest": "New",
+  "old": "Old",
+  "discount": "Discount",
+  "sortBy": "Sort by",
+
+  "deliveryTime": "Delivery Time",
+  "deliveryAddress": "Delivery Address",
+  "paymentMethod": "Payment Method",
+  "itIsAGift": "It is a gift",
+  "name": "Name",
+  "enterName": "Enter the name",
+  "cashOnDelivery": "Cash on delivery",
+  "creditCard": "Credit card",
+  "placeOrder": "Place order",
+  "instant": "Instant",
+  "addNew": "Add new",
+  "next": "Next",
+  "invalidData": "Invalid data",
+  "pleaseSelectAddress": "Please select an address",
+  "pleaseSelectPayment": "Please select payment method"
 }

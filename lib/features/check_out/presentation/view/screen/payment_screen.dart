@@ -1,13 +1,17 @@
-import 'package:flower_app/config/enums/payment_method.dart';
-import 'package:flower_app/features/check_out/presentation/view/widgets/custom_payment_method_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../config/enums/payment_method.dart';
 import '../../../../../core/localization/l10n/app_localizations.dart';
 import '../../../../cart/presentation/manager/cart_cubit.dart';
 import '../../../../cart/presentation/manager/cart_state.dart';
 import '../../../../cart/presentation/widget/custom_total_price.dart';
 import '../widgets/custom_checkout_button.dart';
+import '../widgets/custom_payment_method_selector.dart';
+
+import '../../../../check_out/data/models/request/credit_payment_request.dart';
+import '../../../../check_out/presentation/manager/checkout_cubit.dart';
+import '../../../../check_out/presentation/manager/checkout_intents.dart';
 
 class PaymentStep extends StatefulWidget {
   const PaymentStep({
@@ -15,11 +19,14 @@ class PaymentStep extends StatefulWidget {
     required this.onNext,
     required this.onBack,
     required this.onPaymentMethodSelected,
+    required this.buildPaymentRequest,
   });
 
   final VoidCallback onNext;
   final VoidCallback onBack;
   final ValueChanged<PaymentMethod> onPaymentMethodSelected;
+
+  final CheckoutPaymentRequest Function() buildPaymentRequest;
 
   @override
   State<PaymentStep> createState() => _PaymentStepState();
@@ -27,6 +34,8 @@ class PaymentStep extends StatefulWidget {
 
 class _PaymentStepState extends State<PaymentStep> {
   PaymentMethod? selectedMethod;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +50,11 @@ class _PaymentStepState extends State<PaymentStep> {
               selectedMethod = method;
             });
           },
+          onCardSelected: () {
+            setState(() {
+              selectedMethod = PaymentMethod.card;
+            });
+          },
         ),
 
         BlocBuilder<CartCubit, CartState>(
@@ -49,7 +63,7 @@ class _PaymentStepState extends State<PaymentStep> {
 
             return Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
+                horizontal: 16,
                 vertical: 24,
               ),
               child: CustomTotalPrice(
