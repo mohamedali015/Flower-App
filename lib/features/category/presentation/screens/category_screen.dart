@@ -62,9 +62,9 @@ class _CategoryViewState extends State<_CategoryView> {
     }
 
     /// CATEGORY TAB
-    if (state.categories.isNotEmpty &&
-        selectedIndex - 1 < state.categories.length) {
-      final categoryId = state.categories[selectedIndex - 1].id!;
+    final categories = state.categoriesState.data ?? [];
+    if (categories.isNotEmpty && selectedIndex - 1 < categories.length) {
+      final categoryId = categories[selectedIndex - 1].id!;
 
       context.read<CategoryCubit>().doEvent(
         ProductEvent(
@@ -88,12 +88,11 @@ class _CategoryViewState extends State<_CategoryView> {
         children: [
           SizedBox(height: MyResponsive.height(context, value: 50)),
 
-          BlocBuilder<CategoryCubit, CategoryState>(
-            buildWhen: (previous, current) =>
-                previous.selectedCategoryId != current.selectedCategoryId,
-            builder: (context, state) {
+          BlocSelector<CategoryCubit, CategoryState, String>(
+            selector: (state) => state.selectedCategoryId ?? '',
+            builder: (context, selectedCategoryId) {
               return CustomHeaderCategory(
-                currentCategoryId: state.selectedCategoryId ?? '',
+                currentCategoryId: selectedCategoryId,
               );
             },
           ),
@@ -103,14 +102,16 @@ class _CategoryViewState extends State<_CategoryView> {
           Expanded(
             child: BlocConsumer<CategoryCubit, CategoryState>(
               listener: (context, state) {
+                final categories = state.categoriesState.data ?? [];
+
                 /// SAFETY RESET
-                if (state.categories.isNotEmpty &&
-                    selectedIndex >= state.categories.length + 1) {
+                if (categories.isNotEmpty &&
+                    selectedIndex >= categories.length + 1) {
                   selectedIndex = 0;
                 }
 
                 /// FIRST LOAD
-                if (isFirstLoad && state.categories.isNotEmpty) {
+                if (isFirstLoad && categories.isNotEmpty) {
                   isFirstLoad = false;
 
                   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -120,14 +121,14 @@ class _CategoryViewState extends State<_CategoryView> {
               },
               builder: (context, state) {
                 /// CATEGORY LOADING
-                if (state.isLoading) {
+                if (state.categoriesState.isLoading) {
                   return const TabsShimmer();
                 }
 
                 /// CATEGORY ERROR
-                if (state.errorMessage != null) {
+                if (state.categoriesState.errorMessage != null) {
                   return CustomErrorWidget(
-                    errorMessage: state.errorMessage!,
+                    errorMessage: state.categoriesState.errorMessage!,
                     haveTryAgain: true,
                     onPressed: () {
                       context.read<CategoryCubit>().doEvent(
@@ -137,8 +138,11 @@ class _CategoryViewState extends State<_CategoryView> {
                   );
                 }
 
+                final categories = state.categoriesState.data ?? [];
+                final products = state.productsState.data ?? [];
+
                 /// EMPTY CATEGORY
-                if (state.categories.isEmpty) {
+                if (categories.isEmpty) {
                   return CustomErrorWidget(
                     errorMessage: local.noCategoriesFound,
                   );
@@ -148,7 +152,7 @@ class _CategoryViewState extends State<_CategoryView> {
                   children: [
                     /// TABS
                     CategoryTabBar(
-                      categories: state.categories,
+                      categories: categories,
                       selectedIndex: selectedIndex,
                       onTap: (index) {
                         if (selectedIndex == index) return;
@@ -168,14 +172,14 @@ class _CategoryViewState extends State<_CategoryView> {
                       child: Builder(
                         builder: (_) {
                           /// PRODUCTS LOADING
-                          if (state.isProductLoading) {
+                          if (state.productsState.isLoading) {
                             return const GridProductShimmer();
                           }
 
                           /// PRODUCTS ERROR
-                          if (state.productErrorMessage != null) {
+                          if (state.productsState.errorMessage != null) {
                             return CustomErrorWidget(
-                              errorMessage: state.productErrorMessage!,
+                              errorMessage: state.productsState.errorMessage!,
                               haveTryAgain: true,
                               onPressed: () {
                                 _loadProducts(state);
@@ -184,7 +188,7 @@ class _CategoryViewState extends State<_CategoryView> {
                           }
 
                           /// EMPTY PRODUCTS
-                          if (state.products.isEmpty) {
+                          if (products.isEmpty) {
                             return CustomErrorWidget(
                               errorMessage: local.noProductsFound,
                             );
@@ -196,9 +200,9 @@ class _CategoryViewState extends State<_CategoryView> {
                             },
                             child: CustomGridView(
                               physics: const AlwaysScrollableScrollPhysics(),
-                              itemCount: state.products.length,
+                              itemCount: products.length,
                               itemBuilder: (context, index) {
-                                final product = state.products[index];
+                                final product = products[index];
                                 return ProductCard(product: product);
                               },
                             ),
