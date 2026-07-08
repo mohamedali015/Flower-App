@@ -6,6 +6,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../../core/values/api_end_points.dart';
 import '../../core/values/api_strings.dart';
 import '../di/di.dart';
+import '../firebase/api/fcm_interceptor.dart';
 import '../secure_cache/secure_cache/cache_keys.dart';
 import '../secure_cache/secure_cache/secure_cache.dart';
 import '../user/manager/user_cubit.dart';
@@ -99,6 +100,22 @@ abstract class ApiModule {
 
     dio.interceptors.add(logger);
 
+    return dio;
+  }
+
+  @Named(ApiStrings.fcmDio)
+  @lazySingleton
+  Dio provideFcmDio(PrettyDioLogger logger, FcmInterceptor fcmInterceptor) {
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: ApiEndPoints.fcmBaseUrl,
+        connectTimeout: const Duration(seconds: 10),
+        sendTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 10),
+      ),
+    );
+    dio.interceptors.add(fcmInterceptor);
+    dio.interceptors.add(logger);
     return dio;
   }
 }

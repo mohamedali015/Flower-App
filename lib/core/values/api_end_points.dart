@@ -26,7 +26,11 @@ abstract class ApiEndPoints {
 
   static const String userNotifications = '/notifications/user';
   static const String unreadCount = '/notifications/unread-count';
+
   static const String orders = 'orders';
   static const String cashOrderCheckout = "/cash-order";
-  static const String creditCheckout = '$orders/checkout';
+  static const String creditCheckout = '/$orders/checkout';
+
+  static const String fcmBaseUrl = 'https://fcm.googleapis.com';
+  static const String fcmSendPath = '/v1/projects/{projectId}/messages:send';
 }
