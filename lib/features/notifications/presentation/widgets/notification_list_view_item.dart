@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../core/shared_widgets/svg_wrapper.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_text_styles.dart';
-import '../../domain/entities/notification_entity.dart';
+import '../../domain/entities/firestore_notification_entity.dart'; // استيراد الـ Entity الجديد
 
 class NotificationListViewItem extends StatelessWidget {
-  final NotificationEntity entity;
+  final FirestoreNotificationEntity entity; // تعديل النوع هنا ليكون الجديد
 
   const NotificationListViewItem({super.key, required this.entity});
 
