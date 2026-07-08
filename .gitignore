@@ -58,3 +58,5 @@ app.*.map.json
 /lib/core/localization/l10n/app_localizations_ar.dart
 /lib/core/localization/l10n/app_localizations_en.dart
 /lib/firebase_options.dart
+/lib/secret_keys.dart
+/firebase.json
