@@ -15,12 +15,11 @@ class FirestoreNotificationsModel {
 
   Map<String, dynamic> toJson() => _$FirestoreNotificationsModelToJson(this);
 
-  /// ميثود مساعدة بتديلها لغة التطبيق الحالية (ar أو en) وبترجعلك المحتوى المناسب مباشرة
   NotificationContent? getContentForLanguage(String languageCode) {
     if (languageCode == 'ar') {
-      return ar ?? en; // لو العربي مش موجود كـ fallback يرجع الإنجليزي
+      return ar ?? en;
     }
-    return en ?? ar; // الافتراضي إنجليزي، ولو مش موجود يرجع العربي
+    return en ?? ar;
   }
 }
 
@@ -40,7 +39,6 @@ class NotificationContent {
 
   Map<String, dynamic> toJson() => _$NotificationContentToJson(this);
 
-  // ميثودس مخصصة للتعامل مع الـ Timestamp بتاع الفايرستور بداخل json_serializable
   static Timestamp? _timestampFromJson(dynamic json) {
     if (json is Timestamp) return json;
     if (json is String) return Timestamp.fromDate(DateTime.parse(json));

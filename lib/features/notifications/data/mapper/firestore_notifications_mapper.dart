@@ -3,7 +3,6 @@ import 'package:flower_app/features/notifications/domain/entities/firestore_noti
 
 extension FirestoreNotificationsModelMapper on FirestoreNotificationsModel {
   FirestoreNotificationEntity toEntity(String languageCode) {
-    // getContentForLanguage هي الميثود اللي عملناها في الموديل
     final content = getContentForLanguage(languageCode);
     return FirestoreNotificationEntity(
       title: content?.title ?? '',
