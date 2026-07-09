@@ -7,9 +7,10 @@ abstract class ApiEndPoints {
   static const String resetPassword = "/auth/resetPassword";
   static const String verifyResetCode = "/auth/verifyResetCode";
 
-  static const String getUserData = "/auth/profile-data";
+  static const String getUserData = "/auth/profile-data_source";
   static const String categories = "/categories";
   static const String products = "/products";
   static const String home = "/home";
   static const String getOccasions = '/occasions';
+  static const String cart="/cart" ;
 }

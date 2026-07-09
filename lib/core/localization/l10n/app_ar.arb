@@ -84,5 +84,11 @@
   "deliverTo": "توصيل الي",
   "viewAll": "المزيد",
 
-"searchForAnyProductYouWant": "ابحث عن أي منتج تريده"
+"searchForAnyProductYouWant": "ابحث عن أي منتج تريده",
+"items": "العناصر",
+  "checkout": "إتمام الطلب",
+  "subTotal": "المجموع الفرعي",
+  "deliveryFee": "رسوم التوصيل",
+  "total": "الإجمالي",
+  "addedSuccessfully" : "تم الاضافة بنجاح"
 }
