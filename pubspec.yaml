@@ -74,6 +74,7 @@ dependencies:
   url_launcher: ^6.3.1
   googleapis: ^16.0.0
   googleapis_auth: ^2.3.2
+  timeline_tile: ^2.0.0
 
 dev_dependencies:
   flutter_test:
