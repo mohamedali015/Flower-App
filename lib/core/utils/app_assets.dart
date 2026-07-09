@@ -37,4 +37,5 @@ abstract class AppAssets {
 
   static const String driverBoyIcon = "$_baseIconsPath/driver_boy.svg";
   static const String whatsAppIcon = "$_baseIconsPath/whatsapp.svg";
+  static const String moneyIcon = "$_baseIconsPath/money.svg";
 }

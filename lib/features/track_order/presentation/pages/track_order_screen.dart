@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import '../../../../config/di/di.dart';
 import '../../../../core/helpers/url_launcher_helper.dart';
 import '../../../../core/utils/app_constants.dart';
+import '../widgets/order_items_widget.dart';
+import '../widgets/track_order_info_card.dart';
 
 class TrackOrderScreen extends StatefulWidget {
   const TrackOrderScreen({super.key});
@@ -73,6 +75,20 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                     ),
                     const SizedBox(height: 40),
                     const OrderTimeline(currentStatus: orderState),
+                    const SizedBox(height: 20),
+                    const OrderItemsWidget(products: []),
+                    const SizedBox(height: 20),
+                    TrackOrderInfoCard(
+                      iconPath: AppAssets.moneyIcon,
+                      title: '${localizations.egp} 3000',
+                      subTitle: localizations.cashOnDelivery,
+                    ),
+                    const SizedBox(height: 24),
+                    TrackOrderInfoCard(
+                      iconPath: AppAssets.location,
+                      title: localizations.home,
+                      subTitle: '2XVP+XC - Sheikh Zayed',
+                    ),
                     const SizedBox(height: 20),
                   ],
                 ),
