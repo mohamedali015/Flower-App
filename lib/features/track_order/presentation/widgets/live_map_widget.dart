@@ -215,7 +215,7 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
                   : _storeLocation.latitude != 0
                   ? _storeLocation
                   : const LatLng(30.0444, 31.2357),
-              initialZoom: 13,
+              initialZoom: 14,
               onMapReady: _fitBounds,
             ),
             children: [
