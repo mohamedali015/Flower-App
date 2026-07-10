@@ -219,5 +219,6 @@
   "orderDelivered" : "تم توصيل الطلب",
   "orderDetails" : "تفاصيل الطلب",
   "deliveryArrived": "وصل المندوب",
-  "orderIsPending": "الطلب قيد الانتظار"
+  "orderIsPending": "الطلب قيد الانتظار",
+  "myLocation": "موقعي"
 }

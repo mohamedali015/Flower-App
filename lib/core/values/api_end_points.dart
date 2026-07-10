@@ -33,4 +33,11 @@ abstract class ApiEndPoints {
 
   static const String fcmBaseUrl = 'https://fcm.googleapis.com';
   static const String fcmSendPath = '/v1/projects/{projectId}/messages:send';
+
+  static const String openRouteBaseUrl =
+      "https://api.openrouteservice.org/v2/directions/";
+  static const String openRouteDrivingCar = "driving-car";
+
+  static const String openStreetMapTiles =
+      'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 }

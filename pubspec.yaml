@@ -72,6 +72,8 @@ dependencies:
   webview_flutter: ^4.13.1
   geolocator: ^14.0.3
   url_launcher: ^6.3.1
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
   googleapis: ^16.0.0
   googleapis_auth: ^2.3.2
   timeline_tile: ^2.0.0

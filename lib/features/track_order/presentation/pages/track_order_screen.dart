@@ -1,3 +1,4 @@
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/shared_widgets/custom_button.dart';
 import 'package:flower_app/core/shared_widgets/custom_loading_indicator.dart';
@@ -164,7 +165,13 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                         Expanded(
                           child: CustomButton(
                             title: localizations.showMap,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.mapScreenRoute,
+                                arguments: order.id,
+                              );
+                            },
                           ),
                         ),
                         if (orderStatus == OrderStatus.delivered) ...[

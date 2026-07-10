@@ -11,4 +11,6 @@ abstract class AppConstants {
 
   static const String aboutUsBaseUrl =
       'https://elevate-flutter-team.github.io/flower_app_web_views/about.html';
+
+  static const String appPackageName = 'com.elevate.flower_app';
 }

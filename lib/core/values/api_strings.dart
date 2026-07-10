@@ -12,4 +12,8 @@ abstract class ApiStrings {
       'https://www.googleapis.com/auth/cloud-platform';
   static const String projectId = 'project_id';
   static const String fcmDio = 'fcmDio';
+
+  static const String apiKey = "api_key";
+  static const String start = "start";
+  static const String end = "end";
 }

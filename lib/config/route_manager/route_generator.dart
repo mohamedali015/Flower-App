@@ -272,7 +272,10 @@ abstract class RouteGenerator {
 
         ////? map screen
         case Routes.mapScreenRoute:
-          return CupertinoPageRoute(builder: (_) => const MapScreen());
+          final orderId = settings.arguments as String;
+          return CupertinoPageRoute(
+            builder: (_) => MapScreen(orderId: orderId),
+          );
 
         /// Default
         default:

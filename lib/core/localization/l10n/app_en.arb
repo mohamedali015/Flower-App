@@ -243,5 +243,6 @@
   "orderDelivered" : "Order Delivered",
   "orderDetails" : "Order details",
   "deliveryArrived": "Delivery Arrived",
-  "orderIsPending": "Order is pending"
+  "orderIsPending": "Order is pending",
+  "myLocation": "My Location"
 }
