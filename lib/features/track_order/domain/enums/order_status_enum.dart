@@ -3,7 +3,8 @@ enum OrderStatus {
   picked,
   outForDelivery,
   arrived,
-  delivered;
+  delivered,
+  completed;
 
   static OrderStatus fromString(String? status) {
     switch (status) {
@@ -17,6 +18,8 @@ enum OrderStatus {
         return OrderStatus.arrived;
       case 'delivered':
         return OrderStatus.delivered;
+      case 'completed':
+        return OrderStatus.completed;
       default:
         return OrderStatus.accepted;
     }

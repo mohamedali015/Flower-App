@@ -42,4 +42,9 @@ class TrackOrderRepoImpl implements TrackOrderRepo {
         return Failure(errorMessage: result.errorMessage);
     }
   }
+
+  @override
+  Future<Result<void>> updateOrderToCompleted(String orderId) {
+    return _remoteDataSource.updateOrderToCompleted(orderId);
+  }
 }

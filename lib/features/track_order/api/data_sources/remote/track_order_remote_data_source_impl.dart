@@ -2,6 +2,7 @@ import 'package:flower_app/config/data_base/data_base_service.dart';
 import 'package:flower_app/config/error_handling/execute_api.dart';
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/config/firebase/firestore_collection.dart';
+import 'package:flower_app/config/firebase/firestore_field_name.dart';
 import 'package:flower_app/features/track_order/api/open_route_api_client.dart';
 import 'package:flower_app/features/track_order/data/data_sources/remote/track_order_remote_data_source.dart';
 import 'package:flower_app/features/track_order/data/models/remote/open_route_response.dart';
@@ -41,5 +42,21 @@ class TrackOrderRemoteDataSourceImpl implements TrackOrderRemoteDataSource {
         end: "$endLng,$endLat",
       );
     });
+  }
+
+  @override
+  Future<Result<void>> updateOrderToCompleted(String orderId) async {
+    try {
+      await _databaseService.updateData(
+        path: "${FireStoreCollection.orderCollectionPath}/$orderId",
+        data: {
+          FireStoreFieldName.orderStatus: "completed",
+          FireStoreFieldName.isActive: false,
+        },
+      );
+      return Success(data: null);
+    } catch (e) {
+      return Failure(errorMessage: e.toString());
+    }
   }
 }

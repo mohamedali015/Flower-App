@@ -19,3 +19,9 @@ class GetRouteEvent extends TrackOrderEvents {
     required this.endLng,
   });
 }
+
+class UpdateOrderToCompletedEvent extends TrackOrderEvents {
+  final String orderId;
+
+  UpdateOrderToCompletedEvent({required this.orderId});
+}

@@ -6,15 +6,16 @@ import 'package:latlong2/latlong.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../core/localization/l10n/app_localizations.dart';
+import '../../../../core/shared_widgets/custom_error_widget.dart';
+import '../../../../core/shared_widgets/custom_loading_indicator.dart';
 import '../../../../core/shared_widgets/svg_wrapper.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_constants.dart';
-import '../../../../core/values/api_end_points.dart';
 import '../../domain/entities/track_order_entity.dart';
 import '../manager/track_order_cubit.dart';
 import '../manager/track_order_events.dart';
 import '../manager/track_order_state.dart';
+import 'app_map.dart';
 
 class LiveMapWidget extends StatefulWidget {
   final TrackOrderEntity order;
@@ -26,12 +27,27 @@ class LiveMapWidget extends StatefulWidget {
 }
 
 class _LiveMapWidgetState extends State<LiveMapWidget> {
+  static const String _myLocationHeroTag = 'my_location_btn';
+  static const String _zoomInHeroTag = 'zoom_in_btn';
+  static const String _zoomOutHeroTag = 'zoom_out_btn';
+  static const String _latLongSeparator = ',';
+  static const String _errorGettingLocationMsg =
+      'Error getting location attempt';
+  static const String _errorParsingLatLongMsg = 'Error parsing latLong:';
+
+  static const double _initialZoom = 14.0;
+  static const double _maxZoom = 14.0;
+  static const double _myLocationZoom = 14.0;
+  static const double _fitBoundsPadding = 120.0;
+
   final MapController _mapController = MapController();
   late LatLng _storeLocation;
   LatLng? _userCurrentLocation;
   late ValueNotifier<LatLng> _driverLocationNotifier;
   bool _initialBoundsSet = false;
   bool _routeFetched = false;
+  bool _isPermissionDenied = false;
+  bool _isLoadingLocation = true;
 
   @override
   void initState() {
@@ -48,24 +64,31 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
   }
 
   Future<void> _getUserLocation() async {
-    // Step 1: Request permission using permission_handler
+    setState(() {
+      _isLoadingLocation = true;
+      _isPermissionDenied = false;
+    });
+
     final status = await Permission.location.request();
 
     if (!status.isGranted) {
-      debugPrint('Location permission denied via permission_handler');
-      // If denied, we can't do anything for current location
+      if (mounted) {
+        setState(() {
+          _isPermissionDenied = true;
+          _isLoadingLocation = false;
+        });
+      }
       return;
     }
 
     int retries = 0;
     while (retries < 5) {
-      // Increased retries for better chance
+      if (!mounted) return;
       try {
-        Position position = await _determinePosition();
-        debugPrint(
-          'GPS Location Attempt ${retries + 1}: ${position.latitude}, ${position.longitude}',
+        final local = AppLocalizations.of(context)!;
+        Position position = await _determinePosition(
+          local.locationServicesDisabled,
         );
-
         if (position.latitude != 0 && position.longitude != 0) {
           if (mounted) {
             setState(() {
@@ -73,6 +96,7 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
                 position.latitude,
                 position.longitude,
               );
+              _isLoadingLocation = false;
             });
             _fetchInitialRoute();
             _fitBounds();
@@ -80,12 +104,18 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
           return;
         }
       } catch (e) {
-        debugPrint('Error getting location attempt ${retries + 1}: $e');
+        debugPrint('$_errorGettingLocationMsg ${retries + 1}: $e');
       }
       retries++;
-      await Future.delayed(
-        const Duration(seconds: 2),
-      ); // Wait longer between retries
+      await Future.delayed(const Duration(seconds: 2));
+    }
+
+    if (mounted) {
+      setState(() {
+        _isLoadingLocation = false;
+        // If still null, we could potentially show an error or a default location,
+        // but user asked not to render map before getting location.
+      });
     }
   }
 
@@ -103,15 +133,12 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
     }
   }
 
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  Future<Position> _determinePosition(String errorMessage) async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+      return Future.error(errorMessage);
     }
 
-    // Permission is already checked in _getUserLocation
     return await Geolocator.getCurrentPosition(
       locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.best,
@@ -129,25 +156,25 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
 
   LatLng _parseLatLong(String latLong) {
     try {
-      final parts = latLong.split(',');
+      final parts = latLong.split(_latLongSeparator);
       if (parts.length >= 2) {
         return LatLng(double.parse(parts[0]), double.parse(parts[1]));
       }
     } catch (e) {
-      debugPrint('Error parsing latLong: $e');
+      debugPrint('$_errorParsingLatLongMsg $e');
     }
     return const LatLng(0, 0);
   }
 
   void _fitBounds() {
-    if (!_initialBoundsSet) {
+    if (!_initialBoundsSet && _userCurrentLocation != null) {
       final List<LatLng> points = [];
 
       if (_storeLocation.latitude != 0) points.add(_storeLocation);
       if (_driverLocationNotifier.value.latitude != 0) {
         points.add(_driverLocationNotifier.value);
       }
-      if (_userCurrentLocation != null && _userCurrentLocation!.latitude != 0) {
+      if (_userCurrentLocation!.latitude != 0) {
         points.add(_userCurrentLocation!);
       }
 
@@ -156,12 +183,11 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
         _mapController.fitCamera(
           CameraFit.bounds(
             bounds: bounds,
-            padding: const EdgeInsets.all(120),
-            maxZoom: 13.0,
+            padding: const EdgeInsets.all(_fitBoundsPadding),
+            maxZoom: _maxZoom,
           ),
         );
-        // Only mark as set if we have all 3 or at least 2 and user is handled
-        if (points.length == 3 || _userCurrentLocation != null) {
+        if (points.length == 3) {
           _initialBoundsSet = true;
         }
       }
@@ -170,13 +196,39 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
 
   void _moveToMyLocation() {
     if (_userCurrentLocation != null) {
-      _mapController.move(_userCurrentLocation!, 13.0);
+      _mapController.move(_userCurrentLocation!, _myLocationZoom);
     }
+  }
+
+  void _zoomIn() {
+    _mapController.move(
+      _mapController.camera.center,
+      _mapController.camera.zoom + 1,
+    );
+  }
+
+  void _zoomOut() {
+    _mapController.move(
+      _mapController.camera.center,
+      _mapController.camera.zoom - 1,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
+
+    if (_isPermissionDenied) {
+      return CustomErrorWidget(
+        errorMessage: local.locationPermissionDenied,
+        haveTryAgain: true,
+        onPressed: _getUserLocation,
+      );
+    }
+
+    if (_isLoadingLocation || _userCurrentLocation == null) {
+      return const Center(child: CustomLoadingIndicator());
+    }
 
     return BlocListener<TrackOrderCubit, TrackOrderState>(
       listenWhen: (prev, current) =>
@@ -191,7 +243,6 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
           );
           _driverLocationNotifier.value = newLoc;
 
-          // Re-fetch route from NEW driver location to user location
           if (_userCurrentLocation != null) {
             context.read<TrackOrderCubit>().doEvent(
               GetRouteEvent(
@@ -202,27 +253,20 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
               ),
             );
           }
-          _fitBounds();
+          // Only re-fit bounds if we haven't successfully fit all 3 markers yet
+          if (!_initialBoundsSet) {
+            _fitBounds();
+          }
         }
       },
       child: Stack(
         children: [
-          FlutterMap(
-            mapController: _mapController,
-            options: MapOptions(
-              initialCenter: _driverLocationNotifier.value.latitude != 0
-                  ? _driverLocationNotifier.value
-                  : _storeLocation.latitude != 0
-                  ? _storeLocation
-                  : const LatLng(30.0444, 31.2357),
-              initialZoom: 14,
-              onMapReady: _fitBounds,
-            ),
-            children: [
-              TileLayer(
-                urlTemplate: ApiEndPoints.openStreetMapTiles,
-                userAgentPackageName: AppConstants.appPackageName,
-              ),
+          AppMap(
+            controller: _mapController,
+            initialCenter: _driverLocationNotifier.value,
+            initialZoom: _initialZoom,
+            onMapReady: _fitBounds,
+            layers: [
               // Route Layer
               BlocBuilder<TrackOrderCubit, TrackOrderState>(
                 buildWhen: (prev, current) =>
@@ -255,17 +299,16 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
                       size: 40,
                     ),
                   ),
-                  if (_userCurrentLocation != null)
-                    Marker(
-                      point: _userCurrentLocation!,
-                      width: 40,
-                      height: 40,
-                      child: const Icon(
-                        Icons.person_pin_circle,
-                        color: AppColors.success,
-                        size: 40,
-                      ),
+                  Marker(
+                    point: _userCurrentLocation!,
+                    width: 40,
+                    height: 40,
+                    child: const Icon(
+                      Icons.person_pin_circle,
+                      color: AppColors.success,
+                      size: 40,
                     ),
+                  ),
                 ],
               ),
               // Dynamic Driver Marker
@@ -299,10 +342,38 @@ class _LiveMapWidgetState extends State<LiveMapWidget> {
               backgroundColor: AppColors.white,
               onPressed: _moveToMyLocation,
               tooltip: local.myLocation,
+              heroTag: _myLocationHeroTag,
               child: const Icon(
                 Icons.my_location,
                 color: AppColors.primaryColor,
               ),
+            ),
+          ),
+          // Zoom Buttons
+          Positioned(
+            right: 16,
+            bottom: 76,
+            child: Column(
+              children: [
+                FloatingActionButton(
+                  mini: true,
+                  backgroundColor: AppColors.white,
+                  onPressed: _zoomIn,
+                  heroTag: _zoomInHeroTag,
+                  child: const Icon(Icons.add, color: AppColors.primaryColor),
+                ),
+                const SizedBox(height: 8),
+                FloatingActionButton(
+                  mini: true,
+                  backgroundColor: AppColors.white,
+                  onPressed: _zoomOut,
+                  heroTag: _zoomOutHeroTag,
+                  child: const Icon(
+                    Icons.remove,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

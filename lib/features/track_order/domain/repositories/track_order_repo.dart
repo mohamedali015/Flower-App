@@ -11,4 +11,6 @@ abstract interface class TrackOrderRepo {
     required double endLat,
     required double endLng,
   });
+
+  Future<Result<void>> updateOrderToCompleted(String orderId);
 }

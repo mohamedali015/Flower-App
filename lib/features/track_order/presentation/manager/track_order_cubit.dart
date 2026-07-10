@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../config/error_handling/result.dart';
 import '../../domain/use_cases/get_route_use_case.dart';
 import '../../domain/use_cases/get_track_order_use_case.dart';
+import '../../domain/use_cases/update_order_to_completed_use_case.dart';
 import 'track_order_events.dart';
 import 'track_order_state.dart';
 
@@ -13,10 +14,14 @@ import 'track_order_state.dart';
 class TrackOrderCubit extends Cubit<TrackOrderState> {
   final GetTrackOrderUseCase _getTrackOrderUseCase;
   final GetRouteUseCase _getRouteUseCase;
+  final UpdateOrderToCompletedUseCase _updateOrderToCompletedUseCase;
   StreamSubscription? _orderSubscription;
 
-  TrackOrderCubit(this._getTrackOrderUseCase, this._getRouteUseCase)
-    : super(const TrackOrderState());
+  TrackOrderCubit(
+    this._getTrackOrderUseCase,
+    this._getRouteUseCase,
+    this._updateOrderToCompletedUseCase,
+  ) : super(const TrackOrderState());
 
   void doEvent(TrackOrderEvents event) {
     switch (event) {
@@ -24,6 +29,8 @@ class TrackOrderCubit extends Cubit<TrackOrderState> {
         _watchTrackOrder(event.orderId);
       case GetRouteEvent():
         _getRoute(event);
+      case UpdateOrderToCompletedEvent():
+        _updateOrderToCompleted(event.orderId);
     }
   }
 
@@ -93,6 +100,39 @@ class TrackOrderCubit extends Cubit<TrackOrderState> {
         emit(
           state.copyWith(
             routeStateParam: state.routeState.copyWith(
+              isLoadingParam: false,
+              errorMessageParam: result.errorMessage,
+            ),
+          ),
+        );
+    }
+  }
+
+  Future<void> _updateOrderToCompleted(String orderId) async {
+    emit(
+      state.copyWith(
+        updateOrderStateParam: state.updateOrderState.copyWith(
+          isLoadingParam: true,
+        ),
+      ),
+    );
+
+    final result = await _updateOrderToCompletedUseCase.call(orderId);
+
+    switch (result) {
+      case Success():
+        emit(
+          state.copyWith(
+            updateOrderStateParam: state.updateOrderState.copyWith(
+              isLoadingParam: false,
+              isSuccessParam: true,
+            ),
+          ),
+        );
+      case Failure():
+        emit(
+          state.copyWith(
+            updateOrderStateParam: state.updateOrderState.copyWith(
               isLoadingParam: false,
               errorMessageParam: result.errorMessage,
             ),

@@ -220,5 +220,8 @@
   "orderDetails" : "تفاصيل الطلب",
   "deliveryArrived": "وصل المندوب",
   "orderIsPending": "الطلب قيد الانتظار",
-  "myLocation": "موقعي"
+  "myLocation": "موقعي",
+  "locationPermissionDenied": "لا يمكن عرض الخريطة بدون الوصول إلى موقعك",
+  "locationServicesDisabled": "خدمات الموقع معطلة.",
+  "store": "المتجر"
 }

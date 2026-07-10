@@ -244,5 +244,8 @@
   "orderDetails" : "Order details",
   "deliveryArrived": "Delivery Arrived",
   "orderIsPending": "Order is pending",
-  "myLocation": "My Location"
+  "myLocation": "My Location",
+  "locationPermissionDenied": "Can't show map without your location",
+  "locationServicesDisabled": "Location services are disabled.",
+  "store": "Store"
 }
