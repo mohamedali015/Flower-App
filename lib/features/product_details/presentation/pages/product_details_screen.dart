@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_cubit.dart';
-import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_state.dart';
+import 'package:flower_app/config/cart/manager/cart_state.dart';
 import 'package:flower_app/config/products/domain/entities/product_entity.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/shared_widgets/custom_button.dart';
@@ -10,13 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../config/add_to_cart/presentation/manager/add_cart_event.dart';
-import '../../../../config/di/di.dart';
+import '../../../../config/cart/data/model/request/add_to_cart_request.dart';
+import '../../../../config/cart/manager/cart_cubit.dart';
+import '../../../../config/cart/manager/cart_event.dart';
 import '../../../../core/helpers/app_snack_bar.dart';
 import '../../../../core/localization/l10n/app_localizations.dart';
-import '../../../cart/data/model/request/add_to_cart_request.dart';
-import '../../../cart/presentation/manager/cart_cubit.dart';
-import '../../../cart/presentation/manager/cart_event.dart';
 import '../widgets/carousel_slider_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -148,7 +145,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             style: AppTextStyles.regular14(context),
                           ),
 
-                          /// مسافة صغيرة تحت الـ Description عشان متلزقش في الزرار اللي تحت
                           SizedBox(
                             height: MyResponsive.height(context, value: 24),
                           ),
@@ -166,44 +162,42 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 horizontal: 16,
                 vertical: 16,
               ),
-              child: BlocProvider(
-                create: (context) => getIt<AddCartCubit>(),
-                child: BlocConsumer<AddCartCubit, AddCartState>(
-                  listenWhen: (previous, current) =>
-                      previous.addToCartSuccess != current.addToCartSuccess,
-                  listener: (context, state) {
-                    if (state.addToCartSuccess.isSuccess) {
-                      context.read<CartCubit>().doEvent(GetCartItemsEvent());
-                      AppSnackBar.success(context, local.addedSuccessfully);
-                    }
+              child: BlocConsumer<CartCubit, CartState>(
+                listenWhen: (previous, current) =>
+                    previous.addToCartSuccessState != current.addToCartSuccessState,
+                listener: (context, state) {
+                  if (state.addToCartSuccessState.isSuccess) {
 
-                    if (state.addToCartSuccess.errorMessage != null) {
-                      AppSnackBar.error(
-                        context,
-                        state.addToCartSuccess.errorMessage!,
-                      );
-                    }
-                  },
-                  buildWhen: (previous, current) =>
-                      previous.addToCartSuccess.isLoading !=
-                      current.addToCartSuccess.isLoading,
-                  builder: (context, state) {
-                    return CustomButton(
-                      title: local.addToCart,
-                      isLoading: state.addToCartSuccess.isLoading,
-                      onPressed: () {
-                        context.read<AddCartCubit>().doEvent(
-                          AddToCart(
-                            AddToCartRequest(
-                              product: widget.entity.id,
-                              quantity: 1,
-                            ),
-                          ),
-                        );
-                      },
+                    context.read<CartCubit>().doEvent(GetCartItemsEvent());
+                    AppSnackBar.success(context, local.addedSuccessfully);
+                  }
+
+                  if (state.addToCartSuccessState.errorMessage != null) {
+                    AppSnackBar.error(
+                      context,
+                      state.addToCartSuccessState.errorMessage!,
                     );
-                  },
-                ),
+                  }
+                },
+                buildWhen: (previous, current) =>
+                    previous.addToCartSuccessState.isLoading !=
+                    current.addToCartSuccessState.isLoading,
+                builder: (context, state) {
+                  return CustomButton(
+                    title: local.addToCart,
+                    isLoading: state.addToCartSuccessState.isLoading,
+                    onPressed: () {
+                      context.read<CartCubit>().doEvent(
+                        AddToCart(
+                          AddToCartRequest(
+                            product: widget.entity.id,
+                            quantity: 1,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ],

@@ -230,5 +230,6 @@
   "next": "Next",
   "invalidData": "Invalid data",
   "pleaseSelectAddress": "Please select an address",
-  "pleaseSelectPayment": "Please select payment method"
+  "pleaseSelectPayment": "Please select payment method",
+   "pleaseCompleteYourData": "Please complete your data"
 }

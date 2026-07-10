@@ -3,14 +3,12 @@ import 'package:flower_app/config/secure_cache/secure_cache/secure_cache.dart';
 import 'package:flower_app/features/check_out/presentation/factory/checkout_factory.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-
 import '../../../../config/base_state/base_state.dart';
 import '../../../../config/error_handling/result.dart';
 import '../../data/models/request/credit_payment_request.dart';
 import '../../domain/Entities/cashorder_entity.dart';
 import '../../domain/Entities/credit_payment.dart';
 import 'checkout_intents.dart';
-
 part 'checkout_state.dart';
 
 @injectable
@@ -24,7 +22,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   void doIntent(CheckoutIntent intent) {
     switch (intent) {
       case CashPaymentIntent():
-        _executeCashPayment();
+        _executeCashPayment(intent.request);
         break;
       case CreditPaymentIntent():
         _executeCreditPayment(intent.request);
@@ -35,10 +33,13 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     }
   }
 
-  Future<void> _executeCashPayment() async {
+  Future<void> _executeCashPayment(CheckoutPaymentRequest request) async {
     final token = await _secureCache.getData(key: 'token');
     emit(state.copyWith(cashPaymentState: const BaseState(isLoading: true)));
-    final result = await _checkoutFactory.cashPaymentUsecase().call(token!);
+    final result = await _checkoutFactory.cashPaymentUsecase().call(
+      token!,
+      request,
+    );
     switch (result) {
       case Success():
         emit(

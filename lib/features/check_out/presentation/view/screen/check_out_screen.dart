@@ -1,12 +1,11 @@
 import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../../../config/cart/manager/cart_cubit.dart';
+import '../../../../../config/cart/manager/cart_event.dart';
 import '../../../../../config/enums/payment_method.dart';
 import '../../../../../config/user/manager/user_cubit.dart';
 import '../../../../../core/localization/l10n/app_localizations.dart';
-import '../../../../cart/presentation/manager/cart_cubit.dart';
-import '../../../../cart/presentation/manager/cart_event.dart';
 import '../../../../user_address/domain/entities/address.dart';
 import '../../../data/models/request/credit_payment_request.dart';
 import '../../manager/checkout_cubit.dart';
@@ -71,15 +70,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   void _placeOrder() {
     final cubit = context.read<CheckoutCubit>();
     final address = _buildShippingAddress();
+    final request = CheckoutPaymentRequest(shippingAddress: address);
 
     if (selectedPaymentMethod == PaymentMethod.cash) {
-      cubit.doIntent(CashPaymentIntent());
+      cubit.doIntent(CashPaymentIntent(request));
       return;
     }
 
     if (selectedPaymentMethod == PaymentMethod.card) {
-      final request = CheckoutPaymentRequest(shippingAddress: address);
-
       cubit.doIntent(CreditPaymentIntent(request));
     }
   }

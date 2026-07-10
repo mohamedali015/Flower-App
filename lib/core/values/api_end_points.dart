@@ -33,4 +33,5 @@ abstract class ApiEndPoints {
 
   static const String fcmBaseUrl = 'https://fcm.googleapis.com';
   static const String fcmSendPath = '/v1/projects/{projectId}/messages:send';
+  static const String creditCheckout = '/$getOrders/checkout';
 }

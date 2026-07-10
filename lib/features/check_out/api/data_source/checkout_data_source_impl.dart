@@ -14,9 +14,13 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   CheckoutDataSourceImpl(this._checkoutApiClient);
 
   @override
-  Future<Result<CashOrderResponse>> cashOrder(String token) {
+  Future<Result<CashOrderResponse>> cashOrder(
+      String token
+      , CheckoutPaymentRequest request) {
     return executeApi(() async {
-      return _checkoutApiClient.cashOrder();
+      return _checkoutApiClient.cashOrder(
+        request
+      );
     });
   }
 
@@ -26,7 +30,10 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
     CheckoutPaymentRequest request,
   ) {
     return executeApi(() async {
-      return _checkoutApiClient.creditCheckout(request);
+      return _checkoutApiClient.creditCheckout(
+          request,
+        'http://flowerApp',
+      );
     });
   }
 }

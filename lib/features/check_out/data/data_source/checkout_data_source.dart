@@ -4,7 +4,10 @@ import 'package:flower_app/features/check_out/data/models/response/cash_order_re
 import 'package:flower_app/features/check_out/data/models/response/credit_payment_response.dart';
 
 abstract interface class CheckoutDataSource {
-  Future<Result<CashOrderResponse>> cashOrder(String token);
+  Future<Result<CashOrderResponse>> cashOrder(
+    String token,
+    CheckoutPaymentRequest request,
+  );
   Future<Result<CreditPaymentResponse>> creditCheckout(
     String token,
     CheckoutPaymentRequest request,
