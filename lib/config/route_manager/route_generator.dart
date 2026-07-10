@@ -27,7 +27,6 @@ import 'package:flower_app/features/user_address/presentation/screens/saved_addr
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../core/shared_widgets/custom_bottom_nav.dart';
 import '../../core/values/app_strings.dart';
 import '../../features/auth/presentation/manager/login/login_cubit.dart';
@@ -36,13 +35,11 @@ import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
 import '../../features/check_out/presentation/manager/checkout_cubit.dart';
 import '../../features/check_out/presentation/view/screen/check_out.dart';
-import '../../features/check_out/presentation/view/screen/check_out_screen.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
 import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
-import '../add_to_cart/presentation/manager/add_cart_cubit.dart';
 import '../../features/notifications/presentation/pages/notifications_screen.dart';
 import '../../features/payment/views/pages/payment_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';

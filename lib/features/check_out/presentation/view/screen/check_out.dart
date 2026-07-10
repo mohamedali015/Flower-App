@@ -94,7 +94,7 @@ class _CheckOutState extends State<CheckOut> {
                 opacity: isEnabled ? 0.5 : 1,
                 child: BlocBuilder<UserAddressCubit, UserAddressState>(
                   builder: (context, state) {
-                    final loading = state.getLoggedUserAddressState.isLoading;
+                    final loading = state.getLoggedUserAddressesState.isLoading;
 
                     final addresses = state.currentUserAddresses ?? <Address>[];
 
