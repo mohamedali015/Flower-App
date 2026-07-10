@@ -12,7 +12,6 @@ import '../../firebase_options.dart';
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupFlutterNotifications();
-  showFlutterNotification(message);
 }
 
 late AndroidNotificationChannel channel;
@@ -55,7 +54,6 @@ Future<void> setupFlutterNotifications() async {
 void showFlutterNotification(RemoteMessage message) {
   RemoteNotification? notification = message.notification;
   AndroidNotification? android = message.notification?.android;
-  AppleNotification? apple = message.notification?.apple;
   if (notification != null && android != null && !kIsWeb) {
     flutterLocalNotificationsPlugin.show(
       notification.hashCode,
@@ -69,14 +67,6 @@ void showFlutterNotification(RemoteMessage message) {
           icon: 'launch_background',
         ),
       ),
-    );
-  }
-  if (notification != null && apple != null && !kIsWeb) {
-    flutterLocalNotificationsPlugin.show(
-      notification.hashCode,
-      notification.title,
-      notification.body,
-      const NotificationDetails(iOS: DarwinNotificationDetails()),
     );
   }
 }

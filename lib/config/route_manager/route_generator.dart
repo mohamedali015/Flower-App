@@ -43,13 +43,15 @@ import '../../features/forget_password/presentation/manager/event/forget_passwor
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
 import '../../features/forget_password/presentation/pages/reset_password.dart';
 import '../../features/forget_password/presentation/pages/verify_code.dart';
-import '../add_to_cart/presentation/manager/add_cart_cubit.dart';
 import '../../features/notifications/presentation/pages/notifications_screen.dart';
 import '../../features/payment/views/pages/payment_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
+import '../../features/track_order/presentation/pages/map_screen.dart';
+import '../../features/track_order/presentation/pages/track_order_screen.dart';
 import '../../features/user_address/domain/entities/address.dart';
 import '../../features/user_address/presentation/manger/user_address_events.dart';
+import '../add_to_cart/presentation/manager/add_cart_cubit.dart';
 
 abstract class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -259,6 +261,20 @@ abstract class RouteGenerator {
               ],
               child: const CheckOutScreen(),
             ),
+          );
+
+        ////? track order screen
+        case Routes.trackOrderScreenRoute:
+          final orderId = settings.arguments as String;
+          return CupertinoPageRoute(
+            builder: (_) => TrackOrderScreen(orderId: orderId),
+          );
+
+        ////? map screen
+        case Routes.mapScreenRoute:
+          final orderId = settings.arguments as String;
+          return CupertinoPageRoute(
+            builder: (_) => MapScreen(orderId: orderId),
           );
 
         /// Default

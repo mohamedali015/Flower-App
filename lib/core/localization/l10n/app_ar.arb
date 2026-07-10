@@ -207,5 +207,21 @@
   "next": "التالي",
   "invalidData": "بيانات غير صحيحة",
   "pleaseSelectAddress": "من فضلك اختر عنوان",
-  "pleaseSelectPayment": "من فضلك اختر طريقة الدفع"
+  "pleaseSelectPayment": "من فضلك اختر طريقة الدفع",
+
+  "estimatedArrived" : "الوصول المتوقع",
+  "isYourDeliveryHeroForToday" : "هو بطل التوصيل الخاص بك لهذا اليوم",
+  "receivedYourOrder" : "تم استلام طلبك",
+  "preparingYourOrder" : "يتم تجهيز طلبك",
+  "outForDelivery" : "جاري التوصيل",
+  "delivered" : "تم التوصيل",
+  "showMap" : "عرض الخريطة",
+  "orderDelivered" : "تم توصيل الطلب",
+  "orderDetails" : "تفاصيل الطلب",
+  "deliveryArrived": "وصل المندوب",
+  "orderIsPending": "الطلب قيد الانتظار",
+  "myLocation": "موقعي",
+  "locationPermissionDenied": "لا يمكن عرض الخريطة بدون الوصول إلى موقعك",
+  "locationServicesDisabled": "خدمات الموقع معطلة.",
+  "store": "المتجر"
 }

@@ -30,4 +30,12 @@ abstract class AppAssets {
   static const String bin = "$_baseIconsPath/bin.svg";
   static const String edit = "$_baseIconsPath/edit.svg";
   static const String schedule = "$_baseIconsPath/schedule.svg";
+
+  static const String carIcon = "$_baseIconsPath/car.svg";
+  static const String deliveryMotorcycleIcon =
+      "$_baseIconsPath/delivery_motorcycle.svg";
+
+  static const String driverBoyIcon = "$_baseIconsPath/driver_boy.svg";
+  static const String whatsAppIcon = "$_baseIconsPath/whatsapp.svg";
+  static const String moneyIcon = "$_baseIconsPath/money.svg";
 }

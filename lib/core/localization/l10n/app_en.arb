@@ -230,5 +230,22 @@
   "next": "Next",
   "invalidData": "Invalid data",
   "pleaseSelectAddress": "Please select an address",
-  "pleaseSelectPayment": "Please select payment method"
+  "pleaseSelectPayment": "Please select payment method",
+
+  "trackOrder" : "Track order",
+  "estimatedArrived" : "Estimated arrival",
+  "isYourDeliveryHeroForToday" : "Is your delivery hero for today",
+  "receivedYourOrder" : "Received your order",
+  "preparingYourOrder" : "Preparing your order",
+  "outForDelivery" : "Out for delivery",
+  "delivered" : "Delivered",
+  "showMap" : "Show map",
+  "orderDelivered" : "Order Delivered",
+  "orderDetails" : "Order details",
+  "deliveryArrived": "Delivery Arrived",
+  "orderIsPending": "Order is pending",
+  "myLocation": "My Location",
+  "locationPermissionDenied": "Can't show map without your location",
+  "locationServicesDisabled": "Location services are disabled.",
+  "store": "Store"
 }

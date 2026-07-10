@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/material.dart';
-
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/core/helpers/my_responsive.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/shared_widgets/cached_network_image_wrapper.dart';
 import 'package:flower_app/core/utils/app_colors.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flower_app/features/orders/domain/entities/orders_entity.dart';
+import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class OrderCard extends StatelessWidget {
@@ -16,7 +16,9 @@ class OrderCard extends StatelessWidget {
   OrderCard({super.key, required this.order, required this.local});
 
   String get title {
-    final firstItem = order.orderItems?.first;
+    final firstItem = (order.orderItems != null && order.orderItems!.isNotEmpty)
+        ? order.orderItems!.first
+        : null;
     return firstItem?.product?.title ?? local.order;
   }
 
@@ -57,7 +59,9 @@ class OrderCard extends StatelessWidget {
             child: Center(
               child: CachedNetworkImageWrapper(
                 imagePath:
-                    order.orderItems?.first.product?.imgCover.toString() ?? '',
+                    (order.orderItems != null && order.orderItems!.isNotEmpty)
+                    ? order.orderItems!.first.product?.imgCover.toString() ?? ''
+                    : '',
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -96,7 +100,17 @@ class OrderCard extends StatelessWidget {
                   width: double.infinity,
                   height: MyResponsive.height(context, value: 30),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (order.isDelivered == true) {
+                        // TODO: Implement reorder logic
+                      } else {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.trackOrderScreenRoute,
+                          arguments: order.id,
+                        );
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,
                       shape: RoundedRectangleBorder(
