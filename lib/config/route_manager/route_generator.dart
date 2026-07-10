@@ -50,7 +50,6 @@ import '../../features/user_address/domain/entities/address.dart';
 import '../../features/user_address/presentation/manger/user_address_events.dart';
 import '../cart/manager/cart_cubit.dart';
 import '../cart/manager/cart_event.dart';
-import '../add_to_cart/presentation/manager/add_cart_cubit.dart';
 
 abstract class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
