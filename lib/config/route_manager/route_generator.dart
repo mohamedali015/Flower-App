@@ -9,9 +9,9 @@ import 'package:flower_app/features/change_password/presentation/manager/cubit/c
 import 'package:flower_app/features/change_password/presentation/screens/change_password_screen.dart';
 import 'package:flower_app/features/edit_profile/presentation/manager/edit_profile_cubit.dart';
 import 'package:flower_app/features/edit_profile/presentation/pages/edit_profile_screen.dart';
+import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cubit.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
-import 'package:flower_app/features/logout/presentation/manager/cubit/logout_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
 import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
@@ -27,17 +27,14 @@ import 'package:flower_app/features/user_address/presentation/screens/saved_addr
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../core/shared_widgets/custom_bottom_nav.dart';
 import '../../core/values/app_strings.dart';
 import '../../features/auth/presentation/manager/login/login_cubit.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
 import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
-import '../../features/cart/presentation/manager/cart_cubit.dart';
-import '../../features/cart/presentation/manager/cart_event.dart';
 import '../../features/check_out/presentation/manager/checkout_cubit.dart';
-import '../../features/check_out/presentation/view/screen/check_out_screen.dart';
+import '../../features/check_out/presentation/view/screen/check_out.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
@@ -51,6 +48,8 @@ import '../../features/track_order/presentation/pages/map_screen.dart';
 import '../../features/track_order/presentation/pages/track_order_screen.dart';
 import '../../features/user_address/domain/entities/address.dart';
 import '../../features/user_address/presentation/manger/user_address_events.dart';
+import '../cart/manager/cart_cubit.dart';
+import '../cart/manager/cart_event.dart';
 import '../add_to_cart/presentation/manager/add_cart_cubit.dart';
 
 abstract class RouteGenerator {
@@ -178,8 +177,12 @@ abstract class RouteGenerator {
             builder: (_) => MultiBlocProvider(
               providers: [
                 BlocProvider(create: (context) => getIt<SearchCubit>()),
-                BlocProvider(create: (context) => getIt<AddCartCubit>()),
-                BlocProvider(create: (_) => getIt<CartCubit>()),
+                // BlocProvider(create: (context) => getIt<AddCartCubit>()),
+                // BlocProvider(create: (_) => getIt<CartCubit>()),
+                // BlocProvider(create: (context) => getIt<AddCartCubit>()),
+                // BlocProvider(
+                //   create: (_) => getIt<CartCubit>(),
+                // ),
               ],
               child: const SearchScreen(),
             ),
@@ -225,6 +228,13 @@ abstract class RouteGenerator {
             builder: (_) => const NotificationsScreen(),
           );
 
+        case Routes.paymentScreenRoute:
+          final paymentLink = settings.arguments as String;
+
+          return CupertinoPageRoute(
+            builder: (_) => PaymentScreen(paymentUrl: paymentLink),
+          );
+
         case Routes.ordersRoute:
           return CupertinoPageRoute(
             builder: (_) => BlocProvider(
@@ -259,7 +269,7 @@ abstract class RouteGenerator {
                         ..doEvent(GetLoggedUserAddressesEvent()),
                 ),
               ],
-              child: const CheckOutScreen(),
+              child: const CheckOut(),
             ),
           );
 

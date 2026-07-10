@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
-
 import '../../../core/values/api_end_points.dart';
 
 part 'checkout_api_client.g.dart';
@@ -17,11 +16,15 @@ abstract class CheckoutApiClient {
   @factoryMethod
   factory CheckoutApiClient(Dio dio) = _CheckoutApiClient;
 
-  @POST(ApiEndPoints.cashOrderCheckout)
-  Future<CashOrderResponse> cashOrder();
+  @POST(ApiEndPoints.getOrders)
+  Future<CashOrderResponse> cashOrder(
+      @Body() CheckoutPaymentRequest? request,
+      );
+
 
   @POST(ApiEndPoints.creditCheckout)
   Future<CreditPaymentResponse> creditCheckout(
     @Body() CheckoutPaymentRequest? request,
+      @Query('url') String url,
   );
 }

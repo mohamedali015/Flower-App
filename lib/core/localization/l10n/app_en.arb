@@ -247,5 +247,6 @@
   "myLocation": "My Location",
   "locationPermissionDenied": "Can't show map without your location",
   "locationServicesDisabled": "Location services are disabled.",
-  "store": "Store"
+  "store": "Store",
+   "pleaseCompleteYourData": "Please complete your data"
 }

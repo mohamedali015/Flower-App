@@ -223,5 +223,6 @@
   "myLocation": "موقعي",
   "locationPermissionDenied": "لا يمكن عرض الخريطة بدون الوصول إلى موقعك",
   "locationServicesDisabled": "خدمات الموقع معطلة.",
-  "store": "المتجر"
+  "store": "المتجر",
+  "pleaseCompleteYourData": "من فضلك أكمل بياناتك"
 }
