@@ -28,5 +28,5 @@ abstract class ApiEndPoints {
   static const String getOrders = "/orders";
   static const String orders = 'orders';
   static const String cashOrderCheckout = "/cash-order";
-  static const String creditCheckout = '/$orders/checkout';
+  static const String creditCheckout = '/$getOrders/checkout';
 }

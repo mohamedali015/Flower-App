@@ -20,25 +20,35 @@ class CustomCheckoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var local = AppLocalizations.of(context)!;
+    final local = AppLocalizations.of(context)!;
+
     return CustomButton(
       title: title,
       onPressed: () {
-        if (validator != null && validator!() == false) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                errorMessage ?? local.invalidData,
-                style: AppTextStyles.medium16(
-                  context,
-                ).copyWith(color: AppColors.background),
+
+        if (validator != null) {
+
+          final isValid = validator!();
+
+          if (!isValid) {
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  errorMessage ?? local.invalidData,
+                  style: AppTextStyles.medium16(context).copyWith(
+                    color: AppColors.background,
+                  ),
+                ),
               ),
-            ),
-          );
-          return;
+            );
+
+            return;
+          }
         }
 
         onNext();
+
       },
     );
   }

@@ -35,6 +35,7 @@ import '../../features/auth/presentation/pages/login/login_screen.dart';
 import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
 import '../../features/check_out/presentation/manager/checkout_cubit.dart';
+import '../../features/check_out/presentation/view/screen/check_out.dart';
 import '../../features/check_out/presentation/view/screen/check_out_screen.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
@@ -231,7 +232,9 @@ abstract class RouteGenerator {
           final paymentLink = settings.arguments as String;
 
           return CupertinoPageRoute(
-            builder: (_) => PaymentScreen(paymentUrl: paymentLink),
+            builder: (_) => PaymentScreen(
+                paymentUrl: paymentLink
+            ),
           );
 
         case Routes.ordersRoute:
@@ -261,7 +264,7 @@ abstract class RouteGenerator {
                         ..doEvent(GetLoggedUserAddressEvent()),
                 ),
               ],
-              child: const CheckOutScreen(),
+              child: const CheckOut(),
             ),
           );
 

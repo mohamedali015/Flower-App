@@ -16,11 +16,15 @@ abstract class CheckoutApiClient {
   @factoryMethod
   factory CheckoutApiClient(Dio dio) = _CheckoutApiClient;
 
-  @POST(ApiEndPoints.cashOrderCheckout)
-  Future<CashOrderResponse> cashOrder();
+  @POST(ApiEndPoints.getOrders)
+  Future<CashOrderResponse> cashOrder(
+      @Body() CheckoutPaymentRequest? request,
+      );
+
 
   @POST(ApiEndPoints.creditCheckout)
   Future<CreditPaymentResponse> creditCheckout(
     @Body() CheckoutPaymentRequest? request,
+      @Query('url') String url,
   );
 }
