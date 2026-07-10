@@ -218,5 +218,6 @@
   "showMap" : "عرض الخريطة",
   "orderDelivered" : "تم توصيل الطلب",
   "orderDetails" : "تفاصيل الطلب",
-  "deliveryArrived": "وصل المندوب"
+  "deliveryArrived": "وصل المندوب",
+  "orderIsPending": "الطلب قيد الانتظار"
 }

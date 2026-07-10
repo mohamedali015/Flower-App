@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             title: 'Flower APP',
 
-            initialRoute: Routes.trackOrderScreenRoute,
+            initialRoute: Routes.splashRoute,
             onGenerateRoute: RouteGenerator.getRoute,
 
             locale: locale,

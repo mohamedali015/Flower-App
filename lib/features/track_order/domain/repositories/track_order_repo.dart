@@ -1,3 +1,5 @@
+import '../entities/track_order_entity.dart';
+
 abstract interface class TrackOrderRepo {
-  // TODO: Add methods
+  Stream<TrackOrderEntity> watchOrder(String orderId);
 }

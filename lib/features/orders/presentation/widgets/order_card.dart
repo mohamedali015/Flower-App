@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flower_app/core/helpers/my_responsive.dart';
@@ -16,7 +17,9 @@ class OrderCard extends StatelessWidget {
   OrderCard({super.key, required this.order, required this.local});
 
   String get title {
-    final firstItem = order.orderItems?.first;
+    final firstItem = (order.orderItems != null && order.orderItems!.isNotEmpty)
+        ? order.orderItems!.first
+        : null;
     return firstItem?.product?.title ?? local.order;
   }
 
@@ -57,7 +60,9 @@ class OrderCard extends StatelessWidget {
             child: Center(
               child: CachedNetworkImageWrapper(
                 imagePath:
-                    order.orderItems?.first.product?.imgCover.toString() ?? '',
+                    (order.orderItems != null && order.orderItems!.isNotEmpty)
+                    ? order.orderItems!.first.product?.imgCover.toString() ?? ''
+                    : '',
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -96,7 +101,17 @@ class OrderCard extends StatelessWidget {
                   width: double.infinity,
                   height: MyResponsive.height(context, value: 30),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (order.isDelivered == true) {
+                        // TODO: Implement reorder logic
+                      } else {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.trackOrderScreenRoute,
+                          arguments: order.id,
+                        );
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,
                       shape: RoundedRectangleBorder(

@@ -47,6 +47,7 @@ import '../../features/notifications/presentation/pages/notifications_screen.dar
 import '../../features/payment/views/pages/payment_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
+import '../../features/track_order/presentation/pages/map_screen.dart';
 import '../../features/track_order/presentation/pages/track_order_screen.dart';
 import '../../features/user_address/domain/entities/address.dart';
 import '../../features/user_address/presentation/manger/user_address_events.dart';
@@ -262,8 +263,16 @@ abstract class RouteGenerator {
             ),
           );
 
+        ////? track order screen
         case Routes.trackOrderScreenRoute:
-          return CupertinoPageRoute(builder: (_) => const TrackOrderScreen());
+          final orderId = settings.arguments as String;
+          return CupertinoPageRoute(
+            builder: (_) => TrackOrderScreen(orderId: orderId),
+          );
+
+        ////? map screen
+        case Routes.mapScreenRoute:
+          return CupertinoPageRoute(builder: (_) => const MapScreen());
 
         /// Default
         default:

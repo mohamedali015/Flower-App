@@ -1,3 +1,5 @@
+import '../../models/response/track_order_response.dart';
+
 abstract interface class TrackOrderRemoteDataSource {
-  // TODO: Add methods
+  Stream<TrackOrderResponse?> watchOrder(String orderId);
 }

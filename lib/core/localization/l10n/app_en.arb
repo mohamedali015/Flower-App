@@ -242,6 +242,6 @@
   "showMap" : "Show map",
   "orderDelivered" : "Order Delivered",
   "orderDetails" : "Order details",
-  "deliveryArrived": "Delivery Arrived"
-
+  "deliveryArrived": "Delivery Arrived",
+  "orderIsPending": "Order is pending"
 }

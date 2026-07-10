@@ -1,6 +1,5 @@
-import 'package:flower_app/config/error_handling/result.dart';
 import 'package:injectable/injectable.dart';
-
+import '../entities/track_order_entity.dart';
 import '../repositories/track_order_repo.dart';
 
 @injectable
@@ -9,8 +8,7 @@ class GetTrackOrderUseCase {
 
   GetTrackOrderUseCase(this._repo);
 
-  Future<Result<dynamic>> call(String orderId) async {
-    // return _repo.getTrackOrder(orderId);
-    return Failure(errorMessage: 'Not implemented');
+  Stream<TrackOrderEntity> call(String orderId) {
+    return _repo.watchOrder(orderId);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/shared_widgets/svg_wrapper.dart';
 import 'package:flower_app/core/utils/app_assets.dart';
 import 'package:flower_app/core/utils/app_text_styles.dart';
+import 'package:flower_app/features/track_order/domain/entities/track_order_entity.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/shared_widgets/cached_network_image_wrapper.dart';
@@ -10,10 +11,11 @@ import '../../../../core/utils/app_colors.dart';
 class OrderItemsWidget extends StatelessWidget {
   const OrderItemsWidget({super.key, required this.products});
 
-  final List products;
+  final List<TrackOrderProductEntity> products;
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -38,24 +40,20 @@ class OrderItemsWidget extends StatelessWidget {
                 "${products.length} ",
                 style: AppTextStyles.medium16(context),
               ),
-              Text(
-                AppLocalizations.of(context)!.items,
-                style: AppTextStyles.medium16(context),
-              ),
+              Text(local.items, style: AppTextStyles.medium16(context)),
             ],
           ),
           Column(
-            children: List.generate(3, (index) {
+            children: products.map((product) {
               return Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: OrderProductItem(
-                  imageUrl: "",
-                  title: "product $index",
-                  subTitle: "this is product $index",
-                  price: index.toString(),
+                  imageUrl: product.imgCover,
+                  title: product.title,
+                  price: product.price.toString(),
                 ),
               );
-            }),
+            }).toList(),
           ),
         ],
       ),
@@ -69,12 +67,10 @@ class OrderProductItem extends StatelessWidget {
     required this.imageUrl,
     required this.title,
     required this.price,
-    required this.subTitle,
   });
 
   final String imageUrl;
   final String title;
-  final String subTitle;
   final String price;
 
   @override
@@ -98,20 +94,11 @@ class OrderProductItem extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: AppTextStyles.medium16(context)),
-              const SizedBox(height: 4),
-              Text(
-                subTitle,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.regular13(
-                  context,
-                ).copyWith(color: AppColors.grayDark),
-              ),
-            ],
+          child: Text(
+            title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.medium16(context),
           ),
         ),
         const SizedBox(width: 10),
