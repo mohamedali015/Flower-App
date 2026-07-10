@@ -128,6 +128,8 @@ class AppTheme {
 
       ///?  AppBar
       appBarTheme: AppBarTheme(
+        titleSpacing: 0,
+
         backgroundColor: AppColors.background,
         elevation: 0,
         scrolledUnderElevation: 0,

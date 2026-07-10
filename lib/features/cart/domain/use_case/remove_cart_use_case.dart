@@ -1,15 +1,15 @@
-import 'package:flower_app/features/cart/domain/repositories/cart_repo.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../config/error_handling/result.dart';
 import '../entities/get_cart_entity.dart';
+import '../repositories/cart_repo.dart';
 
 @injectable
-class  RemoveCartUseCase{
-  final CartRepo _removeCart;
-  RemoveCartUseCase(this._removeCart);
+class RemoveCartUseCase {
+  final CartRepo _cartRepo;
+  RemoveCartUseCase(this._cartRepo);
 
   Future<Result<GetCartEntity>> call(String id) {
-    return _removeCart.removeFromCart(id);
+    return _cartRepo.removeFromCart(id);
   }
 }

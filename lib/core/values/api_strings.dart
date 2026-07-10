@@ -6,4 +6,10 @@ abstract class ApiStrings {
   static const String resetCode = "resetCode";
 
   static const String photo = 'photo';
+  static const String id = "id";
+
+  static const String fcmScope =
+      'https://www.googleapis.com/auth/cloud-platform';
+  static const String projectId = 'project_id';
+  static const String fcmDio = 'fcmDio';
 }

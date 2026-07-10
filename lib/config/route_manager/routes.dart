@@ -23,4 +23,17 @@ abstract class Routes {
 
   static const String editProfileScreenRoute = '/EditProfileScreen';
   static const String changePasswordRoute = '/changePassword';
+  static const String savedAddressesRoute = '/savedAddresses';
+  static const String addAddressRoute = '/addAddress';
+
+  static const String termsAndConditionsRoute = '/termsAndConditions';
+  static const String aboutUsRoute = '/aboutUs';
+
+  static const String notificationScreenRoute = '/notificationsScreen';
+
+  static const String checkOutRoute = '/checkOut';
+
+  static const String ordersRoute = '/orders';
+
+  static const String paymentScreenRoute = '/paymentScreen';
 }

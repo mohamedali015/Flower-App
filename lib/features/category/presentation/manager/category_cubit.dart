@@ -1,10 +1,10 @@
-import 'package:flower_app/config/products/domain/entities/products_response_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
+
 import '../../../../config/error_handling/result.dart';
 import '../../../../config/products/data/params/product_query_params.dart';
 import '../../../../config/products/domain/use_case/get_products_use_case.dart';
-import '../../domain/entities/get_all_category_entity.dart';
 import '../../domain/use_case/get_category_use_case.dart';
 import 'category_event.dart';
 import 'category_state.dart';
@@ -15,54 +15,79 @@ class CategoryCubit extends Cubit<CategoryState> {
   final GetProductsUseCase _getProductsUseCase;
 
   CategoryCubit(this._getCategoryUseCase, this._getProductsUseCase)
-      : super(const CategoryState());
+    : super(const CategoryState());
 
   Future<void> _getAllCategories() async {
-    emit(state.copyWith(
-      isLoading: true,
-      clearCategoryError: true,
-    ));
+    emit(
+      state.copyWith(
+        categoriesStateParam: state.categoriesState.copyWith(
+          isLoadingParam: true,
+        ),
+      ),
+    );
 
-    final response = await _getCategoryUseCase.getAllCategories();
+    final result = await _getCategoryUseCase.getAllCategories();
 
-    switch (response) {
-      case Success<List<GetAllCategoryEntity>>():
-        emit(state.copyWith(
-          categories: response.data,
-          isLoading: false,
-          clearCategoryError: true,
-        ));
+    switch (result) {
+      case Success():
+        emit(
+          state.copyWith(
+            categoriesStateParam: state.categoriesState.copyWith(
+              isLoadingParam: false,
+              isSuccessParam: true,
+              dataParam: result.data,
+            ),
+          ),
+        );
 
-      case Failure<List<GetAllCategoryEntity>>():
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: response.errorMessage,
-        ));
+      case Failure():
+        emit(
+          state.copyWith(
+            categoriesStateParam: state.categoriesState.copyWith(
+              isLoadingParam: false,
+              isSuccessParam: false,
+              errorMessageParam: result.errorMessage,
+            ),
+          ),
+        );
     }
   }
 
-  Future<void> _getProducts(ProductQueryParams categoryId) async {
-    emit(state.copyWith(
-      isProductLoading: true,
-      clearProductError: true,
-    ));
+  Future<void> _getProducts(ProductQueryParams params) async {
+    emit(
+      state.copyWith(
+        productsStateParam: state.productsState.copyWith(
+          isLoadingParam: true,
+        ),
+        selectedCategoryId: params.categoryId,
+        selectedSortOption: params.sort,
+      ),
+    );
 
-    final response =
-    await _getProductsUseCase.call(params: categoryId);
+    final result = await _getProductsUseCase.call(params: params);
 
-    switch (response) {
-      case Success<ProductsResponseEntity>():
-        emit(state.copyWith(
-          products: response.data.products,
-          isProductLoading: false,
-        ));
+    switch (result) {
+      case Success():
+        emit(
+          state.copyWith(
+            productsStateParam: state.productsState.copyWith(
+              isLoadingParam: false,
+              isSuccessParam: true,
+              dataParam: result.data.products,
+            ),
+          ),
+        );
 
-      case Failure<ProductsResponseEntity>():
-        emit(state.copyWith(
-          isProductLoading: false,
-          clearProductError: true,
-          productErrorMessage: response.errorMessage,
-        ));
+      case Failure():
+        emit(
+          state.copyWith(
+            productsStateParam: state.productsState.copyWith(
+              isLoadingParam: false,
+              isSuccessParam: false,
+              errorMessageParam: result.errorMessage,
+            ),
+          ),
+        );
     }
   }
 
