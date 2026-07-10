@@ -6,6 +6,7 @@ import 'package:flower_app/config/firebase/firestore_field_name.dart';
 import 'package:flower_app/features/track_order/api/open_route_api_client.dart';
 import 'package:flower_app/features/track_order/data/data_sources/remote/track_order_remote_data_source.dart';
 import 'package:flower_app/features/track_order/data/models/remote/open_route_response.dart';
+import 'package:flower_app/features/track_order/data/models/response/driver_model.dart';
 import 'package:flower_app/features/track_order/data/models/response/track_order_response.dart';
 import 'package:flower_app/secret_keys.dart';
 import 'package:injectable/injectable.dart';
@@ -25,6 +26,14 @@ class TrackOrderRemoteDataSourceImpl implements TrackOrderRemoteDataSource {
     return _databaseService.watchDocument<TrackOrderResponse>(
       path: "${FireStoreCollection.orderCollectionPath}/$orderId",
       fromFirestore: (json) => TrackOrderResponse.fromJson(json),
+    );
+  }
+
+  @override
+  Stream<DriverModel?> watchDriver(String driverId) {
+    return _databaseService.watchDocument<DriverModel>(
+      path: "${FireStoreCollection.driversCollectionPath}/$driverId",
+      fromFirestore: (json) => DriverModel.fromJson(json),
     );
   }
 

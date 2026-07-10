@@ -1,9 +1,12 @@
 import '../../../../config/error_handling/result.dart';
+import '../entities/driver_entity.dart';
 import '../entities/route_entity.dart';
 import '../entities/track_order_entity.dart';
 
 abstract interface class TrackOrderRepo {
   Stream<TrackOrderEntity> watchOrder(String orderId);
+
+  Stream<DriverEntity> watchDriver(String driverId);
 
   Future<Result<RouteEntity>> getRoute({
     required double startLat,

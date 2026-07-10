@@ -50,24 +50,24 @@ class _MapScreenState extends State<MapScreen> {
                 const SizedBox(height: 16),
                 const Divider(color: AppColors.primaryColor, thickness: .5),
                 const SizedBox(height: 20),
-                ContactAddressCard(
-                  imageUrl: order.store.image,
-                  name: order.store.name,
-                  onCallPressed: () {
-                    if (order.store.phoneNumber.isNotEmpty) {
-                      getIt<UrlLauncherHelper>().callPhone(
-                        order.store.phoneNumber,
-                      );
-                    }
-                  },
-                  onWhatsappPressed: () {
-                    if (order.store.phoneNumber.isNotEmpty) {
-                      getIt<UrlLauncherHelper>().launchWhatsApp(
-                        order.store.phoneNumber,
-                      );
-                    }
-                  },
-                ),
+                if (state.driverState.data != null)
+                  ContactAddressCard(
+                    name: state.driverState.data!.fullName,
+                    onCallPressed: () {
+                      if (state.driverState.data!.phone.isNotEmpty) {
+                        getIt<UrlLauncherHelper>().callPhone(
+                          state.driverState.data!.phone,
+                        );
+                      }
+                    },
+                    onWhatsappPressed: () {
+                      if (state.driverState.data!.phone.isNotEmpty) {
+                        getIt<UrlLauncherHelper>().launchWhatsApp(
+                          state.driverState.data!.phone,
+                        );
+                      }
+                    },
+                  ),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),

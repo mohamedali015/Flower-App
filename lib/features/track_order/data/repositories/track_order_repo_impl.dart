@@ -1,8 +1,10 @@
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/track_order/data/data_sources/remote/track_order_remote_data_source.dart';
+import 'package:flower_app/features/track_order/data/mapper/driver_mapper.dart';
 import 'package:flower_app/features/track_order/data/mapper/open_route_mapper.dart';
 import 'package:flower_app/features/track_order/data/mapper/track_order_mapper.dart';
 import 'package:flower_app/features/track_order/data/models/remote/open_route_response.dart';
+import 'package:flower_app/features/track_order/domain/entities/driver_entity.dart';
 import 'package:flower_app/features/track_order/domain/entities/route_entity.dart';
 import 'package:flower_app/features/track_order/domain/entities/track_order_entity.dart';
 import 'package:flower_app/features/track_order/domain/repositories/track_order_repo.dart';
@@ -18,6 +20,13 @@ class TrackOrderRepoImpl implements TrackOrderRepo {
   Stream<TrackOrderEntity> watchOrder(String orderId) {
     return _remoteDataSource
         .watchOrder(orderId)
+        .map((response) => response.toEntity());
+  }
+
+  @override
+  Stream<DriverEntity> watchDriver(String driverId) {
+    return _remoteDataSource
+        .watchDriver(driverId)
         .map((response) => response.toEntity());
   }
 

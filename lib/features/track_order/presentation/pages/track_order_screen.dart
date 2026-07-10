@@ -110,26 +110,32 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                               thickness: .5,
                             ),
                             const SizedBox(height: 40),
-                            ContactAddressCard(
-                              imageUrl: order.store.image,
-                              name: order.store.name.isEmpty
-                                  ? localizations.store
-                                  : order.store.name,
-                              onCallPressed: () {
-                                if (order.store.phoneNumber.isNotEmpty) {
-                                  getIt<UrlLauncherHelper>().callPhone(
-                                    order.store.phoneNumber,
-                                  );
-                                }
-                              },
-                              onWhatsappPressed: () {
-                                if (order.store.phoneNumber.isNotEmpty) {
-                                  getIt<UrlLauncherHelper>().launchWhatsApp(
-                                    order.store.phoneNumber,
-                                  );
-                                }
-                              },
-                            ),
+                            if (state.driverState.data != null)
+                              ContactAddressCard(
+                                name: state.driverState.data!.fullName,
+                                onCallPressed: () {
+                                  if (state
+                                      .driverState
+                                      .data!
+                                      .phone
+                                      .isNotEmpty) {
+                                    getIt<UrlLauncherHelper>().callPhone(
+                                      state.driverState.data!.phone,
+                                    );
+                                  }
+                                },
+                                onWhatsappPressed: () {
+                                  if (state
+                                      .driverState
+                                      .data!
+                                      .phone
+                                      .isNotEmpty) {
+                                    getIt<UrlLauncherHelper>().launchWhatsApp(
+                                      state.driverState.data!.phone,
+                                    );
+                                  }
+                                },
+                              ),
                             const SizedBox(height: 24),
                             const Center(
                               child: SvgWrapper(

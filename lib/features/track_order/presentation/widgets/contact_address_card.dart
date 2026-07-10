@@ -9,13 +9,11 @@ import '../../../../core/utils/app_text_styles.dart';
 class ContactAddressCard extends StatelessWidget {
   const ContactAddressCard({
     super.key,
-    required this.imageUrl,
     required this.name,
     this.onCallPressed,
     this.onWhatsappPressed,
   });
 
-  final String imageUrl;
   final String name;
   final VoidCallback? onCallPressed;
   final VoidCallback? onWhatsappPressed;

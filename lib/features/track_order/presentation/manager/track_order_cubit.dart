@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../config/error_handling/result.dart';
+import '../../domain/use_cases/get_driver_use_case.dart';
 import '../../domain/use_cases/get_route_use_case.dart';
 import '../../domain/use_cases/get_track_order_use_case.dart';
 import '../../domain/use_cases/update_order_to_completed_use_case.dart';
@@ -15,12 +16,16 @@ class TrackOrderCubit extends Cubit<TrackOrderState> {
   final GetTrackOrderUseCase _getTrackOrderUseCase;
   final GetRouteUseCase _getRouteUseCase;
   final UpdateOrderToCompletedUseCase _updateOrderToCompletedUseCase;
+  final GetDriverUseCase _getDriverUseCase;
   StreamSubscription? _orderSubscription;
+  StreamSubscription? _driverSubscription;
+  String? _currentDriverId;
 
   TrackOrderCubit(
     this._getTrackOrderUseCase,
     this._getRouteUseCase,
     this._updateOrderToCompletedUseCase,
+    this._getDriverUseCase,
   ) : super(const TrackOrderState());
 
   void doEvent(TrackOrderEvents event) {
@@ -57,11 +62,53 @@ class TrackOrderCubit extends Cubit<TrackOrderState> {
                 ),
               ),
             );
+
+            if (order.driverId.isNotEmpty &&
+                order.driverId != _currentDriverId) {
+              _watchDriver(order.driverId);
+            }
           },
           onError: (error) {
             emit(
               state.copyWith(
                 trackOrderStateParam: state.trackOrderState.copyWith(
+                  isLoadingParam: false,
+                  errorMessageParam: error.toString(),
+                ),
+              ),
+            );
+          },
+        );
+  }
+
+  void _watchDriver(String driverId) {
+    _currentDriverId = driverId;
+    _driverSubscription?.cancel();
+
+    emit(
+      state.copyWith(
+        driverStateParam: state.driverState.copyWith(isLoadingParam: true),
+      ),
+    );
+
+    _driverSubscription = _getDriverUseCase
+        .call(driverId)
+        .listen(
+          (driver) {
+            emit(
+              state.copyWith(
+                driverStateParam: state.driverState.copyWith(
+                  isLoadingParam: false,
+                  isSuccessParam: true,
+                  dataParam: driver,
+                ),
+              ),
+            );
+          },
+          onError: (error) {
+            emit(
+              state.copyWith(
+                driverStateParam: state.driverState.copyWith(
                   isLoadingParam: false,
                   errorMessageParam: error.toString(),
                 ),
@@ -144,6 +191,7 @@ class TrackOrderCubit extends Cubit<TrackOrderState> {
   @override
   Future<void> close() {
     _orderSubscription?.cancel();
+    _driverSubscription?.cancel();
     return super.close();
   }
 }
