@@ -1,3 +1,4 @@
+import 'package:flower_app/config/user/manager/user_cubit.dart';
 import 'package:flower_app/core/localization/l10n/app_localizations.dart';
 import 'package:flower_app/core/shared_widgets/custom_error_widget.dart';
 import 'package:flower_app/core/shared_widgets/custom_loading_indicator.dart';
@@ -26,7 +27,16 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Future<void> _fetchNotifications() async {
-    context.read<NotificationsCubit>().doEvent(GetNotificationsEvent());
+    final currentUserId = context.read<UserCubit>().state.user?.id ?? '';
+    final languageCode = AppLocalizations.of(context)!.localeName;
+
+    // استدعاء الـ Event المخصص للـ Firestore
+    context.read<NotificationsCubit>().doEvent(
+      GetFiretoreNotificationsEvent(
+        userId: currentUserId,
+        languageCode: languageCode,
+      ),
+    );
   }
 
   @override
@@ -34,29 +44,29 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     final local = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: Text(local.notification)),
-      body: RefreshIndicator(
-        onRefresh: _fetchNotifications,
+      appBar: AppBar(title: Text(local.notification), centerTitle: true),
+      body: SafeArea(
         child: BlocBuilder<NotificationsCubit, NotificationsState>(
           builder: (context, state) {
-            final notificationsState = state.notificationsState;
-            final notifications = notificationsState.data?.notifications ?? [];
+            // القراءة من الـ firestoreNotificationsState الجديدة
+            final firestoreState = state.firestoreNotificationsState;
+            final notifications = firestoreState.data ?? [];
 
             return CustomScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
-                if (notificationsState.isLoading)
+                if (firestoreState.isLoading)
                   const SliverFillRemaining(
                     hasScrollBody: false,
-                    child: CustomLoadingIndicator(),
+                    child: Center(child: CustomLoadingIndicator()),
                   )
-                else if (notificationsState.errorMessage != null)
+                // التعديل هنا: فحص ما إذا كان هناك رسالة خطأ (لأن الكلاس لا يحتوي على isError)
+                else if (firestoreState.errorMessage != null)
                   SliverFillRemaining(
                     hasScrollBody: false,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: CustomErrorWidget(
-                        errorMessage: notificationsState.errorMessage!,
+                        errorMessage: firestoreState.errorMessage!,
                         haveTryAgain: true,
                         onPressed: _fetchNotifications,
                       ),
