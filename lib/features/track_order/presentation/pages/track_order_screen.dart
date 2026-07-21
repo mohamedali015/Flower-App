@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../config/di/di.dart';
+import '../../../../core/helpers/event_handler_mixin.dart';
 import '../../../../core/helpers/url_launcher_helper.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../widgets/order_items_widget.dart';
@@ -31,8 +32,22 @@ class TrackOrderScreen extends StatefulWidget {
   State<TrackOrderScreen> createState() => _TrackOrderScreenState();
 }
 
-class _TrackOrderScreenState extends State<TrackOrderScreen> {
+class _TrackOrderScreenState extends State<TrackOrderScreen>
+    with EventHandlerMixin {
   late AppLocalizations localizations;
+  late TrackOrderCubit _trackOrderCubit;
+
+  @override
+  void initState() {
+    _trackOrderCubit = context.read<TrackOrderCubit>();
+
+    _trackOrderCubit.eventStream.listen((event) {
+      if (!mounted) return;
+
+      handleEvent(event);
+    });
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -42,178 +57,155 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          getIt<TrackOrderCubit>()
-            ..doEvent(GetTrackOrderEvent(orderId: widget.orderId)),
-      child: Scaffold(
-        appBar: AppBar(title: Text(localizations.trackOrder)),
-        body: BlocListener<TrackOrderCubit, TrackOrderState>(
-          listenWhen: (prev, current) =>
-              prev.updateOrderState != current.updateOrderState,
-          listener: (context, state) {
-            if (state.updateOrderState.isSuccess) {
-              Navigator.pop(context);
-            }
-          },
-          child: BlocBuilder<TrackOrderCubit, TrackOrderState>(
-            builder: (context, state) {
-              final trackState = state.trackOrderState;
+    return Scaffold(
+      appBar: AppBar(title: Text(localizations.trackOrder)),
+      body: BlocBuilder<TrackOrderCubit, TrackOrderState>(
+        builder: (context, state) {
+          final trackState = state.trackOrderState;
 
-              if (trackState.isLoading) {
-                return const Center(child: CustomLoadingIndicator());
-              }
+          if (trackState.isLoading) {
+            return const CustomLoadingIndicator();
+          }
 
-              if (trackState.data == null || trackState.data!.id.isEmpty) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.hourglass_empty,
-                        size: 80,
-                        color: AppColors.primaryColor,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        localizations.orderIsPending,
-                        style: AppTextStyles.medium18(context),
-                      ),
-                    ],
+          if (trackState.data == null || trackState.data!.id.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.hourglass_empty,
+                    size: 80,
+                    color: AppColors.primaryColor,
                   ),
-                );
-              }
+                  const SizedBox(height: 16),
+                  Text(
+                    localizations.orderIsPending,
+                    style: AppTextStyles.medium18(context),
+                  ),
+                ],
+              ),
+            );
+          }
 
-              final order = trackState.data!;
-              final orderStatus = OrderStatus.fromString(order.orderStatus);
+          final order = trackState.data!;
+          final orderStatus = OrderStatus.fromString(order.orderStatus);
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppConstants.paddingHorizontal,
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppConstants.paddingHorizontal,
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 20),
+                        EstimatedArrivedWidget(
+                          estimatedTime:
+                              DateTime.tryParse(order.updatedAt) ??
+                              DateTime.now(),
+                        ),
+                        const SizedBox(height: 16),
+                        const Divider(
+                          color: AppColors.primaryColor,
+                          thickness: .5,
+                        ),
+                        const SizedBox(height: 40),
+                        if (state.driverState.data != null)
+                          ContactAddressCard(
+                            name: state.driverState.data!.fullName,
+                            onCallPressed: () {
+                              if (state.driverState.data!.phone.isNotEmpty) {
+                                getIt<UrlLauncherHelper>().callPhone(
+                                  state.driverState.data!.phone,
+                                );
+                              }
+                            },
+                            onWhatsappPressed: () {
+                              if (state.driverState.data!.phone.isNotEmpty) {
+                                getIt<UrlLauncherHelper>().launchWhatsApp(
+                                  state.driverState.data!.phone,
+                                );
+                              }
+                            },
+                          ),
+                        const SizedBox(height: 24),
+                        const Center(
+                          child: SvgWrapper(
+                            path: AppAssets.carIcon,
+                            width: 213,
+                            height: 83,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        OrderTimeline(currentStatus: orderStatus),
+                        const SizedBox(height: 20),
+                        OrderItemsWidget(
+                          products: order.orderItems
+                              .map((e) => e.product)
+                              .toList(),
+                        ),
+                        const SizedBox(height: 20),
+                        TrackOrderInfoCard(
+                          iconPath: AppAssets.moneyIcon,
+                          title: '${localizations.egp} ${order.totalPrice}',
+                          subTitle: order.paymentType.toLowerCase() == "cash"
+                              ? localizations.cashOnDelivery
+                              : localizations.creditCard,
+                        ),
+                        const SizedBox(height: 24),
+                        TrackOrderInfoCard(
+                          iconPath: AppAssets.location,
+                          title: localizations.home,
+                          subTitle: order.shippingAddress.street,
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 20),
-                            EstimatedArrivedWidget(
-                              estimatedTime:
-                                  DateTime.tryParse(order.updatedAt) ??
-                                  DateTime.now(),
-                            ),
-                            const SizedBox(height: 16),
-                            const Divider(
-                              color: AppColors.primaryColor,
-                              thickness: .5,
-                            ),
-                            const SizedBox(height: 40),
-                            if (state.driverState.data != null)
-                              ContactAddressCard(
-                                name: state.driverState.data!.fullName,
-                                onCallPressed: () {
-                                  if (state
-                                      .driverState
-                                      .data!
-                                      .phone
-                                      .isNotEmpty) {
-                                    getIt<UrlLauncherHelper>().callPhone(
-                                      state.driverState.data!.phone,
-                                    );
-                                  }
-                                },
-                                onWhatsappPressed: () {
-                                  if (state
-                                      .driverState
-                                      .data!
-                                      .phone
-                                      .isNotEmpty) {
-                                    getIt<UrlLauncherHelper>().launchWhatsApp(
-                                      state.driverState.data!.phone,
-                                    );
-                                  }
-                                },
-                              ),
-                            const SizedBox(height: 24),
-                            const Center(
-                              child: SvgWrapper(
-                                path: AppAssets.carIcon,
-                                width: 213,
-                                height: 83,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            const SizedBox(height: 40),
-                            OrderTimeline(currentStatus: orderStatus),
-                            const SizedBox(height: 20),
-                            OrderItemsWidget(
-                              products: order.orderItems
-                                  .map((e) => e.product)
-                                  .toList(),
-                            ),
-                            const SizedBox(height: 20),
-                            TrackOrderInfoCard(
-                              iconPath: AppAssets.moneyIcon,
-                              title: '${localizations.egp} ${order.totalPrice}',
-                              subTitle:
-                                  order.paymentType.toLowerCase() == "cash"
-                                  ? localizations.cashOnDelivery
-                                  : localizations.creditCard,
-                            ),
-                            const SizedBox(height: 24),
-                            TrackOrderInfoCard(
-                              iconPath: AppAssets.location,
-                              title: localizations.home,
-                              subTitle: order.shippingAddress.street,
-                            ),
-                            const SizedBox(height: 20),
-                          ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CustomButton(
+                          title: localizations.showMap,
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              Routes.mapScreenRoute,
+                              arguments: order.id,
+                            );
+                          },
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: CustomButton(
-                              title: localizations.showMap,
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  Routes.mapScreenRoute,
-                                  arguments: order.id,
-                                );
-                              },
-                            ),
+                      if (orderStatus == OrderStatus.delivered) ...[
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: CustomButton(
+                            title: localizations.orderDelivered,
+                            isLoading: state.updateOrderState.isLoading,
+                            onPressed: () {
+                              _trackOrderCubit.doEvent(
+                                UpdateOrderToCompletedEvent(
+                                  orderId: widget.orderId,
+                                ),
+                              );
+                            },
                           ),
-                          if (orderStatus == OrderStatus.delivered) ...[
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: CustomButton(
-                                title: localizations.orderDelivered,
-                                isLoading: state.updateOrderState.isLoading,
-                                onPressed: () {
-                                  context.read<TrackOrderCubit>().doEvent(
-                                    UpdateOrderToCompletedEvent(
-                                      orderId: widget.orderId,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ],
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
-              );
-            },
-          ),
-        ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

@@ -47,6 +47,8 @@ import '../../features/notifications/presentation/pages/notifications_screen.dar
 import '../../features/payment/views/pages/payment_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../../features/splash/splash_screen.dart';
+import '../../features/track_order/presentation/manager/track_order_cubit.dart';
+import '../../features/track_order/presentation/manager/track_order_events.dart';
 import '../../features/track_order/presentation/pages/map_screen.dart';
 import '../../features/track_order/presentation/pages/track_order_screen.dart';
 import '../../features/user_address/domain/entities/address.dart';
@@ -267,14 +269,24 @@ abstract class RouteGenerator {
         case Routes.trackOrderScreenRoute:
           final orderId = settings.arguments as String;
           return CupertinoPageRoute(
-            builder: (_) => TrackOrderScreen(orderId: orderId),
+            builder: (_) => BlocProvider(
+              create: (context) =>
+                  getIt<TrackOrderCubit>()
+                    ..doEvent(GetTrackOrderEvent(orderId: orderId)),
+              child: TrackOrderScreen(orderId: orderId),
+            ),
           );
 
         ////? map screen
         case Routes.mapScreenRoute:
           final orderId = settings.arguments as String;
           return CupertinoPageRoute(
-            builder: (_) => MapScreen(orderId: orderId),
+            builder: (_) => BlocProvider(
+              create: (context) =>
+                  getIt<TrackOrderCubit>()
+                    ..doEvent(GetTrackOrderEvent(orderId: orderId)),
+              child: MapScreen(orderId: orderId),
+            ),
           );
 
         /// Default

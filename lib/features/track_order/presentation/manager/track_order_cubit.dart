@@ -1,6 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flower_app/config/base_cubit/base_cubit.dart';
+import 'package:flower_app/config/base_cubit/base_event.dart';
+import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../config/error_handling/result.dart';
@@ -12,7 +14,7 @@ import 'track_order_events.dart';
 import 'track_order_state.dart';
 
 @injectable
-class TrackOrderCubit extends Cubit<TrackOrderState> {
+class TrackOrderCubit extends BaseCubit<TrackOrderState, BaseEvent> {
   final GetTrackOrderUseCase _getTrackOrderUseCase;
   final GetRouteUseCase _getRouteUseCase;
   final UpdateOrderToCompletedUseCase _updateOrderToCompletedUseCase;
@@ -174,6 +176,12 @@ class TrackOrderCubit extends Cubit<TrackOrderState> {
               isLoadingParam: false,
               isSuccessParam: true,
             ),
+          ),
+        );
+        emitEvent(
+          const NavigationEvent(
+            routeName: Routes.ordersRoute,
+            type: NavigationType.pop,
           ),
         );
       case Failure():
