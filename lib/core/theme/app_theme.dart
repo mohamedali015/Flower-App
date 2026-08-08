@@ -52,31 +52,31 @@ class AppTheme {
           borderRadius: BorderRadius.circular(
             MyResponsive.radius(value: 4, context),
           ),
-          borderSide: BorderSide(color: AppColors.grayDark),
+          borderSide: const BorderSide(color: AppColors.grayDark),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
             MyResponsive.radius(value: 4, context),
           ),
-          borderSide: BorderSide(color: AppColors.grayDark),
+          borderSide: const BorderSide(color: AppColors.grayDark),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
             MyResponsive.radius(value: 4, context),
           ),
-          borderSide: BorderSide(color: AppColors.error),
+          borderSide: const BorderSide(color: AppColors.error),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
             MyResponsive.radius(value: 4, context),
           ),
-          borderSide: BorderSide(color: AppColors.error),
+          borderSide: const BorderSide(color: AppColors.error),
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
             MyResponsive.radius(value: 4, context),
           ),
-          borderSide: BorderSide(color: AppColors.grayDark),
+          borderSide: const BorderSide(color: AppColors.grayDark),
         ),
       ),
 
@@ -134,11 +134,11 @@ class AppTheme {
         titleTextStyle: AppTextStyles.medium20(
           context,
         ).copyWith(color: AppColors.black100),
-        iconTheme: IconThemeData(color: AppColors.black100),
+        iconTheme: const IconThemeData(color: AppColors.black100),
       ),
 
       ///?  Progress Indicator
-      progressIndicatorTheme: ProgressIndicatorThemeData(
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.primaryColor,
       ),
 

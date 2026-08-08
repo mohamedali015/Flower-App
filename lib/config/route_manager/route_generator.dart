@@ -4,10 +4,10 @@ import 'package:flower_app/config/route_manager/routes.dart';
 import 'package:flower_app/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_screen.dart';
-import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
-import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_cubit.dart';
 import 'package:flower_app/features/home/presentation/manager/cubit/home_events.dart';
+import 'package:flower_app/features/occasions/presentation/manager/occasions_cubit.dart';
+import 'package:flower_app/features/occasions/presentation/manager/occasions_events.dart';
 import 'package:flower_app/features/occasions/presentation/pages/occasion_screen.dart';
 import 'package:flower_app/features/product_details/presentation/pages/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +20,8 @@ import '../../features/auth/presentation/manager/login/login_cubit.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
 import '../../features/best_seller/presentation/manager/best_seller_cubit.dart';
 import '../../features/best_seller/presentation/manager/best_seller_event.dart';
+import '../../features/cart/presentation/manager/cart_cubit.dart';
+import '../../features/cart/presentation/manager/cart_event.dart';
 import '../../features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import '../../features/forget_password/presentation/manager/event/forget_password_event.dart';
 import '../../features/forget_password/presentation/pages/forget_password_enter_email_view.dart';
@@ -59,7 +61,7 @@ abstract class RouteGenerator {
           return MaterialPageRoute(
             builder: (_) => BlocProvider(
               create: (_) => getIt<ForgetPasswordCubit>(),
-              child: ForgetPasswordEnterEmailView(),
+              child: const ForgetPasswordEnterEmailView(),
             ),
           );
 
@@ -85,12 +87,21 @@ abstract class RouteGenerator {
           final args = settings.arguments as Map<String, dynamic>?;
 
           return CupertinoPageRoute(
-            builder: (_) => BlocProvider(
-              create: (context) => getIt<HomeCubit>()..doEvents(GetHomeEvent()),
+            builder: (_) => MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) =>
+                      getIt<HomeCubit>()..doEvents(GetHomeEvent()),
+                ),
+
+                BlocProvider(
+                  create: (context) =>
+                      getIt<CartCubit>()..doEvent(GetCartItemsEvent()),
+                ),
+              ],
 
               child: CustomBottomNavBar(
                 initialIndex: args?['initialIndex'] ?? 0,
-
                 categoryIndex: args?['categoryIndex'] ?? 0,
               ),
             ),
@@ -101,7 +112,7 @@ abstract class RouteGenerator {
             builder: (_) => BlocProvider(
               create: (context) =>
                   getIt<BestSellerCubit>()..doEvent(GetBestSellerEvent()),
-              child: BestSellerScreen(),
+              child: const BestSellerScreen(),
             ),
           );
 
@@ -121,15 +132,17 @@ abstract class RouteGenerator {
           final entity = settings.arguments as ProductEntity;
 
           return CupertinoPageRoute(
-            builder: (_) => ProductDetailsScreen(entity: entity),
+            builder: (_) => BlocProvider.value(
+              value: getIt<CartCubit>(),
+              child: ProductDetailsScreen(entity: entity),
+            ),
           );
 
-          ///? search Screen
+        ///? search Screen
         case Routes.searchScreenRoute:
           return CupertinoPageRoute(builder: (_) => const SearchScreen());
 
-
-      /// Default
+        /// Default
         default:
           return _errorRoute();
       }

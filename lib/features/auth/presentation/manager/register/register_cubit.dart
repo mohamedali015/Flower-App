@@ -9,7 +9,7 @@ import '../../../domain/params/register_params.dart';
 
 @injectable
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit(this._registerUseCase) : super(RegisterState());
+  RegisterCubit(this._registerUseCase) : super(const RegisterState());
 
   final RegisterUseCase _registerUseCase;
 

@@ -1,6 +1,7 @@
 import 'package:flower_app/core/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'config/di/di.dart';
 import 'config/route_manager/route_generator.dart';
 import 'config/route_manager/routes.dart';
@@ -18,7 +19,7 @@ void main() async {
 
   Bloc.observer = CustomBlocObserver();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,8 +27,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<UserCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<UserCubit>()),
+        // BlocProvider(create: (context) => getIt<AddCartCubit>()),
+      ],
       child: Builder(
         builder: (context) {
           return MaterialApp(

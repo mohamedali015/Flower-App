@@ -39,7 +39,7 @@ void main() {
 
     errorMessage = "Something went wrong. Please try again later.";
 
-    params = RegisterParams(
+    params = const RegisterParams(
       firstName: "Mohamed",
       lastName: "Ali",
       email: "mohamed@gmail.com",

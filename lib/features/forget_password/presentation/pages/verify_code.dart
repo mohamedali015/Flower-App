@@ -17,7 +17,7 @@ import '../manager/cubit/forget_password_cubit.dart';
 import '../manager/event/forget_password_event.dart';
 
 class VerifyCode extends StatefulWidget {
-  const VerifyCode();
+  const VerifyCode({super.key});
 
   @override
   State<VerifyCode> createState() => _VerifyCodeState();
@@ -51,7 +51,7 @@ class _VerifyCodeState extends State<VerifyCode> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppStrings.emailVerification),
+          title: const Text(AppStrings.emailVerification),
           leading: IconButton(
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(
@@ -106,7 +106,6 @@ class _VerifyCodeState extends State<VerifyCode> {
                   },
                   listener: (BuildContext context, ForgetPasswordState state) {
                     if (state.verifyOtpState?.errorMessage != null) {
-                      print("listend");
                       String msg = state.verifyOtpState!.errorMessage!;
                       _errorController.add(ErrorAnimationType.shake);
                       _otpController.clear();
@@ -121,7 +120,7 @@ class _VerifyCodeState extends State<VerifyCode> {
                   },
                 ),
                 SizedBox(height: MyResponsive.height(context, value: 16)),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(AppStrings.didNotReceiveCode),

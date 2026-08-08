@@ -1,115 +1,148 @@
-import 'package:flower_app/config/di/di.dart';
+import 'package:flower_app/core/localization/l10n/app_localizations.dart';
+import 'package:flower_app/core/shared_widgets/custom_error_widget.dart';
+import 'package:flower_app/core/shared_widgets/custom_loading_indicator.dart';
+import 'package:flower_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:injectable/injectable.dart';
-import '../../../../core/helpers/my_responsive.dart';
-import '../../../../core/localization/l10n/app_localizations.dart';
-import '../../../home/presentation/widgets/location_bar.dart';
-import '../../data/model/request/update_cart_request.dart';
+
+import '../../../../core/shared_widgets/custom_button.dart';
+import '../../../../core/utils/app_colors.dart';
 import '../manager/cart_cubit.dart';
 import '../manager/cart_event.dart';
 import '../manager/cart_state.dart';
 import '../widget/custom_cart_item.dart';
-import '../widget/custom_header_cart.dart';
+import '../widget/custom_total_price.dart';
 
-@injectable
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var local = AppLocalizations.of(context)!;
+    final local = AppLocalizations.of(context)!;
 
-    return BlocProvider(
-      create: (context) => getIt<CartCubit>()..doEvent(GetAllCartEvent()),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: BlocBuilder<CartCubit, CartState>(
-            builder: (context, state) {
-              final cartData = state.getCart.data;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(local.cart),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios_new),
+        ),
+      ),
+      body: BlocBuilder<CartCubit, CartState>(
+        buildWhen: (previous, current) {
+          return previous.getCartItemsState != current.getCartItemsState;
+        },
+        builder: (context, state) {
+          /// Loading
+          if (state.getCartItemsState.isLoading) {
+            return const CustomLoadingIndicator();
+          }
 
-              if (state.getCart.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
+          /// Error
+          if (state.getCartItemsState.errorMessage != null) {
+            return CustomErrorWidget(
+              errorMessage: state.getCartItemsState.errorMessage!,
+              haveTryAgain: true,
+              onPressed: () {
+                context.read<CartCubit>().doEvent(GetCartItemsEvent());
+              },
+            );
+          }
 
-              if (state.getCart.errorMessage != null) {
-                return Center(child: Text(state.getCart.errorMessage!));
-              }
+          final cartData = state.getCartItemsState.data;
+          final isEmpty = cartData == null || cartData.cartItems.isEmpty;
 
-              return Column(
-                children: [
-                  /// Header
-                  CustomHeaderCart(getCart: state.getCart),
-
-                  SizedBox(height: MyResponsive.height(context, value: 7)),
-
-                  /// Location
-                  LocationBar(),
-
-                  /// Cart Items
-                  BlocBuilder<CartCubit, CartState>(
-                    builder: (context, state) {
-                      if (state.addToCartSuccess.isLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-
-                      if (state.addToCartSuccess.errorMessage != null) {
-                        return Center(
-                          child: Text(state.addToCartSuccess.errorMessage!),
-                        );
-                      }
-                      return Expanded(
-                        child: ListView.builder(
-                          itemCount: cartData?.cartItems.length ?? 0,
-                          itemBuilder: (context, index) {
-                            final cartItem = cartData!.cartItems[index];
-
-                            return CustomCartItem(
-                              cartItem: cartItem,
-
-                              onIncrease: () {
-                                context.read<CartCubit>().doEvent(
-                                  UpdateCart(
-                                    UpdateCartRequest(
-                                      quantity: cartItem.quantity! + 1,
-                                    ),
-                                    cartItem.productEntity.id,
-                                  ),
-                                );
-                              },
-                              onDelete: () {
-                                context.read<CartCubit>().doEvent(
-                                  RemoveToCart(cartItem.productEntity.id),
-                                );
-                              },
-
-                              onDecrease: () {
-                                final qty = cartItem.quantity ?? 0;
-                                if (qty <= 1) {
-                                  context.read<CartCubit>().doEvent(
-                                    RemoveToCart(cartItem.productEntity.id),
-                                  );
-                                  return;
-                                }
-                                context.read<CartCubit>().doEvent(
-                                  UpdateCart(
-                                    UpdateCartRequest(quantity: qty - 1),
-                                    cartItem.productEntity.id,
-                                  ),
-                                );
-                              },
-                            );
-                          },
+          /// Empty
+          if (isEmpty) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<CartCubit>().doEvent(GetCartItemsEvent());
+              },
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.shopping_cart_outlined,
+                              color: AppColors.primaryColor,
+                              size: 80,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "Your cart is empty",
+                              style: AppTextStyles.bold20(context),
+                            ),
+                          ],
                         ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          }
+
+          /// Success
+          return Column(
+            children: [
+              /// Scrollable Content
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<CartCubit>().doEvent(GetCartItemsEvent());
+                  },
+                  child: ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(16),
+                    itemCount: cartData.cartItems.length,
+                    itemBuilder: (context, index) {
+                      final cartItem = cartData.cartItems[index];
+
+                      return CustomCartItem(
+                        key: ValueKey(cartItem.productEntity.id),
+                        cartItem: cartItem,
                       );
                     },
                   ),
-                ],
-              );
-            },
-          ),
-        ),
+                ),
+              ),
+
+              /// Bottom Section
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    top: BorderSide(color: AppColors.grayDark, width: 0.2),
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CustomTotalPrice(
+                      subTotal: cartData.totalPriceAfterDiscount ?? 0,
+                      deliveryFee: 10,
+                    ),
+                    const SizedBox(height: 30),
+                    CustomButton(title: "Check out", onPressed: () {}),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

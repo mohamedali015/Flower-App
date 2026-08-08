@@ -4,7 +4,6 @@ import 'package:flower_app/core/values/app_strings.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/helpers/validator.dart';
-import '../../../../../core/localization/l10n/app_localizations.dart';
 
 class ResetPasswordFieldsWidget extends StatefulWidget {
   const ResetPasswordFieldsWidget({
@@ -34,8 +33,6 @@ class _ResetPasswordFieldsWidgetState extends State<ResetPasswordFieldsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
-
     return Column(
       children: [
         TextFormField(

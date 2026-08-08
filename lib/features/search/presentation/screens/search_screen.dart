@@ -24,14 +24,14 @@ class SearchScreen extends StatelessWidget {
 
             SearchBar(
               onChanged: (value) {},
-              leading: Icon(
+              leading: const Icon(
                 CupertinoIcons.search,
                 color: AppColors.textHint,
               ),
               trailing: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.cancel,
                     color: AppColors.textHint,
                   ),

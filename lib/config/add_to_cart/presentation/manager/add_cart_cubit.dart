@@ -1,8 +1,9 @@
 import 'package:flower_app/config/add_to_cart/presentation/manager/add_cart_state.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flower_app/config/error_handling/result.dart';
 import 'package:flower_app/features/cart/domain/entities/get_cart_entity.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../../features/cart/data/model/request/add_to_cart_request.dart';
 import '../../domain/use_case/add_cart_use_case.dart';
 import 'add_cart_event.dart';
@@ -46,7 +47,6 @@ class AddCartCubit extends Cubit<AddCartState> {
           ),
         );
     }
-
   }
 
   void doEvent(AddCartEvent event) {

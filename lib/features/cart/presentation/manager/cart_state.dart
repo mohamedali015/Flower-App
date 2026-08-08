@@ -4,38 +4,34 @@ import 'package:flower_app/features/cart/domain/entities/get_cart_entity.dart';
 import '../../../../config/base_state/base_state.dart';
 
 class CartState extends Equatable {
-
-  final BaseState<GetCartEntity> getCart;
-  final BaseState<GetCartEntity> addToCartSuccess;
-  final BaseState<GetCartEntity> removeFromCartSuccess;
-  final BaseState<GetCartEntity> updateCartSuccess;
+  final BaseState<GetCartEntity> getCartItemsState;
+  final BaseState<GetCartEntity> updateCartItemState;
+  final BaseState<GetCartEntity> deleteCartItemState;
 
   const CartState({
-    this.getCart = const BaseState(),
-    this.addToCartSuccess = const BaseState(),
-    this.removeFromCartSuccess = const BaseState(),
-    this.updateCartSuccess = const BaseState(),
-});
+    this.getCartItemsState = const BaseState(),
+    this.updateCartItemState = const BaseState(),
+    this.deleteCartItemState = const BaseState(),
+  });
 
   CartState copyWith({
-    BaseState<GetCartEntity>? getCart,
-    BaseState<GetCartEntity>? addToCartSuccess,
-    BaseState<GetCartEntity>? removeFromCartSuccess,
-    BaseState<GetCartEntity>? updateCartSuccess,
+    BaseState<GetCartEntity>? getCartItemsStateParam,
+    BaseState<GetCartEntity>? updateCartItemStateParam,
+    BaseState<GetCartEntity>? deleteCartItemStateParam,
   }) {
     return CartState(
-      getCart: getCart ?? this.getCart,
-      addToCartSuccess: addToCartSuccess ?? this.addToCartSuccess,
-      removeFromCartSuccess: removeFromCartSuccess ?? this.removeFromCartSuccess,
-      updateCartSuccess: updateCartSuccess ?? this.updateCartSuccess,
+      getCartItemsState: getCartItemsStateParam ?? getCartItemsState,
+
+      updateCartItemState: updateCartItemStateParam ?? updateCartItemState,
+
+      deleteCartItemState: deleteCartItemStateParam ?? deleteCartItemState,
     );
   }
 
   @override
   List<Object?> get props => [
-    getCart,
-    addToCartSuccess,
-    removeFromCartSuccess,
-    updateCartSuccess,
+    getCartItemsState,
+    updateCartItemState,
+    deleteCartItemState,
   ];
 }

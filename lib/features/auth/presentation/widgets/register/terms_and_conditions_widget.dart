@@ -17,7 +17,7 @@ class TermsAndConditionsWidget extends StatelessWidget {
             text: local.termsText,
             style: AppTextStyles.regular12(context),
           ),
-          TextSpan(text: ' '),
+          const TextSpan(text: ' '),
           TextSpan(
             text: local.termsAndConditions,
             style: AppTextStyles.semiBold12(

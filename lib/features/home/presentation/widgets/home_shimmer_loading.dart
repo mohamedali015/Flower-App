@@ -35,9 +35,9 @@ class HomeShimmerLoading extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: 5,
-              separatorBuilder: (_, __) =>
+              separatorBuilder: (_, _) =>
                   SizedBox(width: MyResponsive.width(context, value: 12)),
-              itemBuilder: (_, __) {
+              itemBuilder: (_, _) {
                 return Column(
                   children: [
                     ShimmerBox(
@@ -86,11 +86,11 @@ class HomeShimmerLoading extends StatelessWidget {
               mainAxisSpacing: 12,
               childAspectRatio: .62,
             ),
-            itemBuilder: (_, __) {
+            itemBuilder: (_, _) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: ShimmerBox(height: double.infinity)),
+                  const Expanded(child: ShimmerBox(height: double.infinity)),
 
                   SizedBox(height: MyResponsive.height(context, value: 8)),
 
@@ -129,9 +129,9 @@ class HomeShimmerLoading extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: 4,
-              separatorBuilder: (_, __) =>
+              separatorBuilder: (_, _) =>
                   SizedBox(width: MyResponsive.width(context, value: 12)),
-              itemBuilder: (_, __) {
+              itemBuilder: (_, _) {
                 return ShimmerBox(
                   height: MyResponsive.height(context, value: 180),
                   width: MyResponsive.width(context, value: 150),

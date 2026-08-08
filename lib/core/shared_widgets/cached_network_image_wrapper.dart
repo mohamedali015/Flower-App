@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flower_app/core/shared_widgets/shimmer_box.dart';
 import 'package:flutter/material.dart';
-import 'custom_loading_indicator.dart';
 
 class CachedNetworkImageWrapper extends StatelessWidget {
   final String imagePath;

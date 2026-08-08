@@ -44,7 +44,7 @@ class RememberMe extends StatelessWidget {
           },
           child: Text(
             local.forgetPassword,
-            style: TextStyle(
+            style: const TextStyle(
               decoration: TextDecoration.underline,
               color: AppColors.darkBase,
             ),

@@ -23,7 +23,7 @@ void main() {
   late List<ProductModel> productsModels;
 
   setUpAll(() {
-    params = ProductQueryParams(page: 1, limit: 10);
+    params = const ProductQueryParams(page: 1, limit: 10);
 
     productsModels = List.generate(
       5,

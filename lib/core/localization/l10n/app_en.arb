@@ -90,5 +90,9 @@
      "subTotal": "Sub Total",
      "deliveryFee": "Delivery Fee",
      "total": "Total",
-     "addedSuccessfully" : "Added successfully"
+     "addedSuccessfully" : "Added successfully",
+      "sub_total": "Sub Total",
+         "delivery_fee": "Delivery Fee",
+         "total": "Total",
+         "your_cart_is_empty": "Your cart is empty"
 }

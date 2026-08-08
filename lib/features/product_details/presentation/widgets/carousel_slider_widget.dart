@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -9,7 +8,11 @@ import '../../../../core/shared_widgets/cached_network_image_wrapper.dart';
 class CarouselSliderWidget extends StatelessWidget {
   final ProductEntity product;
 
-  const CarouselSliderWidget(this.product, {required this.onPageChanged});
+  const CarouselSliderWidget(
+    this.product, {
+    super.key,
+    required this.onPageChanged,
+  });
 
   final Function(int, CarouselPageChangedReason) onPageChanged;
 
@@ -19,11 +22,11 @@ class CarouselSliderWidget extends StatelessWidget {
       items: product.images
           .map(
             (path) => CachedNetworkImageWrapper(
-          width: double.infinity,
-          imagePath: path,
-          fit: BoxFit.cover,
-        ),
-      )
+              width: double.infinity,
+              imagePath: path,
+              fit: BoxFit.cover,
+            ),
+          )
           .toList(),
       options: CarouselOptions(
         height: MyResponsive.height(context, value: 400),
@@ -32,8 +35,8 @@ class CarouselSliderWidget extends StatelessWidget {
         initialPage: 0,
         enableInfiniteScroll: true,
         reverse: false,
-        autoPlayInterval: Duration(seconds: 3),
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        autoPlayInterval: const Duration(seconds: 3),
+        autoPlayAnimationDuration: const Duration(milliseconds: 800),
         autoPlayCurve: Curves.fastOutSlowIn,
         enlargeCenterPage: true,
         enlargeFactor: 0.3,
