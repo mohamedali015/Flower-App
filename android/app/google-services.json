@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "1035074510871",
+    "project_id": "elevate-flower-app-92318",
+    "storage_bucket": "elevate-flower-app-92318.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035074510871:android:403e269c4d4692780c3c52",
+        "android_client_info": {
+          "package_name": "com.elevate.c5.t1.flower_driver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVF6k1Fz7aa9OgfpSwqEyJwGvVDlu2_ps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035074510871:android:0061ef9392b42fb30c3c52",
+        "android_client_info": {
+          "package_name": "com.elevate.flower_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVF6k1Fz7aa9OgfpSwqEyJwGvVDlu2_ps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035074510871:android:603b4cfab76b7eb40c3c52",
+        "android_client_info": {
+          "package_name": "com.example.flower_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVF6k1Fz7aa9OgfpSwqEyJwGvVDlu2_ps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
